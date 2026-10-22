@@ -146,4 +146,5 @@ TOTAL                           547    177    68%
 > *(Live-trading prerequisites verified, awaiting explicit authorization)*
 
 - **کامیت مبنا در گیت:** `a492b831f98e67ed3ebdcfaf6eb92fa73bde42e5`
-- **هش کامیت جدید با ممیزی فاز ۱۱:** ثبت‌شده در تاریخچه گیت.
+- **هش کامیت جدید با ممیزی فاز ۱۱:** `9f8548568e9bbf5a121a10692bf5bafd73634310`
+- **تگ رسمی گیت:** `v0.3.0-pre-competition`
