@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wallex-agentic-trader"
+version = "0.1.0"
+description = "Agentic AI Algorithmic Trading System for Wallex x Starcoach Hackathon"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    { name = "Starcoach Hackathon Team" }
+]
+dependencies = [
+    "httpx>=0.28.0",
+    "pydantic>=2.10.0",
+    "pandas>=2.2.0",
+    "numpy>=1.26.0",
+    "pyyaml>=6.0.0",
+    "pysocks>=1.7.1"
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
