@@ -75,3 +75,32 @@ def test_deterministic_fallback_classification():
   res_panic = agent._deterministic_fallback(f_panic)
   assert res_panic.regime == MarketRegime.VOLATILE_PANIC
   assert res_panic.recommended_action == ActionType.HOLD
+
+
+@pytest.mark.asyncio
+async def test_ai_agent_failure_and_timeout_handles_safely():
+  from unittest.mock import AsyncMock
+
+  agent = RegimeClassificationAgent(api_key="fake-key-for-test")
+  # Mock _call_llm_agent to simulate network timeout / exception
+  agent._call_llm_agent = AsyncMock(
+      side_effect=TimeoutError("Gemini API call timed out after 5.0s")
+  )
+
+  f_bull = MarketFeaturesInput(
+      symbol="BTCTMN",
+      price_toman=22_000_000_000.0,
+      ema_spread_pct=1.0,
+      rsi_14=60.0,
+      atr_pct=2.0,
+      vol_ratio=1.3,
+      spread_pct=0.05,
+      trend_direction="BULLISH",
+  )
+
+  # Agent must not crash! It must gracefully return the deterministic fallback
+  res = await agent.classify_regime(f_bull)
+  assert res is not None
+  assert res.regime == MarketRegime.BULLISH_TREND
+  assert res.recommended_action == ActionType.BUY
+

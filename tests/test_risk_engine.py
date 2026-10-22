@@ -218,3 +218,44 @@ def test_minimum_notional_rejection():
 
   assert res.approved is False
   assert any("minimum order notional" in r for r in res.veto_reasons)
+
+
+def test_every_credit_inactive_symbol_from_restrictions_file_is_rejected():
+  import json, pathlib
+
+  repo_root = pathlib.Path(__file__).resolve().parent.parent
+  with open(repo_root / "config" / "market_restrictions.json", "r") as f:
+    data = json.load(f)
+
+  inactive_symbols = {
+      s["symbol"] for s in data.get("credit_inactive_symbols", [])
+  }
+  assert len(inactive_symbols) >= 20
+
+  engine = RiskEngine(
+      restricted_symbols=inactive_symbols,
+      allowed_symbols={"BTCTMN", "ETHTMN"},
+  )
+
+  for sym in inactive_symbols:
+    signal = ProposedTradeSignal(
+        symbol=sym,
+        action=ActionType.BUY,
+        target_price_toman=1000.0,
+        order_value_toman=100_000.0,
+        regime=MarketRegime.BULLISH_TREND,
+        ai_confidence=0.90,
+        rationale="Test inactive check",
+        timestamp="2026-10-22T10:00:00Z",
+    )
+    res = engine.evaluate_signal(
+        signal=signal,
+        current_portfolio_value_toman=5_000_000.0,
+        current_cash_toman=5_000_000.0,
+        current_crypto_exposure_toman=0.0,
+        active_positions={},
+        current_market_spread_pct=0.05,
+    )
+    assert res.approved is False, f"Expected {sym} to be rejected by RiskEngine!"
+    assert any("RESTRICTED" in r for r in res.veto_reasons)
+

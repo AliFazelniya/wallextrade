@@ -162,3 +162,45 @@ async def test_uncertain_order_reconciliation():
   assert reconciled["found"] is True
   assert reconciled["state"] == "OPEN"
   assert reconciled["order"]["symbol"] == "BTCTMN"
+
+
+@pytest.mark.asyncio
+async def test_every_credit_inactive_symbol_rejected_immediately_by_adapter():
+  import json, pathlib
+
+  repo_root = pathlib.Path(__file__).resolve().parent.parent
+  with open(repo_root / "config" / "market_restrictions.json", "r") as f:
+    data = json.load(f)
+
+  inactive_symbols = {
+      s["symbol"] for s in data.get("credit_inactive_symbols", [])
+  }
+  adapter = ExchangeAdapter(
+      client=WallexClient(),
+      portfolio=PortfolioEngine(),
+      trading_mode="SIMULATION",
+      allowed_symbols={"BTCTMN"},
+      restricted_symbols=inactive_symbols,
+  )
+
+  for sym in inactive_symbols:
+    with pytest.raises(MarketNotEligibleError):
+      adapter.validate_market_eligibility(sym)
+
+
+@pytest.mark.asyncio
+async def test_api_rate_limit_and_timeout_error_handling():
+  from unittest.mock import AsyncMock
+  import httpx
+  from src.data.client import WallexAPIError
+
+  client = WallexClient()
+  # Mock _request to simulate rate limit (HTTP 429)
+  client._request = AsyncMock(
+      side_effect=WallexAPIError("Rate limit exceeded", status_code=429)
+  )
+
+  with pytest.raises(WallexAPIError) as exc_info:
+    await client.get_markets()
+  assert exc_info.value.status_code == 429
+
