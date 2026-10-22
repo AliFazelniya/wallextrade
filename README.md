@@ -86,6 +86,9 @@ wallex/
 │   ├── PROJECT_BRIEF.md               # خلاصه اهداف و شرایط مسابقه هکاتون
 │   ├── REQUIREMENTS.md                # الزامات کارکردی و غیرکارکردی سیستم
 │   ├── COMPLIANCE_MATRIX.md           # ماتریس انطباق با قوانین و داوری
+│   ├── COMPETITION_RUNBOOK.md         # راهنمای جامع عملیاتی روز مسابقه (Runbook)
+│   ├── PHASE14_FINAL_DECISION.md      # بیانیه تصمیم نهایی و ممیزی سود فاز ۱۴
+│   ├── PHASE15_COMPETITION_READINESS.md # گزارش آمادگی نهایی مسابقه و ممیزی موانع
 │   ├── OPEN_QUESTIONS.md              # ابهامات و پرسش‌های باز پروژه
 │   ├── WALLEX_API.md                  # مستندات فنی اندپوینت‌ها و هدرهای والکس
 │   ├── MARKET_UNIVERSE.md             # روش‌شناسی پالایش نمادهای مجاز
@@ -110,6 +113,7 @@ wallex/
 │   ├── portfolio/                     # موتور حسابداری، موجودی نقد و تسویه
 │   └── monitoring/                    # ثبت‌کننده لاگ تصمیمات در قالب JSONL
 ├── scripts/
+│   ├── run_production_rehearsal.py    # مانور عملیاتی در سایه بر داده‌های زنده صرافی
 │   ├── run_backtest.py                # اسکریپت اجرای بک‌تست تاریخی روی والکس
 │   ├── run_shadow.py                  # اسکریپت اجرای تست در سایه با داده‌های زنده
 │   └── liquidate_to_toman.py          # اسکریپت تسویه اضطراری کل پورتفولیو به تومان

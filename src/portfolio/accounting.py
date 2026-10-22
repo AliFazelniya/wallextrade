@@ -260,3 +260,40 @@ class PortfolioEngine:
         exposure_pct=round(exposure_pct, 2),
         drawdown_pct=round(self.get_drawdown_pct(), 2),
     )
+
+  def export_state(self) -> Dict[str, Any]:
+    """Serializes the complete portfolio state for crash recovery."""
+    return {
+        "initial_capital_toman": self.initial_capital_toman,
+        "cash_toman": self.cash_toman,
+        "maker_fee_rate": self.maker_fee_rate,
+        "taker_fee_rate": self.taker_fee_rate,
+        "gross_realized_pnl_toman": self.gross_realized_pnl_toman,
+        "net_realized_pnl_toman": self.net_realized_pnl_toman,
+        "total_fees_paid_toman": self.total_fees_paid_toman,
+        "peak_equity_toman": self.peak_equity_toman,
+        "positions": {s: p.model_dump() for s, p in self.positions.items()},
+    }
+
+  @classmethod
+  def from_state(cls, state: Dict[str, Any]) -> PortfolioEngine:
+    """Restores the complete portfolio state after a process crash."""
+    engine = cls(
+        initial_capital_toman=state.get("initial_capital_toman", 5_000_000.0),
+        maker_fee_rate=state.get("maker_fee_rate", 0.0025),
+        taker_fee_rate=state.get("taker_fee_rate", 0.0030),
+    )
+    engine.cash_toman = state.get("cash_toman", engine.initial_capital_toman)
+    engine.gross_realized_pnl_toman = state.get(
+        "gross_realized_pnl_toman", 0.0
+    )
+    engine.net_realized_pnl_toman = state.get("net_realized_pnl_toman", 0.0)
+    engine.total_fees_paid_toman = state.get("total_fees_paid_toman", 0.0)
+    engine.peak_equity_toman = state.get(
+        "peak_equity_toman", engine.cash_toman
+    )
+    engine.positions = {
+        s: Position(**p_data)
+        for s, p_data in state.get("positions", {}).items()
+    }
+    return engine

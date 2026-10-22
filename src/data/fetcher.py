@@ -208,3 +208,30 @@ class MarketDataFetcher:
         "bid_vol": bid_vol,
         "ask_vol": ask_vol,
     }
+
+  def validate_data_freshness(
+      self, df: pd.DataFrame, max_staleness_minutes: float = 30.0
+  ) -> Tuple[bool, str]:
+    """Validates that OHLCV dataframe is non-empty, has required columns, and is fresh."""
+    if df is None or df.empty:
+      return False, "Market data DataFrame is empty."
+
+    required_cols = {"timestamp", "open", "high", "low", "close", "volume"}
+    if not required_cols.issubset(set(df.columns)):
+      return False, (
+          f"Missing required OHLCV columns: {required_cols - set(df.columns)}"
+      )
+
+    if df["close"].isna().any() or (df["close"] <= 0).any():
+      return False, "Market data contains NaN or non-positive close prices."
+
+    last_time = pd.to_datetime(df["timestamp"].iloc[-1], utc=True)
+    now = pd.Timestamp.now(tz="UTC")
+    age_seconds = (now - last_time).total_seconds()
+    if age_seconds > (max_staleness_minutes * 60.0):
+      return False, (
+          f"Market data is stale ({age_seconds / 60.0:.1f} minutes old >"
+          f" {max_staleness_minutes}m)."
+      )
+
+    return True, "Data is fresh and valid."

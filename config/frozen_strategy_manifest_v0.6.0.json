@@ -1,0 +1,45 @@
+{
+  "manifest_version": "1.0.0",
+  "freeze_timestamp": "2026-10-22T15:21:00Z",
+  "git_baseline_commit": "d49bd69b636e0af403f35a7ddca7b34685f52090",
+  "git_baseline_tag": "v0.6.0-phase14-audited",
+  "frozen_strategy": {
+    "name": "RegimeMomentumStrategy",
+    "symbol": "BTCTMN",
+    "timeframe": "15",
+    "warmup_candles": 60,
+    "take_profit_pct": 3.5,
+    "stop_loss_pct": 2.0,
+    "min_confidence": 0.70,
+    "fallback_action": "NO_TRADE"
+  },
+  "ai_regime_agent": {
+    "primary_model": "gemini-2.5-flash",
+    "prompt_version": "v1.0.0",
+    "temperature": 0.1,
+    "timeout_seconds": 5.0,
+    "deterministic_fallback_enabled": true,
+    "fails_closed": true
+  },
+  "risk_engine": {
+    "max_single_order_toman": 500000.0,
+    "max_portfolio_exposure_pct": 60.0,
+    "max_drawdown_pct": 5.0,
+    "max_daily_loss_toman": 200000.0,
+    "max_open_positions": 1,
+    "max_spread_pct": 0.20,
+    "allowed_symbols": ["BTCTMN"],
+    "restricted_symbols_file": "config/market_restrictions.json",
+    "allowlist_file": "config/allowed_markets.json",
+    "emergency_halt_on_drawdown_breach": true
+  },
+  "fee_and_execution": {
+    "maker_fee_rate": 0.0025,
+    "taker_fee_rate": 0.0030,
+    "slippage_pct": 0.15,
+    "initial_capital_toman": 5000000.0,
+    "mandatory_toman_liquidation": true,
+    "trading_mode": "SHADOW",
+    "live_execution_authorized": false
+  }
+}
