@@ -96,6 +96,9 @@ wallex/
 │   ├── PHASE18_EXECUTION_COST_VALIDATION.md # اعتبارسنجی مدل هزینه، ۵ مسیر اجرا و آزمون گیت اسپرد
 │   ├── PHASE19_FINAL_QUANTITATIVE_AUDIT.md # گزارش نهایی ممیزی کمی، تطبیق بازدهی و انجماد استراتژی
 │   ├── PHASE19_EXECUTION_MODEL_RECONCILIATION.md # تطبیق مدل قیمت اجرا، ریزساختار بازار و قراردادهای اسپرد
+│   ├── PHASE20_FINAL_RELEASE_READINESS.md # بسته نهایی تحویل مسابقه و بیانیه انجماد رهایش فاز ۲۰
+│   ├── PHASE20_DATASET_INTEGRITY_AUDIT.md # ممیزی یکپارچگی دیتاست تاریخی و حل مغایرت‌های شمارش کندل
+│   ├── PHASE20_PNL_RECONCILIATION.md  # ممیزی تطبیق P&L، اثبات عدم دوباره‌شماری اسلیپیج و کارمزد
 │   ├── ORGANIZER_BLOCKER_REQUEST_FA.md # نامه رسمی استعلام رفع موانع پنج‌گانه از برگزارکننده
 │   ├── OPEN_QUESTIONS.md              # ابهامات و پرسش‌های باز پروژه
 │   ├── WALLEX_API.md                  # مستندات فنی اندپوینت‌ها و هدرهای والکس

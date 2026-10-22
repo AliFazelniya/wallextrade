@@ -59,6 +59,75 @@ def test_gross_and_net_pnl_accounting():
   assert engine.total_fees_paid_toman == 2_500.0 + 3_150.0  # 5,650 TMN
 
 
+def test_accounting_slippage_and_fee_reconciliation_identity():
+  """Verifies the core accounting invariant:
+
+  1. Slippage is embedded into execution price and reflected in Gross P&L.
+  2. Net P&L = Gross P&L - Total Exchange Fees (no double deduction of slippage).
+  3. Ending Equity - Initial Capital = Net Realized P&L when all positions are closed.
+  """
+  initial_capital = 5_000_000.0
+  engine = PortfolioEngine(
+      initial_capital_toman=initial_capital,
+      maker_fee_rate=0.0025,
+      taker_fee_rate=0.0030,
+  )
+
+  target_buy_price = 20_000_000_000.0
+  slippage_pct = 0.15
+  # Aggressive entry crossing spread: price = target * 1.0015
+  exec_buy_price = target_buy_price * (1.0 + (slippage_pct / 100.0))
+  buy_qty = 0.000025  # 500,000 TMN target notional
+  buy_notional = buy_qty * exec_buy_price
+  buy_fee = buy_notional * 0.0030
+
+  fill_buy = engine.record_fill(
+      symbol="BTCTMN",
+      side="BUY",
+      quantity=buy_qty,
+      price=exec_buy_price,
+      is_maker=False,
+  )
+
+  # Slippage impact on entry: extra cost paid
+  slippage_cost_entry = buy_qty * (exec_buy_price - target_buy_price)
+
+  # Exit at target profit price (+3.5% above target_buy_price) as passive Maker
+  target_sell_price = target_buy_price * 1.035
+  exec_sell_price = target_sell_price  # passive maker, zero slippage
+  sell_notional = buy_qty * exec_sell_price
+  sell_fee = sell_notional * 0.0025
+
+  fill_sell = engine.record_fill(
+      symbol="BTCTMN",
+      side="SELL",
+      quantity=buy_qty,
+      price=exec_sell_price,
+      is_maker=True,
+  )
+
+  # Core Invariants
+  total_fees = buy_fee + sell_fee
+  assert engine.total_fees_paid_toman == pytest.approx(total_fees, abs=1e-4)
+
+  # Realized Gross Gain = sell_notional - cost_basis (where cost_basis includes entry slippage)
+  expected_cost_basis = buy_notional
+  expected_gross_gain = sell_notional - expected_cost_basis
+  assert engine.gross_realized_pnl_toman == pytest.approx(expected_gross_gain, abs=1e-4)
+
+  # Sell ticket net realized gain = gross_gain - sell_fee
+  assert engine.net_realized_pnl_toman == pytest.approx(expected_gross_gain - sell_fee, abs=1e-4)
+
+  # Full Portfolio Equity Reconciliation Identity:
+  # Net Equity Change = Gross Realized P&L - Total Fees Paid (Buy Fees + Sell Fees)
+  net_portfolio_pnl = engine.gross_realized_pnl_toman - engine.total_fees_paid_toman
+  ending_equity = engine.get_total_equity()
+  net_pnl_from_equity = ending_equity - initial_capital
+  assert net_pnl_from_equity == pytest.approx(net_portfolio_pnl, abs=1e-4)
+  assert len(engine.positions) == 0
+
+
+
 def test_balance_reconciliation():
   engine = PortfolioEngine(initial_capital_toman=5_000_000.0)
 
