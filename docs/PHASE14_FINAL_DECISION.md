@@ -1,6 +1,6 @@
 # بیانیه تصمیم نهایی و ارزیابی اعتبار استراتژی (فاز ۱۴)
 ### Phase 14 Final Decision Gate & Strategy Integrity Verdict
-**مخزن:** [`wallex`](file:///root/starcoach-hack/wallex) | **تاریخ تصمیم:** ۲۲ اکتبر ۲۰۲۶ | **تگ پایه ورودی:** `v0.5.0-phase13-validated` | **تگ نهایی ممیزی:** `v0.6.0-phase14-audited`
+**مخزن:** [`wallex`](file:///root/starcoach-hack/wallex) | **تاریخ تصمیم:** ۲۲ اکتبر ۲۰۲۶ | **تگ پایه ورودی:** `v0.5.0-phase13-validated` | **تگ نهایی ممیزی:** `v0.6.0-phase14-audited` (`5356e90`)
 
 ---
 
