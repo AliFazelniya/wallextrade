@@ -34,9 +34,42 @@ class MarketDataFetcher:
     Returns:
         (df_cleaned, audit_metrics_dict)
     """
-    raw_data = await self.client.get_udf_history(
-        symbol, resolution, from_ts, to_ts
-    )
+    MAX_CHUNK_SECONDS = 18 * 86400
+    if from_ts > 0 and to_ts > from_ts and (to_ts - from_ts) > MAX_CHUNK_SECONDS:
+      logger.info(
+          "Requested span of %.1f days exceeds single-request limit. Paginating"
+          " historical requests for %s...",
+          (to_ts - from_ts) / 86400,
+          symbol,
+      )
+      all_t, all_o, all_h, all_l, all_c, all_v = [], [], [], [], [], []
+      curr = from_ts
+      while curr < to_ts:
+        curr_end = min(curr + MAX_CHUNK_SECONDS, to_ts)
+        chunk_raw = await self.client.get_udf_history(
+            symbol, resolution, curr, curr_end
+        )
+        if chunk_raw.get("s") == "ok":
+          all_t.extend(chunk_raw.get("t", []))
+          all_o.extend(chunk_raw.get("o", []))
+          all_h.extend(chunk_raw.get("h", []))
+          all_l.extend(chunk_raw.get("l", []))
+          all_c.extend(chunk_raw.get("c", []))
+          all_v.extend(chunk_raw.get("v", []))
+        curr = curr_end
+      raw_data = {
+          "s": "ok" if all_t else "no_data",
+          "t": all_t,
+          "o": all_o,
+          "h": all_h,
+          "l": all_l,
+          "c": all_c,
+          "v": all_v,
+      }
+    else:
+      raw_data = await self.client.get_udf_history(
+          symbol, resolution, from_ts, to_ts
+      )
 
     if raw_data.get("s") != "ok":
       logger.warning(

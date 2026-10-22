@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict
+from typing import Any, Dict, Tuple
 import numpy as np
 import pandas as pd
 
@@ -38,6 +38,17 @@ def compute_atr(df: pd.DataFrame, period: int = 14) -> pd.Series:
   return atr.bfill()
 
 
+def compute_bollinger_bands(
+    series: pd.Series, period: int = 20, num_std: float = 2.0
+) -> Tuple[pd.Series, pd.Series, pd.Series]:
+  """Bollinger Bands: mid (SMA), upper, lower."""
+  mid = series.rolling(window=period).mean()
+  std = series.rolling(window=period).std()
+  upper = mid + (std * num_std)
+  lower = mid - (std * num_std)
+  return mid, upper, lower
+
+
 def extract_features(df: pd.DataFrame) -> pd.DataFrame:
   """Enriches an OHLCV DataFrame with quantitative features.
 
@@ -46,6 +57,7 @@ def extract_features(df: pd.DataFrame) -> pd.DataFrame:
   - ema_spread_pct: ((ema_20 - ema_50) / ema_50) * 100
   - rsi_14
   - atr_14, atr_pct: (atr_14 / close) * 100
+  - bb_mid, bb_upper, bb_lower, bb_pct_b
   - vol_sma_20, vol_ratio: volume / vol_sma_20
   - return_1d_pct: 24h rolling price return
   """
@@ -60,6 +72,13 @@ def extract_features(df: pd.DataFrame) -> pd.DataFrame:
   out["rsi_14"] = compute_rsi(out["close"], 14)
   out["atr_14"] = compute_atr(out, 14)
   out["atr_pct"] = (out["atr_14"] / out["close"]) * 100
+
+  bb_mid, bb_upper, bb_lower = compute_bollinger_bands(out["close"], 20, 2.0)
+  out["bb_mid"] = bb_mid
+  out["bb_upper"] = bb_upper
+  out["bb_lower"] = bb_lower
+  bb_range = (out["bb_upper"] - out["bb_lower"]).replace(0, 1e-9)
+  out["bb_pct_b"] = (out["close"] - out["bb_lower"]) / bb_range
 
   out["vol_sma_20"] = out["volume"].rolling(window=20).mean()
   out["vol_ratio"] = out["volume"] / (out["vol_sma_20"] + 1e-9)

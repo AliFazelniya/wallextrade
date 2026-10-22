@@ -5,10 +5,19 @@ import pandas as pd
 import pytest
 from src.features.indicators import (
     compute_atr,
+    compute_bollinger_bands,
     compute_ema,
     compute_rsi,
     extract_features,
 )
+
+
+def test_bollinger_bands_computation():
+  prices = pd.Series(range(100, 130), dtype=float)
+  mid, upper, lower = compute_bollinger_bands(prices, period=10, num_std=2.0)
+  assert len(mid) == len(prices)
+  assert (upper.dropna() > mid.dropna()).all()
+  assert (mid.dropna() > lower.dropna()).all()
 
 
 def test_ema_computation():

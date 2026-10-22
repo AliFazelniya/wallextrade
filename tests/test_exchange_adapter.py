@@ -189,6 +189,38 @@ async def test_every_credit_inactive_symbol_rejected_immediately_by_adapter():
 
 
 @pytest.mark.asyncio
+async def test_every_single_restricted_market_symbol_rejected_immediately():
+  import json, pathlib
+
+  repo_root = pathlib.Path(__file__).resolve().parent.parent
+  with open(repo_root / "config" / "market_restrictions.json", "r") as f:
+    data = json.load(f)
+
+  all_restricted = set()
+  for cat in ["credit_inactive_symbols", "excluded_usdt_pairs", "excluded_low_liquidity", "excluded_high_spread", "unverified_symbols"]:
+    for item in data.get(cat, []):
+      all_restricted.add(item["symbol"] if isinstance(item, dict) else item)
+
+  assert len(all_restricted) == 357, f"Expected 357 restricted symbols, got {len(all_restricted)}"
+
+  with open(repo_root / "config" / "allowed_markets.json", "r") as f:
+    allowed_data = json.load(f)
+  allowed_symbols = {m["symbol"] for m in allowed_data.get("markets", [])}
+
+  adapter = ExchangeAdapter(
+      client=WallexClient(),
+      portfolio=PortfolioEngine(),
+      trading_mode="SIMULATION",
+      allowed_symbols=allowed_symbols,
+      restricted_symbols=all_restricted,
+  )
+
+  for sym in all_restricted:
+    with pytest.raises(MarketNotEligibleError):
+      adapter.validate_market_eligibility(sym)
+
+
+@pytest.mark.asyncio
 async def test_api_rate_limit_and_timeout_error_handling():
   from unittest.mock import AsyncMock
   import httpx

@@ -259,3 +259,49 @@ def test_every_credit_inactive_symbol_from_restrictions_file_is_rejected():
     assert res.approved is False, f"Expected {sym} to be rejected by RiskEngine!"
     assert any("RESTRICTED" in r for r in res.veto_reasons)
 
+
+def test_every_single_restricted_market_symbol_rejected_by_risk_engine():
+  import json, pathlib
+
+  repo_root = pathlib.Path(__file__).resolve().parent.parent
+  with open(repo_root / "config" / "market_restrictions.json", "r") as f:
+    data = json.load(f)
+
+  all_restricted = set()
+  for cat in ["credit_inactive_symbols", "excluded_usdt_pairs", "excluded_low_liquidity", "excluded_high_spread", "unverified_symbols"]:
+    for item in data.get(cat, []):
+      all_restricted.add(item["symbol"] if isinstance(item, dict) else item)
+
+  assert len(all_restricted) == 357, f"Expected 357 restricted symbols, got {len(all_restricted)}"
+
+  with open(repo_root / "config" / "allowed_markets.json", "r") as f:
+    allowed_data = json.load(f)
+  allowed_symbols = {m["symbol"] for m in allowed_data.get("markets", [])}
+
+  engine = RiskEngine(
+      restricted_symbols=all_restricted,
+      allowed_symbols=allowed_symbols,
+  )
+
+  for sym in all_restricted:
+    signal = ProposedTradeSignal(
+        symbol=sym,
+        action=ActionType.BUY,
+        target_price_toman=1000.0,
+        order_value_toman=100_000.0,
+        regime=MarketRegime.BULLISH_TREND,
+        ai_confidence=0.90,
+        rationale="Test all-restricted check",
+        timestamp="2026-10-22T10:00:00Z",
+    )
+    res = engine.evaluate_signal(
+        signal=signal,
+        current_portfolio_value_toman=5_000_000.0,
+        current_cash_toman=5_000_000.0,
+        current_crypto_exposure_toman=0.0,
+        active_positions={},
+        current_market_spread_pct=0.05,
+    )
+    assert res.approved is False, f"Expected restricted symbol {sym} to be rejected by RiskEngine!"
+    assert any("RESTRICTED" in r for r in res.veto_reasons)
+
