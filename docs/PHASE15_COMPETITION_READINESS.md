@@ -1,6 +1,6 @@
 # گزارش نهایی آمادگی عملیاتی، انجماد استراتژی و ممیزی پیش‌نیازهای مسابقه (فاز ۱۵)
 ### Phase 15 Final Competition Rehearsal, Operational Reliability, and Strategy Freeze
-**مخزن:** [`wallex`](file:///root/starcoach-hack/wallex) | **تاریخ ممیزی:** ۲۲ اکتبر ۲۰۲۶ | **تگ پایه ورودی:** `v0.6.0-phase14-audited` (`d49bd69`) | **وضعیت تست‌ها:** ۵۸ از ۵۸ تست موفق (پوشش کد ۸۰٪)
+**مخزن:** [`wallex`](file:///root/starcoach-hack/wallex) | **تاریخ ممیزی:** ۲۲ اکتبر ۲۰۲۶ | **تگ پایه ورودی:** `v0.6.0-phase14-audited` (`d49bd69`) | **تگ نهایی فاز ۱۵:** `v0.7.0-phase15-rehearsed` (`3dd26d3`) | **وضعیت تست‌ها:** ۵۸ از ۵۸ تست موفق (پوشش کد ۸۰٪)
 
 ---
 
