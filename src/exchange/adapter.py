@@ -96,6 +96,7 @@ class ExchangeAdapter:
       approved_value_toman: float,
       order_type: str = "LIMIT",
       partial_fill_ratio: float = 1.0,  # 1.0 = 100% full fill, <1.0 = partial fill
+      is_maker: Optional[bool] = None,
   ) -> Dict[str, Any]:
     """Executes or simulates an order after performing strict pre-submission checks."""
     if action == ActionType.HOLD:
@@ -131,6 +132,22 @@ class ExchangeAdapter:
           "symbol": symbol,
           "reason": "Calculated quantity is zero or negligible.",
       }
+
+    # Maker vs Taker classification:
+    # A limit order that does not cross the spread can be Maker (0.25%).
+    # Any order that crosses the spread (slippage > 0, aggressive marketable limit, or MARKET)
+    # acts as liquidity taker (0.30% fee).
+    if is_maker is None:
+      if order_type.upper() == "MARKET":
+        resolved_is_maker = False
+      elif action == ActionType.BUY and self.slippage_pct > 0:
+        resolved_is_maker = False
+      elif action == ActionType.SELL and self.slippage_pct > 0:
+        resolved_is_maker = False
+      else:
+        resolved_is_maker = True
+    else:
+      resolved_is_maker = is_maker
 
     # Apply partial fill ratio if configured
     exec_quantity = full_quantity * max(0.1, min(1.0, partial_fill_ratio))
@@ -168,6 +185,7 @@ class ExchangeAdapter:
             side=action.value,
             quantity=exec_quantity,
             price=exec_price,
+            is_maker=resolved_is_maker,
         )
         return {
             "mode": "LIVE",
@@ -194,7 +212,7 @@ class ExchangeAdapter:
 
     # 6. SIMULATION / SHADOW EXECUTION PATH
     logger.info(
-        "[%s ORDER] %s %s %.6f @ %.1f TMN (Notional: %.0f TMN | Fill: %.0f%%)",
+        "[%s ORDER] %s %s %.6f @ %.1f TMN (Notional: %.0f TMN | Fill: %.0f%% | Maker: %s)",
         self.trading_mode,
         action.value,
         symbol,
@@ -202,6 +220,7 @@ class ExchangeAdapter:
         exec_price,
         exec_quantity * exec_price,
         partial_fill_ratio * 100.0,
+        resolved_is_maker,
     )
 
     fill_info = self.portfolio.record_fill(
@@ -209,6 +228,7 @@ class ExchangeAdapter:
         side=action.value,
         quantity=exec_quantity,
         price=exec_price,
+        is_maker=resolved_is_maker,
     )
 
     return {

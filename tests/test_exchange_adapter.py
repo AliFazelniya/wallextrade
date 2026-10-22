@@ -236,3 +236,47 @@ async def test_api_rate_limit_and_timeout_error_handling():
     await client.get_markets()
   assert exc_info.value.status_code == 429
 
+
+@pytest.mark.asyncio
+async def test_adapter_maker_taker_fee_classification():
+  """Verifies that orders crossing spread with slippage use taker fee, while passive orders use maker fee."""
+  client = WallexClient()
+  portfolio = PortfolioEngine(initial_capital_toman=5_000_000.0)
+  adapter_slippage = ExchangeAdapter(
+      client=client,
+      portfolio=portfolio,
+      trading_mode="SIMULATION",
+      allowed_symbols={"BTCTMN"},
+      slippage_pct=0.15,
+  )
+
+  # Aggressive buy crossing spread with 0.15% slippage -> Taker (0.30%)
+  res_taker = await adapter_slippage.execute_order(
+      symbol="BTCTMN",
+      action=ActionType.BUY,
+      target_price=20_000_000_000.0,
+      approved_value_toman=100_000.0,
+  )
+  assert res_taker["fill"]["is_maker"] is False
+  assert res_taker["fill"]["fee_rate"] == 0.0030
+
+  # Passive limit order with slippage_pct=0.0 and explicit is_maker=True -> Maker (0.25%)
+  adapter_passive = ExchangeAdapter(
+      client=client,
+      portfolio=portfolio,
+      trading_mode="SIMULATION",
+      allowed_symbols={"BTCTMN"},
+      slippage_pct=0.0,
+      duplicate_window_seconds=0.0,
+  )
+  res_maker = await adapter_passive.execute_order(
+      symbol="BTCTMN",
+      action=ActionType.BUY,
+      target_price=20_000_000_000.0,
+      approved_value_toman=100_000.0,
+      is_maker=True,
+  )
+  assert res_maker["fill"]["is_maker"] is True
+  assert res_maker["fill"]["fee_rate"] == 0.0025
+
+
