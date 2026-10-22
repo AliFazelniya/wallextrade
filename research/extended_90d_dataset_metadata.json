@@ -1,0 +1,32 @@
+{
+  "BTCTMN": {
+    "file": "BTCTMN_15m_90d.csv",
+    "sha256": "54292673b433a9a95e19ebab0dc446fdfc1458c9b8e4ea5672a6b5ad51775a9e",
+    "candles_15m": 8636,
+    "raw_records": 129503,
+    "first_timestamp": "2026-07-24 11:15:00+00:00",
+    "last_timestamp": "2026-10-22 11:15:00+00:00",
+    "duplicates": 0,
+    "missing": 96
+  },
+  "ETHTMN": {
+    "file": "ETHTMN_15m_90d.csv",
+    "sha256": "106970901976cf4015a1de237486ea79f3daa93d8b321b697d6f74d8b41df0d9",
+    "candles_15m": 8634,
+    "raw_records": 129475,
+    "first_timestamp": "2026-07-24 11:15:00+00:00",
+    "last_timestamp": "2026-10-22 11:15:00+00:00",
+    "duplicates": 0,
+    "missing": 125
+  },
+  "SOLTMN": {
+    "file": "SOLTMN_15m_90d.csv",
+    "sha256": "27a82f586859eb92a608abf1db9c8cdceef2fe4f29e1570e8d77de5618702f0a",
+    "candles_15m": 8635,
+    "raw_records": 129477,
+    "first_timestamp": "2026-07-24 11:15:00+00:00",
+    "last_timestamp": "2026-10-22 11:15:00+00:00",
+    "duplicates": 0,
+    "missing": 123
+  }
+}

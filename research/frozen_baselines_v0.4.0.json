@@ -1,0 +1,186 @@
+{
+  "commit_hash": "4fdb6901f1ebc4c3331042a1df33d4c207b825a1",
+  "tag": "v0.4.0-strategy-audited",
+  "frozen_at": "2026-10-22T11:16:15Z",
+  "dataset_hashes": {
+    "BTCTMN_15m_36d.csv": {
+      "sha256": "766f71ab61f575b4b7e99d678434eee9b61c47574f6f10dcbdaaef09782170d2",
+      "size_bytes": 326797
+    },
+    "ETHTMN_15m_36d.csv": {
+      "sha256": "37935a80cb85fed9b17809fa0987e5481c7771dd7e886dcaac758ab1083a310a",
+      "size_bytes": 291785
+    },
+    "SOLTMN_15m_36d.csv": {
+      "sha256": "4e189f3c6814025701b316a01920bda66e79138d579f5963be790440729ef863",
+      "size_bytes": 276312
+    }
+  },
+  "fee_model": {
+    "maker_rate": 0.0025,
+    "taker_rate": 0.003,
+    "slippage_pct": 0.15
+  },
+  "btc_tmn_isolated": {
+    "ai_assisted": {
+      "net_return_pct": 1.19,
+      "net_pnl": 59609.0,
+      "max_dd_pct": 0.5,
+      "closed_trades": 7,
+      "win_rate": 71.43,
+      "fees": 19942.0,
+      "turnover": 1.42
+    },
+    "deterministic": {
+      "net_return_pct": 0.67,
+      "net_pnl": 33492.0,
+      "max_dd_pct": 1.79,
+      "closed_trades": 13,
+      "win_rate": 53.85,
+      "fees": 37398.0,
+      "turnover": 2.61
+    },
+    "buy_and_hold": {
+      "net_return_pct": 27.33,
+      "max_dd_pct": 10.38
+    },
+    "cash_toman": {
+      "net_return_pct": 0.0,
+      "max_dd_pct": 0.0
+    }
+  },
+  "shared_portfolio_5M": {
+    "regime_momentum_ai": {
+      "use_ai": true,
+      "initial_capital_toman": 5000000.0,
+      "final_equity_toman": 4958659.0,
+      "gross_pnl_toman": 79979.0,
+      "total_fees_paid_toman": 121320.0,
+      "maker_fees_toman": 24598.0,
+      "taker_fees_toman": 96722.0,
+      "net_pnl_toman": -41341.0,
+      "net_return_pct": -0.83,
+      "max_drawdown_pct": 3.49,
+      "total_trades": 84,
+      "closed_trades": 42,
+      "winning_trades": 19,
+      "losing_trades": 23,
+      "win_rate_pct": 45.24,
+      "turnover": 8.42,
+      "signals_generated": 218,
+      "risk_vetoes_count": 176,
+      "unfilled_orders_count": 0,
+      "total_traded_notional_toman": 42079979.0,
+      "final_cash_toman": 4958659.0,
+      "final_crypto_holdings": {},
+      "all_holdings_liquidated_to_toman": true,
+      "counterfactual_vetoes_count": 643
+    },
+    "regime_momentum_no_ai": {
+      "use_ai": false,
+      "initial_capital_toman": 5000000.0,
+      "final_equity_toman": 4957994.0,
+      "gross_pnl_toman": 99328.0,
+      "total_fees_paid_toman": 141334.0,
+      "maker_fees_toman": 29819.0,
+      "taker_fees_toman": 111516.0,
+      "net_pnl_toman": -42006.0,
+      "net_return_pct": -0.84,
+      "max_drawdown_pct": 5.7,
+      "total_trades": 98,
+      "closed_trades": 49,
+      "winning_trades": 23,
+      "losing_trades": 26,
+      "win_rate_pct": 46.94,
+      "turnover": 9.82,
+      "signals_generated": 861,
+      "risk_vetoes_count": 812,
+      "unfilled_orders_count": 0,
+      "total_traded_notional_toman": 49099328.0,
+      "final_cash_toman": 4957994.0,
+      "final_crypto_holdings": {},
+      "all_holdings_liquidated_to_toman": true,
+      "counterfactual_vetoes_count": 0
+    },
+    "capital_preservation_ai": {
+      "use_ai": true,
+      "initial_capital_toman": 5000000.0,
+      "final_equity_toman": 4989298.0,
+      "gross_pnl_toman": 22450.0,
+      "total_fees_paid_toman": 33152.0,
+      "maker_fees_toman": 7079.0,
+      "taker_fees_toman": 26073.0,
+      "net_pnl_toman": -10702.0,
+      "net_return_pct": -0.21,
+      "max_drawdown_pct": 1.0,
+      "total_trades": 46,
+      "closed_trades": 23,
+      "winning_trades": 11,
+      "losing_trades": 12,
+      "win_rate_pct": 47.83,
+      "turnover": 2.3,
+      "signals_generated": 54,
+      "risk_vetoes_count": 31,
+      "unfilled_orders_count": 0,
+      "total_traded_notional_toman": 11522450.0,
+      "final_cash_toman": 4989298.0,
+      "final_crypto_holdings": {},
+      "all_holdings_liquidated_to_toman": true,
+      "counterfactual_vetoes_count": 0
+    },
+    "cash_toman": {
+      "net_return_pct": 0.0,
+      "max_dd_pct": 0.0
+    }
+  },
+  "generalization_in_sample_vs_out_of_sample": {
+    "RegimeMomentum": {
+      "in_sample": {
+        "net_return_pct": 0.31,
+        "max_dd_pct": 0.13,
+        "trades": 1
+      },
+      "out_of_sample": {
+        "net_return_pct": -0.55,
+        "max_dd_pct": 0.71,
+        "trades": 2
+      }
+    },
+    "MeanReversion": {
+      "in_sample": {
+        "net_return_pct": 0.31,
+        "max_dd_pct": 0.2,
+        "trades": 3
+      },
+      "out_of_sample": {
+        "net_return_pct": -0.17,
+        "max_dd_pct": 0.17,
+        "trades": 1
+      }
+    },
+    "SelectiveMomentum": {
+      "in_sample": {
+        "net_return_pct": 0.0,
+        "max_dd_pct": 0.0,
+        "trades": 0
+      },
+      "out_of_sample": {
+        "net_return_pct": 0.0,
+        "max_dd_pct": 0.0,
+        "trades": 0
+      }
+    },
+    "CapitalPreservation": {
+      "in_sample": {
+        "net_return_pct": 0.31,
+        "max_dd_pct": 0.48,
+        "trades": 19
+      },
+      "out_of_sample": {
+        "net_return_pct": -0.12,
+        "max_dd_pct": 0.12,
+        "trades": 1
+      }
+    }
+  }
+}

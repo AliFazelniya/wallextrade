@@ -1,0 +1,14 @@
+{
+  "BTCTMN_15m_36d.csv": {
+    "sha256": "766f71ab61f575b4b7e99d678434eee9b61c47574f6f10dcbdaaef09782170d2",
+    "size_bytes": 326797
+  },
+  "ETHTMN_15m_36d.csv": {
+    "sha256": "37935a80cb85fed9b17809fa0987e5481c7771dd7e886dcaac758ab1083a310a",
+    "size_bytes": 291785
+  },
+  "SOLTMN_15m_36d.csv": {
+    "sha256": "4e189f3c6814025701b316a01920bda66e79138d579f5963be790440729ef863",
+    "size_bytes": 276312
+  }
+}
