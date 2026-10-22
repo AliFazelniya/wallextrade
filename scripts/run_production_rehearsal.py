@@ -41,7 +41,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(me
 logger = logging.getLogger("production_rehearsal")
 
 
-async def run_rehearsal(num_cycles: int = 5, cycle_delay_seconds: float = 2.0) -> Dict[str, Any]:
+async def run_rehearsal(num_cycles: int = 10, cycle_delay_seconds: float = 1.0) -> Dict[str, Any]:
     logger.info("Initializing Phase 15 Production Shadow Rehearsal...")
 
     manifest_path = repo_root / "config" / "frozen_strategy_manifest_v0.6.0.json"
@@ -76,15 +76,13 @@ async def run_rehearsal(num_cycles: int = 5, cycle_delay_seconds: float = 2.0) -
         slippage_pct=0.15,
     )
 
-    log_path = repo_root / "logs" / "production_rehearsal_phase15.jsonl"
+    log_path = repo_root / "logs" / "production_rehearsal_phase16.jsonl"
     decision_logger = DecisionLogger(log_path=str(log_path))
 
     cycle_records: List[Dict[str, Any]] = []
     latencies_ms: List[float] = []
     start_wall_time = time.time()
-
-    now_ts = int(datetime.datetime.now(datetime.timezone.utc).timestamp())
-    from_ts = now_ts - (5 * 86400)  # 5 days of 15m candles (~480 bars)
+    cached_candles: Optional[pd.DataFrame] = None
 
     for cycle in range(1, num_cycles + 1):
         t_start = time.perf_counter()
@@ -97,14 +95,14 @@ async def run_rehearsal(num_cycles: int = 5, cycle_delay_seconds: float = 2.0) -
         best_ask = spread_info["ask"]
         spread_pct = spread_info["spread_pct"]
 
-        # 2. Ingest live OHLCV candles
-        df_candles, audit = await fetcher.fetch_ohlcv_dataframe(
+        # 2. Ingest live OHLCV candles (Cycle 1: warm-up; Cycles 2+: incremental cached update)
+        df_candles, audit = await fetcher.fetch_incremental_ohlcv(
             symbol=target_symbol,
+            cached_df=cached_candles,
             resolution="15",
-            from_ts=from_ts,
-            to_ts=now_ts,
-            auto_resample_to_true_timeframe=True,
+            warmup_days=5,
         )
+        cached_candles = df_candles
 
         is_fresh, freshness_msg = fetcher.validate_data_freshness(df_candles, max_staleness_minutes=60.0)
 
@@ -238,7 +236,7 @@ async def run_rehearsal(num_cycles: int = 5, cycle_delay_seconds: float = 2.0) -
         "cycles": cycle_records,
     }
 
-    results_path = repo_root / "research" / "phase15_rehearsal_results.json"
+    results_path = repo_root / "research" / "phase16_rehearsal_results.json"
     with open(results_path, "w", encoding="utf-8") as f:
         json.dump(rehearsal_summary, f, indent=2)
 

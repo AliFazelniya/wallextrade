@@ -3,6 +3,7 @@
 import datetime
 import numpy as np
 import pandas as pd
+from unittest.mock import AsyncMock
 import pytest
 from src.data.fetcher import MarketDataFetcher
 
@@ -96,3 +97,38 @@ async def test_paginated_historical_fetching():
   assert client.get_udf_history.call_count == 2
   assert len(df) == 4
   assert audit["raw_record_count"] == 4
+
+
+@pytest.mark.asyncio
+async def test_fetch_incremental_ohlcv_updates_cleanly():
+  client = AsyncMock()
+  fetcher = MarketDataFetcher(client=client)
+
+  # Create base cached dataframe with 70 bars
+  times = pd.date_range("2026-10-22 00:00:00", periods=70, freq="15min", tz="UTC")
+  cached_df = pd.DataFrame({
+      "timestamp": times,
+      "open": [100.0] * 70,
+      "high": [105.0] * 70,
+      "low": [95.0] * 70,
+      "close": [102.0] * 70,
+      "volume": [10.0] * 70,
+  })
+
+  # Mock incremental response returning 2 newest candles (one overlapping, one new)
+  inc_times = [int(times[-1].timestamp()), int((times[-1] + pd.Timedelta(minutes=15)).timestamp())]
+  client.get_udf_history = AsyncMock(return_value={
+      "s": "ok",
+      "t": inc_times,
+      "o": [102.0, 103.0],
+      "h": [106.0, 107.0],
+      "l": [101.0, 102.0],
+      "c": [104.0, 105.0],
+      "v": [15.0, 20.0],
+  })
+
+  updated_df, audit = await fetcher.fetch_incremental_ohlcv("BTCTMN", cached_df=cached_df)
+
+  assert audit["incremental"] is True
+  assert len(updated_df) == 71  # 70 + 1 deduplicated new candle
+  assert updated_df["close"].iloc[-1] == 105.0

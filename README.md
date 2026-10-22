@@ -89,6 +89,7 @@ wallex/
 │   ├── COMPETITION_RUNBOOK.md         # راهنمای جامع عملیاتی روز مسابقه (Runbook)
 │   ├── PHASE14_FINAL_DECISION.md      # بیانیه تصمیم نهایی و ممیزی سود فاز ۱۴
 │   ├── PHASE15_COMPETITION_READINESS.md # گزارش آمادگی نهایی مسابقه و ممیزی موانع
+│   ├── PHASE16_FINAL_GO_NO_GO.md      # بیانیه نهایی گیت تصمیم‌گیری و رفع موانع مسابقه فاز ۱۶
 │   ├── OPEN_QUESTIONS.md              # ابهامات و پرسش‌های باز پروژه
 │   ├── WALLEX_API.md                  # مستندات فنی اندپوینت‌ها و هدرهای والکس
 │   ├── MARKET_UNIVERSE.md             # روش‌شناسی پالایش نمادهای مجاز

@@ -235,3 +235,57 @@ class MarketDataFetcher:
       )
 
     return True, "Data is fresh and valid."
+
+  async def fetch_incremental_ohlcv(
+      self,
+      symbol: str,
+      cached_df: Optional[pd.DataFrame] = None,
+      resolution: str = "15",
+      warmup_days: int = 5,
+      max_cached_bars: int = 600,
+  ) -> Tuple[pd.DataFrame, Dict[str, Any]]:
+    """Incrementally fetches and updates OHLCV data using trailing cache.
+
+    If cached_df is None or has fewer than 60 bars, fetches full warmup_days history.
+    Otherwise, fetches only the newest candles since the latest cached timestamp
+    (with a 30-minute safety overlap) and deduplicates.
+    """
+    now_ts = int(pd.Timestamp.now(tz="UTC").timestamp())
+
+    if cached_df is None or cached_df.empty or len(cached_df) < 60:
+      from_ts = now_ts - (warmup_days * 86400)
+      df_full, audit = await self.fetch_ohlcv_dataframe(
+          symbol=symbol,
+          resolution=resolution,
+          from_ts=from_ts,
+          to_ts=now_ts,
+          auto_resample_to_true_timeframe=True,
+      )
+      return df_full, audit
+
+    # Incremental update: fetch from last candle timestamp minus 30 mins
+    last_dt = pd.to_datetime(cached_df["timestamp"].iloc[-1], utc=True)
+    fetch_from_ts = int(last_dt.timestamp()) - 1800  # 30-min overlap
+
+    df_inc, inc_audit = await self.fetch_ohlcv_dataframe(
+        symbol=symbol,
+        resolution=resolution,
+        from_ts=fetch_from_ts,
+        to_ts=now_ts,
+        auto_resample_to_true_timeframe=True,
+    )
+
+    if df_inc.empty:
+      return cached_df, {"incremental": True, "new_bars": 0}
+
+    merged = self.clean_and_deduplicate_dataframe(
+        pd.concat([cached_df, df_inc], ignore_index=True)
+    )
+    if len(merged) > max_cached_bars:
+      merged = merged.iloc[-max_cached_bars:].reset_index(drop=True)
+
+    return merged, {
+        "incremental": True,
+        "new_bars": len(df_inc),
+        "total_bars": len(merged),
+    }
