@@ -92,6 +92,8 @@ wallex/
 │   ├── PHASE16_FINAL_GO_NO_GO.md      # بیانیه نهایی گیت تصمیم‌گیری و رفع موانع مسابقه فاز ۱۶
 │   ├── PHASE17_FINAL_READINESS.md     # بسته نهایی تحویل مسابقه و بیانیه آمادگی فاز ۱۷
 │   ├── PHASE17_EXECUTION_COST_AUDIT.md # ممیزی کارمزد مِیکر/تیکر، اسلیپیج و گیت اسپرد
+│   ├── PHASE18_FINAL_AUTHORIZATION_GATE.md # گزارش نهایی گیت مجوز انسانی و رده‌بندی فاز ۱۸
+│   ├── PHASE18_EXECUTION_COST_VALIDATION.md # اعتبارسنجی مدل هزینه، ۵ مسیر اجرا و آزمون گیت اسپرد
 │   ├── ORGANIZER_BLOCKER_REQUEST_FA.md # نامه رسمی استعلام رفع موانع پنج‌گانه از برگزارکننده
 │   ├── OPEN_QUESTIONS.md              # ابهامات و پرسش‌های باز پروژه
 │   ├── WALLEX_API.md                  # مستندات فنی اندپوینت‌ها و هدرهای والکس

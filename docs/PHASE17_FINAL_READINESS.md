@@ -16,7 +16,7 @@
 ```mermaid
 flowchart TD
     A["ارزیابی فنی ۱۰۰٪ موفق\n(۶۰ تست پاس، پوشش ۸۱٪، مانور سایه موفق)\nوضعیت: TECHNICAL GO ✅"] --> C{"موانع بیرونی برگزارکننده\n(B-01 تا B-05)"}
-    B["امنیت سرمایه و قفل سخت‌افزاری\nlive_execution_authorized=False 🔒"] --> C
+    B["امنیت سرمایه و گیت نرم‌افزاری سطح کد\nlive_execution_authorized=False 🔒"] --> C
     C -- "در انتظار دریافت زمان، کلید و تاییدیه" --> D["وضعیت نهایی مصوب:\nTECHNICAL GO, ORGANIZER CONFIRMATION PENDING 🟡"]
     D --> E["مرحله بعد:\nاقدام اپراتور انسانی برای استعلام\nو بازبینی نهایی پیش از لایو"]
 ```

@@ -280,3 +280,99 @@ async def test_adapter_maker_taker_fee_classification():
   assert res_maker["fill"]["fee_rate"] == 0.0025
 
 
+@pytest.mark.asyncio
+async def test_comprehensive_five_execution_paths_separately():
+  """Independently verifies all 5 execution paths: passive limit, marketable limit,
+
+  market order, stop-loss exit, and emergency liquidation to Toman.
+  """
+  client = WallexClient()
+  portfolio = PortfolioEngine(initial_capital_toman=5_000_000.0)
+
+  # Path 1: Passive Limit Order (does not cross spread, adds liquidity -> Maker 0.25%)
+  adapter_passive = ExchangeAdapter(
+      client=client,
+      portfolio=portfolio,
+      trading_mode="SIMULATION",
+      allowed_symbols={"BTCTMN"},
+      slippage_pct=0.0,
+      duplicate_window_seconds=0.0,
+  )
+  res_p1 = await adapter_passive.execute_order(
+      symbol="BTCTMN",
+      action=ActionType.BUY,
+      target_price=20_000_000_000.0,
+      approved_value_toman=100_000.0,
+      order_type="LIMIT",
+      is_maker=True,
+  )
+  assert res_p1["fill"]["is_maker"] is True
+  assert res_p1["fill"]["fee_rate"] == 0.0025
+  assert res_p1["fill"]["price"] == 20_000_000_000.0
+
+  # Path 2: Marketable Limit Order (crosses spread with 0.15% slippage -> Taker 0.30%)
+  adapter_marketable = ExchangeAdapter(
+      client=client,
+      portfolio=portfolio,
+      trading_mode="SIMULATION",
+      allowed_symbols={"BTCTMN"},
+      slippage_pct=0.15,
+      duplicate_window_seconds=0.0,
+  )
+  res_p2 = await adapter_marketable.execute_order(
+      symbol="BTCTMN",
+      action=ActionType.BUY,
+      target_price=20_000_000_000.0,
+      approved_value_toman=100_000.0,
+      order_type="LIMIT",
+  )
+  assert res_p2["fill"]["is_maker"] is False
+  assert res_p2["fill"]["fee_rate"] == 0.0030
+  assert res_p2["fill"]["price"] == 20_000_000_000.0 * 1.0015
+
+  # Path 3: Market Order (unconditionally takes liquidity -> Taker 0.30%)
+  res_p3 = await adapter_marketable.execute_order(
+      symbol="BTCTMN",
+      action=ActionType.BUY,
+      target_price=20_000_000_000.0,
+      approved_value_toman=100_000.0,
+      order_type="MARKET",
+  )
+  assert res_p3["fill"]["is_maker"] is False
+  assert res_p3["fill"]["fee_rate"] == 0.0030
+
+  # Path 4: Stop-Loss Exit (aggressive sell crossing bid with 0.15% adverse slippage -> Taker 0.30%)
+  res_p4 = await adapter_marketable.execute_order(
+      symbol="BTCTMN",
+      action=ActionType.SELL,
+      target_price=20_000_000_000.0,
+      approved_value_toman=0.0,
+      order_type="MARKET",
+  )
+  assert res_p4["fill"]["is_maker"] is False
+  assert res_p4["fill"]["fee_rate"] == 0.0030
+  assert res_p4["fill"]["price"] == 20_000_000_000.0 * (1.0 - 0.0015)
+
+  # Path 5: Emergency Liquidation to Toman (liquidates 100% holdings to TMN with 0.15% slippage -> Taker 0.30%)
+  # Add a test position to liquidate
+  portfolio.record_fill(
+      symbol="BTCTMN",
+      side="BUY",
+      quantity=0.00001,
+      price=20_000_000_000.0,
+      is_maker=False,
+  )
+  assert len(portfolio.positions) == 1
+  liquidations = portfolio.liquidate_all_to_toman(
+      current_prices={"BTCTMN": 20_000_000_000.0},
+      slippage_pct=0.15,
+  )
+  assert len(liquidations) == 1
+  assert liquidations[0]["is_maker"] is False
+  assert liquidations[0]["fee_rate"] == 0.0030
+  assert liquidations[0]["price"] == 20_000_000_000.0 * (1.0 - 0.0015)
+  assert len(portfolio.positions) == 0
+  assert portfolio.get_total_equity() == portfolio.cash_toman
+
+
+
