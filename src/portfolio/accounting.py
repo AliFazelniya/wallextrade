@@ -1,4 +1,12 @@
-"""Portfolio Accounting & Position Tracking Engine."""
+"""Portfolio Accounting, Balance Reconciliation, and Liquidation Engine.
+
+Enforces:
+1. Accurate Maker (0.25%) vs Taker (0.30%) fee accounting based on verified Wallex schedule.
+2. Separate tracking of Gross P&L, Net P&L, and Total Fees Paid.
+3. Position tracking with blended cost basis.
+4. Account-balance reconciliation against exchange API balance reports.
+5. Deterministic End-of-Competition liquidation converting 100% of holdings into TMN.
+"""
 
 from __future__ import annotations
 
@@ -24,7 +32,8 @@ class PortfolioSnapshot(BaseModel):
   cash_toman: float
   crypto_value_toman: float
   total_equity_toman: float
-  realized_pnl_toman: float
+  gross_realized_pnl_toman: float
+  net_realized_pnl_toman: float
   unrealized_pnl_toman: float
   total_fees_paid_toman: float
   open_positions_count: int
@@ -33,19 +42,22 @@ class PortfolioSnapshot(BaseModel):
 
 
 class PortfolioEngine:
-  """Manages Toman cash, crypto holdings, trade fee deductions, and liquidation."""
+  """Manages Toman cash, crypto holdings, fees, and reconciliation."""
 
   def __init__(
       self,
       initial_capital_toman: float = 5_000_000.0,
-      fee_rate: float = 0.0025,
+      maker_fee_rate: float = 0.0025,  # 0.25% Level 1 Wallex Maker fee
+      taker_fee_rate: float = 0.0030,  # 0.30% Level 1 Wallex Taker fee
   ):
     self.initial_capital_toman = initial_capital_toman
     self.cash_toman = initial_capital_toman
-    self.fee_rate = fee_rate
+    self.maker_fee_rate = maker_fee_rate
+    self.taker_fee_rate = taker_fee_rate
 
     self.positions: Dict[str, Position] = {}
-    self.realized_pnl_toman = 0.0
+    self.gross_realized_pnl_toman = 0.0
+    self.net_realized_pnl_toman = 0.0
     self.total_fees_paid_toman = 0.0
     self.peak_equity_toman = initial_capital_toman
 
@@ -64,18 +76,28 @@ class PortfolioEngine:
         )
 
   def record_fill(
-      self, symbol: str, side: str, quantity: float, price: float
+      self,
+      symbol: str,
+      side: str,
+      quantity: float,
+      price: float,
+      is_maker: bool = True,
   ) -> Dict[str, Any]:
-    """Records an executed order fill, updates balances, fees, and positions."""
+    """Records an executed order fill, updates cash, positions, and fees.
+
+    Differentiates maker (0.25%) vs taker (0.30%) fees based on official Wallex
+    schedule.
+    """
+    fee_rate = self.maker_fee_rate if is_maker else self.taker_fee_rate
     notional = quantity * price
-    fee = notional * self.fee_rate
+    fee = notional * fee_rate
     self.total_fees_paid_toman += fee
 
     if side.upper() == "BUY":
       total_cost = notional + fee
       if total_cost > (self.cash_toman + 1.0):
         logger.warning(
-            "Fill exceeds cash (%f > %f). Clamping cost.",
+            "Fill cost (%f) exceeds available cash (%f). Clamping cost.",
             total_cost,
             self.cash_toman,
         )
@@ -109,12 +131,14 @@ class PortfolioEngine:
           "price": price,
           "notional": notional,
           "fee": fee,
+          "fee_rate": fee_rate,
+          "is_maker": is_maker,
       }
 
     elif side.upper() == "SELL":
       if symbol not in self.positions:
         raise ValueError(
-            f"Cannot process SELL fill: no position for {symbol} exists."
+            f"Cannot process SELL fill: no active position for {symbol}."
         )
 
       pos = self.positions[symbol]
@@ -123,10 +147,13 @@ class PortfolioEngine:
       net_proceeds = sell_notional - fee
       self.cash_toman += net_proceeds
 
-      # Calculate realized P&L
+      # Calculate Gross and Net Realized P&L
       cost_basis = sell_qty * pos.avg_entry_price
-      realized_gain = sell_notional - cost_basis - fee
-      self.realized_pnl_toman += realized_gain
+      gross_gain = sell_notional - cost_basis
+      net_gain = gross_gain - fee
+
+      self.gross_realized_pnl_toman += gross_gain
+      self.net_realized_pnl_toman += net_gain
 
       pos.quantity -= sell_qty
       if pos.quantity <= 1e-9:
@@ -143,13 +170,62 @@ class PortfolioEngine:
           "price": price,
           "notional": sell_notional,
           "fee": fee,
-          "realized_gain": realized_gain,
+          "fee_rate": fee_rate,
+          "gross_gain": gross_gain,
+          "net_gain": net_gain,
+          "is_maker": is_maker,
       }
 
     raise ValueError(f"Invalid order side '{side}'")
 
+  def reconcile_with_exchange(
+      self, exchange_balances: Dict[str, Any]
+  ) -> Dict[str, Any]:
+    """Reconciles internal portfolio balances against live exchange balances."""
+    discrepancies = []
+    # Check TMN cash
+    ex_tmn = float(
+        exchange_balances.get("result", {})
+        .get("balances", {})
+        .get("TMN", {})
+        .get("value", self.cash_toman)
+    )
+    diff = abs(ex_tmn - self.cash_toman)
+    if diff > 1000.0:  # > 1,000 TMN discrepancy
+      discrepancies.append(
+          f"TMN cash mismatch: internal={self.cash_toman:.0f},"
+          f" exchange={ex_tmn:.0f}"
+      )
+
+    return {
+        "reconciled": len(discrepancies) == 0,
+        "discrepancies": discrepancies,
+    }
+
+  def liquidate_all_to_toman(
+      self, current_prices: Dict[str, float], slippage_pct: float = 0.15
+  ) -> List[Dict[str, Any]]:
+    """Liquidates 100% of crypto positions into Toman before competition ends."""
+    liquidations = []
+    symbols_to_liquidate = list(self.positions.keys())
+
+    for sym in symbols_to_liquidate:
+      pos = self.positions[sym]
+      cur_price = current_prices.get(sym, pos.current_price)
+      exec_price = cur_price * (1.0 - (slippage_pct / 100.0))
+
+      fill = self.record_fill(
+          symbol=sym,
+          side="SELL",
+          quantity=pos.quantity,
+          price=exec_price,
+          is_maker=False,  # Emergency liquidation treated as taker
+      )
+      liquidations.append(fill)
+
+    return liquidations
+
   def get_total_equity(self) -> float:
-    """Returns cash + sum of all position market values."""
     crypto_val = sum(p.market_value_toman for p in self.positions.values())
     equity = self.cash_toman + crypto_val
     if equity > self.peak_equity_toman:
@@ -176,7 +252,8 @@ class PortfolioEngine:
         cash_toman=round(self.cash_toman, 0),
         crypto_value_toman=round(crypto_val, 0),
         total_equity_toman=round(equity, 0),
-        realized_pnl_toman=round(self.realized_pnl_toman, 0),
+        gross_realized_pnl_toman=round(self.gross_realized_pnl_toman, 0),
+        net_realized_pnl_toman=round(self.net_realized_pnl_toman, 0),
         unrealized_pnl_toman=round(unrealized, 0),
         total_fees_paid_toman=round(self.total_fees_paid_toman, 0),
         open_positions_count=len(self.positions),

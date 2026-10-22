@@ -62,6 +62,7 @@ async def run_shadow_cycle(iterations: int = 3, interval_seconds: int = 5):
       portfolio=portfolio,
       trading_mode="SHADOW",
       live_execution_authorized=False,
+      allowed_symbols=set(allowed_symbols),
   )
   decision_logger = DecisionLogger(log_path="logs/trading_decisions.jsonl")
 
@@ -85,7 +86,7 @@ async def run_shadow_cycle(iterations: int = 3, interval_seconds: int = 5):
           continue
 
         # 2. Fetch recent candles and extract features
-        df = await fetcher.fetch_ohlcv_dataframe(sym, "15", from_ts, now_ts)
+        df, _ = await fetcher.fetch_ohlcv_dataframe(sym, "15", from_ts, now_ts)
         if df.empty or len(df) < 50:
           continue
 

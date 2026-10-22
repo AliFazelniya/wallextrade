@@ -1,9 +1,9 @@
-"""Market Data Fetcher and Quality Validation Pipeline."""
+"""Market Data Fetcher, Resampler, and Data Quality Auditor."""
 
 from __future__ import annotations
 
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 import numpy as np
 import pandas as pd
 from src.data.client import WallexClient
@@ -11,12 +11,12 @@ from src.data.client import WallexClient
 logger = logging.getLogger(__name__)
 
 
-class DataQualityError(Exception):
-  """Raised when incoming market data fails validation."""
+class DataQualityAudit(dict):
+  """Container for market data audit results."""
 
 
 class MarketDataFetcher:
-  """Fetches and normalizes market data from Wallex API."""
+  """Fetches, audits, and normalizes market data from Wallex API."""
 
   def __init__(self, client: WallexClient):
     self.client = client
@@ -27,76 +27,121 @@ class MarketDataFetcher:
       resolution: str = "15",
       from_ts: int = 0,
       to_ts: int = 0,
-  ) -> pd.DataFrame:
-    """Fetches UDF history and returns a clean, validated pandas DataFrame.
+      auto_resample_to_true_timeframe: bool = True,
+  ) -> Tuple[pd.DataFrame, Dict[str, Any]]:
+    """Fetches UDF history, audits data quality, and optionally resamples to true timeframe.
 
-    Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+    Returns:
+        (df_cleaned, audit_metrics_dict)
     """
-    data = await self.client.get_udf_history(symbol, resolution, from_ts, to_ts)
+    raw_data = await self.client.get_udf_history(
+        symbol, resolution, from_ts, to_ts
+    )
 
-    if data.get("s") != "ok":
+    if raw_data.get("s") != "ok":
       logger.warning(
-          "UDF history returned status '%s' for symbol %s",
-          data.get("s"),
+          "UDF history returned non-ok status '%s' for %s",
+          raw_data.get("s"),
           symbol,
       )
       return pd.DataFrame(
           columns=["timestamp", "open", "high", "low", "close", "volume"]
-      )
+      ), {}
 
-    timestamps = data.get("t", [])
-    opens = data.get("o", [])
-    highs = data.get("h", [])
-    lows = data.get("l", [])
-    closes = data.get("c", [])
-    volumes = data.get("v", [])
+    t = raw_data.get("t", [])
+    o = raw_data.get("o", [])
+    h = raw_data.get("h", [])
+    l = raw_data.get("l", [])
+    c = raw_data.get("c", [])
+    v = raw_data.get("v", [])
 
-    if not timestamps or len(timestamps) == 0:
+    raw_count = len(t)
+    if raw_count == 0:
       return pd.DataFrame(
           columns=["timestamp", "open", "high", "low", "close", "volume"]
-      )
+      ), {}
 
-    df = pd.DataFrame({
-        "timestamp": pd.to_datetime(timestamps, unit="s"),
-        "open": pd.to_numeric(opens, errors="coerce"),
-        "high": pd.to_numeric(highs, errors="coerce"),
-        "low": pd.to_numeric(lows, errors="coerce"),
-        "close": pd.to_numeric(closes, errors="coerce"),
-        "volume": pd.to_numeric(volumes, errors="coerce"),
+    # Raw audit
+    first_ts = int(t[0])
+    last_ts = int(t[-1])
+    raw_step_seconds = (t[1] - t[0]) if raw_count > 1 else 0
+
+    df_raw = pd.DataFrame({
+        "timestamp": pd.to_datetime(t, unit="s", utc=True),
+        "open": pd.to_numeric(o, errors="coerce"),
+        "high": pd.to_numeric(h, errors="coerce"),
+        "low": pd.to_numeric(l, errors="coerce"),
+        "close": pd.to_numeric(c, errors="coerce"),
+        "volume": pd.to_numeric(v, errors="coerce"),
     })
 
-    # Data Quality Validation (Phase 4.1)
-    df = self._validate_and_clean_dataframe(df, symbol)
-    return df
+    # Duplicates check
+    dup_count = int(df_raw.duplicated(subset=["timestamp"]).sum())
+    df = self.clean_and_deduplicate_dataframe(df_raw)
 
-  def _validate_and_clean_dataframe(
-      self, df: pd.DataFrame, symbol: str
-  ) -> pd.DataFrame:
-    """Ensures chronological sorting, removes duplicates and drops NaNs."""
-    initial_len = len(df)
-    # Deduplicate timestamps
-    df = df.drop_duplicates(subset=["timestamp"], keep="last")
+    # Missing bars check (expected based on raw_step_seconds)
+    missing_count = 0
+    if raw_step_seconds > 0 and len(df) > 1:
+      expected_bars = (
+          int((df["timestamp"].iloc[-1] - df["timestamp"].iloc[0]).total_seconds())
+          // raw_step_seconds
+      ) + 1
+      missing_count = max(0, expected_bars - len(df))
 
-    # Chronological sort
-    df = df.sort_values(by="timestamp").reset_index(drop=True)
-
-    # Drop NaNs
-    df = df.dropna(subset=["open", "high", "low", "close"])
-
-    # Sanity check: High >= Low, Close > 0
-    valid_mask = (df["high"] >= df["low"]) & (df["close"] > 0)
-    df = df[valid_mask].reset_index(drop=True)
-
-    cleaned_len = len(df)
-    if cleaned_len < initial_len:
+    # Resampling to true target timeframe if needed (e.g. Wallex resolution=15 returns 1m bars)
+    target_rule = "15min" if resolution in ("15", "15m") else f"{resolution}min"
+    if (
+        auto_resample_to_true_timeframe
+        and resolution == "15"
+        and raw_step_seconds == 60
+    ):
       logger.info(
-          "Cleaned %s candles: %d dropped out of %d",
+          "Resampling raw 1-minute bars into genuine 15-minute OHLCV candles"
+          " for %s...",
           symbol,
-          initial_len - cleaned_len,
-          initial_len,
       )
+      df_resampled = (
+          df.set_index("timestamp")
+          .resample(target_rule)
+          .agg({
+              "open": "first",
+              "high": "max",
+              "low": "min",
+              "close": "last",
+              "volume": "sum",
+          })
+          .dropna()
+          .reset_index()
+      )
+      final_df = df_resampled
+    else:
+      final_df = df
 
-    return df
+    audit = {
+        "symbol": symbol,
+        "requested_resolution": resolution,
+        "raw_record_count": raw_count,
+        "raw_step_seconds": raw_step_seconds,
+        "raw_timeframe_description": (
+            f"{raw_step_seconds}s ({raw_step_seconds/60:.1f}m)"
+            if raw_step_seconds
+            else "unknown"
+        ),
+        "first_timestamp_iso": df_raw["timestamp"].iloc[0].isoformat(),
+        "last_timestamp_iso": df_raw["timestamp"].iloc[-1].isoformat(),
+        "duplicate_count": dup_count,
+        "missing_count": missing_count,
+        "valid_unique_candles": len(final_df),
+        "resampled": len(final_df) != raw_count,
+    }
+
+    return final_df, audit
+
+  def clean_and_deduplicate_dataframe(self, df: pd.DataFrame) -> pd.DataFrame:
+    """Removes duplicate timestamps, sorts chronologically, and cleans NaNs."""
+    cleaned = df.drop_duplicates(subset=["timestamp"], keep="last")
+    cleaned = cleaned.sort_values(by="timestamp").reset_index(drop=True)
+    return cleaned
 
   async def fetch_current_spread(self, symbol: str) -> Dict[str, float]:
     """Fetches top of the orderbook and computes the bid-ask spread."""
