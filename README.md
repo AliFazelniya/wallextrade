@@ -4,13 +4,6 @@
 
 <div align="center">
 
-[![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.12-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
-[![Pytest](<https://img.shields.io/badge/Tests-93%20Passed%20(100%25)-2ea44f?style=for-the-badge&logo=pytest&logoColor=white>)](tests/)
-[![Exchange](https://img.shields.io/badge/Exchange-Wallex%20API%20v1-0052FF?style=for-the-badge)](https://wallex.ir)
-[![Protocol](<https://img.shields.io/badge/Protocol-Model%20Context%20Protocol%20(MCP)-FF6B6B?style=for-the-badge>)](src/mcp/)
-[![Architecture](https://img.shields.io/badge/Architecture-5--Agent%20Consensus%20Swarm-8A2BE2?style=for-the-badge)](src/agents/council.py)
-[![Risk Shield](https://img.shields.io/badge/Risk%20Shield-100%25%20Deterministic-D32F2F?style=for-the-badge)](src/risk/engine.py)
-
 **An institutional-grade, multi-agent quantitative trading engine featuring native Wallex connectivity, a 5-agent consensus swarm, adaptive cross-regime strategies, real-time triangular arbitrage, a local FinTech web dashboard, and an impenetrable deterministic risk management shield.**
 
 [Quickstart](#-quickstart-in-10-seconds) •
@@ -20,8 +13,6 @@
 [4. Capital & Risk Management](#-4-capital-management--risk-control-methodology) •
 [5. Reproducibility & Evaluation](#-5-reproducibility-backtesting--performance-evaluation) •
 [Unified CLI Reference](#-unified-cli-reference) •
-[Hackathon Compliance Matrix](#-hackathon-compliance-matrix) •
-[Presentation Assets](#-presentation--judging-assets)
 
 </div>
 
