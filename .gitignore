@@ -1,0 +1,27 @@
+# Python virtual environment
+.venv/
+venv/
+env/
+
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Environment and secrets
+.env
+*.key
+*.token
+
+# Testing & cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs (keep directory, ignore bulky logs if needed, but allow initial structure)
+logs/*.log

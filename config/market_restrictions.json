@@ -1,0 +1,1825 @@
+{
+  "updated_at": "2026-10-22T10:37:01.299735+00:00",
+  "summary": {
+    "credit_inactive_count": 21,
+    "excluded_usdt_pairs_count": 186,
+    "excluded_low_liquidity_count": 139,
+    "excluded_high_spread_count": 11,
+    "total_restricted_symbols": 357
+  },
+  "credit_inactive_symbols": [
+    {
+      "symbol": "TSLAXTMN",
+      "baseAsset": "TSLAX",
+      "faName": "تسلا استاک - تومان",
+      "reason": "INACTIVE_OR_ZERO_LIQUIDITY_IN_CREDIT_ACCOUNT"
+    },
+    {
+      "symbol": "KITETMN",
+      "baseAsset": "KITE",
+      "faName": "کایت - تومان",
+      "reason": "INACTIVE_OR_ZERO_LIQUIDITY_IN_CREDIT_ACCOUNT"
+    },
+    {
+      "symbol": "AMZNXTMN",
+      "baseAsset": "AMZNX",
+      "faName": "آمازون استاک - تومان",
+      "reason": "INACTIVE_OR_ZERO_LIQUIDITY_IN_CREDIT_ACCOUNT"
+    },
+    {
+      "symbol": "ZRXTMN",
+      "baseAsset": "ZRX",
+      "faName": "زیرو ایکس پروتکل - تومان",
+      "reason": "INACTIVE_OR_ZERO_LIQUIDITY_IN_CREDIT_ACCOUNT"
+    },
+    {
+      "symbol": "AAPLXTMN",
+      "baseAsset": "AAPLX",
+      "faName": "اپل استاک - تومان",
+      "reason": "INACTIVE_OR_ZERO_LIQUIDITY_IN_CREDIT_ACCOUNT"
+    },
+    {
+      "symbol": "JASMYTMN",
+      "baseAsset": "JASMY",
+      "faName": "جسمی کوین - تومان",
+      "reason": "INACTIVE_OR_ZERO_LIQUIDITY_IN_CREDIT_ACCOUNT"
+    },
+    {
+      "symbol": "NVDAXTMN",
+      "baseAsset": "NVDAX",
+      "faName": "انویدیا استاک - تومان",
+      "reason": "INACTIVE_OR_ZERO_LIQUIDITY_IN_CREDIT_ACCOUNT"
+    },
+    {
+      "symbol": "AEVOTMN",
+      "baseAsset": "AEVO",
+      "faName": "آئوو - تومان",
+      "reason": "INACTIVE_OR_ZERO_LIQUIDITY_IN_CREDIT_ACCOUNT"
+    },
+    {
+      "symbol": "METAXTMN",
+      "baseAsset": "METAX",
+      "faName": "متا استاک - تومان",
+      "reason": "INACTIVE_OR_ZERO_LIQUIDITY_IN_CREDIT_ACCOUNT"
+    },
+    {
+      "symbol": "LAYERTMN",
+      "baseAsset": "LAYER",
+      "faName": "سولیر - تومان",
+      "reason": "INACTIVE_OR_ZERO_LIQUIDITY_IN_CREDIT_ACCOUNT"
+    },
+    {
+      "symbol": "TONTMN",
+      "baseAsset": "TON",
+      "faName": "تون کوین - تومان",
+      "reason": "INACTIVE_OR_ZERO_LIQUIDITY_IN_CREDIT_ACCOUNT"
+    },
+    {
+      "symbol": "GIGGLETMN",
+      "baseAsset": "GIGGLE",
+      "faName": "گیگل فاند - تومان",
+      "reason": "INACTIVE_OR_ZERO_LIQUIDITY_IN_CREDIT_ACCOUNT"
+    },
+    {
+      "symbol": "MEMEFITMN",
+      "baseAsset": "MEMEFI",
+      "faName": "میم فای - تومان",
+      "reason": "INACTIVE_OR_ZERO_LIQUIDITY_IN_CREDIT_ACCOUNT"
+    },
+    {
+      "symbol": "MDTTMN",
+      "baseAsset": "MDT",
+      "faName": "مژربل دیتا توکن - تومان",
+      "reason": "INACTIVE_OR_ZERO_LIQUIDITY_IN_CREDIT_ACCOUNT"
+    },
+    {
+      "symbol": "LPTTMN",
+      "baseAsset": "LPT",
+      "faName": "لایوپیر - تومان",
+      "reason": "INACTIVE_OR_ZERO_LIQUIDITY_IN_CREDIT_ACCOUNT"
+    },
+    {
+      "symbol": "NEXOTMN",
+      "baseAsset": "NEXO",
+      "faName": "نکسو - تومان",
+      "reason": "INACTIVE_OR_ZERO_LIQUIDITY_IN_CREDIT_ACCOUNT"
+    },
+    {
+      "symbol": "WBTCTMN",
+      "baseAsset": "WBTC",
+      "faName": "رپد بیت کوین - تومان",
+      "reason": "INACTIVE_OR_ZERO_LIQUIDITY_IN_CREDIT_ACCOUNT"
+    },
+    {
+      "symbol": "HOODXTMN",
+      "baseAsset": "HOODX",
+      "faName": "رابین‌هود استاک - تومان",
+      "reason": "INACTIVE_OR_ZERO_LIQUIDITY_IN_CREDIT_ACCOUNT"
+    },
+    {
+      "symbol": "COINXTMN",
+      "baseAsset": "COINX",
+      "faName": "کوین‌بیس استاک - تومان",
+      "reason": "INACTIVE_OR_ZERO_LIQUIDITY_IN_CREDIT_ACCOUNT"
+    },
+    {
+      "symbol": "XTMN",
+      "baseAsset": "X",
+      "faName": "ایکس امپایر - تومان",
+      "reason": "INACTIVE_OR_ZERO_LIQUIDITY_IN_CREDIT_ACCOUNT"
+    },
+    {
+      "symbol": "PPLTONTMN",
+      "baseAsset": "PPLTON",
+      "faName": "گواهی پلاتین دیجیتال - تومان",
+      "reason": "INACTIVE_OR_ZERO_LIQUIDITY_IN_CREDIT_ACCOUNT"
+    }
+  ],
+  "excluded_usdt_pairs": [
+    {
+      "symbol": "CGPTUSDT",
+      "baseAsset": "CGPT",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "SUSHIUSDT",
+      "baseAsset": "SUSHI",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "GRAMUSDT",
+      "baseAsset": "GRAM",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "EIGENUSDT",
+      "baseAsset": "EIGEN",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "MOGUSDT",
+      "baseAsset": "MOG",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "ZORAUSDT",
+      "baseAsset": "ZORA",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "MAJORUSDT",
+      "baseAsset": "MAJOR",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "BANKUSDT",
+      "baseAsset": "BANK",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "ZRXUSDT",
+      "baseAsset": "ZRX",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "BNBUSDT",
+      "baseAsset": "BNB",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "XTZUSDT",
+      "baseAsset": "XTZ",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "XMRUSDT",
+      "baseAsset": "XMR",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "ETCUSDT",
+      "baseAsset": "ETC",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "DEXEUSDT",
+      "baseAsset": "DEXE",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "MNTUSDT",
+      "baseAsset": "MNT",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "KAIAUSDT",
+      "baseAsset": "KAIA",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "ALICEUSDT",
+      "baseAsset": "ALICE",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "AEROUSDT",
+      "baseAsset": "AERO",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "UNGONUSDT",
+      "baseAsset": "UNGON",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "BATUSDT",
+      "baseAsset": "BAT",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "DOGEUSDT",
+      "baseAsset": "DOGE",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "TRXUSDT",
+      "baseAsset": "TRX",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "MORPHOUSDT",
+      "baseAsset": "MORPHO",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "COINXUSDT",
+      "baseAsset": "COINX",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "SNXUSDT",
+      "baseAsset": "SNX",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "SUSDT",
+      "baseAsset": "S",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "ELONUSDT",
+      "baseAsset": "ELON",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "HMSTRUSDT",
+      "baseAsset": "HMSTR",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "OSMOUSDT",
+      "baseAsset": "OSMO",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "XLMUSDT",
+      "baseAsset": "XLM",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "POLUSDT",
+      "baseAsset": "POL",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "DASHUSDT",
+      "baseAsset": "DASH",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "UMAUSDT",
+      "baseAsset": "UMA",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "SAHARAUSDT",
+      "baseAsset": "SAHARA",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "APEUSDT",
+      "baseAsset": "APE",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "RUNEUSDT",
+      "baseAsset": "RUNE",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "ATHUSDT",
+      "baseAsset": "ATH",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "SKLUSDT",
+      "baseAsset": "SKL",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "DOGSUSDT",
+      "baseAsset": "DOGS",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "VIRTUALUSDT",
+      "baseAsset": "VIRTUAL",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "LTCUSDT",
+      "baseAsset": "LTC",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "RENDERUSDT",
+      "baseAsset": "RENDER",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "CATIUSDT",
+      "baseAsset": "CATI",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "PPLTONUSDT",
+      "baseAsset": "PPLTON",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "TRBUSDT",
+      "baseAsset": "TRB",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "MANAUSDT",
+      "baseAsset": "MANA",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "FLOWUSDT",
+      "baseAsset": "FLOW",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "WUSDT",
+      "baseAsset": "W",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "ONDOUSDT",
+      "baseAsset": "ONDO",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "AEVOUSDT",
+      "baseAsset": "AEVO",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "2ZUSDT",
+      "baseAsset": "2Z",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "USDCUSDT",
+      "baseAsset": "USDC",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "FORMUSDT",
+      "baseAsset": "FORM",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "AMZNXUSDT",
+      "baseAsset": "AMZNX",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "MOVEUSDT",
+      "baseAsset": "MOVE",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "ENAUSDT",
+      "baseAsset": "ENA",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "ENJUSDT",
+      "baseAsset": "ENJ",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "ATOMUSDT",
+      "baseAsset": "ATOM",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "1BBABYDOGEUSDT",
+      "baseAsset": "1BBABYDOGE",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "NMRUSDT",
+      "baseAsset": "NMR",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "METAXUSDT",
+      "baseAsset": "METAX",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "HBARUSDT",
+      "baseAsset": "HBAR",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "ZECUSDT",
+      "baseAsset": "ZEC",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "HYPEUSDT",
+      "baseAsset": "HYPE",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "SYRUPUSDT",
+      "baseAsset": "SYRUP",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "GALAUSDT",
+      "baseAsset": "GALA",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "EDUUSDT",
+      "baseAsset": "EDU",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "ALGOUSDT",
+      "baseAsset": "ALGO",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "LAYERUSDT",
+      "baseAsset": "LAYER",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "METUSDT",
+      "baseAsset": "MET",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "JSTUSDT",
+      "baseAsset": "JST",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "LRCUSDT",
+      "baseAsset": "LRC",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "PYTHUSDT",
+      "baseAsset": "PYTH",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "FLRUSDT",
+      "baseAsset": "FLR",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "GIGGLEUSDT",
+      "baseAsset": "GIGGLE",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "QNTUSDT",
+      "baseAsset": "QNT",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "1INCHUSDT",
+      "baseAsset": "1INCH",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "TUSDT",
+      "baseAsset": "T",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "IOUSDT",
+      "baseAsset": "IO",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "TAOUSDT",
+      "baseAsset": "TAO",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "SLVONUSDT",
+      "baseAsset": "SLVON",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "NEXOUSDT",
+      "baseAsset": "NEXO",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "FILUSDT",
+      "baseAsset": "FIL",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "STRKUSDT",
+      "baseAsset": "STRK",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "MEMEFIUSDT",
+      "baseAsset": "MEMEFI",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "PUMPUSDT",
+      "baseAsset": "PUMP",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "SOLUSDT",
+      "baseAsset": "SOL",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "AUSDT",
+      "baseAsset": "A",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "GMTUSDT",
+      "baseAsset": "GMT",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "MDTUSDT",
+      "baseAsset": "MDT",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "LINEAUSDT",
+      "baseAsset": "LINEA",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "COOKIEUSDT",
+      "baseAsset": "COOKIE",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "BANDUSDT",
+      "baseAsset": "BAND",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "PENGUUSDT",
+      "baseAsset": "PENGU",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "ORCAUSDT",
+      "baseAsset": "ORCA",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "XRPUSDT",
+      "baseAsset": "XRP",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "CRVUSDT",
+      "baseAsset": "CRV",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "TSLAXUSDT",
+      "baseAsset": "TSLAX",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "DOTUSDT",
+      "baseAsset": "DOT",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "ONEUSDT",
+      "baseAsset": "ONE",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "PROVEUSDT",
+      "baseAsset": "PROVE",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "APTUSDT",
+      "baseAsset": "APT",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "SEIUSDT",
+      "baseAsset": "SEI",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "BIOUSDT",
+      "baseAsset": "BIO",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "XUSDT",
+      "baseAsset": "X",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "MEMEUSDT",
+      "baseAsset": "MEME",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "RAYUSDT",
+      "baseAsset": "RAY",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "API3USDT",
+      "baseAsset": "API3",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "KMNOUSDT",
+      "baseAsset": "KMNO",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "BONKUSDT",
+      "baseAsset": "BONK",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "CVCUSDT",
+      "baseAsset": "CVC",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "HOTUSDT",
+      "baseAsset": "HOT",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "MMTUSDT",
+      "baseAsset": "MMT",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "AIXBTUSDT",
+      "baseAsset": "AIXBT",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "ADAUSDT",
+      "baseAsset": "ADA",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "ETHFIUSDT",
+      "baseAsset": "ETHFI",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "YFIUSDT",
+      "baseAsset": "YFI",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "ETHUSDT",
+      "baseAsset": "ETH",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "SOONUSDT",
+      "baseAsset": "SOON",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "WBTCUSDT",
+      "baseAsset": "WBTC",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "PAXGUSDT",
+      "baseAsset": "PAXG",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "SANDUSDT",
+      "baseAsset": "SAND",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "AAPLXUSDT",
+      "baseAsset": "AAPLX",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "LINKUSDT",
+      "baseAsset": "LINK",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "CELRUSDT",
+      "baseAsset": "CELR",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "FLOKIUSDT",
+      "baseAsset": "FLOKI",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "AGLDUSDT",
+      "baseAsset": "AGLD",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "XAUTUSDT",
+      "baseAsset": "XAUT",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "JASMYUSDT",
+      "baseAsset": "JASMY",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "LPTUSDT",
+      "baseAsset": "LPT",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "NOTUSDT",
+      "baseAsset": "NOT",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "SAFEUSDT",
+      "baseAsset": "SAFE",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "EGLDUSDT",
+      "baseAsset": "EGLD",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "IMXUSDT",
+      "baseAsset": "IMX",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "NVDAXUSDT",
+      "baseAsset": "NVDAX",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "CVXUSDT",
+      "baseAsset": "CVX",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "ARBUSDT",
+      "baseAsset": "ARB",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "GRTUSDT",
+      "baseAsset": "GRT",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "MASKUSDT",
+      "baseAsset": "MASK",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "SKYUSDT",
+      "baseAsset": "SKY",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "SUIUSDT",
+      "baseAsset": "SUI",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "AVNTUSDT",
+      "baseAsset": "AVNT",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "CATUSDT",
+      "baseAsset": "CAT",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "ZENUSDT",
+      "baseAsset": "ZEN",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "NEARUSDT",
+      "baseAsset": "NEAR",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "KITEUSDT",
+      "baseAsset": "KITE",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "COPXONUSDT",
+      "baseAsset": "COPXON",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "BCHUSDT",
+      "baseAsset": "BCH",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "POLSUSDT",
+      "baseAsset": "POLS",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "BOMEUSDT",
+      "baseAsset": "BOME",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "SLPUSDT",
+      "baseAsset": "SLP",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "KAITOUSDT",
+      "baseAsset": "KAITO",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "BTTCUSDT",
+      "baseAsset": "BTTC",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "AAVEUSDT",
+      "baseAsset": "AAVE",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "BICOUSDT",
+      "baseAsset": "BICO",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "TONUSDT",
+      "baseAsset": "TON",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "ICPUSDT",
+      "baseAsset": "ICP",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "WIFUSDT",
+      "baseAsset": "WIF",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "TURBOUSDT",
+      "baseAsset": "TURBO",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "AVAXUSDT",
+      "baseAsset": "AVAX",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "CAKEUSDT",
+      "baseAsset": "CAKE",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "USOONUSDT",
+      "baseAsset": "USOON",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "PEPEUSDT",
+      "baseAsset": "PEPE",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "JUPUSDT",
+      "baseAsset": "JUP",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "HOODXUSDT",
+      "baseAsset": "HOODX",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "MAGICUSDT",
+      "baseAsset": "MAGIC",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "SHIBUSDT",
+      "baseAsset": "SHIB",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "TIAUSDT",
+      "baseAsset": "TIA",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "PEOPLEUSDT",
+      "baseAsset": "PEOPLE",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "UNIUSDT",
+      "baseAsset": "UNI",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "TNSRUSDT",
+      "baseAsset": "TNSR",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "BTCUSDT",
+      "baseAsset": "BTC",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "FETUSDT",
+      "baseAsset": "FET",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "SUPERUSDT",
+      "baseAsset": "SUPER",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "WLDUSDT",
+      "baseAsset": "WLD",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "ASTERUSDT",
+      "baseAsset": "ASTER",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "ZILUSDT",
+      "baseAsset": "ZIL",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "AXSUSDT",
+      "baseAsset": "AXS",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "DYDXUSDT",
+      "baseAsset": "DYDX",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "USDSUSDT",
+      "baseAsset": "USDS",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "TOSHIUSDT",
+      "baseAsset": "TOSHI",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "CHZUSDT",
+      "baseAsset": "CHZ",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "KASUSDT",
+      "baseAsset": "KAS",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "XPLUSDT",
+      "baseAsset": "XPL",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "NEIROUSDT",
+      "baseAsset": "NEIRO",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    },
+    {
+      "symbol": "AIOZUSDT",
+      "baseAsset": "AIOZ",
+      "reason": "USDT_DENOMINATED_EXCLUDED_FOR_INITIAL_PHASE"
+    }
+  ],
+  "excluded_low_liquidity": [
+    {
+      "symbol": "XLMTMN",
+      "vol_24h_tmn": 240785746.2,
+      "reason": "VOLUME_BELOW_5B_TMN (0.24B TMN)"
+    },
+    {
+      "symbol": "ONDOTMN",
+      "vol_24h_tmn": 1790827646.66,
+      "reason": "VOLUME_BELOW_5B_TMN (1.79B TMN)"
+    },
+    {
+      "symbol": "KAITOTMN",
+      "vol_24h_tmn": 55727510.1,
+      "reason": "VOLUME_BELOW_5B_TMN (0.06B TMN)"
+    },
+    {
+      "symbol": "TTMN",
+      "vol_24h_tmn": 13091613.61,
+      "reason": "VOLUME_BELOW_5B_TMN (0.01B TMN)"
+    },
+    {
+      "symbol": "FETTMN",
+      "vol_24h_tmn": 167915954.0249,
+      "reason": "VOLUME_BELOW_5B_TMN (0.17B TMN)"
+    },
+    {
+      "symbol": "MMTTMN",
+      "vol_24h_tmn": 511493402.46,
+      "reason": "VOLUME_BELOW_5B_TMN (0.51B TMN)"
+    },
+    {
+      "symbol": "LRCTMN",
+      "vol_24h_tmn": 10409781.878,
+      "reason": "VOLUME_BELOW_5B_TMN (0.01B TMN)"
+    },
+    {
+      "symbol": "BANDTMN",
+      "vol_24h_tmn": 2338879.95,
+      "reason": "VOLUME_BELOW_5B_TMN (0.00B TMN)"
+    },
+    {
+      "symbol": "JSTTMN",
+      "vol_24h_tmn": 77012960.4,
+      "reason": "VOLUME_BELOW_5B_TMN (0.08B TMN)"
+    },
+    {
+      "symbol": "ZENTMN",
+      "vol_24h_tmn": 15959937.065,
+      "reason": "VOLUME_BELOW_5B_TMN (0.02B TMN)"
+    },
+    {
+      "symbol": "ASTERTMN",
+      "vol_24h_tmn": 3007110584.59,
+      "reason": "VOLUME_BELOW_5B_TMN (3.01B TMN)"
+    },
+    {
+      "symbol": "SLVONTMN",
+      "vol_24h_tmn": 2873032196.987,
+      "reason": "VOLUME_BELOW_5B_TMN (2.87B TMN)"
+    },
+    {
+      "symbol": "RENDERTMN",
+      "vol_24h_tmn": 45354385.38,
+      "reason": "VOLUME_BELOW_5B_TMN (0.05B TMN)"
+    },
+    {
+      "symbol": "FLOWTMN",
+      "vol_24h_tmn": 394642835.66,
+      "reason": "VOLUME_BELOW_5B_TMN (0.39B TMN)"
+    },
+    {
+      "symbol": "IOTMN",
+      "vol_24h_tmn": 4965179.69,
+      "reason": "VOLUME_BELOW_5B_TMN (0.00B TMN)"
+    },
+    {
+      "symbol": "SOONTMN",
+      "vol_24h_tmn": 590256507.29,
+      "reason": "VOLUME_BELOW_5B_TMN (0.59B TMN)"
+    },
+    {
+      "symbol": "1BBABYDOGETMN",
+      "vol_24h_tmn": 87868166.31701247,
+      "reason": "VOLUME_BELOW_5B_TMN (0.09B TMN)"
+    },
+    {
+      "symbol": "MOGTMN",
+      "vol_24h_tmn": 197611739.5242,
+      "reason": "VOLUME_BELOW_5B_TMN (0.20B TMN)"
+    },
+    {
+      "symbol": "ZORATMN",
+      "vol_24h_tmn": 24635945.812,
+      "reason": "VOLUME_BELOW_5B_TMN (0.02B TMN)"
+    },
+    {
+      "symbol": "MAGICTMN",
+      "vol_24h_tmn": 558403459.26,
+      "reason": "VOLUME_BELOW_5B_TMN (0.56B TMN)"
+    },
+    {
+      "symbol": "CHZTMN",
+      "vol_24h_tmn": 1666738203.2,
+      "reason": "VOLUME_BELOW_5B_TMN (1.67B TMN)"
+    },
+    {
+      "symbol": "IMXTMN",
+      "vol_24h_tmn": 861416959.6,
+      "reason": "VOLUME_BELOW_5B_TMN (0.86B TMN)"
+    },
+    {
+      "symbol": "KMNOTMN",
+      "vol_24h_tmn": 33084620.48,
+      "reason": "VOLUME_BELOW_5B_TMN (0.03B TMN)"
+    },
+    {
+      "symbol": "EDUTMN",
+      "vol_24h_tmn": 163234738.53,
+      "reason": "VOLUME_BELOW_5B_TMN (0.16B TMN)"
+    },
+    {
+      "symbol": "TURBOTMN",
+      "vol_24h_tmn": 77679293.78,
+      "reason": "VOLUME_BELOW_5B_TMN (0.08B TMN)"
+    },
+    {
+      "symbol": "WLDTMN",
+      "vol_24h_tmn": 1869806123.45,
+      "reason": "VOLUME_BELOW_5B_TMN (1.87B TMN)"
+    },
+    {
+      "symbol": "RUNETMN",
+      "vol_24h_tmn": 2995645517.8,
+      "reason": "VOLUME_BELOW_5B_TMN (3.00B TMN)"
+    },
+    {
+      "symbol": "ATOMTMN",
+      "vol_24h_tmn": 391572225.19,
+      "reason": "VOLUME_BELOW_5B_TMN (0.39B TMN)"
+    },
+    {
+      "symbol": "NEARTMN",
+      "vol_24h_tmn": 2211399499.56,
+      "reason": "VOLUME_BELOW_5B_TMN (2.21B TMN)"
+    },
+    {
+      "symbol": "ELONTMN",
+      "vol_24h_tmn": 264559689.16104,
+      "reason": "VOLUME_BELOW_5B_TMN (0.26B TMN)"
+    },
+    {
+      "symbol": "SAHARATMN",
+      "vol_24h_tmn": 176477144.91,
+      "reason": "VOLUME_BELOW_5B_TMN (0.18B TMN)"
+    },
+    {
+      "symbol": "MASKTMN",
+      "vol_24h_tmn": 719928697.5,
+      "reason": "VOLUME_BELOW_5B_TMN (0.72B TMN)"
+    },
+    {
+      "symbol": "WIFTMN",
+      "vol_24h_tmn": 231369470.646,
+      "reason": "VOLUME_BELOW_5B_TMN (0.23B TMN)"
+    },
+    {
+      "symbol": "MORPHOTMN",
+      "vol_24h_tmn": 25806569.78,
+      "reason": "VOLUME_BELOW_5B_TMN (0.03B TMN)"
+    },
+    {
+      "symbol": "GRTTMN",
+      "vol_24h_tmn": 1208624543.58,
+      "reason": "VOLUME_BELOW_5B_TMN (1.21B TMN)"
+    },
+    {
+      "symbol": "BTTCTMN",
+      "vol_24h_tmn": 60057133.484396,
+      "reason": "VOLUME_BELOW_5B_TMN (0.06B TMN)"
+    },
+    {
+      "symbol": "SKLTMN",
+      "vol_24h_tmn": 106260808.09,
+      "reason": "VOLUME_BELOW_5B_TMN (0.11B TMN)"
+    },
+    {
+      "symbol": "SNXTMN",
+      "vol_24h_tmn": 151412257.98,
+      "reason": "VOLUME_BELOW_5B_TMN (0.15B TMN)"
+    },
+    {
+      "symbol": "TIATMN",
+      "vol_24h_tmn": 171405806.44,
+      "reason": "VOLUME_BELOW_5B_TMN (0.17B TMN)"
+    },
+    {
+      "symbol": "HMSTRTMN",
+      "vol_24h_tmn": 1315478470.377,
+      "reason": "VOLUME_BELOW_5B_TMN (1.32B TMN)"
+    },
+    {
+      "symbol": "PENGUTMN",
+      "vol_24h_tmn": 1319205676.0,
+      "reason": "VOLUME_BELOW_5B_TMN (1.32B TMN)"
+    },
+    {
+      "symbol": "POLSTMN",
+      "vol_24h_tmn": 579222528.4,
+      "reason": "VOLUME_BELOW_5B_TMN (0.58B TMN)"
+    },
+    {
+      "symbol": "ALICETMN",
+      "vol_24h_tmn": 82358043.9,
+      "reason": "VOLUME_BELOW_5B_TMN (0.08B TMN)"
+    },
+    {
+      "symbol": "DYDXTMN",
+      "vol_24h_tmn": 3579810710.73,
+      "reason": "VOLUME_BELOW_5B_TMN (3.58B TMN)"
+    },
+    {
+      "symbol": "NEIROTMN",
+      "vol_24h_tmn": 3963562.396,
+      "reason": "VOLUME_BELOW_5B_TMN (0.00B TMN)"
+    },
+    {
+      "symbol": "LINEATMN",
+      "vol_24h_tmn": 60439438.4,
+      "reason": "VOLUME_BELOW_5B_TMN (0.06B TMN)"
+    },
+    {
+      "symbol": "XPLTMN",
+      "vol_24h_tmn": 447186867.7,
+      "reason": "VOLUME_BELOW_5B_TMN (0.45B TMN)"
+    },
+    {
+      "symbol": "MNTTMN",
+      "vol_24h_tmn": 35740798.39,
+      "reason": "VOLUME_BELOW_5B_TMN (0.04B TMN)"
+    },
+    {
+      "symbol": "MEMETMN",
+      "vol_24h_tmn": 89280533.9173,
+      "reason": "VOLUME_BELOW_5B_TMN (0.09B TMN)"
+    },
+    {
+      "symbol": "EGLDTMN",
+      "vol_24h_tmn": 8067630.6103,
+      "reason": "VOLUME_BELOW_5B_TMN (0.01B TMN)"
+    },
+    {
+      "symbol": "TNSRTMN",
+      "vol_24h_tmn": 363716163.67,
+      "reason": "VOLUME_BELOW_5B_TMN (0.36B TMN)"
+    },
+    {
+      "symbol": "POLTMN",
+      "vol_24h_tmn": 1193264909.5,
+      "reason": "VOLUME_BELOW_5B_TMN (1.19B TMN)"
+    },
+    {
+      "symbol": "PROVETMN",
+      "vol_24h_tmn": 287600201.0,
+      "reason": "VOLUME_BELOW_5B_TMN (0.29B TMN)"
+    },
+    {
+      "symbol": "VIRTUALTMN",
+      "vol_24h_tmn": 10836017.42,
+      "reason": "VOLUME_BELOW_5B_TMN (0.01B TMN)"
+    },
+    {
+      "symbol": "TOSHITMN",
+      "vol_24h_tmn": 116342037.4837,
+      "reason": "VOLUME_BELOW_5B_TMN (0.12B TMN)"
+    },
+    {
+      "symbol": "BOMETMN",
+      "vol_24h_tmn": 797394670.224,
+      "reason": "VOLUME_BELOW_5B_TMN (0.80B TMN)"
+    },
+    {
+      "symbol": "ENJTMN",
+      "vol_24h_tmn": 309592453.698,
+      "reason": "VOLUME_BELOW_5B_TMN (0.31B TMN)"
+    },
+    {
+      "symbol": "AVAXTMN",
+      "vol_24h_tmn": 3842456219.47707,
+      "reason": "VOLUME_BELOW_5B_TMN (3.84B TMN)"
+    },
+    {
+      "symbol": "BATTMN",
+      "vol_24h_tmn": 1874588184.07,
+      "reason": "VOLUME_BELOW_5B_TMN (1.87B TMN)"
+    },
+    {
+      "symbol": "COPXONTMN",
+      "vol_24h_tmn": 4140117479.7767,
+      "reason": "VOLUME_BELOW_5B_TMN (4.14B TMN)"
+    },
+    {
+      "symbol": "UMATMN",
+      "vol_24h_tmn": 83682329.88,
+      "reason": "VOLUME_BELOW_5B_TMN (0.08B TMN)"
+    },
+    {
+      "symbol": "CRVTMN",
+      "vol_24h_tmn": 2549416342.72,
+      "reason": "VOLUME_BELOW_5B_TMN (2.55B TMN)"
+    },
+    {
+      "symbol": "SEITMN",
+      "vol_24h_tmn": 1812070647.86,
+      "reason": "VOLUME_BELOW_5B_TMN (1.81B TMN)"
+    },
+    {
+      "symbol": "FLOKITMN",
+      "vol_24h_tmn": 2917281179.248,
+      "reason": "VOLUME_BELOW_5B_TMN (2.92B TMN)"
+    },
+    {
+      "symbol": "CAKETMN",
+      "vol_24h_tmn": 2605929459.98,
+      "reason": "VOLUME_BELOW_5B_TMN (2.61B TMN)"
+    },
+    {
+      "symbol": "DOGSTMN",
+      "vol_24h_tmn": 1947547074.6576,
+      "reason": "VOLUME_BELOW_5B_TMN (1.95B TMN)"
+    },
+    {
+      "symbol": "ICPTMN",
+      "vol_24h_tmn": 751118985.6,
+      "reason": "VOLUME_BELOW_5B_TMN (0.75B TMN)"
+    },
+    {
+      "symbol": "CELRTMN",
+      "vol_24h_tmn": 12682698.0,
+      "reason": "VOLUME_BELOW_5B_TMN (0.01B TMN)"
+    },
+    {
+      "symbol": "DEXETMN",
+      "vol_24h_tmn": 932508021.09,
+      "reason": "VOLUME_BELOW_5B_TMN (0.93B TMN)"
+    },
+    {
+      "symbol": "NMRTMN",
+      "vol_24h_tmn": 212963891.392,
+      "reason": "VOLUME_BELOW_5B_TMN (0.21B TMN)"
+    },
+    {
+      "symbol": "BICOTMN",
+      "vol_24h_tmn": 557220784.83,
+      "reason": "VOLUME_BELOW_5B_TMN (0.56B TMN)"
+    },
+    {
+      "symbol": "METTMN",
+      "vol_24h_tmn": 254663129.85,
+      "reason": "VOLUME_BELOW_5B_TMN (0.25B TMN)"
+    },
+    {
+      "symbol": "FLRTMN",
+      "vol_24h_tmn": 3538149.71,
+      "reason": "VOLUME_BELOW_5B_TMN (0.00B TMN)"
+    },
+    {
+      "symbol": "SUSHITMN",
+      "vol_24h_tmn": 506164543.8156,
+      "reason": "VOLUME_BELOW_5B_TMN (0.51B TMN)"
+    },
+    {
+      "symbol": "PEOPLETMN",
+      "vol_24h_tmn": 408266887.3668,
+      "reason": "VOLUME_BELOW_5B_TMN (0.41B TMN)"
+    },
+    {
+      "symbol": "HOTTMN",
+      "vol_24h_tmn": 1358803.921,
+      "reason": "VOLUME_BELOW_5B_TMN (0.00B TMN)"
+    },
+    {
+      "symbol": "STRKTMN",
+      "vol_24h_tmn": 2490106850.99,
+      "reason": "VOLUME_BELOW_5B_TMN (2.49B TMN)"
+    },
+    {
+      "symbol": "NOTTMN",
+      "vol_24h_tmn": 2227721803.6,
+      "reason": "VOLUME_BELOW_5B_TMN (2.23B TMN)"
+    },
+    {
+      "symbol": "RAYTMN",
+      "vol_24h_tmn": 634030304.36,
+      "reason": "VOLUME_BELOW_5B_TMN (0.63B TMN)"
+    },
+    {
+      "symbol": "TRBTMN",
+      "vol_24h_tmn": 2805070.116,
+      "reason": "VOLUME_BELOW_5B_TMN (0.00B TMN)"
+    },
+    {
+      "symbol": "PYTHTMN",
+      "vol_24h_tmn": 153823054.92,
+      "reason": "VOLUME_BELOW_5B_TMN (0.15B TMN)"
+    },
+    {
+      "symbol": "QNTTMN",
+      "vol_24h_tmn": 4384146238.276,
+      "reason": "VOLUME_BELOW_5B_TMN (4.38B TMN)"
+    },
+    {
+      "symbol": "ENATMN",
+      "vol_24h_tmn": 2283188076.53,
+      "reason": "VOLUME_BELOW_5B_TMN (2.28B TMN)"
+    },
+    {
+      "symbol": "WTMN",
+      "vol_24h_tmn": 3529712183.1,
+      "reason": "VOLUME_BELOW_5B_TMN (3.53B TMN)"
+    },
+    {
+      "symbol": "EIGENTMN",
+      "vol_24h_tmn": 388540374.9334,
+      "reason": "VOLUME_BELOW_5B_TMN (0.39B TMN)"
+    },
+    {
+      "symbol": "ORCATMN",
+      "vol_24h_tmn": 1582656659.88,
+      "reason": "VOLUME_BELOW_5B_TMN (1.58B TMN)"
+    },
+    {
+      "symbol": "BCHTMN",
+      "vol_24h_tmn": 2314698283.26918,
+      "reason": "VOLUME_BELOW_5B_TMN (2.31B TMN)"
+    },
+    {
+      "symbol": "TAOTMN",
+      "vol_24h_tmn": 821040508.751,
+      "reason": "VOLUME_BELOW_5B_TMN (0.82B TMN)"
+    },
+    {
+      "symbol": "AEROTMN",
+      "vol_24h_tmn": 7896979.91,
+      "reason": "VOLUME_BELOW_5B_TMN (0.01B TMN)"
+    },
+    {
+      "symbol": "CATITMN",
+      "vol_24h_tmn": 19187265.4,
+      "reason": "VOLUME_BELOW_5B_TMN (0.02B TMN)"
+    },
+    {
+      "symbol": "UNGONTMN",
+      "vol_24h_tmn": 752587426.663,
+      "reason": "VOLUME_BELOW_5B_TMN (0.75B TMN)"
+    },
+    {
+      "symbol": "YFITMN",
+      "vol_24h_tmn": 576194.54016,
+      "reason": "VOLUME_BELOW_5B_TMN (0.00B TMN)"
+    },
+    {
+      "symbol": "HYPETMN",
+      "vol_24h_tmn": 4323276081.608,
+      "reason": "VOLUME_BELOW_5B_TMN (4.32B TMN)"
+    },
+    {
+      "symbol": "MAJORTMN",
+      "vol_24h_tmn": 215806685.1,
+      "reason": "VOLUME_BELOW_5B_TMN (0.22B TMN)"
+    },
+    {
+      "symbol": "SUPERTMN",
+      "vol_24h_tmn": 13116030.09,
+      "reason": "VOLUME_BELOW_5B_TMN (0.01B TMN)"
+    },
+    {
+      "symbol": "ZILTMN",
+      "vol_24h_tmn": 12976470.11,
+      "reason": "VOLUME_BELOW_5B_TMN (0.01B TMN)"
+    },
+    {
+      "symbol": "2ZTMN",
+      "vol_24h_tmn": 690901906.0,
+      "reason": "VOLUME_BELOW_5B_TMN (0.69B TMN)"
+    },
+    {
+      "symbol": "JUPTMN",
+      "vol_24h_tmn": 639920858.65,
+      "reason": "VOLUME_BELOW_5B_TMN (0.64B TMN)"
+    },
+    {
+      "symbol": "ETHFITMN",
+      "vol_24h_tmn": 3475676650.36,
+      "reason": "VOLUME_BELOW_5B_TMN (3.48B TMN)"
+    },
+    {
+      "symbol": "CATTMN",
+      "vol_24h_tmn": 81128868.10517,
+      "reason": "VOLUME_BELOW_5B_TMN (0.08B TMN)"
+    },
+    {
+      "symbol": "MOVETMN",
+      "vol_24h_tmn": 22103983.47,
+      "reason": "VOLUME_BELOW_5B_TMN (0.02B TMN)"
+    },
+    {
+      "symbol": "HBARTMN",
+      "vol_24h_tmn": 2668907118.35,
+      "reason": "VOLUME_BELOW_5B_TMN (2.67B TMN)"
+    },
+    {
+      "symbol": "BONKTMN",
+      "vol_24h_tmn": 914540597.3412,
+      "reason": "VOLUME_BELOW_5B_TMN (0.91B TMN)"
+    },
+    {
+      "symbol": "CGPTTMN",
+      "vol_24h_tmn": 50958717.5572,
+      "reason": "VOLUME_BELOW_5B_TMN (0.05B TMN)"
+    },
+    {
+      "symbol": "ETCTMN",
+      "vol_24h_tmn": 3066540.27291,
+      "reason": "VOLUME_BELOW_5B_TMN (0.00B TMN)"
+    },
+    {
+      "symbol": "PAXGTMN",
+      "vol_24h_tmn": 3137747206.324533,
+      "reason": "VOLUME_BELOW_5B_TMN (3.14B TMN)"
+    },
+    {
+      "symbol": "SYRUPTMN",
+      "vol_24h_tmn": 17493903.93,
+      "reason": "VOLUME_BELOW_5B_TMN (0.02B TMN)"
+    },
+    {
+      "symbol": "COOKIETMN",
+      "vol_24h_tmn": 278631614.74,
+      "reason": "VOLUME_BELOW_5B_TMN (0.28B TMN)"
+    },
+    {
+      "symbol": "AIOZTMN",
+      "vol_24h_tmn": 80016357.0,
+      "reason": "VOLUME_BELOW_5B_TMN (0.08B TMN)"
+    },
+    {
+      "symbol": "SLPTMN",
+      "vol_24h_tmn": 13865205.42,
+      "reason": "VOLUME_BELOW_5B_TMN (0.01B TMN)"
+    },
+    {
+      "symbol": "GMTTMN",
+      "vol_24h_tmn": 7794002.2,
+      "reason": "VOLUME_BELOW_5B_TMN (0.01B TMN)"
+    },
+    {
+      "symbol": "BANKTMN",
+      "vol_24h_tmn": 754705177.54,
+      "reason": "VOLUME_BELOW_5B_TMN (0.75B TMN)"
+    },
+    {
+      "symbol": "AXSTMN",
+      "vol_24h_tmn": 145409813.94605,
+      "reason": "VOLUME_BELOW_5B_TMN (0.15B TMN)"
+    },
+    {
+      "symbol": "XTZTMN",
+      "vol_24h_tmn": 322997.4,
+      "reason": "VOLUME_BELOW_5B_TMN (0.00B TMN)"
+    },
+    {
+      "symbol": "DOTTMN",
+      "vol_24h_tmn": 1271848501.04,
+      "reason": "VOLUME_BELOW_5B_TMN (1.27B TMN)"
+    },
+    {
+      "symbol": "CVXTMN",
+      "vol_24h_tmn": 462161836.84,
+      "reason": "VOLUME_BELOW_5B_TMN (0.46B TMN)"
+    },
+    {
+      "symbol": "APTTMN",
+      "vol_24h_tmn": 269927191.8,
+      "reason": "VOLUME_BELOW_5B_TMN (0.27B TMN)"
+    },
+    {
+      "symbol": "KASTMN",
+      "vol_24h_tmn": 310606599.02,
+      "reason": "VOLUME_BELOW_5B_TMN (0.31B TMN)"
+    },
+    {
+      "symbol": "1INCHTMN",
+      "vol_24h_tmn": 1858264.97,
+      "reason": "VOLUME_BELOW_5B_TMN (0.00B TMN)"
+    },
+    {
+      "symbol": "SKYTMN",
+      "vol_24h_tmn": 1918465448.8,
+      "reason": "VOLUME_BELOW_5B_TMN (1.92B TMN)"
+    },
+    {
+      "symbol": "OSMOTMN",
+      "vol_24h_tmn": 464486666.52,
+      "reason": "VOLUME_BELOW_5B_TMN (0.46B TMN)"
+    },
+    {
+      "symbol": "SAFETMN",
+      "vol_24h_tmn": 3794954.68,
+      "reason": "VOLUME_BELOW_5B_TMN (0.00B TMN)"
+    },
+    {
+      "symbol": "BIOTMN",
+      "vol_24h_tmn": 74319880.46,
+      "reason": "VOLUME_BELOW_5B_TMN (0.07B TMN)"
+    },
+    {
+      "symbol": "KAIATMN",
+      "vol_24h_tmn": 47346762.82,
+      "reason": "VOLUME_BELOW_5B_TMN (0.05B TMN)"
+    },
+    {
+      "symbol": "USDCTMN",
+      "vol_24h_tmn": 2102218084.56,
+      "reason": "VOLUME_BELOW_5B_TMN (2.10B TMN)"
+    },
+    {
+      "symbol": "API3TMN",
+      "vol_24h_tmn": 7312543.4,
+      "reason": "VOLUME_BELOW_5B_TMN (0.01B TMN)"
+    },
+    {
+      "symbol": "ATHTMN",
+      "vol_24h_tmn": 457340870.669,
+      "reason": "VOLUME_BELOW_5B_TMN (0.46B TMN)"
+    },
+    {
+      "symbol": "USDSTMN",
+      "vol_24h_tmn": 427378126.41,
+      "reason": "VOLUME_BELOW_5B_TMN (0.43B TMN)"
+    },
+    {
+      "symbol": "GALATMN",
+      "vol_24h_tmn": 2610862544.4,
+      "reason": "VOLUME_BELOW_5B_TMN (2.61B TMN)"
+    },
+    {
+      "symbol": "ONETMN",
+      "vol_24h_tmn": 1862527530.429,
+      "reason": "VOLUME_BELOW_5B_TMN (1.86B TMN)"
+    },
+    {
+      "symbol": "MANATMN",
+      "vol_24h_tmn": 180170273.4,
+      "reason": "VOLUME_BELOW_5B_TMN (0.18B TMN)"
+    },
+    {
+      "symbol": "FORMTMN",
+      "vol_24h_tmn": 1682982657.972,
+      "reason": "VOLUME_BELOW_5B_TMN (1.68B TMN)"
+    },
+    {
+      "symbol": "LINKTMN",
+      "vol_24h_tmn": 2910294757.03,
+      "reason": "VOLUME_BELOW_5B_TMN (2.91B TMN)"
+    },
+    {
+      "symbol": "ALGOTMN",
+      "vol_24h_tmn": 62988721.51,
+      "reason": "VOLUME_BELOW_5B_TMN (0.06B TMN)"
+    },
+    {
+      "symbol": "AVNTTMN",
+      "vol_24h_tmn": 73500.0,
+      "reason": "VOLUME_BELOW_5B_TMN (0.00B TMN)"
+    },
+    {
+      "symbol": "AIXBTTMN",
+      "vol_24h_tmn": 25615911.18,
+      "reason": "VOLUME_BELOW_5B_TMN (0.03B TMN)"
+    },
+    {
+      "symbol": "CVCTMN",
+      "vol_24h_tmn": 14446221.3148,
+      "reason": "VOLUME_BELOW_5B_TMN (0.01B TMN)"
+    },
+    {
+      "symbol": "AAVETMN",
+      "vol_24h_tmn": 2115103113.7698,
+      "reason": "VOLUME_BELOW_5B_TMN (2.12B TMN)"
+    },
+    {
+      "symbol": "AGLDTMN",
+      "vol_24h_tmn": 5525650.24,
+      "reason": "VOLUME_BELOW_5B_TMN (0.01B TMN)"
+    }
+  ],
+  "excluded_high_spread": [
+    {
+      "symbol": "SANDTMN",
+      "spread_pct": 0.4666,
+      "reason": "SPREAD_EXCEEDS_0.35_PCT (0.467%)"
+    },
+    {
+      "symbol": "APETMN",
+      "spread_pct": 0.4242,
+      "reason": "SPREAD_EXCEEDS_0.35_PCT (0.424%)"
+    },
+    {
+      "symbol": "GRAMTMN",
+      "spread_pct": 0.4414,
+      "reason": "SPREAD_EXCEEDS_0.35_PCT (0.441%)"
+    },
+    {
+      "symbol": "DASHTMN",
+      "spread_pct": 0.6324,
+      "reason": "SPREAD_EXCEEDS_0.35_PCT (0.632%)"
+    },
+    {
+      "symbol": "ATMN",
+      "spread_pct": 0.9761,
+      "reason": "SPREAD_EXCEEDS_0.35_PCT (0.976%)"
+    },
+    {
+      "symbol": "TRXTMN",
+      "spread_pct": 0.3716,
+      "reason": "SPREAD_EXCEEDS_0.35_PCT (0.372%)"
+    },
+    {
+      "symbol": "LTCTMN",
+      "spread_pct": 0.6496,
+      "reason": "SPREAD_EXCEEDS_0.35_PCT (0.650%)"
+    },
+    {
+      "symbol": "XMRTMN",
+      "spread_pct": 0.8034,
+      "reason": "SPREAD_EXCEEDS_0.35_PCT (0.803%)"
+    },
+    {
+      "symbol": "ADATMN",
+      "spread_pct": 0.4991,
+      "reason": "SPREAD_EXCEEDS_0.35_PCT (0.499%)"
+    },
+    {
+      "symbol": "STMN",
+      "spread_pct": 0.5305,
+      "reason": "SPREAD_EXCEEDS_0.35_PCT (0.531%)"
+    },
+    {
+      "symbol": "FILTMN",
+      "spread_pct": 0.6366,
+      "reason": "SPREAD_EXCEEDS_0.35_PCT (0.637%)"
+    }
+  ],
+  "unverified_symbols": []
+}

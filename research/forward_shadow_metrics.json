@@ -1,0 +1,33 @@
+{
+  "timestamp": "2026-10-22T11:24:58.284921+00:00",
+  "mode": "PROSPECTIVE_FORWARD_SHADOW",
+  "live_execution_authorized": false,
+  "total_evaluations": 18,
+  "cycles_completed": 3,
+  "symbols_monitored": [
+    "USDTTMN",
+    "PEPETMN",
+    "BTCTMN",
+    "PUMPTMN",
+    "ETHTMN",
+    "USOONTMN"
+  ],
+  "signals_generated": 0,
+  "risk_approvals": 0,
+  "latency_metrics_ms": {
+    "mean_api_latency": 291.2,
+    "p95_api_latency": 438.2,
+    "min_latency": 231.4,
+    "max_latency": 796.9
+  },
+  "mean_spread_pct_by_symbol": {
+    "USDTTMN": 0.0009,
+    "PEPETMN": 0.058,
+    "BTCTMN": 0.008,
+    "PUMPTMN": 0.4382,
+    "ETHTMN": 0.2151,
+    "USOONTMN": 0.0658
+  },
+  "portfolio_final_cash_toman": 5000000.0,
+  "portfolio_open_positions": 0
+}

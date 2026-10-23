@@ -1,0 +1,43 @@
+system:
+  name: "Wallex Agentic Trading System"
+  version: "0.1.0"
+  environment: "sandbox" # sandbox | live
+  base_currency: "TMN"
+  capital_initial_toman: 5000000
+
+api:
+  base_url: "https://api.wallex.ir"
+  timeout_seconds: 10
+  rate_limit_per_minute: 60
+  endpoints:
+    markets: "/v1/markets"
+    depth: "/v1/depth"
+    trades: "/v1/trades"
+    udf_history: "/v1/udf/history"
+    udf_config: "/v1/udf/config"
+    balances: "/v1/account/balances"
+    orders: "/v1/account/orders"
+    open_orders: "/v1/account/open-orders"
+
+risk:
+  max_single_order_toman: 500000
+  max_open_positions: 3
+  max_portfolio_exposure_pct: 60.0
+  max_drawdown_pct: 5.0
+  max_daily_loss_toman: 200000
+  stop_loss_pct: 2.0
+  take_profit_pct: 3.5
+  slippage_tolerance_pct: 0.3
+  min_liquidity_daily_toman: 100000000
+
+ai:
+  model: "gemini-2.5-flash"
+  temperature: 0.2
+  decision_timeout_seconds: 5
+  regime_lookback_candles: 50
+  confidence_threshold: 0.70
+
+strategy:
+  primary: "regime_momentum_filter"
+  fallback: "mean_reversion_vol_adjusted"
+  timeframe: "15" # 15m candles
