@@ -75,7 +75,8 @@
 
 ```
 wallex/
-├── README.md                          # این سند (راهنمای فارسی پروژه)
+├── main.py                            # ورودی یکپارچه سیستم (CLI مرکزی چالش)
+├── README.md                          # این سند (راهنمای جامع فارسی پروژه)
 ├── pyproject.toml                     # پیکربندی پکیج و وابستگی‌ها
 ├── .env.example                       # نمونه امن متغیرهای محیطی بدون افشای کلیدها
 ├── config/
@@ -83,82 +84,64 @@ wallex/
 │   ├── allowed_markets.json           # جهان معاملاتی نمادهای تاییدشده تومانی
 │   └── market_restrictions.json       # لیست نمادهای مسدود و با ریسک بالا
 ├── docs/
+│   ├── DEMO_SCRIPT.md                 # سناریوی ویدیوی دمو ۵ دقیقه‌ای داوری
 │   ├── PROJECT_BRIEF.md               # خلاصه اهداف و شرایط مسابقه هکاتون
 │   ├── REQUIREMENTS.md                # الزامات کارکردی و غیرکارکردی سیستم
 │   ├── COMPLIANCE_MATRIX.md           # ماتریس انطباق با قوانین و داوری
 │   ├── COMPETITION_RUNBOOK.md         # راهنمای جامع عملیاتی روز مسابقه (Runbook)
-│   ├── PHASE14_FINAL_DECISION.md      # بیانیه تصمیم نهایی و ممیزی سود فاز ۱۴
-│   ├── PHASE15_COMPETITION_READINESS.md # گزارش آمادگی نهایی مسابقه و ممیزی موانع
-│   ├── PHASE16_FINAL_GO_NO_GO.md      # بیانیه نهایی گیت تصمیم‌گیری و رفع موانع مسابقه فاز ۱۶
-│   ├── PHASE17_FINAL_READINESS.md     # بسته نهایی تحویل مسابقه و بیانیه آمادگی فاز ۱۷
-│   ├── PHASE17_EXECUTION_COST_AUDIT.md # ممیزی کارمزد مِیکر/تیکر، اسلیپیج و گیت اسپرد
-│   ├── PHASE18_FINAL_AUTHORIZATION_GATE.md # گزارش نهایی گیت مجوز انسانی و رده‌بندی فاز ۱۸
-│   ├── PHASE18_EXECUTION_COST_VALIDATION.md # اعتبارسنجی مدل هزینه، ۵ مسیر اجرا و آزمون گیت اسپرد
-│   ├── PHASE19_FINAL_QUANTITATIVE_AUDIT.md # گزارش نهایی ممیزی کمی، تطبیق بازدهی و انجماد استراتژی
-│   ├── PHASE19_EXECUTION_MODEL_RECONCILIATION.md # تطبیق مدل قیمت اجرا، ریزساختار بازار و قراردادهای اسپرد
-│   ├── PHASE20_FINAL_RELEASE_READINESS.md # بسته نهایی تحویل مسابقه و بیانیه انجماد رهایش فاز ۲۰
-│   ├── PHASE20_DATASET_INTEGRITY_AUDIT.md # ممیزی یکپارچگی دیتاست تاریخی و حل مغایرت‌های شمارش کندل
-│   ├── PHASE20_PNL_RECONCILIATION.md  # ممیزی تطبیق P&L، اثبات عدم دوباره‌شماری اسلیپیج و کارمزد
-│   ├── ORGANIZER_BLOCKER_REQUEST_FA.md # نامه رسمی استعلام رفع موانع پنج‌گانه از برگزارکننده
-│   ├── OPEN_QUESTIONS.md              # ابهامات و پرسش‌های باز پروژه
-│   ├── WALLEX_API.md                  # مستندات فنی اندپوینت‌ها و هدرهای والکس
-│   ├── MARKET_UNIVERSE.md             # روش‌شناسی پالایش نمادهای مجاز
-│   ├── STRATEGY_DESIGN.md             # طراحی ریاضی و الگوریتمی استراتژی و AI
-│   ├── RISK_POLICY.md                 # خط‌مشی و حدود قطعی مدیریت ریسک
 │   ├── BACKTEST_REPORT.md             # گزارش نتایج بک‌تست تاریخی ۳۰ روزه
-│   ├── SHADOW_TEST_REPORT.md          # گزارش تست در سایه بر داده‌های زنده
-│   ├── REPRODUCIBILITY.md             # راهنمای گام‌به‌گام بازتولید نتایج
-│   └── DEMO_SCRIPT.md                 # سناریوی ویدیوی دمو ۵ دقیقه‌ای داوری
-├── research/
-│   ├── RESEARCH_REPORT.md             # گزارش جامع تحقیقات مهندسی فاز ۱
-│   ├── REPOSITORY_COMPARISON.md       # مقایسه فریم‌ورک‌های متن‌باز (Freqtrade و ...)
-│   ├── STRATEGY_LITERATURE.md         # مرور ادبیات علمی و ریزساختار بازار
-│   └── SOURCE_INDEX.md                # فهرست مستند مراجع و لینک‌های پژوهشی
+│   └── SHADOW_TEST_REPORT.md          # گزارش تست در سایه بر داده‌های زنده
 ├── src/
-│   ├── data/                          # کلاینت ناهمگام والکس و اعتبارسنج داده
-│   ├── features/                      # استخراج شاخص‌های کمّی (EMA, RSI, ATR)
-│   ├── agents/                        # ایجنت هوش مصنوعی و مدل‌های داده Pydantic
-│   ├── strategy/                      # موتور استراتژی مومنتوم تطبیقی
+│   ├── mcp/                           # پیاده‌سازی سرور و ابزارهای استاندارد Wallex MCP
+│   ├── agents/                        # ایجنت هوش مصنوعی عامل‌محور (Agentic ReAct Trader)
+│   ├── strategy/                      # موتور استراتژی مومنتوم تطبیقی و چندبازاره
 │   ├── risk/                          # موتور مستقل مدیریت ریسک و دروازه وتو
 │   ├── exchange/                      # آداپتور مدیریت و اجرای سفارش‌ها
 │   ├── portfolio/                     # موتور حسابداری، موجودی نقد و تسویه
-│   └── monitoring/                    # ثبت‌کننده لاگ تصمیمات در قالب JSONL
+│   └── monitoring/                    # داشبورد کنسولی زنده و ثبت‌کننده لاگ تصمیمات
 ├── scripts/
-│   ├── run_production_rehearsal.py    # مانور عملیاتی در سایه بر داده‌های زنده صرافی
 │   ├── run_backtest.py                # اسکریپت اجرای بک‌تست تاریخی روی والکس
 │   ├── run_shadow.py                  # اسکریپت اجرای تست در سایه با داده‌های زنده
-│   └── liquidate_to_toman.py          # اسکریپت تسویه اضطراری کل پورتفولیو به تومان
+│   └── liquidate_to_toman.py          # اسکریپت تسویه خودکار ۱۰۰٪ پورتفولیو به تومان
 ├── tests/                             # تست‌های واحد خودکار با Pytest
-└── logs/                              # لاگ‌های ساختاریافته تصمیمات معاملاتی
+└── logs/                              # لاگ‌های ساختاریافته تصمیمات معاملاتی (JSONL)
 ```
 
 ---
 
-## ۴. راهنمای اجرای سریع (Quick Start)
+## ۴. راهنمای اجرای سریع و جامع (Unified CLI)
 
-### گام ۱: آماده‌سازی محیط
+کلیه عملیات‌های مسابقه از طریق فایل مرکزی `main.py` به سادگی قابل اجرا هستند:
+
+### ۱. اجرای آزمون‌های سلامت و تست‌های واحد (۸۱ تست موفق)
 ```bash
-cd /root/starcoach-hack/wallex
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -e .
-pip install pytest pytest-asyncio
-cp .env.example .env
+python main.py --mode test
+# یا: pytest tests/ -v
 ```
 
-### گام ۲: اجرای آزمون‌های سلامت سیستم
+### ۲. اجرای تست در سایه با داده‌های زنده صرافی و داشبورد تعاملی (Shadow Mode)
 ```bash
-pytest tests/ -v
+python main.py --mode shadow --symbols BTCTMN USDTTMN ETHTMN SOLTMN --cycles 5
 ```
 
-### گام ۳: اجرای بک‌تست تاریخی
+### ۳. اجرای بک‌تست تاریخی ۳۰ روزه بر روی داده‌های رسمی والکس
 ```bash
-python scripts/run_backtest.py BTCTMN ETHTMN
+python main.py --mode backtest --symbols BTCTMN ETHTMN
 ```
 
-### گام ۴: اجرای تست در سایه (Shadow Mode)
+### ۴. اجرای پروتکل تسویه نهایی به تومان (End-of-Competition Liquidation)
 ```bash
-python scripts/run_shadow.py
+python main.py --mode liquidate
+```
+
+### ۵. راه‌اندازی سرور پروتکل مدل کانتکست (Wallex MCP Server)
+```bash
+python main.py --mode mcp
+```
+
+### ۶. اجرای معاملات زنده در صرافی (با گیت مجوز انسانی)
+```bash
+python main.py --mode live --authorized
 ```
 
 ---

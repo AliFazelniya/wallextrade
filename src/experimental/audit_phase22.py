@@ -31,10 +31,11 @@ def student_t_cdf(t: float, df: int) -> float:
     steps = 2000
     xs = np.linspace(0, abs(t), steps + 1)
     ys = [student_t_pdf(float(x), df) for x in xs]
-    integral = float(np.trapezoid(ys, xs))
+    trapz_func = getattr(np, "trapezoid", getattr(np, "trapz", None))
+    integral = float(trapz_func(ys, xs))
     return 0.5 + integral if t > 0 else 0.5 - integral
 
-REPO_ROOT = Path("/root/starcoach-hack/wallex")
+REPO_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT))
 
 from src.experimental.features import extract_advanced_features

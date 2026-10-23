@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-10-23T17:55:42.942199+00:00",
+  "status": "SETTLED_IN_TOMAN",
+  "initial_capital_toman": 5000000.0,
+  "final_cash_toman": 5000000.0,
+  "crypto_holdings_count": 0,
+  "total_equity_toman": 5000000.0,
+  "realized_net_pnl_toman": 0.0,
+  "return_pct": 0.0,
+  "liquidations": []
+}

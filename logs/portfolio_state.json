@@ -1,0 +1,11 @@
+{
+  "initial_capital_toman": 5000000.0,
+  "cash_toman": 5000000.0,
+  "maker_fee_rate": 0.0025,
+  "taker_fee_rate": 0.003,
+  "gross_realized_pnl_toman": 0.0,
+  "net_realized_pnl_toman": 0.0,
+  "total_fees_paid_toman": 0.0,
+  "peak_equity_toman": 5000000.0,
+  "positions": {}
+}

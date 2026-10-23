@@ -17,7 +17,7 @@ from typing import Any, Dict, List
 import pandas as pd
 import numpy as np
 
-REPO_ROOT = Path("/root/starcoach-hack/wallex")
+REPO_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT))
 
 from src.experimental.audit_phase22 import load_all_assets, simulate_candidate_e

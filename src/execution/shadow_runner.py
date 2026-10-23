@@ -46,9 +46,9 @@ class ShadowExecutionRunner:
     ):
         self.symbols = symbols or ["BTCTMN", "ETHTMN", "SOLTMN"]
         self.strategy = strategy or MultiAssetMomentumStrategy(allowed_symbols=self.symbols)
-        self.initial_capital = initial_capital_toman
-        self.data_dir = data_dir or Path("/root/starcoach-hack/wallex/data/cache")
-        self.log_dir = log_dir or Path("/root/starcoach-hack/wallex/logs")
+        repo_root = Path(__file__).resolve().parents[2]
+        self.data_dir = data_dir or (repo_root / "data" / "cache")
+        self.log_dir = log_dir or (repo_root / "logs")
         self.log_dir.mkdir(parents=True, exist_ok=True)
 
         self.portfolio = PortfolioEngine(initial_capital_toman=self.initial_capital)
@@ -158,7 +158,7 @@ class ShadowExecutionRunner:
                     "symbol": best_sym,
                     "approved": risk_eval.approved,
                     "approved_value": risk_eval.approved_value_toman,
-                    "reason": risk_eval.rejection_reason,
+                    "reason": "; ".join(risk_eval.veto_reasons) if risk_eval.veto_reasons else "APPROVED",
                 })
                 if risk_eval.approved and risk_eval.approved_value_toman >= 50_000.0:
                     exec_res = await self.adapter.execute_order(
