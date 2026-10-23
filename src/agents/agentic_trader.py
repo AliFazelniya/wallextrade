@@ -15,6 +15,7 @@ from typing import Any, Dict, List, Optional
 import httpx
 
 from src.agents.schemas import ActionType, MarketRegime
+from src.agents.council import ChiefInvestmentOfficerAgent, CouncilDecision
 from src.mcp.tools import WallexMCPToolSet
 from src.monitoring.logger import DecisionLogger
 
@@ -22,7 +23,7 @@ logger = logging.getLogger("AgenticTrader")
 
 
 class AgenticTrader:
-    """Autonomous ReAct AI Agent for Wallex Algorithmic Trading."""
+    """Autonomous ReAct AI Agent for Wallex Algorithmic Trading with Multi-Agent Swarm."""
 
     def __init__(
         self,
@@ -37,6 +38,7 @@ class AgenticTrader:
         self.api_key = api_key or os.getenv("GEMINI_API_KEY") or os.getenv("OPENAI_API_KEY")
         self.model_name = model_name
         self.max_order_toman = max_order_toman
+        self.cio = ChiefInvestmentOfficerAgent()
 
     async def run_cycle(self, candidate_symbols: Optional[List[str]] = None) -> Dict[str, Any]:
         """Executes a full autonomous ReAct decision cycle across candidate symbols.
@@ -59,8 +61,10 @@ class AgenticTrader:
         # Step 1: Observation via MCP Tools
         overview = await self.tools.get_market_overview(candidate_symbols)
         portfolio = self.tools.get_portfolio_status()
+        triangular_scans = await self.tools.get_triangular_arbitrage_scan()
         cycle_summary["observations"]["market_overview"] = overview
         cycle_summary["observations"]["portfolio"] = portfolio
+        cycle_summary["observations"]["triangular_arbitrage"] = triangular_scans
 
         symbols_to_evaluate = [s for s in overview if not s.startswith("error")]
 
@@ -78,6 +82,10 @@ class AgenticTrader:
             technicals = await self.tools.get_technical_features(sym, "15")
             orderbook = await self.tools.get_orderbook_depth(sym)
 
+            # Match potential triangular arbitrage information
+            base_coin = sym.replace("TMN", "")
+            arb_info = next((d for d in triangular_scans if d.get("base_coin") == base_coin), None)
+
             # Step 2: Reasoning Engine (LLM or High-Grade Local Cognitive Engine)
             reasoning = await self._analyze_and_reason(
                 symbol=sym,
@@ -85,6 +93,7 @@ class AgenticTrader:
                 technicals=technicals,
                 orderbook=orderbook,
                 portfolio=portfolio,
+                arbitrage_info=arb_info,
             )
 
             cycle_summary["decisions"].append({
@@ -95,6 +104,7 @@ class AgenticTrader:
                 "thought_process": reasoning["thought_process"],
                 "rationale": reasoning["rationale"],
             })
+
 
             # Step 3: Action Execution if BUY or SELL recommended
             action_str = reasoning.get("action", "HOLD")
@@ -138,6 +148,8 @@ class AgenticTrader:
                     "price": last_price,
                     "amount": target_amount,
                     "thought_process": reasoning["thought_process"],
+                    "strategy_mode": reasoning.get("strategy_mode", "ADAPTIVE"),
+                    "council_votes": reasoning.get("council_votes", []),
                 },
                 risk_evaluation=exec_result.get("risk_evaluation") if exec_result else None,
                 execution_result=exec_result.get("execution") if exec_result else None,
@@ -154,16 +166,37 @@ class AgenticTrader:
         technicals: Dict[str, Any],
         orderbook: Dict[str, Any],
         portfolio: Dict[str, Any],
+        arbitrage_info: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
         """Generates deep reasoning incorporating technicals, orderbook pressure, and portfolio risk."""
+        # Convene specialized AI agents
+        council_res: CouncilDecision = self.cio.convene_council(
+            symbol=symbol,
+            market_data=market_data,
+            technicals=technicals,
+            orderbook=orderbook,
+            portfolio=portfolio,
+            arbitrage_info=arbitrage_info,
+        )
+
         if self.api_key:
             try:
-                return await self._call_llm_reasoner(symbol, market_data, technicals, orderbook, portfolio)
+                llm_res = await self._call_llm_reasoner(symbol, market_data, technicals, orderbook, portfolio, council_res)
+                llm_res["council_votes"] = [v.model_dump() for v in council_res.council_votes]
+                return llm_res
             except Exception as e:
-                logger.warning("LLM reasoning failed (%s). Using Cognitive Semantic Engine.", e)
+                logger.warning("LLM reasoning failed (%s). Using Multi-Agent Council verdict.", e)
 
-        return self._cognitive_semantic_reasoning(symbol, market_data, technicals, orderbook, portfolio)
-
+        return {
+            "regime": council_res.regime.value,
+            "confidence": council_res.confidence,
+            "action": council_res.action.value,
+            "strategy_mode": council_res.strategy_mode,
+            "suggested_allocation_pct": council_res.suggested_allocation_pct,
+            "thought_process": council_res.thought_stream,
+            "rationale": council_res.synthesis_rationale,
+            "council_votes": [v.model_dump() for v in council_res.council_votes],
+        }
     def _cognitive_semantic_reasoning(
         self,
         symbol: str,
@@ -171,61 +204,28 @@ class AgenticTrader:
         technicals: Dict[str, Any],
         orderbook: Dict[str, Any],
         portfolio: Dict[str, Any],
+        arbitrage_info: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
-        """Deterministic Cognitive Semantic Reasoning Engine."""
-        rsi = technicals.get("rsi_14", 50.0) or 50.0
-        ema_spread = technicals.get("ema_spread_pct", 0.0) or 0.0
-        atr_pct = technicals.get("atr_pct", 1.5) or 1.5
-        vol_ratio = technicals.get("vol_ratio", 1.0) or 1.0
-        imbalance = orderbook.get("orderbook_imbalance", 0.0) or 0.0
-        spread_pct = market_data.get("spread_pct", 0.15)
-        has_pos = symbol in portfolio.get("open_positions", {})
-
-        # 1. Panic / Extreme Volatility check
-        if atr_pct > 5.0 or spread_pct > 0.30:
-            return {
-                "regime": MarketRegime.VOLATILE_PANIC.value,
-                "confidence": 0.90,
-                "action": "HOLD",
-                "suggested_allocation_pct": 0.0,
-                "thought_process": f"High market turbulence (ATR={atr_pct:.2f}%, spread={spread_pct:.3f}%). Capital preservation mandates zero exposure.",
-                "rationale": "Extreme volatility detected. Capital preservation priority.",
-            }
-
-        # 2. Strong Bullish Trend + Buying Orderbook Pressure
-        if ema_spread > 0.25 and 50.0 <= rsi <= 68.0 and imbalance > 0.05 and vol_ratio >= 1.05:
-            return {
-                "regime": MarketRegime.BULLISH_TREND.value,
-                "confidence": 0.88,
-                "action": "HOLD" if has_pos else "BUY",
-                "suggested_allocation_pct": 10.0,
-                "thought_process": (
-                    f"Positive EMA divergence (+{ema_spread:.2f}%) aligned with constructive RSI ({rsi:.1f}) "
-                    f"and orderbook bid support (imbalance {imbalance:+.2f}). High-probability trend continuation."
-                ),
-                "rationale": f"Bullish momentum confirmed across trend, volume ({vol_ratio:.2f}x) and orderbook pressure.",
-            }
-
-        # 3. Bearish Trend / Reversal Danger
-        if (ema_spread < -0.25 and rsi < 48.0) or (has_pos and rsi < 42.0):
-            return {
-                "regime": MarketRegime.BEARISH_TREND.value,
-                "confidence": 0.85,
-                "action": "SELL" if has_pos else "HOLD",
-                "suggested_allocation_pct": 0.0,
-                "thought_process": f"Bearish EMA cross ({ema_spread:.2f}%) and deteriorating momentum (RSI={rsi:.1f}). De-risking position.",
-                "rationale": "Bearish trend structure detected. Exit to protect Toman capital.",
-            }
-
-        # 4. Range / Neutral Market
+        """Deterministic Cognitive Multi-Agent Council Reasoning Engine."""
+        council_res = self.cio.convene_council(
+            symbol=symbol,
+            market_data=market_data,
+            technicals=technicals,
+            orderbook=orderbook,
+            portfolio=portfolio,
+            arbitrage_info=arbitrage_info,
+        )
         return {
-            "regime": MarketRegime.CALM_RANGE.value,
-            "confidence": 0.75,
-            "action": "HOLD",
-            "suggested_allocation_pct": 0.0,
-            "thought_process": f"Market within flat oscillation range (EMA spread={ema_spread:.2f}%, RSI={rsi:.1f}). No clear directional edge.",
-            "rationale": "Calm range regime. Avoiding unnecessary fee friction.",
+            "regime": council_res.regime.value,
+            "confidence": council_res.confidence,
+            "action": council_res.action.value,
+            "strategy_mode": council_res.strategy_mode,
+            "suggested_allocation_pct": council_res.suggested_allocation_pct,
+            "thought_process": council_res.thought_stream,
+            "rationale": council_res.synthesis_rationale,
+            "council_votes": [v.model_dump() for v in council_res.council_votes],
         }
+
 
     async def _call_llm_reasoner(
         self,
@@ -234,12 +234,13 @@ class AgenticTrader:
         technicals: Dict[str, Any],
         orderbook: Dict[str, Any],
         portfolio: Dict[str, Any],
+        council_res: Optional[Any] = None,
     ) -> Dict[str, Any]:
         """Calls Gemini API for Deep Structured Trading Reasoning."""
         system_prompt = (
-            "You are an expert quantitative hedge-fund agent for a 3-day competition with 5,000,000 TMN. "
-            "Analyze market technicals, orderbook depth, and portfolio state to classify regime and decide BUY/SELL/HOLD. "
-            "Return strict JSON with keys: regime, confidence, action, suggested_allocation_pct, thought_process, rationale."
+            "You are the Chief Investment Officer (CIO) of an Agentic AI quantitative fund in a 3-day competition with 5,000,000 TMN. "
+            "Review specialized agent votes (Technical Analyst, Microstructure, Macro Sentiment) along with orderbook depth and technicals. "
+            "Synthesize the debate and decide BUY/SELL/HOLD. Return strict JSON with keys: regime, confidence, action, strategy_mode, suggested_allocation_pct, thought_process, rationale."
         )
 
         user_content = json.dumps({
@@ -248,6 +249,7 @@ class AgenticTrader:
             "technicals": technicals,
             "orderbook": orderbook,
             "portfolio": portfolio,
+            "specialized_council_votes": [v.model_dump() for v in council_res.council_votes] if council_res else [],
         }, ensure_ascii=False)
 
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{self.model_name}:generateContent?key={self.api_key}"

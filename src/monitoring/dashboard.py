@@ -29,6 +29,7 @@ class LiveTerminalDashboard:
         recent_decisions: List[Dict[str, Any]],
         cycle: int,
         max_cycles: Optional[int] = None,
+        triangular_arbitrage: Optional[List[Dict[str, Any]]] = None,
     ):
         now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         cash = portfolio_status.get("cash_toman", 5_000_000.0)
@@ -86,8 +87,25 @@ class LiveTerminalDashboard:
             print(f"│  {sym:<10} │ {d['last_price_toman']:>18,.0f} TMN │ {d['best_bid_toman']:>16,.0f} TMN │ {d['best_ask_toman']:>16,.0f} TMN │ {spr_color}{spr:>6.3f}%{reset} │")
         print(f"{bold}└──────────────────────────────────────────────────────────────────────────────────────────────┘{reset}")
 
+        # Triangular Arbitrage Cross-Rate Radar
+        if triangular_arbitrage:
+            print(f"\n{bold}┌── [۴. رادار آربیتراژ مثلثی والکس (Triangular Cross-Rate Arbitrage)] ──────────────────────┐{reset}")
+            print(f"│  {'نماد':<8} │ {'قیمت تومانی':<18} │ {'معادل سنتتیک (USDT*TMN)':<24} │ {'انحراف':<10} │ {'وضعیت':<14} │")
+            print(f"├──────────┼────────────────────┼──────────────────────────┼────────────┼────────────────┤")
+            for a in triangular_arbitrage:
+                base = a.get("base_coin", "N/A")
+                p_tmn = a.get("tmn_price", 0.0)
+                p_syn = a.get("synthetic_tmn_price", 0.0)
+                disc = a.get("discrepancy_pct", 0.0)
+                is_act = a.get("is_actionable", False)
+                disc_col = "\033[93m" if abs(disc) >= 0.55 else "\033[90m"
+                status_str = "\033[92mOPPORTUNITY\033[0m" if is_act else "Balanced"
+                print(f"│  {base:<8} │ {p_tmn:>14,.0f} TMN │ {p_syn:>20,.0f} TMN │ {disc_col}{disc:>+8.2f}%{reset} │ {status_str:<14} │")
+            print(f"{bold}└──────────────────────────────────────────────────────────────────────────────────────────────┘{reset}")
+
         # Agentic AI Decisions & Reasoning Rationale
-        print(f"\n{bold}┌── [۴. استدلال و تصمیمات ایجنت هوش مصنوعی (Agentic AI Reasoning Trail)] ──────────────────┐{reset}")
+        sec_num = "۵" if triangular_arbitrage else "۴"
+        print(f"\n{bold}┌── [{sec_num}. استدلال و تصمیمات شورا هوش مصنوعی (Multi-Agent Swarm Reasoning)] ──────────────────┐{reset}")
         if not recent_decisions:
             print(f"│  در حال تحلیل و تجمیع داده‌های بازار و اردر بوک...                                          │")
         else:
@@ -101,3 +119,4 @@ class LiveTerminalDashboard:
                 print(f"│  • {bold}[{sym}]{reset} {act_badge} | رژیم: {cyan}{regime}{reset} (اطمینان: {conf:.0f}%)")
                 print(f"│    استدلال: {yellow}{rat}{reset}")
         print(f"{bold}└──────────────────────────────────────────────────────────────────────────────────────────────┘{reset}\n")
+

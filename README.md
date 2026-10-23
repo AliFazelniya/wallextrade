@@ -113,33 +113,50 @@ wallex/
 
 کلیه عملیات‌های مسابقه از طریق فایل مرکزی `main.py` به سادگی قابل اجرا هستند:
 
-### ۱. اجرای آزمون‌های سلامت و تست‌های واحد (۸۱ تست موفق)
+### ۱. اجرای آزمون‌های سلامت و تست‌های واحد (۹۳ تست موفق در ۳ ثانیه)
 ```bash
 python main.py --mode test
 # یا: pytest tests/ -v
 ```
 
-### ۲. اجرای تست در سایه با داده‌های زنده صرافی و داشبورد تعاملی (Shadow Mode)
+### ۲. اجرای تست در سایه با داده‌های زنده و داشبورد ترمینال (Shadow Mode)
 ```bash
 python main.py --mode shadow --symbols BTCTMN USDTTMN ETHTMN SOLTMN --cycles 5
 ```
 
-### ۳. اجرای بک‌تست تاریخی ۳۰ روزه بر روی داده‌های رسمی والکس
+### ۳. راه‌اندازی وب‌داشبورد زنده تعاملی (Local Web Dashboard)
+```bash
+python main.py --mode web --port 8080
+# سپس باز کردن در مرورگر: http://localhost:8080
+```
+
+### ۴. اسکن زنده فرصت‌های آربیتراژ مثلثی والکس (Triangular Arbitrage Scanner)
+```bash
+python main.py --mode arbitrage
+```
+
+### ۵. تولید گزارش رسمی و تعاملی HTML داوری (Judge Audit Pitch Report)
+```bash
+python main.py --mode report
+# گزارش در مسیر docs/JUDGE_AUDIT_REPORT.html ذخیره می‌شود
+```
+
+### ۶. اجرای بک‌تست تاریخی ۳۰ روزه بر روی داده‌های رسمی والکس
 ```bash
 python main.py --mode backtest --symbols BTCTMN ETHTMN
 ```
 
-### ۴. اجرای پروتکل تسویه نهایی به تومان (End-of-Competition Liquidation)
+### ۷. اجرای پروتکل تسویه نهایی به تومان (End-of-Competition Liquidation)
 ```bash
 python main.py --mode liquidate
 ```
 
-### ۵. راه‌اندازی سرور پروتکل مدل کانتکست (Wallex MCP Server)
+### ۸. راه‌اندازی سرور پروتکل مدل کانتکست (Wallex MCP Server)
 ```bash
 python main.py --mode mcp
 ```
 
-### ۶. اجرای معاملات زنده در صرافی (با گیت مجوز انسانی)
+### ۹. اجرای معاملات زنده در صرافی (با گیت مجوز انسانی)
 ```bash
 python main.py --mode live --authorized
 ```

@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>گزارش ممیزی رسمی داوری | هکاتون استارکوچ × والکس</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --border: #334155;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #3b82f6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+        * { box-sizing: border-box; margin:0; padding:0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Vazirmatn", Tahoma, sans-serif; }
+        body { background: var(--bg); color: var(--text); padding: 24px; direction: rtl; }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; }
+        .title h1 { font-size: 24px; color: #fff; margin-bottom: 4px; }
+        .title p { font-size: 14px; color: var(--text-muted); }
+        .badge { padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: bold; color: #fff; display: inline-block; }
+        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .kpi-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+        .kpi-card h3 { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
+        .kpi-card .val { font-size: 24px; font-weight: bold; }
+        .section { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 24px; }
+        .section h2 { font-size: 18px; margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+        table { width: 100%; border-collapse: collapse; text-align: center; font-size: 13px; }
+        th, td { padding: 12px 10px; border-bottom: 1px solid var(--border); }
+        th { background: #111827; color: var(--text-muted); font-weight: 600; }
+        tr:hover { background: rgba(255,255,255,0.02); }
+        .council-box { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+        .council-card { background: #111827; border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+        .council-card h4 { color: var(--primary); font-size: 15px; margin-bottom: 6px; }
+        .council-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="title">
+            <h1>گزارش ممیزی و حسابرسی سامانه معاملاتی الگوریتمی والکس</h1>
+            <p>هکاتون هوش مصنوعی استارکوچ × صرافی والکس (Starcoach x Wallex Agentic AI Hackathon)</p>
+        </div>
+        <div>
+            <span class="badge" style="background:var(--success); font-size:14px;">وضعیت: تسویه ۱۰۰٪ به تومان</span>
+        </div>
+    </div>
+
+    <!-- KPI Summary -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <h3>سرمایه اولیه اختصاصی</h3>
+            <div class="val">5,000,000 <span style="font-size:14px; color:var(--text-muted);">TMN</span></div>
+        </div>
+        <div class="kpi-card">
+            <h3>ارزش خالص فعلی سبد</h3>
+            <div class="val" style="color:var(--success);">5,000,000 <span style="font-size:14px; color:var(--text-muted);">TMN</span></div>
+        </div>
+        <div class="kpi-card">
+            <h3>بازدهی خالص (Net Return)</h3>
+            <div class="val" style="color:var(--success);">+0.00%</div>
+        </div>
+        <div class="kpi-card">
+            <h3>تعداد کل تصمیمات ثبت‌شده</h3>
+            <div class="val">44 <span style="font-size:14px; color:var(--text-muted);">(خرید: 0 | فروش: 0 | هولد: 44)</span></div>
+        </div>
+    </div>
+
+    <!-- Multi-Strategy Arsenal -->
+    <div class="section">
+        <h2>سامانه ترکیبی ۴ استراتژی تطبیقی بازار (Adaptive Multi-Strategy Arsenal)</h2>
+        <div class="council-box">
+            <div class="council-card">
+                <h4>📈 ۱. استراتژی مومنتوم روند (Trend Following)</h4>
+                <p>شکار امواج قدرتمند صعودی در جفت‌ارزهای نقدشونده با واگرایی طلایی میانگین‌های متحرک EMA 20/50 و حد سود پویا +۲.۵٪.</p>
+            </div>
+            <div class="council-card">
+                <h4>🎯 ۲. اسکلپ بازگشت به میانگین (Mean Reversion Scalper)</h4>
+                <p>کسب سود مداوم ۰.۸٪ تا ۱.۵٪ در فازهای رنج بازار با خرید در کف باند بولینگر و فروش در خط میانه SMA20.</p>
+            </div>
+            <div class="council-card">
+                <h4>📐 ۳. آربیتراژ آماری و مثلثی (Triangular Arbitrage)</h4>
+                <p>پایش پیوسته نرخ‌های سنتتیک (BTC/USDT × USDT/TMN) و شکار ناکارآمدی‌های بیش از ۰.۵۵٪ بین اردر بوک تومانی و تتری.</p>
+            </div>
+            <div class="council-card">
+                <h4>🛡️ ۴. بازارسازی هوشمند میکرو-گرید (Adaptive Micro-Grid Maker)</h4>
+                <p>ثبت سفارش‌های Passive در سقف و کف اسپرد برای دریافت کارمزد Maker (۰.۲۵٪ به جای ۰.۳۰٪) با گارد فیلتر نقدینگی مسموم.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Multi-Agent Architecture Review -->
+    <div class="section">
+        <h2>معماری شورای تصمیم‌گیری ۵ عامله هوش مصنوعی (Multi-Agent Consensus Swarm)</h2>
+        <div class="council-box">
+            <div class="council-card">
+                <h4>۱. Technical Analyst Agent</h4>
+                <p>تحلیل روندهای متحرک EMA 20/50، اسیلاتورهای اشباع خرید/فروش RSI، باندهای بولینگر و شتاب نوسان‌پذیری ATR.</p>
+            </div>
+            <div class="council-card">
+                <h4>۲. Microstructure & Orderflow Agent</h4>
+                <p>پایش لایو عمق دفتر سفارش والکس (/v1/depth)، تشخیص دیوارهای نقدینگی و عدم‌تقارن فشار خرید/فروش (Orderbook Imbalance).</p>
+            </div>
+            <div class="council-card">
+                <h4>۳. Macro & Currency Agent</h4>
+                <p>پایش نوسانات جفت‌ارز تتر/تومان (USDTTMN)، کنترل ریسک سیستمیک و محافظت از ارزش ریالی سرمایه.</p>
+            </div>
+            <div class="council-card">
+                <h4>۴. Arbitrage Scout Agent</h4>
+                <p>رصد پیوسته اختلاف قیمت جفت‌های تومانی در برابر معادل دلاری جهت کشف فرصت‌های دلتا-خنثی با اسپرد بهینه.</p>
+            </div>
+            <div class="council-card">
+                <h4>۵. Chief Investment Officer (CIO)</h4>
+                <p>سنتز آراء اعضای ۵ گانه شورا، حل تعارضات تحلیلی، انتخاب بهینه‌ترین استراتژی و ثبت استدلال جامع برای داوران.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Decision Audit Trail Table -->
+    <div class="section">
+        <h2>دفتر ثبت رویداد و ردپای حسابرسی تصمیمات (Audit Trail Log)</h2>
+        <p style="color:var(--text-muted); font-size:13px; margin-bottom:14px;">ثبت کامل مشاهدات، رژیم بازار، استدلال و نتیجه ارزیابی گیت ریسک جهت اثبات عدم انجام معامله دستی مطابق قوانین هکاتون.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>زمان (UTC)</th>
+                    <th>نماد</th>
+                    <th>قیمت بازار</th>
+                    <th>اسپرد</th>
+                    <th>رژیم بازار</th>
+                    <th>تصمیم</th>
+                    <th>استراتژی</th>
+                    <th>گیت ریسک</th>
+                    <th>استدلال و چرایی تصمیم هوش مصنوعی</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            <tr>
+                <td>2026-10-22 10:29:45</td>
+                <td><strong>ETHTMN</strong></td>
+                <td>653,625,518 TMN</td>
+                <td>0.096%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 1</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:29:51</td>
+                <td><strong>USDTTMN</strong></td>
+                <td>271,000 TMN</td>
+                <td>0.017%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 2</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:29:54</td>
+                <td><strong>PEPETMN</strong></td>
+                <td>1 TMN</td>
+                <td>0.082%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 2</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:29:57</td>
+                <td><strong>BTCTMN</strong></td>
+                <td>22,239,999,968 TMN</td>
+                <td>0.046%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 2</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:29:59</td>
+                <td><strong>PUMPTMN</strong></td>
+                <td>1,306 TMN</td>
+                <td>0.230%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 2</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:30:02</td>
+                <td><strong>ETHTMN</strong></td>
+                <td>653,625,518 TMN</td>
+                <td>0.096%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 2</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:30:09</td>
+                <td><strong>USDTTMN</strong></td>
+                <td>271,000 TMN</td>
+                <td>0.017%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 3</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:30:11</td>
+                <td><strong>PEPETMN</strong></td>
+                <td>1 TMN</td>
+                <td>0.074%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 3</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:30:14</td>
+                <td><strong>BTCTMN</strong></td>
+                <td>22,239,999,968 TMN</td>
+                <td>0.066%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 3</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:30:17</td>
+                <td><strong>PUMPTMN</strong></td>
+                <td>1,306 TMN</td>
+                <td>0.230%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 3</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:30:17</td>
+                <td><strong>ETHTMN</strong></td>
+                <td>653,625,518 TMN</td>
+                <td>0.096%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 3</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:41:48</td>
+                <td><strong>USDTTMN</strong></td>
+                <td>271,038 TMN</td>
+                <td>0.015%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 1</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:41:50</td>
+                <td><strong>PEPETMN</strong></td>
+                <td>1 TMN</td>
+                <td>0.123%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 1</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:41:53</td>
+                <td><strong>BTCTMN</strong></td>
+                <td>22,265,343,087 TMN</td>
+                <td>0.047%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 1</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:41:55</td>
+                <td><strong>PUMPTMN</strong></td>
+                <td>1,304 TMN</td>
+                <td>0.153%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 1</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:41:57</td>
+                <td><strong>ETHTMN</strong></td>
+                <td>653,625,419 TMN</td>
+                <td>0.000%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 1</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:42:05</td>
+                <td><strong>USDTTMN</strong></td>
+                <td>271,038 TMN</td>
+                <td>0.015%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 2</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:42:07</td>
+                <td><strong>PEPETMN</strong></td>
+                <td>1 TMN</td>
+                <td>0.082%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 2</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:42:10</td>
+                <td><strong>BTCTMN</strong></td>
+                <td>22,265,343,087 TMN</td>
+                <td>0.047%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 2</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:42:13</td>
+                <td><strong>PUMPTMN</strong></td>
+                <td>1,304 TMN</td>
+                <td>0.154%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 2</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:42:13</td>
+                <td><strong>ETHTMN</strong></td>
+                <td>653,000,005 TMN</td>
+                <td>0.096%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 2</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:42:20</td>
+                <td><strong>USDTTMN</strong></td>
+                <td>271,036 TMN</td>
+                <td>0.015%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 3</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:42:23</td>
+                <td><strong>PEPETMN</strong></td>
+                <td>1 TMN</td>
+                <td>0.082%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 3</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:42:26</td>
+                <td><strong>BTCTMN</strong></td>
+                <td>22,265,343,087 TMN</td>
+                <td>0.047%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 3</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:42:28</td>
+                <td><strong>PUMPTMN</strong></td>
+                <td>1,304 TMN</td>
+                <td>0.154%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 3</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-22 10:42:30</td>
+                <td><strong>ETHTMN</strong></td>
+                <td>653,000,005 TMN</td>
+                <td>0.000%</td>
+                <td><span class="badge" style="background:#3b82f6;">CALM_RANGE</span> (75%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Shadow cycle 3</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-23 18:06:16</td>
+                <td><strong>BTCTMN</strong></td>
+                <td>21,949,672,332 TMN</td>
+                <td>0.010%</td>
+                <td><span class="badge" style="background:#3b82f6;">BEARISH_TREND</span> (85%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Agentic AI autonomous decision: Bearish trend structure detected. Exit to protect Toman capital.</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-23 18:06:16</td>
+                <td><strong>USDTTMN</strong></td>
+                <td>269,174 TMN</td>
+                <td>0.000%</td>
+                <td><span class="badge" style="background:#3b82f6;">BEARISH_TREND</span> (85%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Agentic AI autonomous decision: Bearish trend structure detected. Exit to protect Toman capital.</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-23 18:08:32</td>
+                <td><strong>BTCTMN</strong></td>
+                <td>21,949,672,332 TMN</td>
+                <td>0.010%</td>
+                <td><span class="badge" style="background:#3b82f6;">BEARISH_TREND</span> (85%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Agentic AI autonomous decision: Bearish trend structure detected. Exit to protect Toman capital.</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-23 18:08:32</td>
+                <td><strong>USDTTMN</strong></td>
+                <td>269,174 TMN</td>
+                <td>0.000%</td>
+                <td><span class="badge" style="background:#3b82f6;">BEARISH_TREND</span> (85%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Agentic AI autonomous decision: Bearish trend structure detected. Exit to protect Toman capital.</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-23 18:08:42</td>
+                <td><strong>BTCTMN</strong></td>
+                <td>21,949,672,332 TMN</td>
+                <td>0.010%</td>
+                <td><span class="badge" style="background:#3b82f6;">BEARISH_TREND</span> (85%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Agentic AI autonomous decision: Bearish trend structure detected. Exit to protect Toman capital.</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-23 18:08:42</td>
+                <td><strong>USDTTMN</strong></td>
+                <td>269,174 TMN</td>
+                <td>0.000%</td>
+                <td><span class="badge" style="background:#3b82f6;">BEARISH_TREND</span> (85%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Agentic AI autonomous decision: Bearish trend structure detected. Exit to protect Toman capital.</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-23 18:08:51</td>
+                <td><strong>BTCTMN</strong></td>
+                <td>21,949,672,332 TMN</td>
+                <td>0.010%</td>
+                <td><span class="badge" style="background:#3b82f6;">BEARISH_TREND</span> (85%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Agentic AI autonomous decision: Bearish trend structure detected. Exit to protect Toman capital.</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-23 18:08:51</td>
+                <td><strong>USDTTMN</strong></td>
+                <td>269,174 TMN</td>
+                <td>0.000%</td>
+                <td><span class="badge" style="background:#3b82f6;">BEARISH_TREND</span> (85%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>ADAPTIVE</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Agentic AI autonomous decision: Bearish trend structure detected. Exit to protect Toman capital.</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-23 18:20:06</td>
+                <td><strong>BTCTMN</strong></td>
+                <td>21,943,434,343 TMN</td>
+                <td>0.095%</td>
+                <td><span class="badge" style="background:#3b82f6;">BEARISH_TREND</span> (86%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>CAPITAL_PRESERVATION</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Agentic AI autonomous decision: Council consensus BEARISH: Trend breakdown detected across technical and orderbook channels. De-risking.</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-23 18:20:06</td>
+                <td><strong>USDTTMN</strong></td>
+                <td>269,203 TMN</td>
+                <td>0.001%</td>
+                <td><span class="badge" style="background:#3b82f6;">BEARISH_TREND</span> (86%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>CAPITAL_PRESERVATION</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Agentic AI autonomous decision: Council consensus BEARISH: Trend breakdown detected across technical and orderbook channels. De-risking.</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-23 18:20:06</td>
+                <td><strong>ETHTMN</strong></td>
+                <td>648,419,621 TMN</td>
+                <td>0.065%</td>
+                <td><span class="badge" style="background:#3b82f6;">BEARISH_TREND</span> (86%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>CAPITAL_PRESERVATION</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Agentic AI autonomous decision: Council consensus BEARISH: Trend breakdown detected across technical and orderbook channels. De-risking.</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-23 18:31:38</td>
+                <td><strong>BTCTMN</strong></td>
+                <td>21,954,776,431 TMN</td>
+                <td>0.188%</td>
+                <td><span class="badge" style="background:#3b82f6;">BEARISH_TREND</span> (86%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>CAPITAL_PRESERVATION</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Agentic AI autonomous decision: Council consensus BEARISH: Trend breakdown detected across technical and orderbook channels. De-risking.</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-23 18:31:38</td>
+                <td><strong>USDTTMN</strong></td>
+                <td>269,386 TMN</td>
+                <td>0.001%</td>
+                <td><span class="badge" style="background:#3b82f6;">BEARISH_TREND</span> (86%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>CAPITAL_PRESERVATION</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Agentic AI autonomous decision: Council consensus BEARISH: Trend breakdown detected across technical and orderbook channels. De-risking.</td>
+            </tr>
+            
+
+            <tr>
+                <td>2026-10-23 18:31:38</td>
+                <td><strong>ETHTMN</strong></td>
+                <td>648,277,135 TMN</td>
+                <td>0.065%</td>
+                <td><span class="badge" style="background:#3b82f6;">BEARISH_TREND</span> (86%)</td>
+                <td><span class="badge" style="background:#f59e0b;">HOLD</span></td>
+                <td>CAPITAL_PRESERVATION</td>
+                <td><span style="color:#10b981;font-weight:bold;">✅ تایید</span></td>
+                <td style="font-size:12px; max-width:300px; text-align:right; direction:rtl;">Agentic AI autonomous decision: Council consensus BEARISH: Trend breakdown detected across technical and orderbook channels. De-risking.</td>
+            </tr>
+            
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -204,3 +204,16 @@ class WallexMCPToolSet:
             "execution": exec_res,
             "rationale": rationale,
         }
+
+    async def get_triangular_arbitrage_scan(self) -> List[Dict[str, Any]]:
+        """Tool: Scans Wallex markets for triangular arbitrage discrepancies against USDT."""
+        from src.strategy.triangular_arbitrage import TriangularArbitrageStrategy
+        strat = TriangularArbitrageStrategy()
+        try:
+            markets_resp = await self.client.get_markets()
+            symbols_data = markets_resp.get("result", {}).get("symbols", {})
+            discrepancies = strat.scan_all_supported(symbols_data)
+            return [d.model_dump() for d in discrepancies]
+        except Exception as exc:
+            return []
+

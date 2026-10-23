@@ -55,6 +55,7 @@ async def test_mcp_server_tools_list(mock_system):
     assert "wallex_get_orderbook_depth" in tool_names
     assert "wallex_get_portfolio_status" in tool_names
     assert "wallex_execute_guarded_order" in tool_names
+    assert "wallex_get_triangular_arbitrage_scan" in tool_names
 
 
 @pytest.mark.asyncio

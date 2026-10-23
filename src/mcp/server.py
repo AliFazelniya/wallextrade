@@ -112,9 +112,17 @@ class WallexMCPServer:
                     "required": ["symbol", "action", "target_price", "amount_toman", "rationale"],
                 },
             },
+            {
+                "name": "wallex_get_triangular_arbitrage_scan",
+                "description": "Scan cross-market synthetic rates between COIN/TMN, COIN/USDT, and USDT/TMN for triangular arbitrage inefficiencies.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {},
+                },
+            },
         ]
 
-    async def dispatch_tool_call(self, tool_name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
+    async def dispatch_tool_call(self, tool_name: str, arguments: Dict[str, Any]) -> Any:
         """Dispatches an MCP tool call to the corresponding implementation."""
         if tool_name == "wallex_get_market_overview":
             return await self.toolset.get_market_overview(arguments.get("symbols"))
@@ -127,6 +135,8 @@ class WallexMCPServer:
             )
         elif tool_name == "wallex_get_portfolio_status":
             return self.toolset.get_portfolio_status()
+        elif tool_name == "wallex_get_triangular_arbitrage_scan":
+            return await self.toolset.get_triangular_arbitrage_scan()
         elif tool_name == "wallex_execute_guarded_order":
             return await self.toolset.execute_guarded_order(
                 symbol=arguments["symbol"],
@@ -137,6 +147,7 @@ class WallexMCPServer:
             )
         else:
             raise ValueError(f"Unknown MCP tool: {tool_name}")
+
 
     async def handle_rpc_request(self, request: Dict[str, Any]) -> Dict[str, Any]:
         """Handles standard JSON-RPC request for MCP protocol."""
