@@ -1,0 +1,131 @@
+[
+  {
+    "timestamp": "2026-10-22T15:59:53.168659+00:00",
+    "event_type": "CYCLE_START",
+    "details": {
+      "mode": "SHADOW",
+      "live_auth": false
+    }
+  },
+  {
+    "timestamp": "2026-10-22T15:59:54.516974+00:00",
+    "event_type": "CYCLE_COMPLETE",
+    "details": {
+      "snapshot_symbols": [
+        "BTCTMN",
+        "ETHTMN",
+        "SOLTMN"
+      ],
+      "market_snapshot": {
+        "BTCTMN": {
+          "last_price": 22175362201.0,
+          "bid_price": 22176261750.0,
+          "ask_price": 22198852630.0,
+          "spread_pct": 0.10187378134000112
+        },
+        "ETHTMN": {
+          "last_price": 651606583.0,
+          "bid_price": 651606593.0,
+          "ask_price": 653220836.0,
+          "spread_pct": 0.2477327642345197
+        },
+        "SOLTMN": {
+          "last_price": 28406308.0,
+          "bid_price": 28373284.0,
+          "ask_price": 28517988.0,
+          "spread_pct": 0.5094079807907455
+        }
+      },
+      "signals": [],
+      "risk_verdicts": [],
+      "executions": [],
+      "ranked_candidates": []
+    }
+  },
+  {
+    "timestamp": "2026-10-22T15:59:56.527084+00:00",
+    "event_type": "CYCLE_START",
+    "details": {
+      "mode": "SHADOW",
+      "live_auth": false
+    }
+  },
+  {
+    "timestamp": "2026-10-22T15:59:57.211958+00:00",
+    "event_type": "CYCLE_COMPLETE",
+    "details": {
+      "snapshot_symbols": [
+        "BTCTMN",
+        "ETHTMN",
+        "SOLTMN"
+      ],
+      "market_snapshot": {
+        "BTCTMN": {
+          "last_price": 22175362201.0,
+          "bid_price": 22176261750.0,
+          "ask_price": 22198852630.0,
+          "spread_pct": 0.10187378134000112
+        },
+        "ETHTMN": {
+          "last_price": 651606583.0,
+          "bid_price": 651606593.0,
+          "ask_price": 653220836.0,
+          "spread_pct": 0.2477327642345197
+        },
+        "SOLTMN": {
+          "last_price": 28406308.0,
+          "bid_price": 28373284.0,
+          "ask_price": 28517988.0,
+          "spread_pct": 0.5094079807907455
+        }
+      },
+      "signals": [],
+      "risk_verdicts": [],
+      "executions": [],
+      "ranked_candidates": []
+    }
+  },
+  {
+    "timestamp": "2026-10-22T15:59:59.230763+00:00",
+    "event_type": "CYCLE_START",
+    "details": {
+      "mode": "SHADOW",
+      "live_auth": false
+    }
+  },
+  {
+    "timestamp": "2026-10-22T15:59:59.948815+00:00",
+    "event_type": "CYCLE_COMPLETE",
+    "details": {
+      "snapshot_symbols": [
+        "BTCTMN",
+        "ETHTMN",
+        "SOLTMN"
+      ],
+      "market_snapshot": {
+        "BTCTMN": {
+          "last_price": 22175362201.0,
+          "bid_price": 22176261750.0,
+          "ask_price": 22198852630.0,
+          "spread_pct": 0.10187378134000112
+        },
+        "ETHTMN": {
+          "last_price": 651606583.0,
+          "bid_price": 651606593.0,
+          "ask_price": 653220836.0,
+          "spread_pct": 0.2477327642345197
+        },
+        "SOLTMN": {
+          "last_price": 28406308.0,
+          "bid_price": 28373284.0,
+          "ask_price": 28517988.0,
+          "spread_pct": 0.5094079807907455
+        }
+      },
+      "signals": [],
+      "risk_verdicts": [],
+      "executions": [],
+      "ranked_candidates": []
+    }
+  }
+]
