@@ -175,4 +175,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\n[INFO] Session interrupted by user. Shutting down cleanly.\n")
+        sys.exit(0)
