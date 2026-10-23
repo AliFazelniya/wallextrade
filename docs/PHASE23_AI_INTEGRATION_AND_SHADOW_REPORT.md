@@ -1,77 +1,77 @@
-# گزارش رهایش و اجرای سایه زنده فاز ۲۳ (Phase 23 Deployment Report)
+# Phase 23 Deployment Report
 ## Multi-Asset AI Productionization, Execution Stress Testing & Live Shadow Verification
 
-> **شاخه پژوهشی و مهندسی:** `research/phase22-discovery`  
-> **مخزن:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **کامیت مبنای منجمد:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **استراتژی عملیاتی:** [`MultiAssetMomentumStrategy`](file:///root/starcoach-hack/wallex/src/strategy/multi_asset_momentum.py)  
-> **موتور اجرای سایه:** [`ShadowExecutionRunner`](file:///root/starcoach-hack/wallex/src/execution/shadow_runner.py)  
-> **آزمون‌های خودکار:** ۷۴ آزمون پاس‌شده کامل در ۳.۰۷ ثانیه ([`pytest`](file:///root/starcoach-hack/wallex/tests))  
-> **مجوز معاملات زنده:** `live_execution_authorized = False` (حفاظت سخت‌افزاری/نرم‌افزاری کامل)
+> **Research and engineering branch:** `research/phase22-discovery`  
+> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Operating Strategy:** [`MultiAssetMomentumStrategy`](file:///root/starcoach-hack/wallex/src/strategy/multi_asset_momentum.py)  
+> **Shadow Execution Engine:** [`ShadowExecutionRunner`](file:///root/starcoach-hack/wallex/src/execution/shadow_runner.py)  
+> **Automatic tests:** 74 tests passed in 3.07 seconds ([`pytest`](file:///root/starcoach-hack/wallex/tests))  
+> **Live execution authorization:** `live_execution_authorized = False` (full hardware/software protection)
 
 ---
 
-## ۱. خلاصه اقدامات و معماری مهندسی فاز ۲۳
+## 1. Summary of actions and engineering architecture of phase 23
 
-در پی ممیزی مستقل و دقیق فاز ۲۲ و حل ابهامات آماری و ساختاری، فاز ۲۳ با هدف **عملیاتی‌سازی استاندارد، آزمون استرس چندسناریویی، و ارزیابی زنده سایه (Live Shadow Testing)** اجرا شد:
+Following the independent and detailed audit of phase 22 and the resolution of statistical and structural uncertainties, phase 23 was implemented with the aim of standard operationalization, multi-scenario stress testing, and live shadow testing:
 
-1. **صنعتی‌سازی استراتژی چنددارایی هوش مصنوعی:**
-   - کلاس [`MultiAssetMomentumStrategy`](file:///root/starcoach-hack/wallex/src/strategy/multi_asset_momentum.py) منطبق بر معماری [`BaseStrategy`](file:///root/starcoach-hack/wallex/src/strategy/base.py) پیاده‌سازی شد.
-   - تلفیق مستقیم عامل هوش مصنوعی ([`RegimeClassificationAgent`](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py)) پیش از ورود به پوزیشن، با تایید رژیم صعودی و اطمینان $\ge ۰.۷۰$.
-   - محاسبه امتیاز شتاب مقطعی:
+1. **Industrialization of the multi-asset strategy of artificial intelligence:**
+   - The [`MultiAssetMomentumStrategy`](file:///root/starcoach-hack/wallex/src/strategy/multi_asset_momentum.py) class was implemented according to the [`BaseStrategy`](file:///root/starcoach-hack/wallex/src/strategy/base.py) architecture.
+   - Direct integration of the artificial intelligence agent ([`RegimeClassificationAgent`](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py)) before entering the position, with confirmation of the bullish regime and confidence $\ge 0.70$.
+   - Calculation of the sectional acceleration score:
      $$\text{Score} = \left(\frac{\text{EMA Spread \%}}{\text{ATR \%} + 10^{-6}}\right) \times \left(1 - \frac{\text{Spread \%}}{0.35}\right)$$
-   - سد پذیرش امتیاز $\ge ۱.۰$، حد سود ۳.۲٪ (پسیو میکر) و حد ضرر ۱.۵٪ (اگرسیو تیکر).
-   - بادبان پایانی در ساعت ۶۰ (توقف ورود) و ساعت ۶۶ (خروج پسیو میکر در سود $\ge ۰.۵۰٪$).
+   - Acceptance barrier $\ge 1.0$ score, profit limit 3.2% (passive maker) and loss limit 1.5% (aggressive taker).
+   - Final sail at hour 60 (stop entry) and hour 66 (passive maker exit at $\ge 0.50%$ profit).
 
-2. **موتور اجرای سایه زنده (Live Shadow Runner):**
-   - پیاده‌سازی [`ShadowExecutionRunner`](file:///root/starcoach-hack/wallex/src/execution/shadow_runner.py) متصل به صرافی والکس در حالت `SHADOW`.
-   - استعلام زنده و بی‌وقفه دفتر سفارش و نمادهای `BTCTMN`، `ETHTMN` و `SOLTMN` از `https://api.wallex.ir/v1/markets`.
+2. Live Shadow Runner Engine:
+   - Implementation of [`ShadowExecutionRunner`](file:///root/starcoach-hack/wallex/src/execution/shadow_runner.py) connected to Wallex exchange in `SHADOW` mode.
+   - Live and non-stop inquiry of the order book and symbols ``BTCTMN'', ``ETHTMN'' and ``SOLTMN'' from ``https://api.wallex.ir/v1/markets''.
 
 ---
 
-## ۲. نتایج جلسه پایش زنده بازار والکس (Live Market Shadow Session)
+## 2. The results of the live market monitoring session (Live Market Shadow Session)
 
-جلسه پایش زنده بازار توسط اسکریپت [`run_live_shadow_session.py`](file:///root/starcoach-hack/wallex/src/execution/run_live_shadow_session.py) با موفقیت اجرا شد:
+The live market monitoring session was successfully executed by the script [`run_live_shadow_session.py`](file:///root/starcoach-hack/wallex/src/execution/run_live_shadow_session.py):
 
-| دارایی | آخرین قیمت استعلام‌شده (TMN) | اسپرد جاری صرافی (Spread%) | وضعیت فیلتر اسپرد ($\le ۰.۱۸٪$) | وضعیت رژیم و سیگنال هوش مصنوعی |
+| Property | Last Requested Price (TMN) | Current exchange spread (Spread%) | The state of the spread filter ($\le 0.18%$) | Diet status and artificial intelligence signal
 |:---:|:---:|:---:|:---:|:---:|
-| **BTCTMN** | ۲۲،۱۷۵،۳۶۲،۲۰۱ | ۰.۱۰۲٪ | ✅ مجاز | رژیم رنج / بدون مومنتوم صعودی (حفظ نقد) |
-| **ETHTMN** | ۶۵۱،۶۰۶،۵۸۳ | ۰.۲۴۸٪ | ❌ رد (اسپرد باز) | وتوی اسپرد صرافی (رد خودکار) |
-| **SOLTMN** | ۲۸،۴۰۶،۳۰۸ | ۰.۵۰۹٪ | ❌ رد (اسپرد باز) | وتوی اسپرد صرافی (رد خودکار) |
+| **BTCTMN** | 22,175,362,201 | 0.102% | ✅ Allowed Suffering regime / without upward momentum (retention of cash) |
+| **ETHTMN** | 651,606,583 | 0.248% | ❌ Red (open spread) | Exchange spread veto (automatic rejection).
+| **SOLTMN** | 28,406,308 | 0.509% | ❌ Red (open spread) | Exchange spread veto (automatic rejection).
 
 > [!NOTE]
-> در طول پایش ۳ سیکل زنده، هیچ دارایی واجد شرایط شکست صعودی پرشتاب نشد. سیستم طبق طراحی هوشمند خود، **۱۰۰٪ در حالت نقدینگی امن (Cash)** باقی ماند و ارزش کل پرتفوی دقیقاً **۵،۰۰۰،۰۰۰ تومان** حفظ شد. تمامی وقایع در [`logs/shadow_session_phase23.json`](file:///root/starcoach-hack/wallex/logs/shadow_session_phase23.json) ثبت گردید.
+> During the 3 live cycle monitoring, no asset qualified for a bullish breakout. According to its intelligent design, the system remained **100% in safe liquidity mode (Cash)** and the total value of the portfolio was maintained exactly **5,000,000 Tomans**. All events were logged in [`logs/shadow_session_phase23.json`](file:///root/starcoach-hack/wallex/logs/shadow_session_phase23.json).
 
 ---
 
-## ۳. ماتریس آزمون‌های استرس اجرایی (Stress Testing Matrix)
+## 3. Stress Testing Matrix
 
-استراتژی عملیاتی در ۲۹ پنجره مستقل مسابقه‌ای تحت ۶ سناریوی سخت‌گیرانه اصطکاک و نوسان سنجیده شد:
+The operational strategy was measured in 29 independent racing windows under 6 rigorous friction and swing scenarios:
 
-| سناریوی آزمون تنش | کارمزد میکر / تیکر | فرضیه اسلیپیج | سود خالص کل (TMN) | میانگین بازدهی | نرخ برد پنجره‌ها | اصطکاک کل (TMN) |
+| Stress test scenario Maker / Taker fee Slippage hypothesis Total Net Profit (TMN) | average yield | Windows win rate Total Friction (TMN) |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|
-| **۱. مبنا (Clean Expanding ATR + AI)** | ۰.۲۵٪ / ۰.۳۰٪ | ۰.۱۵٪ | **۹،۲۴۳.۱+** | **۰.۰۰۶٪+** | **۳۴.۵٪** | ۱۰۳،۹۷۴ |
-| **۲. سناریوی کارمزد تشویقی (Promo 0.08%)** | ۰.۰۸٪ / ۰.۰۸٪ | ۰.۱۵٪ | **۶۳،۲۸۰.۹+** | **۰.۰۴۴٪+** | **۳۴.۵٪** | ۴۹،۹۳۷ |
-| **۳. کارمزد تیکر بالا (0.40% Taker)** | ۰.۳۰٪ / ۰.۴۰٪ | ۰.۱۵٪ | ۱۳،۴۹۳.۷- | ۰.۰۰۹٪- | ۲۷.۶٪ | ۱۲۶،۷۱۱ |
-| **۴. اسلیپیج بالا (High Slippage 0.30%)** | ۰.۲۵٪ / ۰.۳۰٪ | ۰.۳۰٪ | ۶۸،۴۶۷.۱- | ۰.۰۴۷٪- | ۱۷.۲٪ | ۱۳۶،۱۹۵ |
-| **۵. اسلیپیج شدید (Severe 0.50%)** | ۰.۲۵٪ / ۰.۳۰٪ | ۰.۵۰٪ | ۱۲۱،۳۸۸.۴- | ۰.۰۸۴٪- | ۱۷.۲٪ | ۱۸۲،۰۲۸ |
-| **۶. نوسان سایه کندل (Intra-bar High/Low)** | ۰.۲۵٪ / ۰.۳۰٪ | ۰.۱۵٪ | ۱۲،۲۸۴.۱- | ۰.۰۰۸٪- | ۳۴.۵٪ | ۱۱۲،۹۳۴ |
+| **1. Basis (Clean Expanding ATR + AI)** | 0.25% / 0.30% | 0.15% **9,243.1+** | **0.006%+** | **34.5%** | 103,974 |
+| **2. Incentive fee scenario (Promo 0.08%)** | 0.08% / 0.08% | 0.15% **63,280.9+** | **0.044%+** | **34.5%** | 49,937 |
+| **3. High taker fee (0.40% Taker)** | 0.30% / 0.40% | 0.15% 13,493.7- | 0.009% - | 27.6% 126,711 |
+| **4. High Slippage (High Slippage 0.30%)** | 0.25% / 0.30% | 0.30% 68,467.1- | 0.047% - | 17.2% 136,195 |
+| **5. Severe slippage (Severe 0.50%)** | 0.25% / 0.30% | 0.50% 121,388.4- | 0.084% - | 17.2% 182,028 |
+| **6. candle shadow swing (Intra-bar High/Low)** | 0.25% / 0.30% | 0.15% 12,284.1- | 0.008% - | 34.5% 112,934 |
 
-### تحلیل ماتریس تنش:
-- در سناریوی کارمزد تشویقی مسابقه (۰.۰۸٪)، سودآوری سیستم به بیش از **۶۳،۰۰۰ تومان** جهش می‌کند.
-- نقطه شکست سیستم، اسلیپیج بیش از ۰.۲۵٪ است که اهمیت ارسال سفارشات لیمیت پسیو میکر و پایشگر کلاینت وب‌سوکت را اثبات می‌کند.
+### Stress matrix analysis:
+- In the competitive incentive fee scenario (0.08%), the profitability of the system jumps to more than **63,000 Tomans**.
+- The breaking point of the system is a slippage of more than 0.25%, which proves the importance of sending limit passive maker orders and websocket client monitoring.
 
 ---
 
-## ۴. راستی‌آزمایی یکپارچگی کد و آزمون‌های واحد
+## 4. Code integrity verification and unit tests
 
-تست‌های خودکار استراتژی در [`tests/test_multi_asset_momentum.py`](file:///root/starcoach-hack/wallex/tests/test_multi_asset_momentum.py) و اجزای فاز ۲۲ در [`tests/test_phase22_components.py`](file:///root/starcoach-hack/wallex/tests/test_phase22_components.py) شامل ۱۲ تست جدید جامع است که با کل مخزن ادغام شدند:
+Automated strategy tests in [`tests/test_multi_asset_momentum.py`](file:///root/starcoach-hack/wallex/tests/test_multi_asset_momentum.py) and phase 22 components in [`tests/test_phase22_components.py`](file:///root/starcoach-hack/wallex/tests/test_phase22_components.py) include 12 comprehensive new tests integrated with the entire repository:
 
 ```text
 ============================== 74 passed in 3.07s ==============================
 ```
 
-کلیه تعهدات ایمنی و قوانین مسابقه:
-- کامیت مبنای منجمد دست‌نخورده حفظ شد.
-- هیچ اردر زنده در صرافی ثبت نشد.
-- وضعیت `live_execution_authorized = False` بدون استثنا برقرار است.
+All safety obligations and competition rules:
+- Frozen base commit kept intact.
+- No live orders were registered in the exchange.
+- ``live_execution_authorized = False'' status is maintained without exception.

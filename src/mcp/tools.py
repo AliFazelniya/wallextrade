@@ -79,6 +79,12 @@ class WallexMCPToolSet:
             total_bid_vol = sum(float(b.get("quantity", 0)) for b in bids)
             total_ask_vol = sum(float(a.get("quantity", 0)) for a in asks)
             imbalance = (total_bid_vol - total_ask_vol) / (total_bid_vol + total_ask_vol + 1e-9)
+
+            # Multi-level exponential decay weighting (Cartea-Jaimungal microstructure model)
+            import math
+            w_bid = sum(float(b.get("quantity", 0)) * math.exp(-0.35 * i) for i, b in enumerate(bids))
+            w_ask = sum(float(a.get("quantity", 0)) * math.exp(-0.35 * i) for i, a in enumerate(asks))
+            weighted_imbalance = (w_bid - w_ask) / (w_bid + w_ask + 1e-9)
             
             return {
                 "symbol": symbol,
@@ -87,6 +93,7 @@ class WallexMCPToolSet:
                 "bid_volume": total_bid_vol,
                 "ask_volume": total_ask_vol,
                 "orderbook_imbalance": round(imbalance, 3),  # >0: buying pressure, <0: selling pressure
+                "weighted_depth_imbalance": round(weighted_imbalance, 3),
             }
         except Exception as exc:
             return {"symbol": symbol, "error": str(exc)}

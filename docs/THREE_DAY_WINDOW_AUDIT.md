@@ -1,100 +1,100 @@
-# ممیزی ساختاری و تحلیل ۲۹ پنجره ۳ روزه مسابقه (فاز ۱۴)
+# Structural audit and analysis of 29 3-day windows of the competition (Phase 14)
 ### Three-Day Competition Window Audit & Walk-Forward Analysis
-**مخزن:** [`wallex`](file:///root/starcoach-hack/wallex) | **تاریخ ممیزی:** ۲۲ اکتبر ۲۰۲۶ | **افق داده:** ۹۰ روز (۸،۶۳۶ کندل ۱۵ دقیقه‌ای `BTCTMN`)
+**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Audit date:** October 22, 2026 **Data horizon:** 90 days (8,636 15-minute candles ``BTCTMN'')
 
 ---
 
-## ۱. ریشه‌یابی ریاضی: چرا ۲۹ پنجره به جای ۳۰ پنجره؟
+## 1. Mathematical rooting: why 29 windows instead of 30 windows?
 
-**مسئله ممیزی:**
-در عنوان گزارش اولیه فاز ۱۳ به صورت لفظی و مفهومی از «بررسی ۳۰ پنجره ۳ روزه در طول ۹۰ روز» ($90 \div 3 = 30$) نام برده شده بود، اما جدول شبیه‌سازی دقیقا ۲۹ پنجره را در بر داشت. 
+**Audit issue:**
+In the title of the initial report of phase 13, it was literally and conceptually mentioned "Investigation of 30 3-day windows during 90 days" ($90 \div 3 = 30$), but the simulation table contained exactly 29 windows.
 
-### اثبات ریاضی و تفکیک کندل‌ها:
-1. **تعداد کل کندل‌های دریافتی از والکس:** **۸،۶۳۶ کندل** ۱۵ دقیقه‌ای.
-2. **دوره پیش‌گرمایش اندیکاتورها (Warm-up Period):**
-   برای محاسبه دقیق میانگین‌های متحرک نمایی (`EMA_20`, `EMA_50`)، شاخص نوسان واقعی (`ATR_14`) و قدرت نسبی (`RSI_14`)، سیستم طبق پیاده‌سازی [`BacktestEngine`](file:///root/starcoach-hack/wallex/src/backtest/engine.py)، **۶۰ کندل اول (معادل ۱۵ ساعت)** را صرفاً به آماده‌سازی اندیکاتورها اختصاص داده و در آن‌ها سیگنالی تولید نمی‌کند.
-3. **تعداد کندل‌های خالص معاملاتی:**
-   $$N_{\text{usable}} = 8,636 - 60 = \mathbf{8,576\text{ کندل}}$$
-4. **تعداد کندل‌های لازم برای یک پنجره کامل ۳ روزه (۷۲ ساعته):**
-   $$K_{\text{window}} = 3\text{ days} \times 24\text{ hours} \times 4\text{ bars/hour} = \mathbf{288\text{ کندل}}$$
-5. **تقسیم صحیح پنجره‌های غیرهم‌پوشان (Non-overlapping Windows):**
-   $$N_{\text{windows}} = \lfloor \frac{8,576}{288} \rfloor = \mathbf{29\text{ پنجره کامل}}$$
-6. **کندل‌های باقیمانده (Residual Bars):**
-   $$R = 8,576 \pmod{288} = \mathbf{224\text{ کندل}}$$
-   $$224\text{ bars} \div 96\text{ bars/day} = \mathbf{2.33\text{ روز (۲ روز و ۸ ساعت)}}$$
+### Mathematical proof and separation of candles:
+1. **Total number of candles received from Wallex:** **8,636 candles** 15 minutes.
+2. **Warm-up period of indicators:**
+   To accurately calculate the exponential moving averages (`EMA_20`, `EMA_50`), real volatility index (`ATR_14`) and relative strength (`RSI_14`), the system according to the implementation of [`BacktestEngine`](file:///root/starcoach-hack/wallex/src/backtest/engine.py), **first 60 candles (equivalent to 15 hours)** is dedicated only to the preparation of indicators and in them It does not produce a signal.
+3. **Number of net trading candles:**
+   $$N_{\text{usable}} = 8,636 - 60 = \mathbf{8,576\text{Kendel}}$$
+4. **The number of candles required for a full 3-day window (72 hours):**
+   $$K_{\text{window}} = 3\text{ days} \times 24\text{ hours} \times 4\text{ bars/hour} = \mathbf{288\text{ candles}}$$
+5. Correct division of non-overlapping windows:
+   $$N_{\text{windows}} = \lfloor \frac{8,576}{288} \rfloor = \mathbf{29\text{ full window}}$$
+6. **Residual Bars:**
+   $$R = 8,576 \pmod{288} = \mathbf{224\text{Kendel}}$$
+   $$224\text{ bars} \div 96\text{ bars/day} = \mathbf{2.33\text{ days (2 days and 8 hours)}}$$
 
 > [!IMPORTANT]
-> باقیمانده ۲۲۴ کندل برای تشکیل یک پنجره کامل ۳ روزه (۲۸۸ کندل) مسابقه کافی نبوده است. بنابراین شبیه‌ساز والک‌فوروارد فاز ۱۳ به صورت کاملاً علمی و بدون سوگیری از تشکیل پنجره ناقص ۳۰ام خودداری کرده و دقیقاً **۲۹ پنجره کامل و مستقل ۷۲ ساعته** را ارزیابی نموده است.
+> The remaining 224 candles were not enough to form a full 3-day window (288 candles) of the match. Therefore, the walkforward phase 13 simulator has completely scientifically and without bias avoided forming an incomplete 30th window and has evaluated exactly **29 complete and independent 72-hour windows**.
 
 ---
 
-## ۲. جدول جامع نتایج ۲۹ پنجره ۳ روزه (۷۲ ساعته)
+## 2. Comprehensive table of results of 29 windows of 3 days (72 hours)
 
-در هر پنجره، سرمایه اولیه ۵،۰۰۰،۰۰۰ تومان بوده و در پایان ۷۲ ساعت، تمام موقعیت‌های باز طبق قوانین هکاتون نقد شده‌اند:
+In each window, the initial capital is 5,000,000 Tomans, and at the end of 72 hours, all open positions are cashed according to the Hackathon rules:
 
-| شماره | بازه زمانی شروع (UTC) | بازه زمانی پایان (UTC) | بازدهی استراتژی با AI | حداکثر افت سرمایه (DD) | تعداد معامله AI | بازدهی خرید و نگهداری (B&H) | وضعیت پنجره |
+| No Start Time (UTC) | End time period (UTC) | Strategy efficiency with AI Maximum capital loss (DD) | Number of transactions AI | Efficiency of purchase and maintenance (B&H) | Window status
 |---|---|---|---|---|---|---|---|
-| **W01** | 2026-07-24 11:15 | 2026-07-28 02:00 | **-۰.۲۸٪** | ۰.۴۶٪ | ۱ | -۵.۰۰٪ | زیان خفیف |
-| **W02** | 2026-07-27 11:15 | 2026-07-31 02:00 | **+۰.۰۲٪** | ۰.۱۸٪ | ۱ | +۰.۴۷٪ | **سودده** |
-| **W03** | 2026-07-30 11:15 | 2026-08-03 02:00 | **۰.۰۰٪** | ۰.۰۰٪ | ۰ | -۲.۲۳٪ | **حفظ نقدینگی ۱۰۰٪** |
-| **W04** | 2026-08-02 11:15 | 2026-08-06 02:00 | **-۰.۲۷٪** | ۰.۲۷٪ | ۱ | -۰.۲۱٪ | زیان خفیف |
-| **W05** | 2026-08-05 11:15 | 2026-08-09 02:00 | **۰.۰۰٪** | ۰.۰۰٪ | ۰ | -۰.۷۲٪ | **حفظ نقدینگی ۱۰۰٪** |
-| **W06** | 2026-08-08 11:15 | 2026-08-12 02:00 | **۰.۰۰٪** | ۰.۰۰٪ | ۰ | -۰.۷۳٪ | **حفظ نقدینگی ۱۰۰٪** |
-| **W07** | 2026-08-11 11:15 | 2026-08-15 02:00 | **۰.۰۰٪** | ۰.۰۰٪ | ۰ | -۲.۵۶٪ | **حفظ نقدینگی ۱۰۰٪** |
-| **W08** | 2026-08-14 11:15 | 2026-08-18 02:00 | **-۰.۰۸٪** | ۰.۰۵٪ | ۱ | +۱.۰۰٪ | زیان خفیف |
-| **W09** | 2026-08-17 11:15 | 2026-08-21 02:00 | **+۱.۱۵٪** | ۰.۰۹٪ | ۳ | +۱۹.۵۱٪ | **سودده (بهترین پنجره)** |
-| **W10** | 2026-08-20 11:15 | 2026-08-24 02:00 | **-۰.۳۲٪** | ۰.۳۶٪ | ۲ | +۱۲.۱۷٪ | زیان خفیف |
-| **W11** | 2026-08-23 11:15 | 2026-08-27 02:00 | **-۰.۰۲٪** | ۰.۴۲٪ | ۲ | +۲.۹۷٪ | زیان ناچیز |
-| **W12** | 2026-08-26 11:15 | 2026-08-30 02:00 | **-۰.۴۴٪** | ۰.۴۸٪ | ۲ | +۲.۴۲٪ | زیان (بدترین پنجره) |
-| **W13** | 2026-08-29 11:15 | 2026-09-02 02:00 | **-۰.۱۱٪** | ۰.۱۲٪ | ۱ | +۳.۸۴٪ | زیان خفیف |
-| **W14** | 2026-09-01 11:15 | 2026-09-05 02:00 | **+۰.۰۲٪** | ۰.۲۹٪ | ۲ | +۶.۰۹٪ | **سودده** |
-| **W15** | 2026-09-04 11:15 | 2026-09-08 02:00 | **-۰.۱۴٪** | ۰.۴۰٪ | ۱ | -۱.۲۴٪ | زیان خفیف |
-| **W16** | 2026-09-07 11:15 | 2026-09-11 02:00 | **-۰.۱۲٪** | ۰.۳۲٪ | ۱ | +۲.۲۰٪ | زیان خفیف |
-| **W17** | 2026-09-10 11:15 | 2026-09-14 02:00 | **۰.۰۰٪** | ۰.۰۰٪ | ۰ | -۱.۸۳٪ | **حفظ نقدینگی ۱۰۰٪** |
-| **W18** | 2026-09-13 11:15 | 2026-09-17 02:00 | **-۰.۲۹٪** | ۰.۳۷٪ | ۱ | -۰.۷۱٪ | زیان خفیف |
-| **W19** | 2026-09-16 11:15 | 2026-09-20 02:00 | **+۰.۰۳٪** | ۰.۲۳٪ | ۱ | +۶.۳۱٪ | **سودده** |
-| **W20** | 2026-09-19 11:15 | 2026-09-23 03:15 | **-۰.۰۰٪** | ۰.۳۱٪ | ۱ | +۵.۴۰٪ | سر‌به‌سر / ناچیز |
-| **W21** | 2026-09-22 11:15 | 2026-09-26 03:15 | **۰.۰۰٪** | ۰.۰۰٪ | ۰ | -۰.۸۰٪ | **حفظ نقدینگی ۱۰۰٪** |
-| **W22** | 2026-09-25 12:30 | 2026-09-29 03:15 | **+۰.۱۰٪** | ۰.۱۸٪ | ۱ | +۵.۴۵٪ | **سودده** |
-| **W23** | 2026-09-28 12:30 | 2026-10-02 03:15 | **-۰.۱۲٪** | ۰.۴۸٪ | ۳ | +۷.۷۵٪ | زیان خفیف |
-| **W24** | 2026-10-01 12:30 | 2026-10-05 03:15 | **+۰.۲۹٪** | ۰.۳۱٪ | ۱ | +۷.۷۰٪ | **سودده** |
-| **W25** | 2026-10-04 12:30 | 2026-10-08 03:15 | **۰.۰۰٪** | ۰.۰۰٪ | ۰ | -۴.۰۲٪ | **حفظ نقدینگی ۱۰۰٪** |
-| **W26** | 2026-10-07 12:30 | 2026-10-11 03:15 | **۰.۰۰٪** | ۰.۰۰٪ | ۰ | -۰.۷۴٪ | **حفظ نقدینگی ۱۰۰٪** |
-| **W27** | 2026-10-10 12:30 | 2026-10-14 03:15 | **۰.۰۰٪** | ۰.۰۰٪ | ۰ | -۲.۳۳٪ | **حفظ نقدینگی ۱۰۰٪** |
-| **W28** | 2026-10-13 12:30 | 2026-10-17 03:15 | **-۰.۳۳٪** | ۰.۳۶٪ | ۱ | +۱.۸۷٪ | زیان خفیف |
-| **W29** | 2026-10-16 12:30 | 2026-10-20 03:15 | **۰.۰۰٪** | ۰.۰۰٪ | ۰ | -۱.۹۴٪ | **حفظ نقدینگی ۱۰۰٪** |
+| **W01** | 2026-07-24 11:15 | 2026-07-28 02:00 | **-0.28%** | 0.46% | 1 -5.00% | Slight loss
+| **W02** | 2026-07-27 11:15 | 2026-07-31 02:00 | **+0.02%** | 0.18% | 1 +0.47% **profitable** |
+| **W03** | 2026-07-30 11:15 | 2026-08-03 02:00 | **0.00%** | 0.00% | 0 | -2.23% **maintain 100% liquidity** |
+| **W04** | 2026-08-02 11:15 | 2026-08-06 02:00 | **-0.27%** | 0.27% | 1 -0.21% Slight loss
+| **W05** | 2026-08-05 11:15 | 2026-08-09 02:00 | **0.00%** | 0.00% | 0 | -0.72% **maintain 100% liquidity** |
+| **W06** | 2026-08-08 11:15 | 2026-08-12 02:00 | **0.00%** | 0.00% | 0 | -0.73% **maintain 100% liquidity** |
+| **W07** | 2026-08-11 11:15 | 2026-08-15 02:00 | **0.00%** | 0.00% | 0 | -2.56% **maintain 100% liquidity** |
+| **W08** | 2026-08-14 11:15 | 2026-08-18 02:00 | **-0.08%** | 0.05% | 1 +1.00% | Slight loss
+| **W09** | 2026-08-17 11:15 | 2026-08-21 02:00 | **+1.15%** | 0.09% | 3 +19.51% | **profitable (best window)** |
+| **W10** | 2026-08-20 11:15 | 2026-08-24 02:00 | **-0.32%** | 0.36% 2 | +12.17% Slight loss
+| **W11** | 2026-08-23 11:15 | 2026-08-27 02:00 | **-0.02%** | 0.42% 2 | +2.97% Insignificant loss
+| **W12** | 2026-08-26 11:15 | 2026-08-30 02:00 | **-0.44%** | 0.48% | 2 | +2.42% Loss (worst window) |
+| **W13** | 2026-08-29 11:15 | 2026-09-02 02:00 | **-0.11%** | 0.12% | 1 +3.84% Slight loss
+| **W14** | 2026-09-01 11:15 | 2026-09-05 02:00 | **+0.02%** | 0.29% | 2 | +6.09% **profitable** |
+| **W15** | 2026-09-04 11:15 | 2026-09-08 02:00 | **-0.14%** | 0.40% 1 -1.24% Slight loss
+| **W16** | 2026-09-07 11:15 | 2026-09-11 02:00 | **-0.12%** | 0.32% | 1 +2.20% Slight loss
+| **W17** | 2026-09-10 11:15 | 2026-09-14 02:00 | **0.00%** | 0.00% | 0 | -1.83% **maintain 100% liquidity** |
+| **W18** | 2026-09-13 11:15 | 2026-09-17 02:00 | **-0.29%** | 0.37% 1 -0.71% Slight loss
+| **W19** | 2026-09-16 11:15 | 2026-09-20 02:00 | **+0.03%** | 0.23% | 1 +6.31% **profitable** |
+| **W20** | 2026-09-19 11:15 | 2026-09-23 03:15 | **-0.00%** | 0.31% | 1 +5.40% Insignificant / Insignificant |
+| **W21** | 2026-09-22 11:15 | 2026-09-26 03:15 | **0.00%** | 0.00% | 0 | -0.80% **maintain 100% liquidity** |
+| **W22** | 2026-09-25 12:30 | 2026-09-29 03:15 | **+0.10%** | 0.18% | 1 +5.45% **profitable** |
+| **W23** | 2026-09-28 12:30 | 2026-10-02 03:15 | **-0.12%** | 0.48% | 3 +7.75% Slight loss
+| **W24** | 2026-10-01 12:30 | 2026-10-05 03:15 | **+0.29%** | 0.31% | 1 +7.70% **profitable** |
+| **W25** | 2026-10-04 12:30 | 2026-10-08 03:15 | **0.00%** | 0.00% | 0 | -4.02% **maintain 100% liquidity** |
+| **W26** | 2026-10-07 12:30 | 2026-10-11 03:15 | **0.00%** | 0.00% | 0 | -0.74% **maintain 100% liquidity** |
+| **W27** | 2026-10-10 12:30 | 2026-10-14 03:15 | **0.00%** | 0.00% | 0 | -2.33% **maintain 100% liquidity** |
+| **W28** | 2026-10-13 12:30 | 2026-10-17 03:15 | **-0.33%** | 0.36% 1 +1.87% Slight loss
+| **W29** | 2026-10-16 12:30 | 2026-10-20 03:15 | **0.00%** | 0.00% | 0 | -1.94% **maintain 100% liquidity** |
 
 ---
 
-## ۳. تحلیل آماری توزیع نتایج ۲۹ پنجره
+## 3. Statistical analysis of the distribution of the results of 29 windows
 
 ```
-توزیع نتایج ۲۹ پنجره مسابقه:
-├── پنجره‌های سودده (> 0%):          ۶ پنجره (۲۰.۷٪)
-├── پنجره‌های خنثی / نقد (0.00%):     ۱۱ پنجره (۳۷.۹٪)
-└── پنجره‌های زیان‌ده (< 0%):         ۱۲ پنجره (۴۱.۴٪)
+Distribution of the results of 29 competition windows:
+├── Profitable windows (> 0%):          6 windows (20.7%)
+├── Neutral / critical windows (0.00%):     11 windows (37.9%)
+└── Damaged windows (< 0%):         12 windows (41.4%)
 ```
 
-- **میانگین بازدهی ۳ روزه (Mean Return):** **-۰.۰۳۱٪**
-- **میانه بازدهی ۳ روزه (Median Return):** **۰.۰۰٪** (استراتژی در نیمی از سناریوها کاملاً نقد یا مثبت مانده است)
-- **انحراف معیار (Standard Deviation):** **۰.۲۷۴٪**
-- **خطای استاندارد میانگین (Standard Error):** **۰.۰۵۱٪**
-- **فاصله اطمینان ۹۵٪ میانگین بازدهی:**
+- **3-day mean return:** **-0.031%**
+- **3-day median return:** **0.00%** (the strategy remains completely negative or positive in half of the scenarios)
+- **Standard Deviation:** **0.274%**
+- ** Standard Error: ** 0.051% **
+- **95% confidence interval of average efficiency:**
   $$\text{95\% CI} = [-0.135\%, +0.073\%]$$
-  *(با توجه به قرارگیری صفر در داخل فاصله اطمینان، بازدهی منفی یا مثبت به لحاظ آماری در سطح ۵٪ معنادار نیست).*
-- **بدترین دراوداون در کل ۲۹ پنجره:** **۰.۴۸٪** (کمتر از نیم درصد افت سرمایه).
+  *(Regarding the placement of zero within the confidence interval, negative or positive returns are not statistically significant at the 5% level).*
+- **Worst drawdown in all 29 windows:** **0.48%** (less than half a percent of capital loss).
 
 ---
 
-## ۴. تطبیق نرخ برد پنجره‌ها (۲۰.۷٪) با نرخ برد معاملات (۵۰٪)
+## 4. Matching the win rate of windows (20.7%) with the win rate of transactions (50%)
 
-**تناقض ظاهری:**
-چگونه استراتژی‌ای که نرخ برد معاملات آن در طول ۹۰ روز ۵۰.۰٪ و در دوره برون‌نمونه‌ای ۵۵.۶٪ است، در پنجره‌های ۳ روزه تنها **۲۰.۷٪ نرخ برد** ثبت کرده است؟
+**Apparent contradiction:**
+How does a strategy that has a 50.0% win rate over 90 days and a 55.6% over sample period record only a **20.7% win rate** in 3 day windows?
 
-### توجیه محاسباتی و مکانیسم بازه کوتاه:
-1. **وزن سنگین پنجره‌های بدون معامله (۳۷.۹٪ Cash Preservation):**
-   در ۱۱ پنجره از ۲۹ پنجره، بازار در فازهای نزولی، فشرده یا فرسایشی بوده است. هوش مصنوعی شرایط را پرریسک ارزیابی کرده و **۰ معامله** انجام داده است. این پنجره‌ها بازدهی دقیقاً ۰.۰۰٪ ثبت کرده‌اند که به عنوان «برد» شمرده نشده‌اند.
-2. **تعداد اندک معاملات در ۷۲ ساعت:**
-   در یک بازه ۳ روزه، ربات حداکثر ۱ یا ۲ معامله انجام می‌دهد. اگر تنها یک معامله انجام شود و به حد ضرر برخورد کند (با زیان خالص ۰.۲۶٪)، کل بازدهی پنجره منفی ثبت می‌شود.
-3. **تحلیل احتمال بقا در هکاتون:**
-   اگر پنجره‌های سودده (۲۰.۷٪) و پنجره‌های حفظ نقدینگی ۱۰۰٪ (۳۷.۹٪) را با هم در نظر بگیریم، در **۵۸.۶٪ مواقع (۱۷ پنجره از ۲۹ پنجره)**، استراتژی یا سود ثبت کرده یا از اصل سرمایه بدون حتی یک ریال زیان محافظت کرده است. علاوه بر این، در بدترین حالت، زیان پورتفولیو در هیچ بازه ۳ روزه‌ای از **۰.۴۴-٪** فراتر نرفته است.
+### Computational justification and short-term mechanism:
+1. **Heavy weight of no-deal windows (37.9% Cash Preservation):**
+   In 11 out of 29 windows, the market has been in bearish, compact or erosion phases. Artificial intelligence has assessed the situation as risky and has made **0 trades**. These windows have recorded returns of exactly 0.00%, which are not counted as "wins".
+2. **Small number of transactions in 72 hours:**
+   In a period of 3 days, the robot makes a maximum of 1 or 2 transactions. If only one trade takes place and hits the break-even point (with a net loss of 0.26%), the total window return is recorded as negative.
+3. **Analyzing the probability of survival in the hackathon:**
+   If we take the profit windows (20.7%) and the 100% liquidity preservation windows (37.9%) together, **58.6% of the time (17 out of 29 windows)**, the strategy either posted a profit or protected principal without a single loss. Furthermore, in the worst case scenario, the portfolio loss did not exceed **-0.44%** in any 3-day period.

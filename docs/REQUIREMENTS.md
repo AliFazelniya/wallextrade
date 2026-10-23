@@ -1,42 +1,42 @@
-# الزامات فنی، معاملاتی و حاکمیتی سامانه (System Requirements)
+# Technical, trading and governance requirements of the system (System Requirements)
 
-این سند الزامات کارکردی (Functional) و غیرکارکردی (Non-Functional) سامانه معاملاتی الگوریتمی والکس را تعریف می‌کند.
-
----
-
-## ۱. الزامات کارکردی (Functional Requirements)
-
-### ۱.۱. دریافت و پردازش داده‌های بازار (Market Data)
-- **FR-01 (پایش نمادها):** دریافت لیست نمادهای معتبر از اندپوینت `/v1/markets` و فیلتر کردن جفت‌ارزهای بر پایه تومان (`quoteAsset == 'TMN'`).
-- **FR-02 (داده‌های کندل و هیستوری):** دریافت کندل‌های OHLCV از اندپوینت رسمی UDF والکس (`/v1/udf/history`) در تایم‌فریم‌های ۱۵ دقیقه‌ای یا ۱ ساعته.
-- **FR-03 (دفتر سفارش و عمق بازار):** استعلام عمق بازار (`/v1/depth`) جهت ارزیابی اسپرد (Spread)، نقدشوندگی (Liquidity) و محاسبه اسلیپیج واقعی قبل از سفارش‌گذاری.
-- **FR-04 (استعلام آخرین معاملات):** پایش معاملات اخیر (`/v1/trades`) به منظور برآورد سرعت نوسانات و حجم معاملات حقیقی.
-
-### ۱.۲. تحلیل و تصمیم‌گیری مبتنی بر هوش مصنوعی عامل‌محور (Agentic AI)
-- **FR-05 (استخراج ویژگی‌های کمّی):** محاسبه شاخص‌های تحلیلی شامل EMA (دوره ۲۰ و ۵۰)، RSI (دوره ۱۴)، ATR (نوسان‌پذیری)، و نسبت حجم به میانگین متحرک ۲۰ روزه.
-- **FR-06 (ایجنت طبقه‌بندی وضعیت بازار - Regime Agent):** مدل زبانی ساختاریافته وظیفه تحلیل وضعیت کلی بازار (Trending Bullish, Trending Bearish, Ranging/Choppy, High Volatility Panic) را بر عهده دارد.
-- **FR-07 (خروجی ساختاریافته Pydantic):** پاسخ ایجنت باید اکیداً در قالب یک مدل داده Pydantic اعتبارسنجی شود که شامل فیلدهای `regime`، `confidence` (بین ۰ تا ۱)، `recommended_action` و `reasoning` به زبان فنی است.
-- **FR-08 (سیستم جایگزین قطعی - Safe Fallback):** در صورت خطای شبکه، اتمام مهلت پاسخ (Timeout) یا خطای اعتبارسنجی خروجی هوش مصنوعی، سیستم به صورت خودکار به وضعیت پیش‌فرض امن (عدم ورود به پوزیشن جدید) سوئیچ می‌کند.
-
-### ۱.۳. موتور مدیریت ریسک مستقل (Independent Risk Engine)
-- **FR-09 (سقف ارزش هر سفارش):** هیچ سفارشی نباید از ۵۰۰،۰۰۰ تومان (۱۰٪ از کل سرمایه اولیه) فراتر رود.
-- **FR-10 (سقف تعهد پورتفولیو):** حداکثر ۶۰٪ از کل ارزش پورتفولیو (۳،۰۰۰،۰۰۰ تومان) می‌تواند به طور همزمان در دارایی‌های رمزنگاری درگیر باشد و حداقل ۴۰٪ باید به صورت نقد در قالب تومان حفظ شود.
-- **FR-11 (حد ضرر و حد سود قطعی):** اعمال حد ضرر حداکثر ۲٪ و حد سود هدف ۳.۵٪ برای کلیه موقعیت‌ها.
-- **FR-12 (سقف افت کلی پورتفولیو - Max Drawdown):** در صورتی که ارزش حساب بیش از ۵٪ از قله ارزش خود فاصله بگیرد، تمام معاملات جدید متوقف و پوزیشن‌های باز ارزیابی می‌گردند.
-- **FR-13 (سقف زیان روزانه):** حداکثر زیان مجاز در طول ۲۴ ساعت معادل ۲۰۰،۰۰۰ تومان (۴٪ حساب) است.
-- **FR-14 (سپر محافظ لغو اضطراری):** قابلیت لغو فوری تمام سفارش‌های باز و جلوگیری از ورود به معاملات پرخطر.
-
-### ۱.۴. ثبت و اجرای سفارش‌ها (Execution & Exchange Adapter)
-- **FR-15 (ثبت سفارش محدود / بازار):** ارسال درخواست امن ثبت سفارش به اندپوینت `/v1/account/orders` با استفاده از هدر `x-api-key`.
-- **FR-16 (تطبیق وضعیت سفارش):** پیگیری شناسه سفارش (`clientOrderId` / `orderId`) و استعلام وضعیت پر شدن (Fills) و مدیریت سفارش‌های نیمه‌پر (Partial Fills).
-- **FR-17 (تسویه نهایی به تومان):** ماژول اختصاصی بستن تمام پوزیشن‌ها و تبدیل دارایی‌ها به تومان در ساعت‌های پایانی هکاتون.
+This document defines the functional and non-functional requirements of Wallex algorithmic trading system.
 
 ---
 
-## ۲. الزامات غیرکارکردی (Non-Functional Requirements)
+## 1. Functional Requirements
 
-- **NFR-01 (امنیت اعتبارسنجی):** عدم افشای کلیدهای API و Secretها در کدهای منبع، کامیت‌های Git و فایل‌های لاگ. استفاده اختصاصی از متغیرهای محیطی `.env`.
-- **NFR-02 (تایپ‌استاتیک و کیفیت کد):** رعایت تایپ‌هینت کامل در پایتون، سازگاری با Python 3.12، و استفاده از Pydantic برای اعتبارسنجی داده‌ها.
-- **NFR-03 (ردیابی کامل و حسابرسی - Auditability):** ثبت تک‌تک رویدادها، سیگنال‌ها، وضعیت ایجنت هوش مصنوعی و پاسخ‌های موتور ریسک در قالب لاگ ساختاریافته JSONL.
-- **NFR-04 (قابلیت بازتولید - Reproducibility):** توانایی بازتولید دقیق نتایج بک‌تست توسط داوران مسابقه با استفاده از اسکریپت ساده `scripts/run_backtest.py`.
-- **NFR-05 (آزمایش‌پذیری خودکار):** پوشش تست‌های واحد (Unit Tests) با Pytest با استفاده از Mock برای پاسخ‌های صرافی به طوری که هیچ سفارش واقعی در زمان اجرای تست‌ها ارسال نشود.
+### 1.1. Receiving and processing market data
+- **FR-01 (Symbol monitoring):** Get list of valid symbols from endpoint `/v1/markets` and filter currency pairs based on Tomans (`quoteAsset == 'TMN'`).
+- **FR-02 (candle and history data):** Receive OHLCV candles from the official Wallex UDF endpoint (`/v1/udf/history`) in 15-minute or 1-hour timeframes.
+- **FR-03 (order office and market depth):** market depth query (`/v1/depth') to evaluate the spread (Spread), liquidity (Liquidity) and calculate the actual slippage before ordering.
+- **FR-04 (Inquiry of the latest trades):** Monitoring of recent trades (`/v1/trades`) in order to estimate the speed of fluctuations and the volume of real trades.
+
+### 1.2. Analysis and decision-making based on agent-based artificial intelligence (Agentic AI)
+- **FR-05 (quantitative feature extraction):** Calculation of analytical indicators including EMA (period 20 and 50), RSI (period 14), ATR (volatility), and the volume ratio to the 20-day moving average.
+- **FR-06 (Regime Agent): The structured language model is responsible for analyzing the overall market situation (Trending Bullish, Trending Bearish, Ranging/Choppy, High Volatility Panic).
+- **FR-07 (Pydantic Structured Output):** The agent's response must be strictly validated in the form of a Pydantic data model that includes `regime', `confidence' (between 0 and 1), `recommended_action' and `reasoning' fields in technical language.
+- **FR-08 (safe fallback system):** In case of network error, response timeout or artificial intelligence output validation error, the system automatically switches to the safe default state (not entering a new position).
+
+### 1.3. Independent Risk Engine
+- **FR-09 (ceiling value of each order):** No order should exceed 500,000 Tomans (10% of the total initial capital).
+- **FR-10 (portfolio commitment ceiling):** Maximum 60% of the total value of the portfolio (3,000,000 Tomans) can be simultaneously involved in crypto assets and at least 40% must be kept in cash in the form of Tomans.
+- **FR-11 (definite loss limit and profit limit):** apply a maximum loss limit of 2% and a target profit limit of 3.5% for all positions.
+- **FR-12 (Max Drawdown ceiling):** If the account value deviates more than 5% from its peak value, all new transactions are stopped and open positions are evaluated.
+- **FR-13 (daily loss limit):** The maximum allowed loss during 24 hours is equivalent to 200,000 Tomans (4% of the account).
+- **FR-14 (Emergency Cancellation Protection Shield):** Ability to immediately cancel all open orders and prevent entry into risky transactions.
+
+### 1.4. Order registration and execution (Execution & Exchange Adapter)
+- **FR-15 (restricted order registration / market):** Send a secure order registration request to the `/v1/account/orders' endpoint using the `x-api-key' header.
+- **FR-16 (Adjustment of order status):** Order ID tracking (`clientOrderId` / `orderId`) and filling status inquiry (Fills) and management of partially filled orders (Partial Fills).
+- **FR-17 (final settlement in Tomans):** Exclusive module to close all positions and convert assets to Tomans in the final hours of the hackathon.
+
+---
+
+## 2. Non-Functional Requirements
+
+- **NFR-01 (Validation Security):** Non-disclosure of API keys and Secrets in source code, Git commits and log files. Dedicated use of `.env' environment variables.
+- **NFR-02 (Typestatics and Code Quality):** Full typehint compliance in Python, compatibility with Python 3.12, and use of Pydantic for data validation.
+- **NFR-03 (Full Traceability and Auditability):** Recording of each event, signal, AI agent status and risk engine responses in JSONL structured log format.
+- **NFR-04 (Reproducibility):** Ability to accurately reproduce backtest results by match judges using a simple `scripts/run_backtest.py' script.
+- **NFR-05 (Automated Testability):** Covering Unit Tests with Pytest using Mock for exchange responses so that no real order is sent when the tests are run.

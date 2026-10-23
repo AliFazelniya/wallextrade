@@ -1,47 +1,47 @@
-# ممیزی واقع‌گرایی مدل اجرای سفارش در صرافی والکس (Phase 25 Execution Realism)
+# Audit of the realism of the order execution model in Wallex exchange (Phase 25 Execution Realism)
 ## Realistic Order Execution, Queue Uncertainty, Wallex Microstructure & Fill Dynamics
 
-> **مخزن:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **شاخه پژوهشی:** `research/phase25-validation`  
-> **کامیت مبنای منجمد:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **موضوع:** اعتبارسنجی فرضیات اجرای سفارش، کارمزدها، عدم قطعیت پر شدن و محدودیت‌های فنی والکس
+> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Research branch:** `research/phase25-validation`  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Subject:** Validation of order execution assumptions, fees, uncertainty of filling and technical limitations of Wallex
 
 ---
 
-## ۱. ممیزی مستندات رسمی و ویژگی‌های صرافی والکس (Wallex Exchange Realities)
+## 1. Audit of official documents and features of Wallex Exchange Realities
 
-بررسی کلاینت صرافی در [`src/data/client.py`](file:///root/starcoach-hack/wallex/src/data/client.py) و آداپتور اجرا در [`src/exchange/adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py) حقایق زیر را آشکار کرد:
+Examination of the exchange client in [`src/data/client.py`](file:///root/starcoach-hack/wallex/src/data/client.py) and the execution adapter in [`src/exchange/adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py) revealed the following facts:
 
-1. **عدم پشتیبانی والکس از سفارشات Post-Only نیتیو:**  
-   اندپوینت سفارش‌گذاری والکس (`POST /v1/account/orders`) تنها دارای پارامترهای `type` (شامل `LIMIT` یا `MARKET`)، `side`، `price` و `quantity` است. هیچ فلگ نیتیوی برای Post-Only وجود ندارد.  
-   *نتیجه:* اگر قیمت سفارش لیمیت با بهترین مظنه سمت مقابل تلاقی کند، سفارش بلافاصله تیکر محسوب شده و مشمول کارمزد **۰.۳۰٪** می‌شود.
-2. **عدم وجود سفارشات Stop-Loss نیتیو در سرور صرافی:**  
-   والکس فاقد سفارشات شرطی توقف ضرر (Stop-Market / Stop-Limit) است. حد ضرر باید منحصراً توسط **کلاینت الگوریتمی (ربات)** پایش و با رسیدن قیمت به سطح توقف، به صورت سفارش مارکت/لیمیت اگرسیو به سرور صرافی ارسال شود.  
-   *نتیجه:* قطعی اتصال، تاخیر شبکه و اسلیپیج ناشی از پرش قیمت می‌تواند هزینه استاپ را افزایش دهد.
-3. **حداقل ارزش معامله (Minimum Notional):**  
-   والکس دارای کف سفارش معادل ۵۰،۰۰۰ تومان است. کلیه سفارشات پورتفوی با حجم ۵۰۰،۰۰۰ تومان (۱۰ برابر حداقل مجاز) ارسال می‌شوند و کاملاً معتبرند.
-
----
-
-## ۲. مدل‌سازی نوسانات سایه کندل و مسیر قیمت درون کندل (Intra-Bar Execution Path)
-
-در ارزیابی بک‌تست‌های تایم‌فریم ۱۵ دقیقه‌ای:
-* **مسیر نامطلوب قیمت (Worst-Case Path Assumption):**  
-  چنانچه در یک کندل ۱۵ دقیقه‌ای، قیمت هم سقف حد سود (+۴.۵٪) و هم کف حد ضرر (-۲.۲٪) را لمس کند، الگوریتم به طور محافظه‌کارانه فرض می‌کند که **ابتدا حد ضرر فعال شده است**.
-* **محاسبه دقیق اسلیپیج و کارمزد در استاپ‌لاس:**  
-  خروج در استاپ‌لاس با فرض قطعی سفارش Taker با کارمزد ۰.۳۰٪ و اسلیپیج ۰.۱۵٪ (مجموعاً ۲.۶۵٪ افت از نقطه ورود) لحاظ گردید.
+1. **Wallex does not support Native Post-Only orders:**  
+   Wallex's ordering endpoint (`POST /v1/account/orders') only has parameters `type' (including `LIMIT' or `MARKET'), `side', `price' and `quantity'. There is no native flag for Post-Only.  
+   *Result:* If the price of the limit order meets the best quote on the opposite side, the order is immediately considered a ticker and is subject to a **0.30%** fee.
+2. **Lack of Native Stop-Loss orders on the exchange server:**  
+   Wallex does not have stop-loss conditional orders (Stop-Market / Stop-Limit). The loss limit should be monitored exclusively by the **algorithmic client (robot)** and when the price reaches the stop level, it should be sent to the exchange server in the form of an aggressive market/limit order.  
+   *Result:* Connection interruption, network delay and slippage caused by price jump can increase the stop cost.
+3. **Minimum Notional Transaction Value:**  
+   Wallex has an order floor equal to 50,000 Tomans. All portfolio orders are sent with a volume of 500,000 Tomans (10 times the minimum allowed) and are fully valid.
 
 ---
 
-## ۳. آزمون تنش حساسیت اجرای سفارشات در مدل C (تلفیق H1+H3)
+## 2. Modeling candle shadow fluctuations and price path inside the candle (Intra-Bar Execution Path)
 
-| سناریوی اجرای سفارش | کارمزد میکر / تیکر | فرض اسلیپیج | سود خالص کل (TMN) | میانگین بازدهی | نرخ برد | اصطکاک مبادله (TMN) | تاب‌آوری سیستم |
+In evaluating the backtests of the 15-minute timeframe:
+* **Worst-Case Path Assumption:**  
+  If, in a 15-minute candle, the price touches both the ceiling of the profit limit (+4.5%) and the floor of the limit of loss (-2.2%), the algorithm conservatively assumes that **stop loss is activated first**.
+* **Exact calculation of slippage and commission in stoploss:**  
+  Stoploss exit was considered with the assumption of a Taker order with a 0.30% fee and a 0.15% slippage (a total of 2.65% drop from the entry point).
+
+---
+
+## 3. Stress test of order execution sensitivity in model C (combination of H1+H3)
+
+| Order execution scenario Maker / Taker fee Slippage assumption Total Net Profit (TMN) | average yield | Win rate Exchange Friction (TMN) | System resilience
 |---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **مبنا (Base Friction)** | ۰.۲۵٪ / ۰.۳۰٪ | ۰.۱۵٪ | **۶۳،۹۵۴.۷+** | **۰.۰۴۴٪+** | **۲۷.۶٪** | ۱۳۴،۶۱۲ | ✅ عالی |
-| **همه خروج‌ها تیکر (All Taker Exits)** | ۰.۳۰٪ / ۰.۳۰٪ | ۰.۱۵٪ | **۵۸،۰۵۶.۸+** | **۰.۰۴۰٪+** | **۲۷.۶٪** | ۱۴۰،۵۱۰ | ✅ فوق‌العاده مقاوم |
-| **اسلیپیج متوسط (Slippage 0.30%)** | ۰.۲۵٪ / ۰.۳۰٪ | ۰.۳۰٪ | **۴۰،۱۳۷.۸+** | **۰.۰۲۸٪+** | **۳۱.۰٪** | ۱۶۵،۲۴۷ | ✅ مقاوم |
-| **اسلیپیج شدید (Slippage 0.50%)** | ۰.۲۵٪ / ۰.۳۰٪ | ۰.۵۰٪ | **۱۲،۰۷۹.۹+** | **۰.۰۰۸٪+** | **۲۷.۶٪** | ۲۲۴،۰۸۰ | ✅ بقای مثبت |
+| **Base Friction** | 0.25% / 0.30% | 0.15% **63,954.7+** | **0.044%+** | **27.6%** | 134,612 | Excellent
+| **All Taker Exits** | 0.30% / 0.30% | 0.15% **58,056.8+** | **0.040%+** | **27.6%** | 140,510 | Extremely resistant
+| **Moderate slippage (Slippage 0.30%)** | 0.25% / 0.30% | 0.30% **40,137.8+** | **0.028%+** | **31.0%** | 165,247 | ✅ Resistant
+| **Severe slippage (Slippage 0.50%)** | 0.25% / 0.30% | 0.50% **12,079.9+** | **0.008%+** | **27.6%** | 224,080 | Positive survival
 
-### نتیجه ممیزی واقع‌گرایی اجرا:
-برخلاف کاندیدای E اولیه که با افزایش اسلیپیج به شدت زیان‌ده می‌شد (-۱۲۱ هزار تومان زیان)، مدل تلفیقی H1+H3 حتی تحت اسلیپیج شدید ۰.۵۰٪ و با فرض پر نشدن سفارشات میکر (All Taker)، کماکان **سود خالص مثبت (+۱۲،۰۸۰ تومان تا +۵۸،۰۵۷ تومان)** ثبت می‌کند.
-این امر ناشی از نسبت پاداش به ریسک ساختاری (TP +4.5% vs SL -2.2%) و کنترل بهینه تعداد معاملات است.
+### The result of the realism audit:
+Unlike the initial candidate E, which suffered a severe loss (-121 thousand Tomans loss), even under severe slippage of 0.50% and assuming that all taker orders are not filled, the consolidated model H1+H3 still registers **positive net profit (+12,080 Tomans to +58,057 Tomans)**.
+This is due to the structural risk-reward ratio (TP +4.5% vs SL -2.2%) and optimal control of the number of trades.

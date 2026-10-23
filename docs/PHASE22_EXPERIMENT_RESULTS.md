@@ -1,75 +1,75 @@
-# نتایج تجربی و بازتولیدپذیر آزمایش‌های استراتژی (Phase 22)
+# Experimental and reproducible results of strategy tests (Phase 22)
 ## Reproducible Experimental Results & Stress Testing Suite
 
-> **شاخه پژوهشی:** `research/phase22-discovery`  
-> **مخزن:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **کامیت مبنا:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **محیط اجرا:** پایتون ۳.۱۲.۳، ایزوله در ماژول [`src/experimental/`](file:///root/starcoach-hack/wallex/src/experimental)
+> **Research branch:** `research/phase22-discovery`  
+> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Environment:** Python 3.12.3, isolated in module [`src/experimental/`](file:///root/starcoach-hack/wallex/src/experimental)
 
 ---
 
-## ۱. جدول نتایج تجربی کلیه کاندیداها در ۲۹ پنجره مستقل مسابقه‌ای (Primary Benchmark N = 29)
+## 1. Table of experimental results of all candidates in 29 independent competitive windows (Primary Benchmark N = 29)
 
-تمامی آزمایش‌ها با سرمایه اولیه ۵،۰۰۰،۰۰۰ تومان نقد در شروع هر پنجره ۷۲ ساعته، بدون پوزیشن موروثی و با لحاظ کارمزد سطح یک والکس (۰.۲۵٪ میکر و ۰.۳۰٪ تیکر) و اسلیپیج اجرایی ۰.۱۵٪ شبیه‌سازی شدند:
+All experiments were simulated with an initial capital of 5,000,000 Tomans in cash at the beginning of each 72-hour window, without legacy positions, and with Wallex level one fee (0.25% maker and 0.30% ticker) and 0.15% executive slippage:
 
-| کاندیدای استراتژی (Strategy Candidate) | سود/زیان کل (TMN) | میانگین بازدهی ۷۲h | نرخ برد کل | پنجره‌های بدون معامله | تعداد معامله | حداکثر افت سرمایه | مجموع اصطکاک مبادله | آماره تی (vs 0) | فاصله اطمینان ۹۵٪ بازدهی | وضعیت عملکرد |
+| Strategy Candidate | Total Profit/Loss (TMN) | The average yield is 72h Total win rate No-deal windows Number of transactions Maximum capital loss Total exchange friction | T-statistics (vs 0) | 95% efficiency confidence interval Performance status
 |---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **خط مبنای منجمد فاز ۲۱ (AI Baseline)** | **۲۸،۸۷۱-** | **۰.۰۱۹۹٪-** | ۲۰.۷٪ | ۱۰ از ۲۹ (۳۴.۵٪) | ۲۶ | ۰.۵۱٪ | ۱۰۹،۹۲۱ TMN | ۰.۳۸۶- | [۰.۱۲۵٪- , ۰.۰۸۶٪+] | زیان‌ده |
-| **خط مبنای دتر مینیستیک فاز ۲۱ (Det Baseline)** | **۹۶،۴۷۱-** | **۰.۰۶۶۵٪-** | ۴۱.۴٪ | ۰ از ۲۹ (۰.۰٪) | ۵۰ | ۰.۷۲٪ | ۲۱۱،۷۲۱ TMN | ۰.۹۴۰- | [۰.۲۱۲٪- , ۰.۰۷۹٪+] | زیان‌ده شدید |
-| **خط مبنای نقد ۱۰۰٪ (100% Cash)** | **۰** | **۰.۰۰۰۰٪** | ۰.۰٪ | ۲۹ از ۲۹ (۱۰۰٪) | ۰ | ۰.۰۰٪ | ۰ TMN | ۰.۰۰۰ | [۰.۰۰۰٪ , ۰.۰۰۰٪] | بی‌طرف |
-| **کاندیدای A (روند تطبیقی + بادبان پایانی)** | **۱۲۵،۵۷۷-** | **۰.۰۸۷۲٪-** | ۰.۰٪ | ۱۲ از ۲۹ (۴۱.۴٪) | ۳۴ | ۰.۳۵٪ | ۱۹۲،۴۹۳ TMN | ۴.۲۲۷- | [۰.۱۲۹٪- , ۰.۰۴۵٪-] | ناموفق (تارگت‌های کوچک شکست خورد) |
-| **کاندیدای B (شکست کانال دانچیان + ADX)** | **۶۸،۹۷۵-** | **۰.۰۴۷۹٪-** | ۳۱.۰٪ | ۳ از ۲۹ (۱۰.۳٪) | ۳۸ | ۰.۵۵٪ | ۱۶۴،۲۶۰ TMN | ۰.۹۲۷- | [۰.۱۵۳٪- , ۰.۰۵۷٪+] | زیان‌ده به دلیل اصطکاک |
-| **کاندیدای C (بازگشت به میانگین در رنج)** | **۵،۴۲۷+** | **۰.۰۰۳۸٪+** | ۳.۴٪ | **۲۸ از ۲۹ (۹۶.۶٪)** | **۱** | ۰.۰۴٪ | ۳،۵۱۹ TMN | ۱.۰۰۰+ | [۰.۰۰۴٪- , ۰.۰۱۱٪+] | سودآور اما عملاً غیرفعال |
-| **کاندیدای D (عامل مسیریاب چندرژیمی)** | **۷۵،۶۹۳-** | **۰.۰۵۲۶٪-** | ۳۱.۰٪ | ۲ از ۲۹ (۶.۹٪) | ۴۳ | ۰.۵۹٪ | ۱۸۱،۲۶۵ TMN | ۱.۰۱۱- | [۰.۱۵۸٪- , ۰.۰۵۴٪+] | زیان‌ده |
-| **کاندیدای E (مومنتوم مقطعی BTC/ETH/SOL + بادبان)** | **۴۷،۲۴۱+** | **۰.۰۳۲۸٪+** | **۴۴.۸٪** | **۷ از ۲۹ (۲۴.۱٪)** | **۳۳** | **۰.۴۸٪** | **۱۳۱،۶۱۲ TMN** | **۰.۷۲۶+** | **[۰.۰۵۹٪- , ۰.۱۲۵٪+]** | **برترین کاندیدا (سودآور و فعال)** |
+| **Phase 21 Frozen Baseline (AI Baseline)** | **28,871-** | **0.0199%-** | 20.7% 10 out of 29 (34.5%) | 26 | 0.51% 109,921 TMN 0.386-| [-0.125%, +0.086%] | Loser
+| **Det Baseline of phase 21** | **96,471-** | **0.0665%-** | 41.4% 0 of 29 (0.0%) | 50 | 0.72% | 211,721 TMN 0.940-| [-0.212%, +0.079%] | severe loss
+| **100% cash base line (100% Cash)** | **0** **0.0000%** | 0.0% | 29 out of 29 (100%) | 0 | 0.00% | 0 TMN 0.000 | [0.000%, 0.000%] | unbiased
+| **Candidate A (adaptive process + final sail)** | **125,577-** | **0.0872%-** | 0.0% | 12 out of 29 (41.4%) | 34 | 0.35% 192,493 TMN 4.227-| [-0.129%, -0.045%] | Failed (small targets failed) |
+| **Candidate B (Danchian channel failure + ADX)** | **68,975-** | **0.0479%-** | 31.0% 3 out of 29 (10.3%) | 38 | 0.55% 164,260 TMN 0.927-| [-0.153%, +0.057%] | Loss due to friction
+| **Candidate C (return to mean in range)** | **5,427+** | **0.0038%+** | 3.4% **28 out of 29 (96.6%)** | **1** 0.04% | 3,519 TMN 1.000+ | [-0.004%, +0.011%] | Profitable but practically inactive
+| **candidate D (multimode routing agent)** | **75,693-** | **0.0526%-** | 31.0% 2 out of 29 (6.9%) | 43 | 0.59% | 181,265 TMN 1.011- | [-0.158%, +0.054%] | Loser
+| **Candidate E (BTC/ETH/SOL cross section momentum + sail)** | **47,241+** | **0.0328%+** | **44.8%** | **7 out of 29 (24.1%)** | **33** | **0.48%** | **131,612 TMN** | **0.726+** | **[-0.059%, +0.125%]** | **The best candidate (profitable and active)** |
 
 ---
 
-## ۲. اعتبارسنجی درون-نمونه در برابر برون-نمونه کاندیدای E (Out-of-Sample Validation)
+## 2. In-sample validation against out-of-sample candidate E (Out-of-Sample Validation)
 
-جهت جلوگیری قاطع از بیش‌برازش (Overfitting)، دیتاست به دو بخش زمانی کرونولوژیک تقسیم شد:
-- **درون-نمونه (In-Sample):** پنجره‌های W01 الی W15 (روزهای ۰ تا ۴۵)
-- **برون-نمونه کاملاً دست‌نخورده (Out-of-Sample):** پنجره‌های W16 الی W29 (روزهای ۴۵ تا ۹۰)
+In order to avoid overfitting, the dataset was divided into two chronological sections:
+- **In-Sample:** windows W01 to W15 (days 0 to 45)
+- Out-of-Sample: Windows W16 to W29 (Days 45 to 90)
 
-| شاخص ارزیابی | بخش درون-نمونه (W01-W15) | بخش برون-نمونه (W16-W29) | کل دوره ۲۹ پنجره |
+| Evaluation index In-sample segment (W01-W15) | Out-of-sample section (W16-W29) | The entire period of 29 windows
 |---|:---:|:---:|:---:|
-| **تعداد پنجره‌ها** | ۱۵ پنجره | ۱۴ پنجره | ۲۹ پنجره |
-| **سود خالص تومانی کل** | **۳،۴۵۳.۴+ تومان** | **۴۳،۷۸۷.۳+ تومان** | **۴۷،۲۴۰.۷+ تومان** |
-| **میانگین بازدهی ۷۲ ساعته** | **۰.۰۰۵٪+** | **۰.۰۶۳٪+** | **۰.۰۳۳٪+** |
-| **میانه بازدهی ۷۲ ساعته** | ۰.۰۰۰٪ | ۰.۰۰۰٪ | ۰.۰۰۰٪ |
-| **نرخ برد پنجره‌ها** | **۴۶.۷٪** (۷ از ۱۵) | **۴۲.۹٪** (۶ از ۱۴) | **۴۴.۸٪** (۱۳ از ۲۹) |
-| **پنجره‌های بدون معامله** | ۳ از ۱۵ (۲۰.۰٪) | ۴ از ۱۴ (۲۸.۶٪) | ۷ از ۲۹ (۲۴.۱٪) |
-| **تعداد معاملات بسته‌شده** | ۲۱ معامله | ۱۲ معامله | ۳۳ معامله |
-| **حداکثر افت سرمایه** | ۰.۴۸٪ | ۰.۳۶٪ | ۰.۴۸٪ |
-| **مجموع اصطکاک پرداختی** | ۸۴،۴۸۳ تومان | ۴۷،۱۲۹ تومان | ۱۳۱،۶۱۲ تومان |
-| **آماره تی (T-Statistic)** | ۰.۰۶۳+ | **۱.۱۹۹+** | **۰.۷۲۶+** |
+| **Number of windows** | 15 windows 14 windows 29 windows
+| **Tomani net profit** | **3,453.4+ Tomans** | **43,787.3+ Tomans** | **47,240.7+ Tomans** |
+| **Average efficiency of 72 hours** | **0.005%+** | **0.063%+** | **0.033%+** |
+| **Average yield of 72 hours** | 0.000% | 0.000% | 0.000% |
+| **Window range rate** | **46.7%** (7 out of 15) | **42.9%** (6 out of 14) | **44.8%** (13 out of 29) |
+| **windows without transaction** | 3 out of 15 (20.0%) | 4 out of 14 (28.6%) | 7 out of 29 (24.1%) |
+| **Number of closed transactions** | 21 transactions 12 transactions 33 transactions
+| **Maximum capital loss** | 0.48% | 0.36% 0.48% |
+| **total friction paid** | 84,483 Tomans 47,129 Tomans 131,612 Tomans
+| **T-Statistic** | 0.063+ | **1.199+** | **0.726+** |
 
 > [!IMPORTANT]
-> کاندیدای E نه تنها در بخش برون-نمونه سودآوری خود را حفظ کرد، بلکه بازدهی میانگین آن در دوره برون-نمونه به **۰.۰۶۳٪+** و آماره تی به **۱.۱۹۹+** افزایش یافت. این امر اثبات می‌کند که برتری کاندیدای E ناشی از برازش تصادفی بر تاریخچه گذشته نبوده است.
+> Candidate E not only maintained its profitability in the out-of-sample sector, but its average return in the out-of-sample period increased to **0.063%+** and the T-statistic increased to **1.199+**. This proves that the superiority of candidate E was not due to a random fit to the past history.
 
 ---
 
-## ۳. آزمون‌های تنش و حساسیت اصطکاک (Stress Testing Matrix)
+## 3. Stress testing and friction sensitivity tests (Stress Testing Matrix)
 
-کاندیدای E در ۸ سناریوی استرس تحت بارهای سنگین کارمزد و لغزش قیمت سنجیده شد:
+Candidate E was tested in 8 stress scenarios under heavy fee loads and price slippage:
 
-| سناریوی تنش | سود خالص کل (TMN) | میانگین بازدهی | نرخ برد پنجره‌ها | تعداد معامله | مجموع اصطکاک مبادله | تحلیل تاب‌آوری |
+| Tension scenario Total Net Profit (TMN) | average yield | Windows win rate Number of transactions Total exchange friction | Resilience analysis
 |---|:---:|:---:|:---:|:---:|:---:|---|
-| **۱. خط مبنا (اسلیپیج ۰.۱۵٪، کارمزد ۰.۲۵/۰.۳۰٪)** | **۴۷،۲۴۱+** | **۰.۰۳۳٪+** | **۴۴.۸٪** | ۳۳ | ۱۳۱،۶۱۲ TMN | مبنای مسابقه‌ای استاندارد |
-| **۲. اسلیپیج بالا (۰.۳۰٪ اسلیپیج)** | ۶۶،۶۹۲- | ۰.۰۴۶٪- | ۳۱.۰٪ | ۳۴ | ۱۷۷،۱۵۳ TMN | افت سودآوری در اسلیپیج ۲ برابر |
-| **۳. اسلیپیج شدید (۰.۵۰٪ اسلیپیج)** | ۱۶۷،۵۸۵- | ۰.۱۱۶٪- | ۲۰.۷٪ | ۳۵ | ۲۴۵،۳۷۱ TMN | آستانه شکنندگی بحرانی |
-| **۴. افزایش ۵۰٪ اسپرد بازار** | **۸،۶۸۹+** | **۰.۰۰۶٪+** | **۲۷.۶٪** | ۲۱ | ۸۴،۵۰۹ TMN | حفظ سودآوری با وتوی اسپردهای باز |
-| **۵. تاخیر اجرایی (۱ کندل تاخیر در ورود)** | **۹،۹۵۸+** | **۰.۰۰۷٪+** | **۳۷.۹٪** | ۳۴ | ۱۳۷،۹۷۶ TMN | مقاومت بالا در برابر تاخیر شبکه |
-| **۶. کارمزد تشویقی مسابقه (۰.۰۸٪ ثابت)** | **۱۱۵،۷۷۷+** | **۰.۰۸۰٪+** | **۴۴.۸٪** | ۳۳ | ۶۳،۰۷۶ TMN | اوج سودآوری در تخفیف مسابقه |
-| **۷. کارمزد تیکر بالا (۰.۴۰٪ تیکر صرافی)** | **۱۸،۴۷۶+** | **۰.۰۱۳٪+** | **۳۷.۹٪** | ۳۳ | ۱۶۰،۳۷۷ TMN | حفظ سودآوری حتی در کارمزد ۰.۴۰٪ |
+| **1. Baseline (slippage 0.15%, fee 0.25/0.30%)** | **47,241+** | **0.033%+** | **44.8%** | 33 | 131,612 TMN Standard racing basis
+| **2. High slippage (0.30% slippage)** | 66,692- | 0.046% - | 31.0% 34 | 177,153 TMN Drop in profitability in slippage 2 times
+| **3. Severe slippage (0.50% slippage)** | 167,585- | 0.116%-| 20.7% 35 | 245,371 TMN Critical fragility threshold
+| **4. 50% increase in market spread** | **8,689+** | **0.006%+** | **27.6%** | 21 | 84,509 TMN Maintaining profitability by vetoing open spreads
+| **5. Executive delay (1 candle delay in entry)** | **9,958+** | **0.007%+** | **37.9%** | 34 | 137,976 TMN High resistance to network delay
+| **6. Competition incentive fee (0.08% fixed)** | **115,777+** | **0.080%+** | **44.8%** | 33 | 63,076 TMN The peak of profitability in the competition discount
+| **7. High ticker fee (0.40% exchange ticker)** | **18,476+** | **0.013%+** | **37.9%** | 33 | 160,377 TMN Maintaining profitability even at 0.40% fee
 
 ---
 
-## ۴. کالبدشکافی علل شکست کاندیداهای ناموفق
+## 4. Autopsy of the causes of failure of unsuccessful candidates
 
-1. **چرا کاندیدای A شکست خورد؟ (۱۲۵ هزار تومان زیان):**  
-   با کاهش حد سود از ۴.۰٪ به ۲.۰٪ و حد ضرر به ۱.۲٪، فرکانس فعال‌سازی حد ضرر به شدت افزایش یافت. هر بار فعال‌سازی حد ضرر با احتساب ۰.۷۵٪ کارمزد و اسلیپیج، زیان خالص ۲.۰٪ ایجاد کرد؛ در حالی که حد سود پس از کسر کارمزد تنها ۱.۲٪ باقی ماند. این عدم تقارن نسبت پاداش به ریسک را تخریب کرد.
-2. **چرا کاندیدای C عملاً کاربرد نداشت؟ (تنها ۱ معامله در ۹۰ روز):**  
-   برای اینکه استراتژی بازگشت به میانگین در کارمزد ۰.۶۰٪ صرافی سودآور باشد، فاصله کف باند بولینگر تا خط میانگین باید حداقل ۱.۲٪ تا ۱.۵٪ باشد. در رژیم‌های بدون نوسان (ADX < 20)، پهنای باندها به شدت فشرده می‌شود و این فاصله به ندرت به ۱.۲٪ می‌رسد؛ در نتیجه فیلتر هزینه مانع از ورود در ۲۸ پنجره گردید.
-3. **چرا کاندیدای E برنده شد؟:**  
-   چون همواره قوی‌ترین مومنتوم را از میان ۳ ارز انتخاب کرد و با تعیین تارگت بازتر (حد سود ۳.۲٪ در برابر حد ضرر ۱.۵٪)، سود خالص هر معامله برنده (+۲.۵٪) به راحتی هزینه‌های صرافی را پوشش داد و با مهار تصفیه اضطراری در ۱۲ ساعت پایانی، زیان پایانی را به صفر رساند.
+1. Why did candidate A fail? (125 thousand tomans loss):**  
+   With the reduction of the profit limit from 4.0% to 2.0% and the loss limit to 1.2%, the frequency of activation of the stop loss increased drastically. Each activation of the loss limit generated a net loss of 2.0%, including 0.75% commission and slippage; While the profit margin after deducting fees remained only 1.2%. This asymmetry destroyed the reward-to-risk ratio.
+2. ** Why candidate C was practically not used? (only 1 transaction in 90 days):**  
+   For the mean reversion strategy at 0.60% exchange fee to be profitable, the distance between the floor of the Bollinger Band and the mean line should be at least 1.2% to 1.5%. In non-volatile regimes (ADX < 20), the bandwidth is strongly compressed and this distance rarely reaches 1.2%; As a result, the cost filter prevented entry in 28 windows.
+3. **Why candidate E won?:**  
+   Because he always chose the strongest momentum among the 3 currencies and by setting a more open target (profit limit of 3.2% against loss limit of 1.5%), the net profit of each winning trade (+2.5%) easily covered the exchange costs and by curbing the emergency liquidation in the last 12 hours, he reduced the final loss to zero.

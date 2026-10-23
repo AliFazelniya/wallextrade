@@ -1,65 +1,64 @@
-# راهنمای جامع و ممیزی‌شده تعامل با رابط برنامه‌نویسی والکس (Wallex API Audit & Reference)
+# Comprehensive and audited guide for interacting with the Wallex programming interface (Wallex API Audit & Reference)
 
-این سند مرجع فنی قطعی، ممیزی‌شده و تست‌شده جهت برقراری ارتباط پایدار، استعلام داده‌های عمومی و ارسال ایمن سفارش‌ها به صرافی والکس است.
-
----
-
-## ۱. مشخصات عمومی و پروتکل احراز هویت
-- **آدرس پایه (Base URL):** `https://api.wallex.ir`
-- **فرمت تبادل داده:** JSON (`Content-Type: application/json`)
-- **شیوه احراز هویت اندپوینت‌های خصوصی:** هدر `x-api-key: YOUR_API_KEY` (بررسی‌شده: ارسال کلید نامعتبر منتهی به خطای `{"code":1201,"message":"invalid API key format"}` می‌شود).
-- **منطقه زمانی سرور:** `Asia/Tehran`
+This document is the definitive, audited and tested technical reference for stable communication, public data query and secure order submission to Wallex Exchange.
 
 ---
 
-## ۲. ساختار کارمزدها (ممیزی رسمی سطح ۱ والکس)
+## 1. Public profile and authentication protocol
+- **Base URL:** `https://api.wallex.ir`
+- **Data exchange format:** JSON (`Content-Type: application/json`)
+- **Private endpoint authentication method:** header `x-api-key: YOUR_API_KEY` (checked: sending invalid key leads to error `{"code":1201,"message":"invalid API key format"}`).
+- **Server time zone:** `Asia/Tehran`
 
-بر اساس مستندات رسمی کارمزدهای بازار اسپات والکس برای حجم معاملات سطح یک (معاملات زیر ۱۰ میلیون تومان در ۳۰ روز گذشته):
+---
 
-| بازار | کارمزد سفارش‌گذار (Maker) | کارمزد سفارش‌بردار (Taker) | توضیحات |
+## 2. Fee structure (Wallex level 1 official audit)
+
+According to the official documents of the SpotWallex market fees for the volume of level one transactions (transactions below 10 million Tomans in the last 30 days):
+
+| The market Maker's fee | Taker fee | Description
 |---|---|---|---|
-| **بازارهای با پایه تومان (`*TMN`)** | **۰.۲۵٪** (0.0025) | **۰.۳۰٪** (0.0030) | سفارش‌های محدود (Limit) به عنوان Maker و سفارش‌های بازار/اضطراری به عنوان Taker |
-| **بازارهای با پایه تتر (`*USDT`)** | **۰.۱۰٪** (0.0010) | **۰.۱۳٪** (0.0013) | به دلیل اضافه شدن اصطکاک تبدیل تومان به تتر فعلاً مسدود شده است |
-| **معامله آنی (OTC Easy Trade)** | ۰.۰۰٪ | ۰.۰۰٪ | کارمزد مستقیم صفر است، اما اسپرد ضمنی بالایی در نرخ خرید/فروش وجود دارد |
+| **Toman-based markets (`*TMN`)** | **0.25%** (0.0025) | **0.30%** (0.0030) | Limit orders as Maker and market/emergency orders as Taker
+| **Markets based on Tether (`*USDT`)** | **0.10%** (0.0010) | **0.13%** (0.0013) | Due to the addition of friction, the conversion of Toman to Tether is currently blocked
+| **Instant transaction (OTC Easy Trade)** | 0.00% | 0.00% | Direct commission is zero, but there is a high implied spread in the bid/ask rate
 
 ---
 
-## ۳. اندپوینت‌های عمومی (Public Endpoints)
+## 3. Public Endpoints
 
-### ۳.۱. فهرست بازارها و متادیتا (Markets Metadata)
-- **مسیر:** `GET /v1/markets`
-- **احراز هویت:** بدون نیاز به توکن (عمومی)
-- **یافته‌های ممیزی:**
-  - ۳۷۳ بازار فعال گزارش می‌شود (۱۸۷ نماد تومانی و ۱۸۶ نماد تتری).
-  - فیلد `isMarketTypeEnable`: صرفاً برای **۴ نماد** (`USDTTMN`, `BTCTMN`, `ETHTMN`, `XAUTTMN`) برابر با `true` است (یعنی امکان ارسال سفارش با قیمت بازار `MARKET`). تمامی سایر نمادها (`SOLTMN`, `DOGETMN`, `PEPETMN`, ...) **صرفاً از سفارش محدود `LIMIT` پشتیبانی می‌کنند**.
-  - حداقل ارزش سفارش (`minNotional`) در تمام جفت‌ارزهای تومانی معادل **۵۰،۰۰۰ تومان** است.
+### 3.1. List of markets and metadata (Markets Metadata)
+- **Path:** `GET /v1/markets`
+- **Authentication:** No token required (public)
+- **Audit findings:**
+  - 373 active markets are reported (187 Toman symbols and 186 Tetri symbols).
+  - `isMarketTypeEnable` field: it is equal to `true` only for **4 symbols** (`USDTTMN`, `BTCTMN`, `ETHTMN`, `XAUTTMN`) (that is, it is possible to send an order with market price `MARKET`). All other symbols (`SOLTMN`, `DOGETMN`, `PEPETMN`, ...) **only support `LIMIT` limit order**.
+  - The minimum order value (`minNotional') in all Toman currency pairs is equivalent to **50,000 Tomans**.
 
-### ۳.۲. دفتر سفارش و عمق بازار (Order Book Depth)
-- **مسیر:** `GET /v1/depth?symbol={symbol}`
-- **پارامترها:** `symbol` (مثال: `BTCTMN`)
-- **سرعت پاسخ:** میانگین زیر ۲۰۰ میلی‌ثانیه. ساختار خروجی شامل آرایه‌های `bid` و `ask` به صورت مرتب‌شده بر اساس بهترین قیمت.
+### 3.2. Order book and market depth (Order Book Depth)
+- **Path:** `GET /v1/depth?symbol={symbol}`
+- **parameters:** `symbol` (example: `BTCTMN`)
+- **Response speed:** The average is below 200 milliseconds. The output structure consists of `bid` and `ask` arrays sorted by best price.
 
-### ۳.۳. دریافت داده‌های کندل تاریخی (TradingView UDF History)
-- **مسیر:** `GET /v1/udf/history?symbol={symbol}&resolution={res}&from={from_ts}&to={to_ts}`
-- **یافته کلیدی ممیزی فاز ۴:**
-  - ارسال `resolution=1` منجر به پاسخ خالی می‌شود.
-  - ارسال `resolution=15` داده‌های خام با گام زمانی **۶۰ ثانیه (۱ دقیقه‌ای)** تا سقف ۲۷،۳۴۵ کندل برمی‌گرداند. کلاینت سیستم وظیفه تجمیع و بازنمونه‌برداری (Resampling) به کندل‌های ۱۵ دقیقه‌ای را به صورت خودکار بر عهده دارد.
-  - ارسال `resolution=60` داده‌های واقعی ۱ ساعته (۷۱۹ کندل در ۳۰ روز) برمی‌گرداند.
+### 3.3. Get historic candlestick data (TradingView UDF History)
+- **Path:** `GET /v1/udf/history?symbol={symbol}&resolution={res}&from={from_ts}&to={to_ts}`
+- **Key finding of phase 4 audit:**
+  - Sending `resolution=1` results in an empty response.
+  - Sending `resolution=15` returns raw data with a time step of **60 seconds (1 minute)** up to 27,345 candles. The system client is responsible for resampling to 15-minute candles automatically.
+  - sending `resolution=60` will return 1 hour real data (719 candelas in 30 days).
 
 ---
 
-## ۴. اندپوینت‌های خصوصی و مدیریت سفارش‌ها (Private Endpoints)
+## 4. Private endpoints and order management (Private Endpoints)
 
-### ۴.۱. استعلام موجودی (Balances)
-- **مسیر:** `GET /v1/account/balances`
-- **هدر:** `x-api-key: YOUR_KEY`
-- **ساختار پاسخ:** تفکیک دارایی‌ها به دو بخش موجودی آزاد (`value`) و موجودی قفل‌شده در سفارش‌های باز (`locked`).
+### 4.1. Balance inquiry
+- **Path:** `GET /v1/account/balances`
+- **Header:** `x-api-key: YOUR_KEY`
+- **Structure of the answer:** Separation of assets into two parts: free balance (`value') and locked balance in open orders (`locked').
 
-### ۴.۲. ثبت سفارش (Place Order)
-- **مسیر:** `POST /v1/account/orders`
-- **هدر:** `x-api-key: YOUR_KEY`
-- **بدنه JSON:**
-```json
+### 4.2. Place Order
+- **Path:** `POST /v1/account/orders`
+- **Header:** `x-api-key: YOUR_KEY`
+- **JSON body:**```json
 {
   "symbol": "BTCTMN",
   "type": "LIMIT",
@@ -70,6 +69,6 @@
 }
 ```
 
-### ۴.۳. استعلام سفارش‌های باز (Open Orders) و لغو سفارش (Cancel Order)
-- **استعلام بازها:** `GET /v1/account/open-orders`
-- **لغو سفارش:** `DELETE /v1/account/orders?clientOrderId={clientOrderId}` یا `orderId={orderId}`.
+### 4.3. Inquiring about open orders (Open Orders) and canceling orders (Cancel Order)
+- **Request open orders:** `GET /v1/account/open-orders`
+- **Order cancellation:** `DELETE /v1/account/orders?clientOrderId={clientOrderId}` or `orderId={orderId}`.

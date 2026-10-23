@@ -49,6 +49,16 @@ def compute_bollinger_bands(
   return mid, upper, lower
 
 
+def compute_kaufman_efficiency_ratio(series: pd.Series, period: int = 10) -> pd.Series:
+  """Kaufman's Efficiency Ratio (KER): Directional move divided by total path traveled.
+  Values near 1.0 indicate smooth directional trend; values near 0.0 indicate high noise/chop.
+  """
+  direction = (series - series.shift(period)).abs()
+  volatility = series.diff().abs().rolling(window=period).sum()
+  ker = direction / (volatility + 1e-9)
+  return ker.fillna(0.5)
+
+
 def extract_features(df: pd.DataFrame) -> pd.DataFrame:
   """Enriches an OHLCV DataFrame with quantitative features.
 
@@ -57,6 +67,7 @@ def extract_features(df: pd.DataFrame) -> pd.DataFrame:
   - ema_spread_pct: ((ema_20 - ema_50) / ema_50) * 100
   - rsi_14
   - atr_14, atr_pct: (atr_14 / close) * 100
+  - ker_10: Kaufman Efficiency Ratio (trend vs noise)
   - bb_mid, bb_upper, bb_lower, bb_pct_b
   - vol_sma_20, vol_ratio: volume / vol_sma_20
   - return_1d_pct: 24h rolling price return
@@ -72,6 +83,7 @@ def extract_features(df: pd.DataFrame) -> pd.DataFrame:
   out["rsi_14"] = compute_rsi(out["close"], 14)
   out["atr_14"] = compute_atr(out, 14)
   out["atr_pct"] = (out["atr_14"] / out["close"]) * 100
+  out["ker_10"] = compute_kaufman_efficiency_ratio(out["close"], 10)
 
   bb_mid, bb_upper, bb_lower = compute_bollinger_bands(out["close"], 20, 2.0)
   out["bb_mid"] = bb_mid
@@ -103,6 +115,7 @@ def get_latest_feature_snapshot(df: pd.DataFrame) -> Dict[str, Any]:
       "ema_spread_pct": round(float(latest.get("ema_spread_pct", 0.0)), 3),
       "rsi_14": round(float(latest.get("rsi_14", 50.0)), 2),
       "atr_pct": round(float(latest.get("atr_pct", 0.0)), 3),
+      "ker_10": round(float(latest.get("ker_10", 0.5)), 3),
       "vol_ratio": round(float(latest.get("vol_ratio", 1.0)), 2),
       "recent_return_pct": round(float(latest.get("return_pct", 0.0)), 2),
       "trend_direction": (

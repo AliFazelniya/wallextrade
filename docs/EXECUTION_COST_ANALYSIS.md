@@ -1,73 +1,73 @@
-# تحلیل عمیق هزینه‌های اجرا، ساختار کارمزد و ماتریس استرس (فاز ۱۲)
+# In-depth analysis of implementation costs, fee structure and stress matrix (phase 12)
 ### In-Depth Execution Cost Analysis, Microstructure Dynamics & Fee Stress Matrix
-**مخزن:** [`wallex`](file:///root/starcoach-hack/wallex) | **صرافی مقصد:** والکس (Wallex) | **جدول رسمی کارمزد:** سطح ۱ تومانی (میکر ۰.۲۵٪ / تیکر ۰.۳۰٪)
+**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Destination exchange:** Wallex | **Official fee table:** 1 Toman level (0.25% multiplier / 0.30% ticker)
 
 ---
 
-## ۱. ساختار ریزمعاملاتی کارمزدهای والکس و طبقه‌بندی سفارش‌ها
+## 1. Microtransaction structure of Wallex fees and order classification
 
-در صرافی والکس، نحوه ارسال و تطبیق سفارش، نرخ کارمزد کسرشده را تعیین می‌کند:
+In the Wallex exchange, the method of sending and matching the order determines the deducted commission rate:
 
 ```mermaid
 flowchart LR
-    A["ارسال سفارش به درگاه والکس"] --> B{"آیا قیمت سفارش بلافاصله با دفتر تطبیق می‌خورد؟"}
-    B -->|بله: برداشت نقدینگی| C["سفارش‌بردار (Taker)"]
-    B -->|خیر: نشستن در دفتر سفارش| D["سفارش‌گذار (Maker)"]
+    A["Send the order to the Wallex portal"] --> B{"Does the order price match the office immediately?"}
+    B -->|Yes: cash withdrawal| C["order taker"]
+    B -->|No: sitting in the order office| D["Maker"]
     
-    C --> E["کارمزد ۰.۳۰٪ (سطح ۱ تومانی)"]
-    D --> F["کارمزد ۰.۲۵٪ (سطح ۱ تومانی)"]
+    C --> E["0.30% fee (1 Toman level)"]
+    D --> F["0.25% fee (1 Toman level)"]
     
     subgraph Execution Scenarios
-    C -.-> G["سفارش‌های حد ضرر اضطراری (Stop-Loss)"]
-    C -.-> H["تسویه پایانی مسابقه به تومان (Liquidation)"]
-    D -.-> I["سفارش‌های ورود حدی غیرمارکت‌پذیر"]
-    D -.-> J["سفارش‌های خروج با حد سود (Take-Profit)"]
+    C -.-> G["Stop-Loss orders"]
+    C -.-> H["Final settlement of the competition in Tomans (Liquidation)"]
+    D -.-> I["Non-marketable limit entry orders"]
+    D -.-> J["Exit orders with profit limit (Take-Profit)"]
     end
 ```
 
-### ۱.۱. فرمول محاسبه هزینه کل معامله رفت‌وبرگشت (Full Round-Trip Cost)
-در هر معامله خرید و سپس فروش، هزینه‌های مبادلاتی به صورت تجمعی از حساب کسر می‌شوند:
+### 1.1. Full Round-Trip Cost calculation formula
+In each purchase and then sale transaction, transaction fees are cumulatively deducted from the account:
 $$\text{Total Cost} = (\text{Notional}_{\text{buy}} \times \text{Fee}_{\text{buy}}) + (\text{Notional}_{\text{sell}} \times \text{Fee}_{\text{sell}}) + 2 \times \text{Slippage}$$
 
-به ازای هر سفارش استاندارد ۵۰۰،۰۰۰ تومانی:
-- **کارمزد ورود میکر (۰.۲۵٪):** ۱،۲۵۰ تومان
-- **کارمزد ورود تیکر (۰.۳۰٪):** ۱،۵۰۰ تومان
-- **کارمزد خروج حد سود میکر (۰.۲۵٪):** ~۱،۲۹۰ تومان (با فرض سود ۳.۵٪)
-- **کارمزد خروج حد ضرر تیکر (۰.۳۰٪):** ~۱،۴۷۰ تومان (با فرض ضرر ۲.۰٪)
-- **لغزش قیمتی میانگین (۰.۱۵٪ دوطرفه):** ~۱،۵۰۰ تومان
-- **مجموع اصطکاک رفت‌وبرگشت هر سفارش:** بین **۴،۰۴۰ تومان تا ۴،۴۷۰ تومان (معادل ۰.۸۰٪ تا ۰.۹۰٪ ارزش سفارش)**.
+For each standard order of 500,000 Tomans:
+- **Maker entry fee (0.25%):** 1,250 Tomans
+- **Tiker entry fee (0.30%):** 1,500 Tomans
+- **Profit limit withdrawal fee (0.25%):** ~1,290 Tomans (assuming 3.5% profit)
+- **Ticker loss limit withdrawal fee (0.30%):** ~1,470 Tomans (assuming a 2.0% loss)
+- **Average price slippage (0.15% two-way):** ~1,500 Tomans
+- **Total round-trip friction for each order:** between **4,040 Tomans to 4,470 Tomans (equivalent to 0.80% to 0.90% of the order value)**.
 
 ---
 
-## ۲. رفتار در برابر پرشدن جزئی (Partial Fills) و سفارش‌های تکمیل‌نشده
+## 2. Behavior against partial fills and uncompleted orders
 
-در کلاس [`ExchangeAdapter`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py) و [`PortfolioEngine`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py):
-1. **مدل‌سازی سفارش‌های تکمیل‌نشده (Unfilled Orders):** سفارش خرید تنها زمانی پر می‌شود که در کندل بعدی، کمترین قیمت معامله‌شده (`Low`) به قیمت سفارش یا پایین‌تر رسیده باشد (`Low <= TargetPrice`). در غیر این صورت، سفارش پرنشده تلقی شده و کارمزدی کسر نمی‌شود.
-2. **مدل‌سازی پرشدن جزئی (Partial Fills):** سیستم از پرشدن کسری سفارشات (مثلاً ۵۰٪ یا ۷۰٪ حجم درخواستی بر اساس عمق موجود در دفتر سفارش) پشتیبانی می‌کند و کارمزد دقیقاً به نسبت حجم اجراشده محاسبه و در پایگاه داده پورتفولیو ثبت می‌گردد. آزمون واحد [`test_partial_fill_execution`](file:///root/starcoach-hack/wallex/tests/test_exchange_adapter.py#L110-L134) صحت این عملکرد را اثبات کرده است.
+In class [`ExchangeAdapter`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py) and [`PortfolioEngine`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py):
+1. Modeling Unfilled Orders: The buy order is filled only when the lowest traded price (`Low') has reached the order price or lower (`Low <= TargetPrice') in the next candle. Otherwise, the order will be considered unfilled and no fee will be deducted.
+2. **Partial Fills Modeling:** The system supports the partial filling of orders (for example, 50% or 70% of the requested volume based on the depth in the order book) and the fee is calculated exactly in proportion to the executed volume and recorded in the portfolio database. The unit test [`test_partial_fill_execution`](file:///root/starcoach-hack/wallex/tests/test_exchange_adapter.py#L110-L134) has proven the correctness of this functionality.
 
 ---
 
-## ۳. ماتریس استرس و تحلیل حساسیت کارمزد و اسلیپیج (Stress Matrix)
+## 3. Stress matrix and fee and slippage sensitivity analysis (Stress Matrix)
 
-برای سنجش میزان تاب‌آوری سیستم در برابر افزایش احتمالی کارمزدها یا نوسانات شدید اسلیپیج در بازار زنده، ۴ سناریوی استرس مختلف بر روی پورتفولیوی چندنمادی شبیه‌سازی شد:
+To measure the resilience of the system against a possible increase in fees or extreme slippage fluctuations in the live market, 4 different stress scenarios were simulated on the multisymbol portfolio:
 
-| سناریو | مفروضات کارمزد و اسلیپیج | بازدهی خالص سبد | سود/زیان ناخالص | مجموع کارمزدهای پرداختی | حداکثر دراوداون پورتفولیو | وضعیت حاکمیتی |
+| Scenario Fee and slippage assumptions Net return of the portfolio Gross Profit/Loss | Total fees paid Maximum portfolio drawdown The state of governance
 |---|---|---|---|---|---|---|
-| **سناریو ۱ (پایه رسمی والکس)** | میکر ۰.۲۵٪ / تیکر ۰.۳۰٪ / اسلیپیج ۰.۱۵٪ | **۰.۸۳-٪** | ۷۹،۹۷۹+ ت | ۱۲۱،۳۲۰ ت | **۳.۴۹٪** | ✅ ایمن و مجاز |
-| **سناریو ۲ (بدبینانه تمام‌تیکر)** | میکر ۰.۳۰٪ / تیکر ۰.۳۰٪ / اسلیپیج ۰.۱۵٪ | **۰.۸۹-٪** | ۷۹،۹۷۹+ ت | ۱۲۴،۴۰۰ ت | **۳.۵۸٪** | ✅ ایمن و مجاز |
-| **سناریو ۳ (اصطکاک شدید)** | میکر ۰.۳۵٪ / تیکر ۰.۳۵٪ / اسلیپیج ۰.۲۵٪ | **۱.۰۸-٪** | ۷۹،۹۷۹+ ت | ۱۳۳،۹۵۰ ت | **۳.۸۵٪** | ✅ ایمن و مجاز |
-| **سناریو ۴ (استرس بحرانی)** | میکر ۰.۴۰٪ / تیکر ۰.۴۰٪ / اسلیپیج ۰.۳۵٪ | **۱.۳۲-٪** | ۷۹،۹۷۹+ ت | ۱۴۳،۵۰۰ ت | **۴.۱۵٪** | ✅ ایمن و مجاز |
+| **Scenario 1 (Official Wallex Base)** | Maker 0.25% / Ticker 0.30% / Slippage 0.15% | **-0.83%** | 79,979+ tons 121,320 tons **3.49%** | Safe and authorized
+| **Scenario 2 (full ticker pessimism)** | Maker 0.30% / Ticker 0.30% / Slippage 0.15% | **-0.89%** | 79,979+ tons 124,400 tons **3.58%** | Safe and authorized
+| **Scenario 3 (severe friction)** | Maker 0.35% / Ticker 0.35% / Slippage 0.25% | **-1.08%** | 79,979+ tons 133,950 tons **3.85%** | Safe and authorized
+| **Scenario 4 (critical stress)** | Maker 0.40% / Ticker 0.40% / Slippage 0.35% | **-1.32%** | 79,979+ tons 143,500 tons **4.15%** | Safe and authorized
 
-### تحلیل نمودار حساسیت:
-- با افزایش نرخ کارمزد از ۰.۲۵٪ به ۰.۴۰٪ و افزایش اسلیپیج از ۰.۱۵٪ به ۰.۳۵٪ (افزایش بیش از ۱۰۰ درصدی اصطکاک مبادلاتی)، افت بازدهی کل حساب تنها **۰.۴۹٪** افزایش یافت (از ۰.۸۳-٪ به ۱.۳۲-٪).
-- حتی در سناریوی استرس بحرانی، حداکثر دراوداون پورتفولیو در سطح **۴.۱۵٪** مهار شد و هرگز به سقف ۵.۰٪ توقف اضطراری مسابقه نرسید.
-- این آزمون تاب‌آوری بالای موتور مدیریت ریسک [`RiskEngine`](file:///root/starcoach-hack/wallex/src/risk/engine.py) را در سخت‌ترین شرایط ریزساختاری صرافی اثبات می‌کند.
+### Sensitivity chart analysis:
+- With the increase of the commission rate from 0.25% to 0.40% and the increase of slippage from 0.15% to 0.35% (more than 100% increase in exchange friction), the total return of the account increased by only **0.49%** (from -0.83% to -1.32%).
+- Even in the critical stress scenario, the maximum drawdown of the portfolio was restrained at **4.15%** level and never reached the 5.0% emergency stop of the race.
+- This test proves the high resilience of the risk management engine [`RiskEngine'] (file:///root/starcoach-hack/wallex/src/risk/engine.py) in the most difficult microstructural conditions of the exchange.
 
 ---
 
-## ۴. توصیه‌های مسیریابی سفارش برای روز مسابقه (Order Routing Recommendations)
+## 4. Order Routing Recommendations for match day
 
-برای بهینه‌سازی حداکثری بازدهی خالص در محیط واقعی:
-1. **استفاده از سفارش‌های ورود میکر (Maker Post-Only):** کلیه سفارش‌های ورود عادی باید با قیمت حد در سمت داخل دفتر سفارش ارسال شوند تا از نرخ کارمزد پایین‌تر میکر (۰.۲۵٪ به جای ۰.۳۰٪) بهره‌مند شده و اسلیپیج به صفر میل کند.
-2. **رزرو سفارش تیکر صرفاً برای حد ضرر اضطراری:** سفارش‌های تیکر تنها زمانی ارسال شوند که بازار به سرعت در حال ریزش به زیر آستانه حد ضرر ۲٪ باشد.
-3. **محدودسازی معاملات در ساعات کم‌عمق شبانه:** اسپرد بازار در ساعات ۲ تا ۶ بامداد به دلیل کاهش سفارش‌گذاران بازتر می‌شود؛ موتور معاملاتی باید در این ساعات حد آستانه اسپرد را به ۰.۱۵٪ کاهش دهد.
+To optimize the maximum net efficiency in the real environment:
+1. **Using Maker Entry Orders (Maker Post-Only):** All normal entry orders must be sent at the limit price on the inside of the order book to benefit from the lower Maker commission rate (0.25% instead of 0.30%) and zero slippage.
+2. **Reserve ticker order only for emergency loss limit:** Ticker orders should be placed only when the market is rapidly falling below the 2% loss limit threshold.
+3. **Limiting transactions in shallow hours of the night:** The spread of the market becomes more open during the hours of 2 to 6 in the morning due to the decrease in order takers; The trading engine should reduce the spread threshold to 0.15% during these hours.

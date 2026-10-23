@@ -1,106 +1,106 @@
-# ممیزی ساختاری و تطبیق محاسباتی سود فرضی هوش مصنوعی (فاز ۱۴)
+# Structural audit and computational matching of artificial intelligence hypothetical benefit (phase 14)
 ### AI Counterfactual Evaluation & Realizable Portfolio Value Reconciliation
-**مخزن:** [`wallex`](file:///root/starcoach-hack/wallex) | **تاریخ ممیزی:** ۲۲ اکتبر ۲۰۲۶ | **افق زمانی داده‌ها:** ۹۰ روز کامل (۸،۶۳۶ کندل ۱۵ دقیقه‌ای جفت‌ارز `BTCTMN`) | **سرمایه اولیه:** ۵،۰۰۰،۰۰۰ تومان
+**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Audit date:** October 22, 2026 **Data time horizon:** 90 full days (8,636 15-minute candles of ``BTCTMN'' currency pair) | **Initial capital:** 5,000,000 Tomans
 
 ---
 
-## ۱. صورت‌مسئله و ریشه‌یابی ادعای اولیه در فاز ۱۳
+## 1. Statement of the problem and rooting of the initial claim in phase 13
 
-در گزارش فاز ۱۳، بر مبنای تحلیل فکت‌های فرضی (Counterfactual Analysis)، ادعا شده بود که سیستم فیلتر رژیم بازار هوش مصنوعی با وتو کردن سیگنال‌های نامناسب، مبلغ **۱،۷۵۸،۲۰۲ تومان (+۳۵.۲٪)** سود یا ارزش افزوده خالص برای پورتفولیو ایجاد کرده است:
-- **۵۵۳ سیگنال وتوشده:** ۳۷۸ وتوی موفق (True Save - زیان اجتناب‌شده به ارزش ۲،۸۱۲،۲۲۴ تومان) و ۱۷۵ سود ازدست‌رفته (Missed Profit به ارزش ۱،۰۵۴،۰۲۲ تومان).
-- **تفاضل فرضی:** $2,812,224 - 1,054,022 = \mathbf{+1,758,202\text{ تومان}}$.
+In the phase 13 report, based on counterfactual analysis, it was claimed that the filter system of the artificial intelligence market regime created an amount of **1,758,202 Tomans (+35.2%)** profit or net added value for the portfolio by vetoing inappropriate signals:
+- **553 vetoed signals:** 378 successful vetoes (True Save - avoided losses worth 2,812,224 Tomans) and 175 missed profits (Missed Profit worth 1,054,022 Tomans).
+- **hypothetical difference:** $2,812,224 - 1,054,022 = \mathbf{+1,758,202\text{ Tomans}}$.
 
 > [!CAUTION]
-> **هشدار ممیزی آماری:**
-> در صورتی که این عدد بدون تفکیک مفهومی به داوران مسابقه ارائه شود، به عنوان «بزرگ‌نمایی غیرواقعی (Unrealistic Overstatement)» و خطای فاحش در حسابداری پورتفولیو تلقی خواهد شد؛ زیرا کل سود محقق‌شده پورتفولیو در افق ۹۰ روزه برابر با **+۲۱،۵۱۵ تومان (+۰.۴۳٪)** بوده است.
+> **Statistical Audit Warning:**
+> If this number is presented to the competition judges without conceptual separation, it will be considered as "Unrealistic Overstatement" and a gross error in portfolio accounting; Because the total realized profit of the portfolio in the 90-day horizon was equal to **+21,515 Tomans (+0.43%)**.
 
-در این ممیزی مستقل، علت این شکاف بزرگ به طور دقیق شکافته شده و دو سطح محاسباتی متمایز مستند می‌گردد:
-1. **سطح تشخیصی سیگنال مجزا (Signal-Level Classifier Diagnostic)**
-2. **سطح سود واقعی قابل تحقق پورتفولیو (Sequential Realizable Portfolio P&L)**
+In this independent audit, the cause of this large gap is precisely broken down and two distinct computational levels are documented:
+1. **Separate signal diagnostic level (Signal-Level Classifier Diagnostic)**
+2. **Sequential Realizable Portfolio P&L**
 
 ---
 
-## ۲. سطح اول: ارزیابی تشخیصی سیگنال خام (Unconstrained Signal-Level Evaluation)
+## 2. First level: Unconstrained Signal-Level Evaluation
 
-در تابع [`run_counterfactual_audit`](file:///root/starcoach-hack/wallex/scripts/run_phase13_validation.py#L58-L218)، روی تک‌تک کندل‌های ۹۰ روزه که شرایط تکنیکال اولیه را داشتند، ارزیابی صورت گرفته است:
+In the function [`run_counterfactual_audit`](file:///root/starcoach-hack/wallex/scripts/run_phase13_validation.py#L58-L218), an evaluation has been made on each 90-day candle that had the initial technical conditions:
 
-| شاخص ارزیابی سیگنال | تعداد | درصد | ارزش ناخالص / خالص فرضی (تومان) |
+| Signal evaluation index Number | percentage | Hypothetical gross / net value (tomans) |
 |---|---|---|---|
-| **کل سیگنال‌های کاندید تکنیکال (Candidate Signals)** | **۶۷۱** | ۱۰۰٪ | — |
-| **سیگنال‌های تاییدشده توسط هوش مصنوعی (Approved Signals)** | **۱۱۸** | ۱۷.۶٪ | — |
-| • ورودهای موفق تاییدشده (True Entries - Net Win) | ۳۶ | ۳۰.۵٪ | — |
-| • ورودهای ناموفق تاییدشده (False Entries - Net Loss) | ۸۲ | ۶۹.۵٪ | — |
-| **سیگنال‌های وتوشده توسط هوش مصنوعی (Vetoed Signals)** | **۵۵۳** | **۸۲.۴٪** | — |
-| • **وتوی صحیح / نجات سرمایه (True Saves)** | **۳۷۸** | **۶۸.۴٪** | **۲،۸۱۲،۲۲۴ تومان زیان اجتناب‌شده** |
-| • **وتوی نادرست / سود از دست رفته (Missed Profits)** | **۱۷۵** | **۳۱.۶٪** | **۱،۰۵۴،۰۲۲ تومان سود سوخت‌شده** |
-| **تراز تئوریک تجمیع سیگنال‌ها** | — | — | **+۱،۷۵۸،۲۰۲ تومان ارزش اسمی** |
+| **All technical candidate signals (Candidate Signals)** | **671** | 100% | —
+| **Signals approved by artificial intelligence (Approved Signals)** | **118** | 17.6% —
+| • Confirmed successful entries (True Entries - Net Win) | 36 | 30.5% —
+| • Confirmed failed entries (False Entries - Net Loss). 82 | 69.5% —
+| **Vetoed Signals by Artificial Intelligence** | **553** | **82.4%** | —
+| • **Sahih Veto / Capital Saving (True Saves)** | **378** | **68.4%** | **2,812,224 tomans avoided loss** |
+| • **Incorrect veto / Missed Profits** | **175** | **31.6%** | ** 1,054,022 Tomans burned profit** |
+| **Theoretical balance of signal aggregation** | — — **+1,758,202 Tomans nominal value** |
 
-### چرا این عدد منعکس‌کننده سود واقعی حساب نیست؟
-1. **فرضیه موقعیت‌های نامحدود همزمان (Unconstrained Overlapping Positions):**
-   محاسبه فوق فرض کرده است که برای تک‌تک ۵۵۳ کندل وتوشده، یک معامله مستقل با مارجین ۵۰۰،۰۰۰ تومان باز می‌شود. در حالی که کل سرمایه حساب تنها ۵،۰۰۰،۰۰۰ تومان است و بر اساس قوانین ریسک، حداکثر ۱ معامله همزمان در این جفت‌ارز مجاز است.
-2. **تراکم و هم‌پوشانی خوشه‌ای (Episode Clustering):**
-   در یک روند فرسایشی ریزشی، معمولاً ۱۰ الی ۲۰ کندل پشت‌سرهم شرط تکنیکال ضعیف را تریگر می‌کنند. تحلیل داده‌های کندل به کندل نشان داد که این ۵۵۳ کندل در **۳۸۸ اپیزود ناپیوسته** رخ داده‌اند.
-   اگر ربات اولین سیگنال را وتو نمی‌کرد و وارد موقعیت می‌شد، سرمایه تا ۴۸ کندل در موقعیت اول قفل می‌شد و سیستم اساساً امکان ورود به سیگنال‌های ۲ تا ۱۰ را نداشت. بنابراین جمع زدن زیان‌های تک‌تک کندل‌های بعدی، **شمارش مکرر (Double Counting)** یک حرکت بازار است.
+### Why does this number not reflect the actual profit of the account?
+1. Unconstrained Overlapping Positions Hypothesis:
+   The above calculation has assumed that for each of the 553 vetoed candles, an independent transaction will be opened with a margin of 500,000 Tomans. While the total capital of the account is only 5,000,000 Tomans and according to the risk rules, a maximum of 1 simultaneous transaction is allowed in this currency pair.
+2. **Episode Clustering:**
+   In a bearish breakout trend, usually 10-20 candlesticks in a row trigger a weak technical condition. Candle-by-candle data analysis showed that these 553 candles occurred in **388 non-consecutive episodes**.
+   If the bot did not veto the first signal and enter the position, capital would be locked up to 48 candles in the first position and the system would basically not be able to enter signals 2-10. Therefore, adding up the losses of each subsequent candle, **Double Counting** is a market move.
 
 ---
 
-## ۳. سطح دوم: عملکرد متوالی و سود واقعی قابل تحقق پورتفولیو (Sequential Realizable P&L)
+## 3. Second level: Sequential performance and realizable profit of the portfolio (Sequential Realizable P&L)
 
-هنگامی که استراتژی سنتی (کامپوننت تکنیکال بدون هوش مصنوعی) و استراتژی تلفیقی (تکنیکال + هوش مصنوعی) در چارچوب یک شبیه‌ساز واقعی با سرمایه ۵،۰۰۰،۰۰۰ تومان، رعایت سقف موقعیت‌ها، کارمزد واقعی والکس و تسویه الزامی اجرا می‌شوند، نتایج واقعی زیر به دست می‌آید:
+When the traditional strategy (technical component without artificial intelligence) and the integrated strategy (technical + artificial intelligence) are implemented in the framework of a real simulator with a capital of 5,000,000 Tomans, compliance with the position limit, real Wallex fee and mandatory settlement, the following real results are obtained:
 
 ```mermaid
 flowchart TD
-    subgraph Deterministic["استراتژی سنتی (بدون هوش مصنوعی)"]
-        D1["۳۹ معامله بسته"]
-        D2["سود ناخالص: ۹۱،۷۸۸+ تومان"]
-        D3["کارمزد پرداختی: ۱۱۲،۶۱۲ تومان"]
-        D4["سود/زیان خالص: ۲۰،۸۲۴- تومان (-۰.۴۲٪)"]
+    subgraph Deterministic[""]
+        D1["39 closed deals"]
+        D2["Gross profit: 91,788+ Tomans"]
+        D3["Paid fee: 112,612 Tomans"]
+        D4["Net profit/loss: -20,824 Tomans (-0.42%)"]
     end
 
-    subgraph AI["استراتژی با فیلتر رژیم هوش مصنوعی"]
-        A1["۲۴ معامله بسته"]
-        A2["سود ناخالص: ۹۰،۶۷۷+ تومان"]
-        A3["کارمزد پرداختی: ۶۹،۱۶۲ تومان"]
-        A4["سود/زیان خالص: ۲۱،۵۱۵+ تومان (+۰.۴۳٪)"]
+    subgraph AI["Strategy with artificial intelligence regime filter"]
+        A1["24 closed deals"]
+        A2["Gross profit: 90,677+ Tomans"]
+        A3["Paid fee: 69,162 Tomans"]
+        A4["Net profit/loss: 21,515+ Tomans (+0.43%)"]
     end
 
-    D4 --> Delta["ارزش افزوده واقعی محقق‌شده"]
+    D4 --> Delta["Actual added value realized"]
     A4 --> Delta
-    Delta --> Res["سود خالص افزوده: ۴۲،۳۳۹+ تومان (+۰.۸۵٪ سرمایه)\nصرفه‌جویی کارمزد: ۴۳،۴۵۰ تومان"]
+    Delta --> Res["Added net profit: 42,339+ Tomans (+0.85% of capital)\nFee savings: 43,450 Tomans"]
 ```
 
-### جدول مقایسه اجرای واقعی در کل افق ۹۰ روزه
+### Comparison table of actual performance in the entire 90-day horizon
 
-| شاخص متوالی پورتفولیو | سیستم سنتی (بدون AI) | سیستم بهینه‌شده با فیلتر هوش مصنوعی | ارزش افزوده واقعی قابل تحقق (Delta) |
+| Sequential portfolio index Traditional system (no AI) | Optimized system with artificial intelligence filter Realizable added value (Delta) |
 |---|---|---|---|
-| **تعداد کل معاملات متوالی انجام‌شده** | **۳۹ معامله** | **۲۴ معامله** | **۱۵ معامله فیلترشده (Noise Avoided)** |
-| **سود ناخالص (Gross P&L)** | ۹۱،۷۸۸+ تومان | ۹۰،۶۷۷+ تومان | ۱،۱۱۱- تومان |
-| **مجموع کارمزدهای پرداختی به والکس** | **۱۱۲،۶۱۲ تومان** | **۶۹،۱۶۲ تومان** | **۴۳،۴۵۰ تومان صرفه‌جویی مستقیم کارمزد** |
-| **سود/زیان خالص نهایی (Net Realized P&L)** | **۲۰،۸۲۴- تومان (-۰.۴۲٪)** | **۲۱،۵۱۵+ تومان (+۰.۴۳٪)** | **+۴۲،۳۳۹ تومان (+۰.۸۵٪)** |
-| **نرخ برد معاملات (Win Rate)** | ۴۶.۱٪ | ۵۰.۰٪ | ۳.۹٪+ بهبود |
-| **حداکثر افت سرمایه (Max Drawdown)** | ۱.۸۱٪ | ۱.۳۱٪ | ۰.۵۰٪ کاهش ریسک |
+| **Total number of consecutive transactions** | **39 transaction** | **24 transactions** | **15 filtered transactions (Noise Avoided)** |
+| **Gross P&L** | 91,788+ Tomans 90,677+ Tomans 1,111 tomans
+| **Total fees paid to Wallex** | **112,612 Tomans** | **69,162 Tomans** | **43,450 tomans direct fee savings** |
+| **Final net profit/loss (Net Realized P&L)** | **-20,824 Tomans (-0.42%)** | **21,515+ Tomans (+0.43%)** | **+42,339 Tomans (+0.85%)** |
+| **Win Rate** | 46.1% 50.0% 3.9%+ improvement
+| **Maximum capital loss (Max Drawdown)** | 1.81% 1.31% 0.50% risk reduction
 
 ---
 
-## ۴. اثبات ریاضی مکانیزم ارزش‌آفرینی هوش مصنوعی: همبستگی صرفه‌جویی کارمزد و سود نهایی
+## 4. Mathematical proof of artificial intelligence value creation mechanism: Correlation of fee saving and final profit
 
-یک کشف بنیادی در این ممیزی نشان می‌دهد که سود خالص اضافه شده توسط هوش مصنوعی با مبلغ کارمزدهای صرفه‌جویی‌شده تقریباً برابر است:
+A fundamental finding in this audit is that the net profit added by AI is roughly equal to the amount of fees saved:
 
 $$\text{Realizable Incremental Net P&L} = +21,515 - (-20,824) = \mathbf{+42,339\text{ TMN}}$$
 $$\text{Direct Fee Savings} = 112,612 - 69,162 = \mathbf{43,450\text{ TMN}}$$
 $$\text{Difference} = 43,450 - 42,339 = \mathbf{1,111\text{ TMN}}$$
 
-### نتیجه‌گیری تحلیلی:
-هوش مصنوعی بازار را در رژیم‌های خنثی و نوسانی با دقت بالا شناسایی کرده و مانع از ورود به **۱۵ معامله تله (False Breakout)** شده است. 
-سود ناخالص حاصل از بازار تقریباً تغییری نکرده است (۹۱،۷۸۸ تومان در برابر ۹۰،۶۷۷ تومان)، اما استراتژی سنتی با باز و بسته کردن ۱۵ معامله ناموفق، **۴۳،۴۵۰ تومان کارمزد اضافی** به صرافی پرداخت کرده و پورتفولیو را منفی نموده است. 
-در حالی که فیلتر هوش مصنوعی با حذف معاملات اضافه، این کارمزد را حفظ کرده و پورتفولیو را به بازدهی مثبت **+۰.۴۳٪** رسانده است.
+### Analytical conclusion:
+Artificial intelligence has identified the market in neutral and volatile regimes with high accuracy and has prevented entering **15 false breakout trades**. 
+The gross profit from the market has not changed almost (91,788 Tomans against 90,677 Tomans), but the traditional strategy has paid an additional fee of 43,450 Tomans to the exchange and made the portfolio negative by opening and closing 15 failed transactions. 
+While the artificial intelligence filter has kept this fee by removing extra trades and brought the portfolio to a positive return of **+0.43%**.
 
 ---
 
-## ۵. راهنمای دفاع در برابر داوران هکاتون (Judging Defense Matrix)
+## 5. Defense Guide against Hackathon Judges (Judging Defense Matrix)
 
-در جلسه پرزنت و داوری هکاتون والکس، اعضای تیم باید موضع شفاف، علمی و مستند زیر را اتخاذ کنند:
+In the Wallex Hackathon presentation and judging session, the team members must adopt the following clear, scientific and documented position:
 
 > [!TIP]
-> **نحوه پاسخگویی به سوال داوران در مورد رقم ۱.۷۵ میلیون تومان:**
-> «رقم ۱،۷۵۸،۲۰۲ تومان، خروجی آزمون تشخیصی طبقه‌بندی (Classifier Diagnostic Metric) است که نشان می‌دهد سیستم وتوی هوش مصنوعی در سطح سیگنال‌های خام، ۶۸.۴٪ دقت داشته و از افتادن در ۳۷۸ دام معاملاتی جلوگیری کرده است. اما از نظر مالی و تراز پورتفولیو، اثر این فیلتر به صورت **جلوگیری از ۱۵ معامله مخرب متوالی، صرفه‌جویی در ۴۳،۴۵۰ تومان کارمزد والکس، و ثبت سود خالص افزوده ۴۲،۳۳۹ تومانی (+۰.۸۵٪ نسبت به استراتژی پایه سنتی)** تجلی یافته است.»
+> **How to answer the judges' question about the figure of 1.75 million Tomans:**
+> "The figure of 1,758,202 Tomans is the output of the Classifier Diagnostic Metric test, which shows that the artificial intelligence veto system had 68.4% accuracy at the level of raw signals and prevented falling into 378 trading traps. But in terms of finances and portfolio balance, the effect of this filter has been manifested in the form of **preventing 15 destructive transactions in a row, saving 43,450 Tomans in Wallex fees, and registering an additional net profit of 42,339 Tomans (+0.85% compared to the traditional base strategy)**."

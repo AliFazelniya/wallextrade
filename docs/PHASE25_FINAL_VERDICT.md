@@ -1,37 +1,37 @@
-# حکم نهایی، ارزیابی مقایسه‌ای جامع و چارچوب تصمیم‌گیری فاز ۲۵
+# Final verdict, comprehensive comparative assessment and decision-making framework of phase 25
 ## Phase 25 Final Comparative Verdict & Eight-Pillar Decision Framework
 
-> **مخزن:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **شاخه پژوهشی:** `research/phase25-validation`  
-> **کامیت مبنای منجمد:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **وضعیت نهایی:** پایان موفقیت‌آمیز پژوهش، ممیزی تجربی و اعتبارسنجی فرضیات (Research GO / Live NO-GO)  
-> **مجوز معاملات زنده:** `live_execution_authorized = False` (کاملاً مسدود و غیرفعال)
+> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Research branch:** `research/phase25-validation`  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Final status:** Successful completion of research, experimental audit and hypothesis validation (Research GO / Live NO-GO)  
+> **Live execution authorization:** `live_execution_authorized = False` (completely blocked and disabled)
 
 ---
 
-## ۱. خلاصه اجرایی و سنتز نتایج پژوهش (Executive Summary)
+## 1. Executive summary and synthesis of research results (Executive Summary)
 
-فاز ۲۵ با هدف پایان دادن به خوش‌بینی‌های بدون پشتوانه و اعتبارسنجی دقیق دو فرضیه پژوهشی فاز ۲۴ شامل **H1 (روند ساختاری چندزمانی)** و **H3 (نشت شتاب از بیت‌کوین به آلت‌کوین‌ها)** اجرا گردید. در طول این فاز، تمامی کدهای معاملاتی، ساختار نقدینگی صرافی والکس، خطاهای حسابی گذشته، اثر واقعی مداخله هوش مصنوعی، و رفتار سیستم در ۲۹ پنجره رقابتی ۷۲ ساعته به‌صورت کاملاً مستقل و تجربی مورد بازبینی قرار گرفتند.
+Phase 25 was implemented with the aim of putting an end to unsupported optimism and validating the two research hypotheses of Phase 24 including **H1 (multitemporal structural trend)** and **H3 (leakage of momentum from Bitcoin to altcoins)**. During this phase, all trading codes, liquidity structure of Wallex exchange, past arithmetic errors, actual effect of AI intervention, and system behavior in 29 competitive 72-hour windows were fully independently and experimentally reviewed.
 
 ```mermaid
 flowchart TD
-    subgraph P24["میراث فاز ۲۴"]
-        CE["کاندید E اصلاح‌شده\n(۱۲،۲۸۴- TMN)"]
-        H1_RAW["H1 خام (تک‌سهم)\n(۳۵،۷۹۳+ TMN)"]
-        H3_RAW["H3 خام (تک‌سهم)\n(۲۳،۹۶۶+ TMN)"]
+    subgraph P24["Legacy of phase 24"]
+        CE["Modified candidate E\n(TMN-12,284)"]
+        H1_RAW["H1 raw (single share)\n(TMN 35,793+)"]
+        H3_RAW["Raw H3 (single share)\n(TMN 23,966+)"]
     end
 
-    subgraph P25_ENG["موتور پرتفوی یکپارچه فاز ۲۵"]
-        MA["مدل A (انحصاری H1)\n(۶۳،۰۳۵+ TMN | ۳۳ معامله)"]
-        MB["مدل B (انحصاری H3)\n(۴۸،۷۰۸+ TMN | ۶ معامله)"]
-        MC["مدل C (تلفیق H1+H3)\n(۶۳،۹۵۵+ TMN | ۳۵ معامله)"]
+    subgraph P25_ENG["Integrated portfolio engine phase 25"]
+        MA["Model A (H1 Exclusive)\n(63,035+ TMN | 33 transactions)"]
+        MB["Model B (H3 exclusive)\n(TMN 48,708+ | 6 transactions)"]
+        MC["Model C (combination of H1+H3)\n(TMN 63,955+ | 35 deals)"]
     end
 
-    subgraph P25_VAL["اعتبارسنجی سخت‌گیرانه فاز ۲۵"]
-        BOOT["بوت‌استرپ ۱۰،۰۰۰ تکرار\n(فاصله ۹۵٪ از صفر عبور کرد: p=26.3%)"]
-        WF["آزمون زمانی گام‌به‌جلو\n(ماه سوم: ۲۳،۹۹۳- TMN زیان)"]
-        STRESS["ماتریس ۱۴ سناریوی استرس\n(۱۲ قبولی / ۲ مردودی در نقدینگی و حذف W09)"]
-        AI_ABL["مطالعه تفکیک هوش مصنوعی\n(عامل رژیم ۳۷k- تخریب کرد | ارزیاب حساس به هزینه حفظ کرد)"]
+    subgraph P25_VAL["Strict validation phase 25"]
+        BOOT["Bootstrap 10,000 replicates\n(95% interval crossed zero: p=26.3%)"]
+        WF["Step forward time test\n(Third month: TMN-23,993 loss)"]
+        STRESS["Matrix of 14 stress scenarios\n(12 passes / 2 failures in liquidity and removal of W09)"]
+        AI_ABL["A study of the separation of artificial intelligence\n(37k regime agent destroyed | cost sensitive appraiser preserved)"]
     end
 
     CE --> P25_ENG
@@ -44,166 +44,164 @@ flowchart TD
 
 ---
 
-## ۲. جدول ماتریس مقایسه جامع استراتژی‌ها (Comprehensive Comparative Evaluation Matrix)
+## 2. Comprehensive Comparative Evaluation Matrix table of strategies
 
-جدول زیر تمامی مدل‌ها و فرضیات را در شرایط آزمون کاملاً یکسان (سرمایه اولیه ۵،۰۰۰،۰۰۰ تومان، کارمزد سازنده ۰.۲۵٪، کارمزد سفارش‌بردار ۰.۳۰٪، لغزش قیمت ۰.۱۵٪، پایش سایه کندل High/Low، و بادبان پایانی در ساعت ۶۰) مقایسه می‌کند:
+The table below compares all models and assumptions under exactly the same test conditions (initial capital 5,000,000 Tomans, builder fee 0.25%, order taker fee 0.30%, price slippage 0.15%, high/low candle shadow tracking, and closing sail at 60 hours):
 
-| شاخص ارزیابی عملکرد و ریسک | کاندید E اصلی (فاز ۲۲ خام) | کاندید E تولیدی (فاز ۲۳ با Agent) | کاندید E اصلاح‌شده (فاز ۲۴) | مدل A: انحصاری H1 (روند ساختاری) | مدل B: انحصاری H3 (نشت شتاب لید-لگ) | مدل C: دترمینیستیک H1+H3 (تلفیقی) | مدل C-AI: تلفیق با هوش مصنوعی حساس به هزینه |
+| performance and risk assessment index Main candidate E (raw phase 22) | Production candidate E (phase 23 with Agent) | Modified Candidate E (Phase 24) | Model A: exclusive H1 (structural trend) | Model B: Exclusive H3 (Lead-Leg Acceleration Leakage) | Model C: Deterministic H1+H3 (combined) | C-AI model: integration with cost-sensitive artificial intelligence
 |---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **سود خالص کل ۲۹ پنجره (TMN)** | ۴۷،۲۴۱+ | ۹،۲۴۳+ | ۱۲،۲۸۴- | ۶۳،۰۳۵+ | ۴۸،۷۰۸+ | **۶۳،۹۵۵+** | ۶۰،۸۲۹+ |
-| **میانگین بازدهی ۷۲ ساعته** | ۰.۰۳۳٪+ | ۰.۰۰۶٪+ | ۰.۰۰۸٪- | ۰.۰۴۳٪+ | ۰.۰۳۴٪+ | **۰.۰۴۴٪+** | ۰.۰۴۲٪+ |
-| **میانه بازدهی پنجره‌ها (Median)** | ۰.۰۰۰٪ | ۰.۰۰۰٪ | ۰.۰۰۰٪ | ۰.۰۰۰٪ | ۰.۰۰۰٪ | ۰.۰۰۰٪ | ۰.۰۰۰٪ |
-| **درصد پنجره‌های سودآور (Win%)** | ۲۴.۱٪ (۷/۲۹) | ۲۰.۷٪ (۶/۲۹) | ۱۳.۸٪ (۴/۲۹) | ۲۷.۶٪ (۸/۲۹) | ۱۳.۸٪ (۴/۲۹) | **۲۷.۶٪ (۸/۲۹)** | ۲۷.۶٪ (۸/۲۹) |
-| **درصد پنجره‌های بدون معامله (Zero%)** | ۵۱.۷٪ (۱۵/۲۹) | ۵۵.۲٪ (۱۶/۲۹) | ۶۵.۵٪ (۱۹/۲۹) | ۵۵.۲٪ (۱۶/۲۹) | ۸۲.۸٪ (۲۴/۲۹) | **۵۱.۷٪ (۱۵/۲۹)** | ۵۵.۲٪ (۱۶/۲۹) |
-| **تعداد کل معاملات اجراشده** | ۲۸ | ۲۸ | ۲۸ | ۳۳ | ۶ | **۳۵** | ۳۴ |
-| **نسبت سود به زیان (Profit Factor)** | ۱.۶۲ | ۱.۱۲ | ۰.۸۲ | ۱.۵۰ | **۳.۲۰** | ۱.۴۸ | ۱.۴۷ |
-| **حداکثر افت سرمایه (Max DD)** | ۲.۰۵٪ | ۱.۱۸٪ | ۱.۶۵٪ | ۰.۷۴٪ | **۰.۳۲٪** | ۰.۷۴٪ | ۰.۷۴٪ |
-| **بار کل اصطکاک مبادله (TMN)** | ۵۳،۴۸۵ | ۱۰۹،۹۲۱ | ۱۰۹،۹۲۱ | ۱۲۵،۶۴۸ | **۲۲،۱۳۸** | ۱۳۴،۶۱۲ | ۱۳۰،۱۲۶ |
-| **نسبت اصطکاک به سود ناخالص** | ۵۳.۱٪ | ۹۲.۲٪ | > ۱۰۰٪ | ۶۶.۶٪ | **۳۱.۳٪** | ۶۷.۸٪ | ۶۸.۱٪ |
-| **حساسیت به لغزش بالا (۰.۳۰٪)** | منفی | منفی | منفی | +۳۹،۱۰۰ | +۳۸،۵۰۰ | **+۴۰،۱۳۸** | +۳۸،۲۰۰ |
-| **عملکرد در ماه سوم (W21-W29)** | منفی | منفی | منفی | ۱۹،۲۰۰- TMN | ۳،۴۰۰- TMN | **۲۳،۹۹۳- TMN** | ۲۲،۱۰۰- TMN |
-| **آماره تی ($t$) و سطح اطمینان** | ۱.۲۰ ($p=24\%$) | ۰.۲۵ ($p=80\%$) | منفی | ۰.۶۴ ($p=53\%$) | **۱.۵۱ ($p=14\%$)** | ۰.۶۵ ($p=52\%$) | ۰.۶۲ ($p=54\%$) |
-| **مشارکت خالص هوش مصنوعی** | نامشخص | ۳۷،۹۹۸- TMN | لحاظ نشد | صفر | صفر | صفر (مبنا) | **۴،۴۸۶ TMN صرفه‌جویی کارمزد** |
-| **قابلیت اتکای فنی و هماهنگی API** | متوسط | متوسط | متوسط | عالی | عالی | **عالی** | **عالی** |
+| **total net profit of 29 windows (TMN)** | 47,241+ | 9,243+ | 12,284-| 63,035+ | 48,708+ | **63,955+** | 60,829+ |
+| **Average efficiency of 72 hours** | 0.033%+ | 0.006%+ | 0.008% - | 0.043%+ | 0.034%+ | **0.044%+** | 0.042%+ |
+| **Mean efficiency of windows (Median)** | 0.000% | 0.000% | 0.000% | 0.000% | 0.000% | 0.000% | 0.000% |
+| **Percentage of profitable windows (Win%)** | 24.1% (7/29) | 20.7% (6/29) | 13.8% (4/29) | 27.6% (8/29) | 13.8% (4/29) | **27.6% (8/29)** | 27.6% (8/29) |
+| **Percentage of windows without transactions (Zero%)** | 51.7% (15/29) | 55.2% (16/29) | 65.5% (19/29) | 55.2% (16/29) | 82.8% (24/29) | **51.7% (15/29)** | 55.2% (16/29) |
+| **Total number of executed transactions** | 28 | 28 | 28 | 33 | 6 | **35** 34 |
+| **Ratio of profit to loss (Profit Factor)** | 1.62 | 1.12 0.82 | 1.50 | **3.20** | 1.48 | 1.47 |
+| **Maximum capital loss (Max DD)** | 2.05% 1.18% 1.65% 0.74% **0.32%** | 0.74% 0.74%
+| **Total exchange friction load (TMN)** | 53,485 | 109,921 | 109,921 | 125,648 | **22,138** | 134,612 | 130,126 |
+| **Ratio of friction to gross profit** | 53.1% 92.2% > 100% | 66.6% **31.3%** | 67.8% 68.1%
+| **High slip sensitivity (0.30%)** | Negative Negative Negative +39,100 | +38,500 | **+40,138** | +38,200 |
+| **Performance in the third month (W21-W29)** | Negative Negative Negative TMN-19,200 TMN-3,400 **TMN-23,993** | TMN-22,100
+| **T statistic ($t$) and confidence level** | 1.20 ($p=24\%$) | 0.25 ($p=80\%$) | Negative 0.64 ($p=53\%$) | **1.51 ($p=14\%$)** | 0.65 ($p=52\%$) | 0.62 ($p=54\%$) |
+| ** pure contribution of artificial intelligence ** | Uncertain 37,998-TMN | Not included Zero Zero zero (base) | **4,486 TMN fee saving** |
+| **Technical reliability and API coordination** | Average | Average | Average | Excellent Excellent **Excellent** | **Excellent** |
 
 ---
 
-## ۳. ارزیابی هشت‌گانه ارکان استراتژی (The Eight-Pillar Verdict Framework)
+## 3. The Eight-Pillar Verdict Framework (The Eight-Pillar Verdict Framework)
 
-بر اساس شواهد محاسباتی و داده‌های تجربی، ارزیابی رسمی برای هر یک از ارکان هشت‌گانه به شرح زیر صادر می‌گردد:
+Based on computational evidence and experimental data, the official evaluation for each of the eight pillars is issued as follows:
 
 ```
 ===================================================================================================
-رکن ارزیابی                          | وضعیت نهایی    | خلاصه شواهد و استدلال علمی
+Evaluation pillar                          | Final status    | Summary of scientific evidence and reasoning
 ---------------------------------------------------------------------------------------------------
-۱. امکان‌پذیری پژوهش (Research Feasibility) | PASS           | اثبات علمی نشت شتاب لید-لگ و کشف ساختار چندزمانی بدون نشت داده
-۲. سودآوری تاریخی (Historical Profitability) | PASS           | سود خالص +۶۳،۹۵۵ تومان در ۲۹ پنجره با اعمال کارمزد و لغزش
-۳. اعتبارسنجی آماری (Statistical Validation) | INCONCLUSIVE   | فاصله اطمینان ۹۵٪ بوت‌استرپ شامل صفر است (p=26.3% > 0.05)
-۴. مشارکت هوش مصنوعی (AI Contribution)        | PASS (مشروط)   | مردودی عامل صلب فاز ۲۳ (-37k)؛ قبولی ارزیاب احتمالاتی حساس به هزینه
-۵. واقع‌گرایی اجرایی (Execution Realism)     | PASS           | تطبیق با محدودیت‌های API والکس، پایش سایه کندل و قبولی در ۱۲ سناریوی استرس
-۶. آمادگی معاملات آزمایشی (Paper Trading)    | PASS           | زیرساخت پیاده‌سازی و شبیه‌سازی زنده با وب‌سوکت و ثبت لاگ تصمیمات
-۷. آمادگی مسابقه (Competition Readiness)     | CONDITIONAL    | مجاز فقط به عنوان تک‌تیرانداز ساختاری با پیش‌فرض ۱۰۰٪ نقدینگی
-۸. مجوز معاملات واقعی (Live Authorization)   | FAIL / NO-GO   | کاملاً ممنوع و مسدود (live_execution_authorized = False)
+1. Research Feasibility | PASS           | Scientific proof of lead-lag acceleration leakage and discovery of multitemporal structure without data leakage
+2. Historical Profitability | PASS           | Net profit +63,955 Tomans in 29 windows with commission and slip
+3. Statistical Validation | INCONCLUSIVE   | 95% bootstrap confidence interval includes zero (p=26.3% > 0.05)
+4. AI Contribution        | PASS (conditional)   | Rejection of solid phase 23 (-37k); Adopting a cost-sensitive probabilistic estimator
+5. Execution Realism     | PASS           | Adapting to Valax API limits, candle shadow monitoring and passing 12 stress scenarios
+6. Preparation of trial trades (Paper Trading)    | PASS           | Implementation infrastructure and live simulation with websocket and logging of decisions
+7. Competition Readiness     | CONDITIONAL    | Allowed only as structural sniper with default 100% liquidity
+8. Live Authorization   | FAIL / NO-GO   | Completely forbidden and blocked (live_execution_authorized = False)
 ===================================================================================================
 ```
 
-### شرح تفصیلی ارکان هشت‌گانه:
+### Detailed description of the eight pillars:
 
-### رکن ۱: امکان‌پذیری پژوهش (Research Feasibility) — `PASS`
-- **شواهد:** پژوهش تجربی فاز ۲۵ اثبات کرد که نشت شتاب از لیدر بازار (بیت‌کوین) به آلت‌کوین‌های با بتا بالا (سولانا و اتریوم) یک پدیده اقتصادی و رفتاری واقعی در بازار والکس است (مطابق با ادبیات علمی Makarov & Schoar 2020 و Katsiampa 2019).
-- اجرای آزمایش با تاخیر اجباری ۱ کندلی (Strict 1-Bar Lag) نشان داد که استراتژی حتی بدون دسترسی به قیمت هم‌زمان و با تکیه بر اطلاعات کاملاً قطعی گذشته، همچنان سودآور باقی می‌ماند (+۲۳،۹۶۶ تومان در H3 خام).
+### Pillar 1: Research Feasibility - ``PASS''
+- **Evidence:** Phase 25 empirical research proved that momentum leakage from the market leader (Bitcoin) to high-beta altcoins (Solana and Ethereum) is a real economic and behavioral phenomenon in the Wallex market (according to the scientific literature Makarov & Schoar 2020 and Katsiampa 2019).
+- The execution of the test with the forced lag of 1 candlestick (Strict 1-Bar Lag) showed that the strategy remains profitable even without access to the simultaneous price and relying on completely certain information of the past (+23,966 Tomans in raw H3).
 
-### رکن ۲: سودآوری تاریخی (Historical Profitability) — `PASS`
-- **شواهد:** مدل تلفیقی C در ۲۹ پنجره مستقل ۷۲ ساعته (معادل ۹۰ روز متوالی بازار)، پس از کسر تمامی کارمزدهای واقعی والکس (سطح ۱: کارمزد سازنده ۰.۲۵٪، کارمزد سفارش‌بردار ۰.۳۰٪) و لغزش اجرای ۰.۱۵٪، به سود خالص **+۶۳،۹۵۴.۷ تومان** دست یافته است.
-- حداکثر افت سرمایه این پرتفوی در طول ۹۰ روز تنها **۰.۷۴٪** (۳۶،۸۵۰ تومان) بوده است.
+### Pillar 2: Historical Profitability - ``PASS''
+- **Evidence:** In 29 independent 72-hour windows (equivalent to 90 consecutive market days), after deducting all Wallex real fees (Level 1: 0.25% manufacturer fee, 0.30% order taker fee) and 0.15% execution slip, the consolidated model C has achieved a net profit of **+63,954.7 Tomans**.
+- The maximum capital loss of this portfolio during 90 days was only **0.74%** (36,850 Tomans).
 
-### رکن ۳: اعتبارسنجی آماری (Statistical Validation) — `INCONCLUSIVE`
-- **شواهد:** 
-  1. آزمون بازنمونه‌گیری بوت‌استرپ با ۱۰،۰۰۰ تکرار نشان داد که فاصله اطمینان ۹۵٪ بازدهی میانگین در بازه `[-0.0811%, +0.1798%]` قرار داشته و از عدد صفر عبور می‌کند.
-  2. پی-ولیو تجربی برابر با **۲۶.۲۶٪** است که بسیار بزرگتر از آستانه استاندارد ۵٪ ($p > 0.05$) می‌باشد.
-  3. حساسیت شدید به داده‌های پرت: با حذف تنها پنجره W09، سود کل از +۶۴ هزار تومان به **۳،۴۴۱- تومان زیان** تبدیل می‌شود.
-  4. در آزمون زمانی گام‌به‌جلو، در ۳۰ روز پایانی (W21-W29)، سیستم **۲۳،۹۹۳- تومان زیان** ایجاد کرده است.
-  5. به این ترتیب، از منظر استانداردهای بین‌المللی داده‌های مالی، نمی‌توان فرضیه تصادفی بودن نتایج را رد کرد.
+### Pillar 3: Statistical Validation — ``INCONCLUSIVE''
+- **Evidence:** 
+  1. The bootstrap resampling test with 10,000 repetitions showed that the 95% confidence interval of the average efficiency was in the range of ``[-0.0811%, +0.1798%]'' and crossed zero.
+  2. The empirical p-value is equal to **26.26%**, which is much larger than the standard threshold of 5% ($p > 0.05$).
+  3. Extreme sensitivity to outlier data: by removing only the W09 window, the total profit changes from +64 thousand tomans to **-3,441 tomans loss**.
+  4. In the step-by-step time test, in the last 30 days (W21-W29), the system has created a loss of -23,993 tomans.
+  5. In this way, from the perspective of international financial data standards, the hypothesis of randomness of the results cannot be rejected.
 
-### رکن ۴: مشارکت هوش مصنوعی (AI Contribution) — `PASS (مشروط)`
-- **شواهد:**
-  - **مردودی قطعی عامل فاز ۲۳:** ارزیابی نشان داد که عامل رژیم مبتنی بر شروط صلب بولین (`RegimeClassificationAgent`) با وتوی سه موقعیت برنده بزرگ در قله‌های شتاب بازار، سود سیستم را بیش از **۳۷،۳۲۳ تومان تخریب کرد**.
-  - **قبولی ارزیاب احتمالاتی حساس به هزینه (`CostSensitiveAIEvaluator`):** این ماژول هوش مصنوعی با محاسبه امیدریاضی حاشیه سود نسبت به کارمزد، ضمن حفظ ۹۵٪ سودآوری مدل دترمینیستیک (+۶۰،۸۲۹ تومان)، توانست ۴،۴۸۶ تومان از هزینه‌های غیرضروری اصطکاک را با حذف سیگنال‌های کم‌رمق صرفه‌جویی کند.
+### Pillar 4: AI Contribution — ``PASS (conditional)''
+- **Evidence:**
+  - **Certain rejection of phase 23 agent:** The evaluation showed that the regime agent based on rigid Boolean conditions (`RegimeClassificationAgent') destroyed the profit of the system more than **37,323 tomans** by vetoing three big winning positions at the peaks of market momentum.
+  - Acceptance of cost-sensitive probabilistic evaluator (`CostSensitiveAIEvaluator'):** This artificial intelligence module, by calculating the mathematical expectation of the profit margin compared to the fee, while maintaining 95% of the profitability of the deterministic model (+60,829 Tomans), was able to save 4,486 Tomans from unnecessary friction costs by removing low-quality signals.
 
-### رکن ۵: واقع‌گرایی اجرایی (Execution Realism) — `PASS`
-- **شواهد:**
-  - ممیزی فنی مشخص کرد که والکس فاقد سفارش‌های بومی `post_only` و `stop_loss` است. بنابراین تمامی حدضررها از سمت کلاینت و به‌صورت سفارش‌بردار (Taker) اجرا می‌شوند.
-  - مدل C در سناریوی بدبینانه خروج ۱۰۰٪ با سفارش‌بردار همچنان **+۵۸،۰۵۷ تومان** سود ثبت کرد.
-  - در آزمون نفوذ درون‌کندلی با اولویت فعال‌سازی بدبینانه حدضرر، سود مدل تغییری نکرد (+۶۳،۹۵۵ تومان).
-  - در ماتریس ۱۴ سناریوی استرس، استراتژی در **۱۲ سناریو سربلند بیرون آمد**.
+### Pillar 5: Execution Realism - ``PASS''
+- **Evidence:**
+  - Technical audit revealed that Wallex lacks native `post_only` and `stop_loss` orders. Therefore, all limits are executed from the client side and as a taker.
+  - Model C in the pessimistic scenario of 100% withdrawal with the order taker still recorded a profit of **+58,057 Tomans**.
+  - In the candlestick penetration test with pessimistic minimum activation priority, the profit of the model did not change (+63,955 Tomans).
+  - In the matrix of 14 stress scenarios, the strategy came out proud in **12 scenarios**.
 
-### رکن ۶: آمادگی معاملات آزمایشی (Paper-Trading Readiness) — `PASS`
-- **شواهد:** تمامی ماژول‌های اتصال وب‌سوکت، پایش جریان کتاب سفارشات زنده، انطباق با قطعی اینترنت، محاسبه برخط اسپرد، و بادبان پایانی ۷۲ ساعته به‌صورت کامل پیاده‌سازی و تست شده‌اند (۷۸ تست واحد و تجمیعی با موفقیت ۱۰۰٪ پاس شدند).
+### Pillar 6: Paper-Trading Readiness - ``PASS''
+- **Evidence:** All modules of websocket connection, live order book flow monitoring, internet outage adaptation, online spread calculation, and 72-hour final sail have been fully implemented and tested (78 unit and cumulative tests passed with 100% success).
 
-### رکن ۷: آمادگی مسابقه (Competition Readiness) — `CONDITIONAL PASS`
-- **شواهد و شرایط:** استراتژی H1+H3 مجاز است در مسابقه شرکت کند، مشروط بر رعایت اکید پروتکل **«تک‌تیرانداز ساختاری» (Structural Sniper)**:
-  - دارایی پیش‌فرض در تمام مدت مسابقه باید **۱۰۰٪ نقدینگی تومان در کیف‌پول** باشد.
-  - ورود به معامله منحصراً زمانی مجاز است که تاییدیه روند ۱ ساعته، شکست حجم در تایم‌فریم ۱۵ دقیقه، و اسپرد زیر ۰.۱۸٪ هم‌زمان برقرار باشند.
-  - در صورت عدم وقوع چنین روندی، حفظ نقدینگی با بازدهی ۰.۰۰٪ نسبت به هرگونه معامله احساسی یا فرسایشی ارجحیت مطلق دارد.
+### Pillar 7: Competition Readiness - `CONDITIONAL PASS'
+- **Evidences and Conditions:** The H1+H3 strategy is allowed to participate in the competition, subject to strict compliance with the **Structural Sniper” protocol:
+  - The default asset for the entire duration of the competition must be **100% Toman liquidity in the wallet**.
+  - Trade entry is allowed only when 1-hour trend confirmation, volume breakout in 15-minute time frame, and spread below 0.18% exist at the same time.
+  - If such a trend does not occur, maintaining liquidity with a yield of 0.00% is absolutely preferable to any emotional or erosion transaction.
 
-### رکن ۸: مجوز معاملات زنده واقعی (Live Execution Authorization) — `FAIL / NO-GO`
-- **شواهد و حکم قطعی:**
+### Pillar 8: Live Execution Authorization — ``FAIL / NO-GO''
+- **Evidence and definitive verdict:**
   > [!CAUTION]
-  > **معاملات با پول واقعی در حساب زنده والکس تحت هیچ شرایطی مجاز نیست.**  
-  > متغیر `live_execution_authorized = False` در تمامی تنظیمات فعال باقی می‌ماند. این پروژه صرفاً در چارچوب شبیه‌سازی مسابقه، حساب‌های دمو و پیپرتریدینگ مجاز به اجرا است.
+  > **Transactions with real money in Wallex live account are not allowed under any circumstances.**  
+  > The variable `live_execution_authorized = False' remains active in all settings. This project is only allowed to run in the context of racing simulation, demo accounts and papertrading.
 
 ---
 
-## ۴. اطلاعات کامل بازتولیدپذیری علمی (Full Reproducibility Information)
+## 4. Full Reproducibility Information
 
-برای تضمین بازتولید ۱۰۰٪ تمامی نتایج توسط هیئت داوران و مهندسان مستقل:
+To guarantee 100% reproducibility of all results by independent judges and engineers:
 
-1. **شناسه کامیت و شاخه گیت:**
-   - شاخه ایزوله: `research/phase25-validation`
-   - کامیت مبنا: [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)
-   - کامیت برچسب‌خورده منجمد فاز ۲۰: `v1.0.0-phase20-frozen-release` (دست‌نخورده)
-2. **منشأ داده‌ها و تایم‌استمپ‌ها:**
-   - منبع داده: دیتاست رسمی ۹۰ روزه بازار والکس در قالب کندل‌های ۱۵ دقیقه‌ای برای سه جفت‌ارز `BTCTMN`، `ETHTMN`، و `SOLTMN`.
-   - پوشش زمانی: از ۱ آگوست ۲۰۲۶ تا ۳۰ اکتبر ۲۰۲۶ (بیش از ۸،۶۰۰ کندل تاریخی متوالی).
-3. **فرمان‌های اجرای ممیزی و آزمون‌ها:**
-   ```bash
-   # ۱. اجرای کامل سوئیت تست‌های واحد (۷۸ تست سبز)
+1. **Commit ID and Git branch:**
+   - Isolated branch: `research/phase25-validation`
+   - Base commit: [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)
+   - Frozen phase 20 tagged commit: `v1.0.0-phase20-frozen-release` (intact)
+2. **Source of data and timestamps:**
+   - Data source: official 90-day Wallex market dataset in the form of 15-minute candles for three currency pairs `BTCTMN', `ETHTMN', and `SOLTMN'.
+   - Time coverage: from August 1, 2026 to October 30, 2026 (more than 8,600 consecutive historical candles).
+3. **Orders for conducting audits and tests:**```bash
+   # 1. Complete implementation of unit tests suite (78 green tests)
    .venv/bin/pytest -v
    
-   # ۲. بازتولید مقایسه ۳ مدل پرتفوی (Models A, B, C)
+   # 2. Reproducing the comparison of 3 portfolio models (Models A, B, C)
    .venv/bin/python src/experimental/ensemble_engine.py
    
-   # ۳. بازتولید مطالعه تفکیک اثر هوش مصنوعی (AI Ablation)
+   # 3. Reproduction of AI Ablation Study
    .venv/bin/python src/experimental/ai_ablation_study.py
    
-   # ۴. بازتولید ماتریس ۱۴ سناریوی استرس
+   # 4. Reproducing the matrix of 14 stress scenarios
    .venv/bin/python src/experimental/stress_test_14_scenarios.py
-   ```
-4. **تراز مالی و تسویه حسابی:**
-   - اختلاف حسابی ۳۶.۸k و ۳۵.۸k فاز ۲۴ به‌صورت کامل و تا سطح ریال در [`docs/PHASE25_BASELINE_RECONCILIATION.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_BASELINE_RECONCILIATION.md) ریشه‌یابی و حل شد. خطای موازنه حسابی صفر است ($0.00$ TMN).
+   ```4. **Financial balance and settlement:**
+   - Arithmetic difference of 36.8k and 35.8k of phase 24 was completely rooted and solved up to the level of rial in [`docs/PHASE25_BASELINE_RECONCILIATION.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_BASELINE_RECONCILIATION.md). Arithmetic balancing error is zero ($0.00 TMN).
 
 ---
 
-## ۵. راهنمای عملیاتی و تاکتیک حضور در مسابقه ۷۲ ساعته (Competition Strategy Blueprint)
+## 5. Operational guide and tactics for participating in the 72-hour competition (Competition Strategy Blueprint)
 
-در صورتی که تیم تصمیم به شرکت در مسابقه ۷۲ ساعته هکاتون والکس با استراتژی فاز ۲۵ بگیرد، جدول عملیاتی زیر باید بدون کوچکترین تخطی اجرا گردد:
+If the team decides to participate in the 72-hour hackathon Valax with the phase 25 strategy, the following operational table must be implemented without the slightest violation:
 
 ```mermaid
 stateDiagram-v2
-    [*] --> CASH_100: شروع مسابقه (ساعت ۰)
-    CASH_100 --> EVALUATE: دریافت هر کندل ۱۵ دقیقه‌ای
-    EVALUATE --> CASH_100: اسپرد > ۰.۱۸٪ یا روند خنثی
-    EVALUATE --> AI_GATE: تطابق روند 1h و حجم 15m
-    AI_GATE --> CASH_100: امیدریاضی هوش مصنوعی < ۰.۴۰٪
-    AI_GATE --> POSITION_OPEN: تایید امیدریاضی و ورود با حداکثر ۵۰۰ هزار تومان
-    POSITION_OPEN --> TP_EXIT: رشد قیمت به +۴.۵٪ (خروج Maker)
-    POSITION_OPEN --> SL_EXIT: افت قیمت به ۲.۲٪- (خروج اضطراری Taker)
-    POSITION_OPEN --> PASSIVE_WINDDOWN: ساعت ۶۶ مسابقه و سود > ۰.۵۰٪ (خروج سازنده)
-    POSITION_OPEN --> FORCED_LIQUIDATION: ساعت ۷۰ مسابقه (تسویه قطعی به تومان)
+    [*] --> CASH_100: The start of the race (0 o'clock)
+    CASH_100 --> EVALUATE: Receive every 15-minute candle
+    EVALUATE --> CASH_100: spread > 0.18% or neutral trend
+    EVALUATE --> AI_GATE: Process matching 1h and volume 15m
+    AI_GATE --> CASH_100: Omidriyazi artificial intelligence < 0.40%
+    AI_GATE --> POSITION_OPEN: Omidriazi's approval and entry with a maximum of 500 thousand tomans
+    POSITION_OPEN --> TP_EXIT: Price growth to +4.5% (departure Maker)
+    POSITION_OPEN --> SL_EXIT: Price drop to 2.2%- (Emergency exit Taker)
+    POSITION_OPEN --> PASSIVE_WINDDOWN: 66 hours of competition and profit > 0.50% (Manufacturer exit)
+    POSITION_OPEN --> FORCED_LIQUIDATION: 70 hours of the race (Final settlement in Tomans)
     TP_EXIT --> CASH_100
     SL_EXIT --> CASH_100
     PASSIVE_WINDDOWN --> CASH_100
-    FORCED_LIQUIDATION --> FINAL_CASH: پایان مسابقه با ۱۰۰٪ تومان نقد
+    FORCED_LIQUIDATION --> FINAL_CASH: End of the competition with 100% cash
 ```
 
-### اصول تغییرناپذیر رقابت:
-1. **قانون بقای سرمایه:** مسابقه یک دوی ماراتن نیست، یک فرصت ۷۲ ساعته بسیار فشرده است. در صورت نامساعد بودن شرایط کلان بازار، ثبت بازدهی ۰.۰۰٪ بسیار باارزش‌تر از زیان ۲٪- ناشی از معامله‌گری اجباری در بازار رنج است.
-2. **تمرکز روی سولانا (SOL):** داده‌ها نشان دادند که ۸۹.۳٪ از کل سودهای استراتژی ساختاری در جفت‌ارز `SOLTMN` محقق شده است. در صورت تعارض منابع، اولویت تخصیص همواره با سولانا است.
-3. **پایان نقد:** در ساعت ۷۰ مسابقه، بدون توجه به وضعیت سود یا زیان باز، تمامی دارایی‌های رمزارزی باید به تومان تبدیل شوند تا ریسک نوسانات پایانی حذف گردد.
+### Immutable principles of competition:
+1. **The Law of Capital Survival:** The race is not a marathon, it is a very tight 72-hour opportunity. If macro market conditions are unfavorable, recording a return of 0.00% is much more valuable than a loss of -2% due to forced trading in a suffering market.
+2. **Focus on Solana (SOL):** The data showed that 89.3% of the total structural strategy profits were realized in ``SOLTMN'' currency pair. In case of resource conflict, the allocation priority is always with Solana.
+3. **End of Cashout:** At the 70th hour of the match, regardless of the open profit or loss status, all cryptocurrency assets must be converted into Tomans to eliminate the risk of final fluctuations.
 
 ---
 
-## ۶. نمایه اسناد ده گانه ممیزی فاز ۲۵ (Documentation Index)
+## 6. Index of ten documents of phase 25 audit (Documentation Index)
 
-تمامی اسناد ده‌گانه تولیدشده در این فاز به‌صورت دقیق و متقابل ارجاع داده شده‌اند:
+All ten documents produced in this phase are detailed and cross-referenced:
 
-1. [`docs/PHASE25_BASELINE_RECONCILIATION.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_BASELINE_RECONCILIATION.md): ریشه‌یابی و تطبیق ریاضی مغایرت حسابی فاز ۲۴ تا سطح ریال.
-2. [`docs/PHASE25_H1_INDEPENDENT_VALIDATION.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_H1_INDEPENDENT_VALIDATION.md): اعتبارسنجی مستقل فرضیه H1، بررسی ۱۰ سوال کلیدی و کشف وابستگی به سولانا.
-3. [`docs/PHASE25_H3_LEAD_LAG_RESEARCH.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_H3_LEAD_LAG_RESEARCH.md): مبانی آکادمیک نشت شتاب بیت‌کوین و ارزیابی اجرای با تاخیر ۱ کندلی.
-4. [`docs/PHASE25_ENSEMBLE_ARCHITECTURE.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_ENSEMBLE_ARCHITECTURE.md): معماری تلفیق پرتفوی H1+H3 و اثبات هم‌خطی بالا بین مدل‌ها.
-5. [`docs/PHASE25_AI_ABLATION_RESULTS.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_AI_ABLATION_RESULTS.md): آزمون سه‌گانه تفکیک اثر هوش مصنوعی و حل مشکل فیلتر بولین فاز ۲۳.
-6. [`docs/PHASE25_EXECUTION_REALISM_AUDIT.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_EXECUTION_REALISM_AUDIT.md): ممیزی خردساختار بازار والکس، نبود سفارش بومی Stop و شبیه‌سازی خروج‌های Taker.
-7. [`docs/PHASE25_OUT_OF_SAMPLE_VALIDATION.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_OUT_OF_SAMPLE_VALIDATION.md): تحلیل بوت‌استرپ ۱۰،۰۰۰ تکرار، حساسیت به داده پرت و زیان ماه سوم.
-8. [`docs/PHASE25_STRESS_TEST_RESULTS.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_STRESS_TEST_RESULTS.md): ماتریس جامع تست استرس در ۱۴ سناریوی نامساعد بازار.
-9. [`docs/PHASE25_SHADOW_EXECUTION_REPORT.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_SHADOW_EXECUTION_REPORT.md): تست اجرای سایه با وب‌سوکت و ارزیابی عمق دفاتر سفارشات والکس.
-10. [`docs/PHASE25_FINAL_VERDICT.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_FINAL_VERDICT.md): همین گزارش؛ چارچوب تصمیم‌گیری و حکم نهایی فاز ۲۵.
+1. [`docs/PHASE25_BASELINE_RECONCILIATION.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_BASELINE_RECONCILIATION.md): Finding the root and mathematical matching of the arithmetic discrepancy of phase 24 up to the level of Rial.
+2. [`docs/PHASE25_H1_INDEPENDENT_VALIDATION.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_H1_INDEPENDENT_VALIDATION.md): Independent validation of hypothesis H1, examining 10 key questions and discovering Solana dependence.
+3. [`docs/PHASE25_H3_LEAD_LAG_RESEARCH.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_H3_LEAD_LAG_RESEARCH.md): Academic Fundamentals of Bitcoin Acceleration Leaks and Lagging Execution Evaluation 1 Candleley.
+4. [`docs/PHASE25_ENSEMBLE_ARCHITECTURE.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_ENSEMBLE_ARCHITECTURE.md): H1+H3 portfolio integration architecture and proof of high collinearity between models.
+5. [`docs/PHASE25_AI_ABLATION_RESULTS.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_AI_ABLATION_RESULTS.md): Tripartite test of separation of artificial intelligence effect and solving phase 23 boolean filter problem.
+6. [`docs/PHASE25_EXECUTION_REALISM_AUDIT.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_EXECUTION_REALISM_AUDIT.md): Wallex market microstructure audit, lack of native Stop order and simulation of Taker exits.
+7. [`docs/PHASE25_OUT_OF_SAMPLE_VALIDATION.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_OUT_OF_SAMPLE_VALIDATION.md): Bootstrap analysis of 10,000 replicates, sensitivity to outliers, and third-month losses.
+8. [`docs/PHASE25_STRESS_TEST_RESULTS.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_STRESS_TEST_RESULTS.md): Comprehensive stress test matrix in 14 adverse market scenarios.
+9. [`docs/PHASE25_SHADOW_EXECUTION_REPORT.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_SHADOW_EXECUTION_REPORT.md): Shadow execution test with websocket and depth assessment of Wallex order books.
+10. [`docs/PHASE25_FINAL_VERDICT.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_FINAL_VERDICT.md): same report; The decision-making framework and the final verdict of phase 25.

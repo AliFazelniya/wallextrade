@@ -1,69 +1,69 @@
-# ممیزی جامع درستی‌آزمایی و حساسیت تست‌های استرس (Phase 26 Stress Test Integrity)
+# Comprehensive audit of the validity and sensitivity of stress tests (Phase 26 Stress Test Integrity)
 ## Adversarial Stress-Test Verification, State Mutation & Execution Realism Audit
 
-> **مخزن:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **شاخه پژوهشی:** `research/phase26-forensic-validation`  
-> **کامیت مبنای منجمد:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **وضعیت ارزیابی ممیزی:** ✅ **حل کامل ابهامات و تایید درستی جهش حالت (State Mutation Verified)**
+> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Research branch:** `research/phase26-forensic-validation`  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Audit evaluation status:** ✅ **Completely resolving the ambiguities and confirming the correctness of the state mutation (State Mutation Verified)**
 
 ---
 
-## ۱. کالبدشکافی علل یکسانی نتایج سناریوهای فاز ۲۵ (Root Cause Analysis of Identical Results)
+## 1. Root Cause Analysis of Identical Results of Phase 25 Scenarios
 
-در گزارش فاز ۲۵، چهار سناریوی استرس دقیقاً سودی مشابه با حالت مبنا (+۶۳،۹۵۴.۷ تومان) گزارش کرده بودند:
-1. افزایش ۵۰٪ اسپرد (`Increased Spreads +50%`)
-2. کاهش نسبت اجرای جزئی به ۷۰٪ (`Partial Fills 70%`)
-3. تسویه اجباری پایانی (`Forced Deadline Liquidation`)
-4. مسیر بدبینانه درون‌کندلی (`Adverse Intrabar Path`)
+In the phase 25 report, four stress scenarios reported exactly the same profit as the base case (+63,954.7 Tomans):
+1. Increase of 50% spread ("Increased Spreads +50%")
+2. Reducing the ratio of partial implementation to 70% (`Partial Fills 70%')
+3. Forced Deadline Liquidation
+4. Adverse Intrabar Path
 
-### ممیزی موشکافانه کد اسکریپت فاز ۲۵:
-بررسی خط‌به‌خط اسکریپت [`src/experimental/stress_test_14_scenarios.py`](file:///root/starcoach-hack/wallex/src/experimental/stress_test_14_scenarios.py) و تابع [`simulate_portfolio_ensemble`](file:///root/starcoach-hack/wallex/src/experimental/ensemble_engine.py#L33) راز این یکسانی را فاش ساخت:
-- **نقص پارامترهای ارسالی در فاز ۲۵:** در اسکریپت اولیه فاز ۲۵، سناریوهای ۰۶، ۱۱ و ۱۲ به جای ارسال مقادیر جهش‌یافته (مانند `spread_multiplier=1.5` یا `fill_ratio=0.70`)، به دلیل غیبت این آرگومان‌ها در امضای تابع شبیه‌ساز، ناخواسته مقادیر پیش‌فرض مبنا (`slippage_pct=0.15, maker_fee=0.0025, taker_fee=0.0030`) را به موتور ارسال می‌کردند! در واقع موتور شبیه‌ساز هیچ‌گاه متوجه اعمال این استرس‌ها نشده بود!
-- **سناریوی درون‌کندلی (Adverse Intrabar):** موتور شبیه‌ساز مبنا از پیش به صورت **محافظه‌کارانه و بدبینانه** کدنویسی شده بود (`is_sl` همواره قبل از `is_tp` بررسی می‌شد). بنابراین اجرای حالت بدبینانه تغییری در خروجی مبنا ایجاد نمی‌کرد.
-
----
-
-## ۲. اعمال اصلاحات ساختاری و جهش واقعی پارامترها در موتور فاز ۲۶
-
-در فاز ۲۶، امضای تابع `simulate_portfolio_ensemble` و منطق اجرای آن با پارامترهای صریح و واقعی جهش حالت بازنویسی شد:
-- `spread_multiplier: float = 1.0` (ضرب اسپرد در ۱.۵۰ و اعمال آن بر فیلتر آستانه ورود و هزینه اجرا)
-- `fill_ratio: float = 1.0` (کاهش حجم اسمی سفارش به ۷۰٪: `notional = 500,000 * 0.70 = 350,000 TMN`)
-- `forced_deadline_hour: float = 72.0` (اعمال تسویه فوری در ساعت ۶۸ مسابقه با سفارش Taker)
-- `favorable_intrabar: bool = False` (حالت بدبینانه پیش‌فرض در برابر حالت خوش‌بینانه)
+### Scrutiny audit of phase 25 script code:
+A line-by-line examination of the script [`src/experimental/stress_test_14_scenarios.py`](file:///root/starcoach-hack/wallex/src/experimental/stress_test_14_scenarios.py) and the function [`simulate_portfolio_ensemble`](file:///root/starcoach-hack/wallex/src/experimental/ensemble_engine.py#L33) revealed the secret of this similarity:
+- **Defective parameters sent in phase 25:** In the initial script of phase 25, scenarios 06, 11 and 12 instead of sending mutated values (such as `spread_multiplier=1.5` or `fill_ratio=0.70`), due to the absence of these arguments in the signature of the simulator function, unwanted base default values (`slippage_pct=0.15, maker_fee=0.0025, taker_fee=0.0030`) were sent to the engine! In fact, the simulation engine had never noticed the application of these stresses!
+- **Adverse Intrabar scenario:** The base simulator engine was pre-coded as **conservative and pessimistic** (`is_sl' was always checked before `is_tp'). Therefore, running the pessimistic mode did not change the baseline output.
 
 ---
 
-## ۳. جدول ماتریس بازتولیدشده تست استرس با جهش واقعی حالت (۱۴ سناریو)
+## 2. Applying structural modifications and actual jump of parameters in phase 26 engine
 
-| شماره و شرح سناریوی استرس | سود خالص کل (TMN) | میانگین بازدهی | نرخ برد پنجره‌ها | تعداد معامله | اصطکاک صرافی (TMN) | وضعیت و تحلیل تغییرات |
+In phase 26, the signature of the ``simulate_portfolio_ensemble'' function and its execution logic were rewritten with explicit and real state transition parameters:
+- `spread_multiplier: float = 1.0` (multiply the spread by 1.50 and apply it to the entry threshold filter and execution cost)
+- `fill_ratio: float = 1.0` (decrease the nominal volume of the order to 70%: `notional = 500,000 * 0.70 = 350,000 TMN`)
+- `forced_deadline_hour: float = 72.0` (apply immediate settlement at the 68th hour of the match with Taker's order)
+- `favorable_intrabar: bool = False` (default pessimistic mode vs optimistic mode)
+
+---
+
+## 3. Reproduced matrix table of stress test with real state jump (14 scenarios)
+
+| Number and description of the stress scenario Total Net Profit (TMN) | average yield | Windows win rate Number of transactions Exchange Friction (TMN) | Status and analysis of changes
 |---|:---:|:---:|:---:|:---:|:---:|---|
-| **۰۱. مبنای استاندارد (لغزش ۰.۱۵٪ و کارمزد رسمی)** | **۶۳،۹۵۴.۷+** | **۰.۰۴۴٪+** | **۲۷.۶٪** | ۳۵ | ۱۳۴،۶۱۲ | نقطه مرجع مبنا |
-| **۰۲. کارمزد افزایشی (۰.۳۵٪ Maker و ۰.۴۰٪ Taker)** | ۲۸،۷۹۱.۱+ | ۰.۰۲۰٪+ | ۲۷.۶٪ | ۳۵ | ۱۶۹،۷۷۵ | سود کاهش یافت (افزایش اصطکاک) |
-| **۰۳. لغزش استاندارد ۰.۱۵٪** | ۶۳،۹۵۴.۷+ | ۰.۰۴۴٪+ | ۲۷.۶٪ | ۳۵ | ۱۳۴،۶۱۲ | منطبق بر مبنا |
-| **۰۴. لغزش بالا (۰.۳۰٪)** | ۴۰،۱۳۷.۸+ | ۰.۰۲۸٪+ | ۳۱.۰٪ | ۳۴ | ۱۶۵،۲۴۷ | سود منطقی کاهش یافت |
-| **۰۵. لغزش شدید (۰.۵۰٪)** | ۱۲،۰۷۹.۹+ | ۰.۰۰۸٪+ | ۲۷.۶٪ | ۳۵ | ۲۲۴،۰۸۰ | حفظ حاشیه سود مثبت |
-| **۰۶. اسپرد افزایشی (+۵۰٪ و فیلتر اسپرد)** | **۸۵،۳۲۱.۷+** | **۰.۰۵۹٪+** | ۲۴.۱٪ | **۱۹** | **۷۲،۶۹۳** | **تغییر واقعی رخ داد!** (کاهش معاملات نویزی) |
-| **۰۷. شکست سفارش‌های سازنده (۱۰۰٪ Taker)** | ۵۸،۰۵۶.۸+ | ۰.۰۴۰٪+ | ۲۷.۶٪ | ۳۵ | ۱۴۰،۵۱۰ | پایداری در خروج‌های تیکر |
-| **۰۸. تاخیر در اجرای استاپ (۰.۳۵٪ لغزش استاپ)** | ۱۸،۷۸۲.۶+ | ۰.۰۱۳٪+ | ۳۱.۰٪ | ۳۵ | ۱۸۳،۰۶۴ | کاهش سود منطقی |
-| **۰۹. شوک افت نقدینگی (لغزش ۰.۴۰٪ و کارمزد بالا)** | **۱۳،۴۳۵.۶-** | ۰.۰۰۹٪- | ۲۴.۱٪ | ۳۵ | ۲۲۴،۳۹۳ | ❌ **مردود (زیان‌دهی در نقدینگی ناچیز)** |
-| **۱۰. مسیر درون‌کندلی بدبینانه (Adverse SL)** | ۶۳،۹۵۴.۷+ | ۰.۰۴۴٪+ | ۲۷.۶٪ | ۳۵ | ۱۳۴،۶۱۲ | اثبات عدم وجود کندل مبهم هم‌زمان |
-| **۱۱. پرشدن جزئی (تکمیل ۷۰٪ حجم سفارش)** | **۴۴،۷۶۸.۳+** | **۰.۰۳۱٪+** | ۲۷.۶٪ | ۳۵ | **۹۴،۲۲۸** | **دقیقاً ۷۰.۰٪ سود و اصطکاک مبنا!** |
-| **۱۲. تسویه اجباری زودهنگام در ساعت ۶۸** | **۶۹،۰۱۲.۷+** | **۰.۰۴۸٪+** | ۲۷.۶٪ | ۳۵ | ۱۳۴،۶۳۷ | بهبود سود با خروج قبل از نوسان پایانی |
-| **۱۳. استرس شوک نوسانی (لغزش ۰.۲۵٪)** | ۴۵،۷۰۱.۷+ | ۰.۰۳۲٪+ | ۳۱.۰٪ | ۳۴ | ۱۵۳،۸۷۹ | پایداری معقول |
-| **۱۴. حذف برترین پنجره سودآور (بدون W09)** | **۳،۴۴۰.۸-** | ۰.۰۰۲٪- | ۲۵.۰٪ | ۳۱ | ۱۲۰،۴۲۰ | ❌ **مردود (وابستگی به موج استثنایی)** |
+| **01. Standard basis (slippage 0.15% and official fee)** | **63,954.7+** | **0.044%+** | **27.6%** | 35 | 134,612 | Base reference point
+| **02. Incremental fee (0.35% Maker and 0.40% Taker)** | 28,791.1+ | 0.020%+ | 27.6% 35 | 169,775 | Profit decreased (increased friction) |
+| **03. Standard slip 0.15%** | 63,954.7+ | 0.044%+ | 27.6% 35 | 134,612 | According to the basis |
+| **04. High slip (0.30%)** | 40,137.8+ | 0.028%+ | 31.0% 34 | 165,247 | Rational profit decreased
+| **05. Severe slippage (0.50%)** | 12,079.9+ | 0.008%+ | 27.6% 35 | 224,080 | Maintaining a positive profit margin
+| **06. Incremental spread (+50% and spread filter)** | **85,321.7+** | **0.059%+** | 24.1% **19** | **72,693** | **REAL CHANGE HAPPENED!** (NOISE TRADING REDUCTION) |
+| **07. Failure of manufacturer orders (100% Taker)** | 58,056.8+ | 0.040%+ | 27.6% 35 | 140,510 | Stability in ticker exits
+| **08. Stop execution delay (0.35% stop slip)** | 18,782.6+ | 0.013%+ | 31.0% 35 | 183,064 | Reduction of rational profit
+| **09. Liquidity shock (slippage of 0.40% and high fees)** | **13,435.6-** | 0.009% - | 24.1% 35 | 224,393 | ❌ **rejected (insignificant liquidity loss)** |
+| **10. The pessimistic intercandle path (Adverse SL)** | 63,954.7+ | 0.044%+ | 27.6% 35 | 134,612 | Proving the non-existence of ambiguous candles at the same time
+| **11. Partial filling (completion of 70% of the order volume)** | **44,768.3+** | **0.031%+** | 27.6% 35 | **94,228** | **Exactly 70.0% profit and base friction!** |
+| **12. Mandatory early settlement in 68 hours **69,012.7+** | **0.048%+** | 27.6% 35 | 134,637 | Profit improvement by exiting before the final swing
+| **13. Oscillating shock stress (slip 0.25%)** | 45,701.7+ | 0.032%+ | 31.0% 34 | 153,879 | Reasonable stability
+| **14. Remove Top Profitable Window (No W09)** | **3,440.8-** | 0.002% - | 25.0% | 31 | 120,420 | ❌ **rejected (dependence on exceptional wave)** |
 
 ---
 
-## ۴. اثبات ریاضی و فیزیکی پاسخ سیستم به جهش‌ها
+## 4. Mathematical and physical proof of system response to mutations
 
-1. **اثبات ریاضی پرشدن جزئی ۷۰٪ (Scenario 11):**  
+1. **Mathematical proof of partial filling of 70% (Scenario 11):**  
    $$63,954.7 \times 0.70 = 44,768.29 \text{ TMN}$$  
    $$134,612 \times 0.70 = 94,228.40 \text{ TMN}$$  
-   خروجی واقعی اسکریپت با دقت صدم ریال دقیقاً **+۴۴،۷۶۸.۳ تومان** سود و **۹۴،۲۲۸ تومان** اصطکاک شد. این اثبات قطعی تاثیر خطی حجم پوزیشن است.
-2. **کشف سناریوی اسپرد ۵۰٪+ (Scenario 06):**  
-   با ضرب اسپرد در ۱.۵، فیلتر اسپرد ورودی ($Spread \le 0.16\%$) فعال‌تر شد و ۱۶ معامله نوسانی را که در اسپرد‌های مرزی انجام شده و عموماً با حدضرر بسته شده بودند وتو کرد. در نتیجه معاملات به ۱۹ معامله پالایش‌شده کاهش یافته و سود به **+۸۵،۳۲۱.۷ تومان** رسید.
-3. **اثبات دلیل ثبات سناریوی درون‌کندلی (Scenario 10):**  
-   اجرای آزمایشی با فرض خوش‌بینانه (`favorable_intrabar=True`) نیز دقیقاً عدد ۶۳،۹۵۴.۶۶ تومان را بازتولید کرد؛ زیرا در کل ۳۵ معامله تاریخی، حتی یک کندل ۱۵ دقیقه‌ای وجود نداشته که هم‌زمان سقف آن به تارگت ۴.۵٪+ و کف آن به استاپ ۲.۲٪- برسد (نیازمند دامنه نوسان ۶.۷٪ در ۱۵ دقیقه). بنابراین هیچ ابهام درون‌کندلی در تاریخچه وجود ندارد.
+   The actual output of the script with the accuracy of 100 rials was exactly **+44,768.3 Tomans** profit and **94,228 Tomans** friction. This is definitive proof of the linear effect of position volume.
+2. ** Discovery of the 50%+ spread scenario (Scenario 06):**  
+   By multiplying the spread by 1.5, the input spread filter ( $Spread \le 0.16\%$ ) became more active and vetoed 16 swing trades that were made at border spreads and were generally closed at a loss. As a result, the transactions were reduced to 19 refined transactions and the profit reached **+85,321.7 Tomans**.
+3. **Proving the reason for the stability of the internal scenario (Scenario 10):**  
+   A test run with an optimistic assumption (`favorable_intrabar=True') also reproduced exactly the number 63,954.66 Tomans; Because in all 35 historical transactions, there was not a single 15-minute candle whose ceiling reached the target of +4.5% and its floor reached the stop of -2.2% (requiring a swing range of 6.7% in 15 minutes). Therefore, there is no internal ambiguity in history.
 
-### حکم نهایی ممیزی تست‌های استرس: `PASS`
-نقص شبیه‌سازی فاز ۲۵ برطرف شد، جهش متغیرها به صورت واقعی و اثبات‌پذیر انجام گرفت و سیستم رفتار فیزیکی و ریاضی کاملاً معتبری نشان داد.
+### The final verdict of the audit of the stress tests: ``PASS''
+The defect of phase 25 simulation was solved, the mutation of the variables was done in a real and provable way, and the system showed a completely valid physical and mathematical behavior.

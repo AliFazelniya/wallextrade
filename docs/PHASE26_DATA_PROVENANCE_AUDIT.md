@@ -1,77 +1,77 @@
-# ممیزی قانونی اصالت و منشأ داده‌های بازار (Phase 26 Data Provenance Audit)
+# Legal audit of authenticity and origin of market data (Phase 26 Data Provenance Audit)
 ## Forensic Data Provenance, Timestamp Integrity & Future-Date Resolution
 
-> **مخزن:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **شاخه پژوهشی:** `research/phase26-forensic-validation`  
-> **کامیت مبنای منجمد:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **زمان ممیزی:** ۲۲ اکتبر ۲۰۲۶ - ساعت ۲۰:۴۵ به وقت محلی (۱۷:۱۵ به وقت UTC)  
-> **نتیجه بررسی اصالت داده‌ها:** ✅ **تایید قطعی اصالت داده‌ها (PASS) / رفع کامل ابهام روایی تاریخ‌ها**
+> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Research branch:** `research/phase26-forensic-validation`  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Audit time:** October 22, 2026 - 20:45 local time (17:15 UTC time)  
+> **The result of checking the authenticity of the data:** ✅ **Definitive confirmation of the authenticity of the data (PASS) / Complete removal of the ambiguity of validity of the dates**
 
 ---
 
-## ۱. حل قطعی تناقض «داده‌های مربوط به آینده» (Resolution of the Future-Date Contradiction)
+## 1. Resolution of the Future-Date Contradiction
 
-### شرح ابهام مطرح‌شده:
-در گزارش نهایی فاز ۲۵ ادعا شده بود که مجموعه داده‌های تاریخی ۹۰ روزه بازار از **۱ آگوست ۲۰۲۶ تا ۳۰ اکتبر ۲۰۲۶** را پوشش می‌دهد. در حالی که زمان جاری **۲۲ اکتبر ۲۰۲۶** است. این عبارت این ظن را ایجاد می‌کرد که کندل‌های بعد از ۲۲ اکتبر به صورت غیرواقعی یا پیش‌بینانه (Future-dated) به دیتاست تزریق شده‌اند و معاملات ۲۷ ژوئیه در کارنامه معاملاتی قبل از شروع دیتاست بوده‌اند.
+### Description of the ambiguity raised:
+The final phase 25 report claimed that the historical data set covers 90 days of the market from August 1, 2026 to October 30, 2026. While the current time is October 22, 2026. This statement raised the suspicion that the candles after October 22 were unrealistically or future-dated and the July 27 trades were in the trading record before the start of the data set.
 
-### کشف و اثبات مستند قانونی (Forensic Evidence):
-ممیزی بایت‌به‌بایت فایل‌های CSV خام در پوشه `data/cache` حقیقت قطعی را برملا ساخت:
-1. **افق واقعی داده‌های خام:**
-   - اولین کندل در تمامی فایل‌های ۹۰ روزه: **`2026-07-24 11:15:00 UTC`** (۲۴ ژوئیه ۲۰۲۶)
-   - آخرین کندل در تمامی فایل‌های ۹۰ روزه: **`2026-10-22 11:15:00 UTC`** (۲۲ اکتبر ۲۰۲۶، دقیقاً ۶ ساعت قبل از زمان نگارش گزارش جاری)
-2. **علت تناقض ظاهری:**
-   - عبارت «۱ آگوست تا ۳۰ اکتبر» در گزارش متنی فاز ۲۵ صرفاً یک **خطای بیانی و تقریبی در تدوین متن (Documentation Narrative Typo)** از سوی تحلیل‌گر بوده است (تصور تقریبی ماه‌های اوت، سپتامبر و اکتبر به عنوان یک دوره ۳ ماهه)، در حالی که کد پایتون و فایل‌های ذخیره‌شده دقیقاً داده‌های واقعی ۹۰ روز گذشته تا تاریخ امروز را شامل می‌شدند.
-3. **معاملات ۲۷ ژوئیه ۲۰۲۶:**
-   - معاملات ثبت‌شده در تاریخ ۲۷ ژوئیه ۲۰۲۶ (مانند معاملات پنجره W01 و W02 در کارنامه H1) کاملاً طبیعی، معتبر و منطقی هستند؛ زیرا داده‌های تاریخی از ۲۴ ژوئیه آغاز شده و معاملات پس از تکمیل دوره گرم‌کردن اندیکاتورها (Warm-up period معادل ۱۵ ساعت) در روز ۲۷ ژوئیه فعال شده‌اند.
-4. **تایید عدم وجود هرگونه داده مربوط به آینده:**
-   - هیچ رکوردی پس از ساعت ۱۱:۱۵ روز ۲۲ اکتبر ۲۰۲۶ در هیچ فایلی وجود ندارد. کلیه داده‌ها در لحظه استخراج معتبر و متعلق به گذشته بوده‌اند.
+### Discovery and proof of legal documents (Forensic Evidence):
+A byte-by-byte audit of the raw CSV files in the ``data/cache'' folder revealed the definitive truth:
+1. **Real horizon of raw data:**
+   - The first candle in all 90-day files: **`2026-07-24 11:15:00 UTC`** (July 24, 2026)
+   - The last candle in all 90-day files: **`2026-10-22 11:15:00 UTC`** (October 22, 2026, exactly 6 hours before the time of writing the current report)
+2. **The reason for the apparent contradiction:**
+   - The phrase "August 1st to October 30th" in the text report of phase 25 was simply a **expression and approximate error in editing the text (Documentation Narrative Typo)** by the analyst (roughly imagining the months of August, September and October as a 3-month period), while the Python code and the saved files contained exactly the real data of the past 90 days until today.
+3. **Transactions of July 27, 2026:**
+- Transactions recorded on July 27, 2026 (such as window transactions W01 and W02 in the H1 portfolio) are completely natural, valid and logical; Because the historical data started on July 24 and the trades were activated after completing the warming period of the indicators (Warm-up period equivalent to 15 hours) on July 27.
+4. **Confirmation of the absence of any data related to the future:**
+   - There are no records after 11:15 on October 22, 2026 in any file. All data are valid and belong to the past at the moment of extraction.
 
 ```mermaid
 timeline
-    title خط زمانی واقعی دیتاست ۹۰ روزه والکس در برابر خطای روایی
-    2026-07-24 : شروع واقعی استخراج داده‌ها (11:15 UTC)
-    2026-07-27 : اولین معاملات واقعی مدل H1 در پنجره W01
-    2026-08-01 : تاریخ ادعاشده اشتباه در متن فاز ۲۵ (Typo)
-    2026-10-22 : آخرین کندل واقعی موجود در کش (11:15 UTC) و زمان حال حاضر
-    2026-10-30 : تاریخ فرضی انتهای متن فاز ۲۵ (اثبات شد در کش وجود ندارد!)
+    title The real time line of the 90-day Wallex dataset against the validity error
+    2026-07-24 : The actual start of data mining (11:15 UTC)
+    2026-07-27 : The first real transactions of the model H1 in the window W01
+    2026-08-01 : The alleged wrong date in the text of Phase 25 (Typo)
+    2026-10-22 : The last real candle in the cache (11:15 UTC) and the present tense
+    2026-10-30 : The hypothetical date of the end of the text of phase 25 (proved not to exist in the cache!)
 ```
 
 ---
 
-## ۲. مشخصات کامل، هش‌های SHA-256 و کالبدشکافی فایل‌های دیتاست
+## 2. Full specification, SHA-256 hashes and autopsy of dataset files
 
-جدول زیر نتیجه اجرای مستقل اسکریپت ممیزی هش و ساختار رکوردها بر روی فایل‌های کش محلی است:
+The following table is the result of independent execution of the hash audit script and the structure of records on local cache files:
 
-| نام فایل دیتاست | مسیر مطلق روی دیسک | حجم (Bytes) | چک‌سام اختصاصی (SHA-256) | تعداد رکورد | اولین تایم‌استمپ (UTC) | آخرین تایم‌استمپ (UTC) |
+| The name of the data file Absolute path on disk Volume (Bytes) | Dedicated checksum (SHA-256) | Number of records First timestamp (UTC) | Last timestamp (UTC) |
 |---|---|:---:|---|:---:|:---:|:---:|
-| **BTCTMN_15m_90d.csv** | [`data/cache/BTCTMN_15m_90d.csv`](file:///root/starcoach-hack/wallex/data/cache/BTCTMN_15m_90d.csv) | ۸۱۲،۷۹۰ | `54292673b433a9a95e19ebab0dc446fdfc1458c9b8e4ea5672a6b5ad51775a9e` | ۸،۶۳۶ | 2026-07-24 11:15 | 2026-10-22 11:15 |
-| **ETHTMN_15m_90d.csv** | [`data/cache/ETHTMN_15m_90d.csv`](file:///root/starcoach-hack/wallex/data/cache/ETHTMN_15m_90d.csv) | ۷۲۷،۶۹۲ | `106970901976cf4015a1de237486ea79f3daa93d8b321b697d6f74d8b41df0d9` | ۸،۶۳۴ | 2026-07-24 11:15 | 2026-10-22 11:15 |
-| **SOLTMN_15m_90d.csv** | [`data/cache/SOLTMN_15m_90d.csv`](file:///root/starcoach-hack/wallex/data/cache/SOLTMN_15m_90d.csv) | ۶۸۹،۴۹۲ | `27a82f586859eb92a608abf1db9c8cdceef2fe4f29e1570e8d77de5618702f0a` | ۸،۶۳۵ | 2026-07-24 11:15 | 2026-10-22 11:15 |
-| **BTCTMN_15m_36d.csv** | [`data/cache/BTCTMN_15m_36d.csv`](file:///root/starcoach-hack/wallex/data/cache/BTCTMN_15m_36d.csv) | ۳۲۶،۷۹۷ | `766f71ab61f575b4b7e99d678434eee9b61c47574f6f10dcbdaaef09782170d2` | ۳،۴۵۲ | 2026-09-16 11:00 | 2026-10-22 11:00 |
-| **ETHTMN_15m_36d.csv** | [`data/cache/ETHTMN_15m_36d.csv`](file:///root/starcoach-hack/wallex/data/cache/ETHTMN_15m_36d.csv) | ۲۹۱،۷۸۵ | `37935a80cb85fed9b17809fa0987e5481c7771dd7e886dcaac758ab1083a310a` | ۳،۴۵۰ | 2026-09-16 11:00 | 2026-10-22 11:00 |
-| **SOLTMN_15m_36d.csv** | [`data/cache/SOLTMN_15m_36d.csv`](file:///root/starcoach-hack/wallex/data/cache/SOLTMN_15m_36d.csv) | ۲۷۶،۳۱۲ | `4e189f3c6814025701b316a01920bda66e79138d579f5963be790440729ef863` | ۳،۴۵۱ | 2026-09-16 11:00 | 2026-10-22 11:00 |
+| **BTCTMN_15m_90d.csv** | [`data/cache/BTCTMN_15m_90d.csv`](file:///root/starcoach-hack/wallex/data/cache/BTCTMN_15m_90d.csv) | 812,790 | `54292673b433a9a95e19ebab0dc446fdfc1458c9b8e4ea5672a6b5ad51775a9e` | 8,636 | 2026-07-24 11:15 | 2026-10-22 11:15 |
+| **ETHTMN_15m_90d.csv** | [`data/cache/ETHTMN_15m_90d.csv`](file:///root/starcoach-hack/wallex/data/cache/ETHTMN_15m_90d.csv) | 727,692 | `106970901976cf4015a1de237486ea79f3daa93d8b321b697d6f74d8b41df0d9` | 8,634 | 2026-07-24 11:15 | 2026-10-22 11:15 |
+| **SOLTMN_15m_90d.csv** | [`data/cache/SOLTMN_15m_90d.csv`](file:///root/starcoach-hack/wallex/data/cache/SOLTMN_15m_90d.csv) | 689,492 | `27a82f586859eb92a608abf1db9c8cdceef2fe4f29e1570e8d77de5618702f0a` | 8,635 | 2026-07-24 11:15 | 2026-10-22 11:15 |
+| **BTCTMN_15m_36d.csv** | [`data/cache/BTCTMN_15m_36d.csv`](file:///root/starcoach-hack/wallex/data/cache/BTCTMN_15m_36d.csv) | 326,797 | `766f71ab61f575b4b7e99d678434eee9b61c47574f6f10dcbdaaef09782170d2` | 3,452 | 2026-09-16 11:00 | 2026-10-22 11:00 |
+| **ETHTMN_15m_36d.csv** | [`data/cache/ETHTMN_15m_36d.csv`](file:///root/starcoach-hack/wallex/data/cache/ETHTMN_15m_36d.csv) | 291,785 | `37935a80cb85fed9b17809fa0987e5481c7771dd7e886dcaac758ab1083a310a` | 3,450 | 2026-09-16 11:00 | 2026-10-22 11:00 |
+| **SOLTMN_15m_36d.csv** | [`data/cache/SOLTMN_15m_36d.csv`](file:///root/starcoach-hack/wallex/data/cache/SOLTMN_15m_36d.csv) | 276,312 | `4e189f3c6814025701b316a01920bda66e79138d579f5963be790440729ef863` | 3,451 | 2026-09-16 11:00 | 2026-10-22 11:00 |
 
 ---
 
-## ۳. ارزیابی سلامت ساختار کندل‌ها و ممیزی OHLC
+## 3. Structural health assessment of candles and OHLC audit
 
-آزمون‌های اعتبارسنجی آماری و ساختاری بر روی ۸،۶۳۶ ردیف هر دیتاست نشان داد:
-- **صعودی بودن اکید زمان (Monotonicity):** کاملاً رعایت شده است (`is_monotonic = True`).
-- **تعداد رکوردهای تکراری (Duplicates):** دقیقاً صفر رکورد (`0 duplicates`).
-- **نقض رابطه سقف و کف ($High < Low$):** دقیقاً صفر مورد (`0 invalid`).
-- **قیمت‌های منفی یا صفر ($Close \le 0$):** صفر مورد.
-- **حجم منفی ($Volume < 0$):** صفر مورد.
-- **مقادیر گمشده و نال (NaN/Null):** صفر مورد در ستون‌های OHLCV.
-- **شکاف‌های زمانی (Gaps):** تنها ۱ تا ۲ مورد قطعی کوتاه‌مدت (حداکثر ۱.۵ ساعت) به دلیل دوره نگهداری سرورهای صرافی در طول ۹۰ روز رخ داده است که بدون درونیابی مصنوعی و با حفظ پیوستگی قیمت هندل شده‌اند.
+Statistical and structural validation tests on 8,636 rows of each dataset showed:
+- **Monotonicity:** is fully observed (`is_monotonic = True').
+- **Number of duplicate records (Duplicates):** Exactly zero records (`0 duplicates').
+- **Violation of ceiling and floor relationship ($High < Low$):** Exactly zero cases (`0 invalid`).
+- **Negative or zero prices ($Close \le 0$):** Zero items.
+- **Negative volume ($Volume < 0$):** Zero items.
+- **Missing and null values ​​(NaN/Null):** Zero items in OHLCV columns.
+- **Time gaps (Gaps):** Only 1-2 short-term outages (maximum 1.5 hours) have occurred due to the maintenance period of exchange servers during 90 days, which were handled without artificial interpolation and maintaining price continuity.
 
 ---
 
-## ۴. منبع داده، روش بازیابی و انطباق با مقررات مسابقه
+## 4. Data source, method of retrieval and compliance with competition regulations
 
-- **تامین‌کننده داده:** صرافی والکس (`Wallex Exchange`)
-- **اندپوینت رسمی دریافت داده:** `https://api.wallex.ir/v1/udf/history`
-- **روش تجمیع:** کندل‌های ۱ دقیقه‌ای رسمی سرور با فرمول استاندارد ($O=t_0, H=\max, L=\min, C=t_{\text{end}}, V=\sum v$) به کندل‌های ۱۵ دقیقه‌ای استاندارد تبدیل شده‌اند.
-- **تایم‌استمپ بازخوانی:** ۲۲ اکتبر ۲۰۲۶، بین ساعت ۱۱:۲۰ تا ۱۱:۳۵ UTC.
+- **Data provider:** Wallex Exchange
+- **Official data receiving endpoint:** `https://api.wallex.ir/v1/udf/history`
+- **Aggregation method:** The official 1-minute candles of the server have been converted into standard 15-minute candles with the standard formula ($O=t_0, H=\max, L=\min, C=t_{\text{end}}, V=\sum v$).
+- **Refresh timestamp:** October 22, 2026, between 11:20 and 11:35 UTC.
 
-### حکم نهایی ممیزی منشأ داده: `PASS`
-دیتاست تاریخی والکس ۱۰۰٪ واقعی، عاری از داده‌های جعلی، فاقد هرگونه کندل آینده، و دارای پیوستگی و یکپارچگی حسابی کامل است.
+### The final judgment of the data source audit: ``PASS''
+Wallex historical dataset is 100% real, free of fake data, free of any future candles, and has complete consistency and arithmetic integrity.

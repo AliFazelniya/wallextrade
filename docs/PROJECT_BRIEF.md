@@ -1,40 +1,40 @@
-# خلاصه پروژه: سامانه معاملاتی الگوریتمی مبتنی بر هوش مصنوعی عامل‌محور (Starcoach × Wallex)
+# Project summary: Algorithmic trading system based on agent-oriented artificial intelligence (Starcoach × Wallex)
 
-## ۱. معرفی رویداد و هدف
-این پروژه به عنوان راهکار جامع برای هکاتون هوش مصنوعی عامل‌محور (Agentic AI Hackathon) مشترک **استارکوچ (Starcoach)** و **والکس (Wallex)** طراحی و پیاده‌سازی شده است.
+## 1. Introducing the event and purpose
+This project has been designed and implemented as a comprehensive solution for Agentic AI Hackathon jointly by **Starcoach** and **Wallex**.
 
-هدف اصلی، توسعه یک موتور معاملاتی الگوریتمی خودکار، قابل بازتولید، متکی بر اصول کمّی (Quantitative Trading) و تصمیم‌گیری هوشمند مبتنی بر هوش مصنوعی عامل‌محور (Agentic AI) است که:
-۱. داده‌های زنده و تاریخی بازار را از صرافی والکس دریافت کند.
-۲. با تفکیک دقیق وظایف (Regime Classification, Signal Generation, Risk Management)، موقعیت‌های معاملاتی کم‌ریسک را شناسایی نماید.
-۳. کنترل‌های ریسک غیرقابل‌دورزدن (Deterministic Risk Controls) را اعمال کند.
-۴. سفارش‌ها را به صورت خودکار از طریق API والکس اجرا کند.
-۵. قابلیت اجرای بک‌تست تاریخی و آزمایش در سایه (Shadow Testing) را داشته باشد.
-۶. در پایان مسابقه کلیه دارایی‌ها را با موفقیت و کمترین لغزش قیمتی به **تومان (TMN)** نقد کند.
-
----
-
-## ۲. مشخصات و شرایط مسابقه
-
-- **سرمایه اولیه اسمی:** ۵،۰۰۰،۰۰۰ تومان (تخصیص‌یافته به ازای هر تیم).
-- **مدت مسابقه:** رویداد فشرده ۳ روزه.
-- **واحد پایه تسویه:** تومان (TMN) - در پایان دوره تمام دارایی‌ها باید به تومان تبدیل شده باشند.
-- **حساب معاملاتی:** حساب اعتباری / پراپ تریدینگ صرافی والکس با سقف ۵ میلیون تومان.
-- **معیارهای ارزیابی:**
-  - **عملکرد مالی واقعی (Net P&L):** سودآوری پس از کسر کارمزد صرافی والکس و احتساب اسلیپیج واقعی.
-  - **کنترل ریسک و دراوداون (Max Drawdown & Risk Control):** مدیریت سرمایه و جلوگیری از افت شدید سرمایه.
-  - **کیفیت فنی و معماری نرم‌افزاری:** تفکیک ماژول‌ها، تست‌پذیری، تایپ‌هینت، مستندسازی و ساختار مهندسی.
-  - **کاربرد معنادار هوش مصنوعی (Agentic AI):** عدم اکتفا به یک اسکریپت ساده و استفاده مؤثر از ایجنت‌ها در طبقه‌بندی وضعیت بازار (Market Regime)، انتخاب استراتژی و مدیریت پویای پارامترها.
-  - **قابلیت بازتولید و ثبت شفاف تصمیمات (Audit Trail & Reproducibility):** ثبت کامل لاگ JSONL برای تک‌تک تصمیمات و امکان بررسی مستقل توسط داوران.
+The main goal is to develop an automated, reproducible, algorithmic trading engine based on quantitative trading principles and intelligent decision-making based on agentic AI, which:
+1. Get live and historical market data from Wallex exchange.
+2. Identify low-risk trading positions by accurately separating tasks (Regime Classification, Signal Generation, Risk Management).
+3. Apply deterministic risk controls.
+4. Execute orders automatically through Wallex API.
+5. It has the ability to perform historical backtesting and shadow testing.
+6. At the end of the competition, liquidate all assets successfully and with the least price slippage to **Toman (TMN)**.
 
 ---
 
-## ۳. نقش تیم مهندسی چندگانه
-سیستم حاضر حاصل هماهنگی نقش‌های تخصصی زیر است:
-- **مهندس تحقیقات کمّی (Quantitative Researcher):** مدل‌سازی رفتار بازار، تحلیل ریزساختار و نرخ بازدهی.
-- **استراتژیست معاملات الگوریتمی (Algo Strategist):** طراحی منطق ورود/خروج بر مبنای مومنتوم و بازگشت به میانگین.
-- **معمار هوش مصنوعی عامل‌محور (Agentic AI Architect):** طراحی چارچوب ایجنت‌ها و خروجی‌های ساختاریافته Pydantic.
-- **مهندس بک‌اند پایتون (Python Backend Engineer):** توسعه هسته ناهمگام (Async Engine) و پایپ‌لاین ماژولار.
-- **مهندس ادغام API صرافی (Exchange Integration Engineer):** پیاده‌سازی کلاینت استاندارد والکس و مدیریت نرخ درخواست‌ها.
-- **مهندس مدیریت ریسک (Risk Engineer):** طراحی موتور مستقل و لایه‌های قطعی پیشگیری از زیان.
-- **مهندس اعتبارسنجی آماری و بک‌تست (Validation & Backtest Engineer):** شبیه‌سازی دقیق هزینه‌ها و اعتبارسنجی واک‌فوروارد.
-- **مهندس مستندسازی و تضمین کیفیت (QA & Technical Documentation):** تدوین مستندات و کدهای تست خودکار.
+## 2. Competition specifications and conditions
+
+- **Initial nominal capital:** 5,000,000 Tomans (allocated for each team).
+- **Competition duration:** 3-day intensive event.
+- **Basic settlement unit:** Toman (TMN) - At the end of the period, all assets must be converted into Toman.
+- **Trading account:** Wallex exchange credit/prop trading account with a limit of 5 million Tomans.
+- **evaluation criteria:**
+  - **Actual financial performance (Net P&L):** Profitability after deducting Wallex exchange fee and accounting for actual slippage.
+  - **Risk and Drawdown Control (Max Drawdown & Risk Control):** Capital management and preventing a sharp drop in capital.
+  - **Technical quality and software architecture:** Separation of modules, testability, typehint, documentation and engineering structure.
+  - **Significant use of artificial intelligence (Agentic AI):** Not being limited to a simple script and effective use of agents in the classification of the market situation (Market Regime), strategy selection and dynamic management of parameters.
+  - **Ability to reproduce and clearly record decisions (Audit Trail & Reproducibility):** Complete JSONL log recording for each decision and the possibility of independent review by judges.
+
+---
+
+## 3. Multiple engineering team roles
+The current system is the result of the coordination of the following specialized roles:
+- **Quantitative Researcher:** Modeling of market behavior, analysis of microstructure and rate of return.
+- **Algo Strategist:** Designing entry/exit logic based on momentum and return to the mean.
+- Agent-oriented artificial intelligence architect (Agentic AI Architect): Designing Pydantic agents framework and structured outputs.
+- **Python Backend Engineer:** Development of asynchronous core (Async Engine) and modular pipeline.
+- **Exchange API integration engineer:** Implementation of Valax standard client and request rate management.
+- **Risk Management Engineer:** Designing an independent engine and definitive loss prevention layers.
+- Validation & Backtest Engineer: Accurate cost simulation and walkforward validation.
+- **QA & Technical Documentation Engineer:** Compilation of documentation and automatic test codes.

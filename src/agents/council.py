@@ -228,6 +228,10 @@ class ChiefInvestmentOfficerAgent:
         has_pos = symbol in portfolio.get("open_positions", {})
         spread_pct = float(market_data.get("spread_pct", 0.15) or 0.15)
         rsi = float(technicals.get("rsi_14", 50.0) or 50.0)
+        atr_pct = float(technicals.get("atr_pct", 1.5) or 1.5)
+
+        # Quantitative Volatility Parity Sizing: scales inversely with volatility
+        vol_adjusted_alloc = round(min(10.0, max(4.0, (1.2 / max(0.5, atr_pct)) * 10.0)), 1)
 
         # 1. Systemic / Panic Veto
         if any(v.opinion == "PANIC" for v in votes) or spread_pct > 0.30:
@@ -252,7 +256,7 @@ class ChiefInvestmentOfficerAgent:
                 confidence=v_arb.confidence,
                 action=action,
                 strategy_mode="TRIANGULAR_ARBITRAGE",
-                suggested_allocation_pct=8.0,
+                suggested_allocation_pct=vol_adjusted_alloc,
                 council_votes=votes,
                 synthesis_rationale=(
                     f"Council consensus TRIANGULAR_ARBITRAGE: {v_arb.key_evidence} "
@@ -271,11 +275,11 @@ class ChiefInvestmentOfficerAgent:
                 confidence=round(avg_conf, 2),
                 action=action,
                 strategy_mode="MOMENTUM",
-                suggested_allocation_pct=10.0,
+                suggested_allocation_pct=vol_adjusted_alloc,
                 council_votes=votes,
                 synthesis_rationale=(
                     f"Council consensus BULLISH: Technicals confirmed trend divergence and orderbook showed buy-side support. "
-                    f"Initiating momentum trade on {symbol}."
+                    f"Initiating momentum trade on {symbol} (volatility-parity allocation: {vol_adjusted_alloc}%)."
                 ),
                 thought_stream=f"[Council] Tech: {v_tech.key_evidence} | Micro: {v_micro.key_evidence}",
             )

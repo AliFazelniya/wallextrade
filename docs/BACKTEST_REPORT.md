@@ -1,29 +1,28 @@
-# گزارش ممیزی و نتایج بک‌تست تاریخی (Audited Backtest Report)
+# Audit report and historical backtest results (Audited Backtest Report)
 
-این سند نتایج ممیزی‌شده شبیه‌سازی استراتژی مومنتوم تطبیقی با فیلتر رژیم هوش مصنوعی بر روی داده‌های واقعی صرافی والکس را مستند می‌کند.
+This paper documents the audited results of the simulation of the adaptive momentum strategy with the artificial intelligence regime filter on the real data of Wallex exchange.
 
-## ۱. بررسی ریشه‌ای مغایرت تعداد کندل‌ها (Investigation of Candle Count Discrepancy)
+## 1. Investigation of Candle Count Discrepancy
 
-- **یافته کلیدی:** در گزارش اولیه، تعداد ۲۷،۳۴۴ کندل برای ۳۰ روز گزارش شده بود. با بررسی عمیق مشخص گردید که اندپوینت رسمی UDF والکس (`GET /v1/udf/history?resolution=15`) به جای کندل‌های ۱۵ دقیقه‌ای، داده‌های خام با گام زمانی **۶۰ ثانیه (۱ دقیقه‌ای)** به تعداد حداکثر ۲۷،۳۴۵ رکورد بازمی‌گرداند (~۱۹ روز داده ۱ دقیقه‌ای).
-- **روش اصلاح و اعتبارسنجی:** در نسخه اصلاح‌شده، داده‌های خام ۱ دقیقه‌ای توسط کتابخانه Pandas با تابع `resample('15min')` بر روی بازه‌های زمانی منطبق به کندل‌های معتبر ۱۵ دقیقه‌ای تجمیع شدند (هر ۱۵ کندل ۱ دقیقه‌ای = ۱ کندل ۱۵ دقیقه‌ای)، و نتایج مجدداً محاسبه گردید.
+- **Key finding:** In the initial report, the number of 27,344 candles was reported for 30 days. Upon in-depth investigation, it was found that Wallex's official UDF endpoint (`GET /v1/udf/history?resolution=15`) returns raw data with a **60 second (1 minute)** time step up to 27,345 records (~19 days of 1 minute data) instead of 15 minute candles.
+- **Modification and validation method:** In the modified version, the 1-minute raw data was aggregated by the Pandas library with the ``resample('15min')'' function on time intervals corresponding to valid 15-minute candles (every 15 1-minute candles = 1 15-minute candle), and the results were recalculated.
 
-## ۲. مشخصات و فرضیات شبیه‌سازی
-- **سرمایه اولیه:** ۵،۰۰۰،۰۰۰ تومان
-- **کارمزد سفارش‌گذار (Maker):** ۰.۲۵٪ بر مبنای جدول رسمی سطح ۱ والکس
-- **کارمزد سفارش‌بردار (Taker):** ۰.۳۰٪ بر مبنای جدول رسمی سطح ۱ والکس
-- **لغزش قیمت فرضی (Slippage):** ۰.۱۵٪ در هر معامله
-- **حد ضرر (Stop Loss):** ۲.۰٪
-- **حد سود (Take Profit):** ۳.۵٪
-- **سقف سفارش:** ۵۰۰،۰۰۰ تومان (۱۰٪ پورتفولیو)
-- **حداکثر تعهد:** ۶۰٪ کل پورتفولیو
+## 2. Simulation specifications and assumptions
+- **Initial capital:** 5,000,000 Tomans
+- **Maker's fee:** 0.25% based on the official table of Wallex level 1
+- **Taker fee:** 0.30% based on the official table of Wallex level 1
+- ** Hypothetical price slippage:** 0.15% per transaction
+- **Stop Loss:** 2.0%
+- **Take Profit:** 3.5%
+- **Order ceiling:** 500,000 Tomans (10% of portfolio)
+- **Maximum commitment:** 60% of the entire portfolio
 
-## ۳. جدول تفصیلی ممیزی داده و عملکرد به تفکیک نماد
+## 3. Detailed table of audit data and performance by symbol
 
-| شاخص / نماد | **BTCTMN** | **ETHTMN** |
+| Index / Symbol | **BTCTMN** | **ETHTMN** |
 |---|---|---|
 
-
-## ۴. تحلیل ریسک و اعتبارسنجی واک‌فوروارد
-۱. در تمام مراحل شبیه‌سازی، محاسبات گام‌به‌گام و بدون نگاه به آینده (No Lookahead Bias) انجام گرفته است.
-۲. دراوداون سیستم در طول دوره شبیه‌سازی در هر دو نماد کمتر از ۱.۰٪ باقی مانده و حد مجاز ۵٪ نقض نشده است.
-۳. نتایج به صورت ۱۰۰٪ قطعی با دستور `python scripts/run_backtest.py BTCTMN ETHTMN` قابل بازتولید است.
+## 4. Risk analysis and validation of walkforward
+1. In all stages of simulation, step-by-step calculations have been performed without looking into the future (No Lookahead Bias).
+2. System drawdown remained less than 1.0% during the simulation period in both symbols and the 5% limit was not violated.
+3. The results are 100% reproducible with `python scripts/run_backtest.py BTCTMN ETHTMN' command.

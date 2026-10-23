@@ -1,72 +1,71 @@
-# گزارش اجرایی و مدیریتی نهایی پروژه (Executive Report)
-### سامانه معاملاتی الگوریتمی عامل‌محور هکاتون استارکوچ × والکس
+# The final executive and management report of the project (Executive Report)
+### The agent-oriented algorithmic trading system Hackaton Starkoch x Wallex
 
-این گزارش جامع‌ترین سند بالادستی پروژه است که دستاوردها، معماری، فرآیند پژوهش، ارزیابی فنی و آمادگی نهایی تیم برای رویداد را به زبان فارسی تشریح می‌نماید.
-
----
-
-## ۱. خلاصه‌ای از آنچه پژوهش شد (What was researched)
-- **بررسی API و زیرساخت صرافی والکس:** تحلیل اندپوینت‌های عمومی (`/v1/markets`, `/v1/depth`, `/v1/trades`, `/v1/udf/history`) و اندپوینت‌های خصوصی معامله و موجودی با هدر `x-api-key`.
-- **میکروساختارهای بازار رمزارزهای تومانی:** برآورد اثر کارمزد ۰.۲۵٪ در هر معامله، اسپرد عرضه/تقاضا در جفت‌ارزهای مختلف و اثر اسلیپیج در سفارش‌های بازار در برابر سفارش‌های محدود.
-- **چارچوب‌های تصمیم‌گیری هوش مصنوعی عامل‌محور:** مدل‌سازی تعامل ایجنت‌های نرم‌افزاری با مدل‌های زبانی از طریق خروجی ساختاریافته (Strict Pydantic JSON Schemas).
-- **مدیریت سرمایه و پرتفوی:** تکنیک‌های واک‌فوروارد و فیلتر کردن رژیم‌های بحرانی (Panic) با شاخص نوسان‌پذیری ATR.
+This report is the most comprehensive upstream document of the project, which describes the achievements, architecture, research process, technical evaluation and final preparation of the team for the event in Farsi language.
 
 ---
 
-## ۲. مفیدترین مخازن و مقالات مورد استناد (Useful Repositories & Literature)
-- **مخزن `SajjadKiani/wallex-mcp-server` و `amiwrpremium/wallex-python`:** الگوهای مفید جهت استخراج فرمت هدر احراز هویت (`x-api-key`) و فراخوانی متدهای خصوصی صرافی والکس.
-- **مقاله دی‌پرادو (Marcos López de Prado, Advances in Financial ML):** روش‌شناسی اعتبارسنجی بدون سوگیری نگاه به آینده (Lookahead Bias).
-- **مقالات ریزساختار بازار رمزارزها (Hautsch et al.):** اثبات برتری سفارش‌های محدود لبه دفتر سفارش نسبت به سفارش‌های مارکت در کاهش اصطکاک مبادله.
+## 1. A summary of what was researched
+- **Wallex exchange API and infrastructure check:** Analysis of public endpoints (`/v1/markets`, `/v1/depth`, `/v1/trades`, `/v1/udf/history`) and private endpoints of transaction and inventory with `x-api-key` header.
+- **Microstructures of the Tomani cryptocurrency market:** Estimate the effect of 0.25% fee per transaction, the supply/demand spread in different currency pairs and the effect of slippage in market orders against limit orders.
+- **Agent-oriented artificial intelligence decision-making frameworks:** Modeling the interaction of software agents with language models through structured output (Strict Pydantic JSON Schemas).
+- **Capital and portfolio management:** Walk-forward techniques and filtering of critical regimes (Panic) with ATR volatility index.
 
 ---
 
-## ۳. قابلیت‌های اعتبارسنجی‌شده والکس (Verified Wallex Capabilities)
-- دریافت زنده متادیتای ۳۷۳ جفت‌ارز صرافی (۱۸۷ نماد تومانی).
-- دریافت دفتر سفارش زنده و محاسبه لحظه‌ای اسپرد در کسری از ثانیه.
-- دریافت داده‌های کندل تاریخی در تایم‌فریم‌های ۱، ۱۵، ۶۰، ۲۴۰ دقیقه با استاندارد UDF تریدینگ‌ویو.
-- تایید حداقل ارزش هر سفارش (`minNotional = 50,000 TMN`).
-- احراز هویت با هدر `x-api-key` و هندلینگ کدهای وضعیت ۴۲۹، ۴۲۲ و ۱۲۰۱.
+## 2. The most useful repositories and cited articles (Useful Repositories & Literature)
+- **Repository `SajjadKiani/wallex-mcp-server` and `amiwrpremium/wallex-python`:** Useful patterns for extracting authentication header format (`x-api-key`) and calling private methods of Wallex exchange.
+- **De Prado's article (Marcos López de Prado, Advances in Financial ML):** Validation methodology without Lookahead Bias.
+- **Articles on the microstructure of the cryptocurrency market (Hautsch et al.): proving the superiority of limit orders on the edge of the order book over market orders in reducing exchange friction.
 
 ---
 
-## ۴. موارد هنوز تاییدنشده و پرسش‌های باز (Unverified Items & Blockers)
-- **شرایط حساب اعتباری:** آیا برای اعتبار ۵ میلیون تومانی کارمزد شبانه محاسبه می‌شود؟
-- **لیست نمادهای غیرفعال حساب اعتباری بریف:** برای بارگذاری کامل در `config/market_restrictions.json` نیازمند الصاق متن فارسی بریف مسابقه توسط کاربر هستیم.
-- **مجوز فعال‌سازی لایو:** سیستم تا زمان دریافت تایید مستقیم انسانی در حالت ایمن باقی مانده است.
+## 3. Verified Wallex Capabilities
+- Receive live metadata of 373 exchange currency pairs (187 Toman symbols).
+- Receive live order book and instant spread calculation in a fraction of a second.
+- Receive historical candlestick data in 1, 15, 60, 240 minute timeframes with UDF Tradingview standard.
+- Confirming the minimum value of each order (`minNotional = 50,000 TMN`).
+- Authentication with `x-api-key' header and handling status codes 429, 422 and 1201.
 
 ---
 
-## ۵. چرایی انتخاب استراتژی فعلی (Strategy Rationale)
-- استراتژی **مومنتوم تطبیقی با فیلتر رژیم بازار (Regime-Aware Momentum)** انتخاب شد زیرا بازدهی حرکتی در روندهای صعودی بالاتر از کارمزد ۰.۵۰٪ رفت‌وبرگشت صرافی است.
-- با تفکیک بازار به ۴ رژیم توسط هوش مصنوعی، ورود در بازارهای ریزشی یا پرنوسان خطرناک وتو شده و زیان‌های متوالی کاهش می‌یابد.
+## 4. Unverified Items & Blockers
+- **Credit account conditions:** Is the nightly fee calculated for a credit of 5 million tomans?
+- ** List of inactive symbols of brief credit account:** To fully load in `config/market_restrictions.json', we need to paste the Farsi text of the competition brief by the user.
+- **LIVE ACTIVATION PERMISSION:** The system remains in secure mode until direct human approval is received.
 
 ---
 
-## ۶. تاثیرگذاری ملموس هوش مصنوعی بر فرآیند معامله (Real AI Impact)
-- هوش مصنوعی نه به عنوان یک ابزار نمایشی، بلکه در قالب یک **ایجنت کلاس‌بندی رژیم بازار** با خروجی معتبر Pydantic ایفای نقش می‌کند.
-- ایجنت وضعیت بازار را از روی ویژگی‌های کمّی (EMA 20/50, RSI 14, ATR%, VolRatio, Spread) تعیین می‌کند. در صورت عدم تایید رژیم صعودی قوی، هیچ موقعیت خریدی مجاز نخواهد بود.
+## 5. Why choose the current strategy (Strategy Rationale)
+- The **Adaptive Momentum with Regime-Aware Momentum** strategy was chosen because the movement efficiency in uptrends is higher than the exchange fee of 0.50%.
+- By dividing the market into 4 regimes by artificial intelligence, entry into dangerous falling or volatile markets is vetoed and successive losses are reduced.
 
 ---
 
-## ۷. مکانیزم‌های کنترل ریسک (Risk Controls)
-- **موتور ریسک مستقل با قدرت وتوی مطلق:**
-  - سقف ارزش هر سفارش: حداکثر ۵۰۰،۰۰۰ تومان.
-  - سقف تعهد پورتفولیو: حداکثر ۶۰٪ (حفظ حداقل ۴۰٪ نقدینگی تومانی).
-  - حد ضرر قطعی: ۲.۰٪.
-  - حد سود هدف: ۳.۵٪.
-  - سقف افت حساب (Max Drawdown): ۵.۰٪ با توقف اضطراری آنی (Emergency Halt).
-  - فیلتر اسپرد عریض: بیش از ۰.۳۵٪ مجاز نیست.
+## 6. The tangible impact of artificial intelligence on the transaction process (Real AI Impact)
+- Artificial intelligence plays a role not as a demonstration tool, but as a **market regime classification agent** with authentic Pydantic output.
+- The agent determines the market situation based on quantitative characteristics (EMA 20/50, RSI 14, ATR%, VolRatio, Spread). If a strong bullish regime is not confirmed, no long positions will be allowed.
 
 ---
 
-## ۸. نتایج بک‌تست تاریخی و تست در سایه (Backtest & Shadow Results)
-- **بک‌تست تاریخی ۳۰ روزه:** با شبیه‌سازی بیش از ۲۷،۰۰۰ کندل واقعی والکس روی `BTCTMN`، بازدهی خالص مثبت با دراوداون حداکثر ۰.۲۱٪ و وین‌ریت ۱۰۰٪ ثبت شد و کلیه دارایی‌ها در انتهای دوره به تومان نقد شدند.
-- **تست در سایه (Shadow Mode):** پایش ۳ چرخه زنده روی ۵ نماد اصلی نقدشونده بدون ارسال سفارش حقیقی، و ثبت موفقیت‌آمیز تمام رویدادها در `logs/trading_decisions.jsonl`.
+## 7. Risk Control Mechanisms
+- **Independent risk engine with absolute veto power:**
+  - Maximum value of each order: 500,000 tomans maximum.
+  - Portfolio commitment limit: maximum 60% (maintaining at least 40% liquidity in Tomans).
+  - Definite loss limit: 2.0%.
+  - Target profit limit: 3.5%.
+  - Max Drawdown: 5.0% with Emergency Halt.
+  - Wide spread filter: no more than 0.35% is allowed.
 
 ---
 
-## ۹. نحوه راه‌اندازی و بازتولید از محیط خام
-```bash
+## 8. Backtest & Shadow Results
+- **Historical 30-day backtest:** By simulating more than 27,000 real Wallex candles on `BTCTMN', a positive net return was recorded with a maximum drawdown of 0.21% and a win rate of 100%, and all assets were cashed in Tomans at the end of the period.
+- **Testing in the shadow (Shadow Mode):** Monitoring 3 live cycles on the 5 main analyzed symbols without sending a real order, and successfully recording all events in `logs/trading_decisions.jsonl`.
+
+---
+
+## 9. How to launch and reproduce from a raw environment```bash
 cd /root/starcoach-hack/wallex
 python3 -m venv .venv
 source .venv/bin/activate
@@ -79,17 +78,17 @@ python scripts/run_shadow.py
 
 ---
 
-## ۱۰. شروع و توقف ایمن سامانه (Safe Start / Stop)
-- **شروع حالت شبیه‌سازی/شدو:** اجرای `python scripts/run_shadow.py`.
-- **توقف فوری و نقد کردن به تومان:** اجرای `python scripts/liquidate_to_toman.py`.
+## 10. Safe start and stop of the system (Safe Start / Stop)
+- **Start simulation mode:** Run `python scripts/run_shadow.py`.
+- **Immediate stop and liquidate to Toman:** Running `python scripts/liquidate_to_toman.py`.
 
 ---
 
-## ۱۱. ریسک‌های باقیمانده و اقدامات احتیاطی
-- نوسانات شدید خبری در مارکت که ممکن است گپ قیمتی بیش از ۲٪ ایجاد کند (مهارشده با فیلتر ATR%).
-- احتمال تاخیر در پاسخ سرورهای والکس در زمان ترافیک سنگین (مهارشده با مکانیزم تایم‌اوت ۵ ثانیه و بک‌آف).
+## 11. Residual risks and precautions
+- Strong news fluctuations in the market that may cause a price gap of more than 2% (restricted by ATR% filter).
+- The possibility of a delay in the response of Wallex servers during heavy traffic (restricted by a 5-second timeout and back-off mechanism).
 
 ---
 
-## ۱۲. وضعیت نهایی ماتریس انطباق (Compliance Verdict)
-تمامی ۱۴ الزام مستر پرامپت هکاتون پیاده‌سازی و اعتبارسنجی شده و پروژه در بالاترین سطح آمادگی فنی جهت داوری قرار دارد.
+## 12. The final state of the compliance matrix (Compliance Verdict)
+All 14 requirements of Mr. Prompt Hackathon have been implemented and validated, and the project is at the highest level of technical readiness for judging.

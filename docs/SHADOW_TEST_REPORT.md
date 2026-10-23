@@ -1,40 +1,40 @@
-# گزارش ممیزی تست در سایه بر داده‌های زنده صرافی والکس (Audited Shadow Test Report)
+# Audited shadow test report on the live data of Wallex exchange (Audited Shadow Test Report)
 
-این سند مشاهدات، تصمیمات ایجنت، بررسی‌های موتور ریسک و وضعیت ثبت لاگ‌ها را در حالت تست در سایه (Shadow Mode) بر روی بازار زنده والکس مستند می‌کند.
+This document documents observations, agent decisions, risk engine checks, and logging status in Shadow Mode on the Wallex live market.
 
 ---
 
-## ۱. تفکیک اکید استعلام داده از ارسال سفارش (Zero Live Orders)
+## 1. Strict separation of data inquiry from order submission (Zero Live Orders)
 
 > [!IMPORTANT]
-> در طول کل فرآیند تست در سایه، **هیچ سفارش واقعی به صرافی والکس ارسال نشده است**.
-> - استعلام‌های اردر بوک (`/v1/depth`) و کندل‌های تاریخی (`/v1/udf/history`) همگی **صرفاً خواندنی (Read-Only)** هستند.
-> - ماژول `ExchangeAdapter` با پرچم `live_execution_authorized=False` قفل سخت‌افزاری بوده و هرگونه ارسال سفارش لایو را وتو کرده است.
+> During the entire shadow testing process, **no real orders were sent to Wallex exchange**.
+> - Orderbook queries (`/v1/depth`) and history candles (`/v1/udf/history`) are all **Read-Only**.
+> - The `ExchangeAdapter` module is hardware locked with `live_execution_authorized=False` flag and has vetoed any live order submission.
 
 ---
 
-## ۲. مشخصات و متادیتای آزمون در سایه
-- **تاریخ و زمان اجرا:** ۲۲ اکتبر ۲۰۲۶ (ساعت ۱۰:۴۱:۴۵ تا ۱۰:۴۲:۳۱ زمان UTC)
-- **محیط اجرایی:** سرور با پایتون ۳.۱۲ و اتصال مستقیم به API والکس
-- **تعداد چرخه‌های ثبت‌شده:** ۳ چرخه کامل روی ۵ نماد اصلی نقدشونده
-- **تعداد رکوردهای لاگ ثبت‌شده در این اجرا:** ۱۵ لاگ حسابرسی جدید در [`logs/trading_decisions.jsonl`](file:///root/starcoach-hack/wallex/logs/trading_decisions.jsonl)
-- **سرمایه اسمی پورتفولیو:** ۵،۰۰۰،۰۰۰ تومان
+## 2. Test specifications and metadata in the shadow
+- **Execution date and time:** October 22, 2026 (10:41:45 to 10:42:31 UTC time)
+- **Environment:** Server with Python 3.12 and direct connection to Wallex API
+- **Number of registered cycles:** 3 complete cycles on 5 main cashable symbols
+- **Number of log records recorded in this run:** 15 new audit logs in [`logs/trading_decisions.jsonl`](file:///root/starcoach-hack/wallex/logs/trading_decisions.jsonl)
+- **Nominal portfolio capital:** 5,000,000 Tomans
 
 ---
 
-## ۳. جدول مشاهدات و تصمیمات چرخه زنده
+## 3. Table of life cycle observations and decisions
 
-| نماد | قیمت زنده (TMN) | اسپرد اردر بوک | رژیم تشخیص‌داده‌شده AI | اطمینان AI | تصمیم استراتژی | وضعیت ریسک | سفارش لایو؟ |
+| Symbol | Live Price (TMN) | Spread order book AI detected regime | Confidence AI | Strategy decision Risk situation Live order? |
 |---|---|---|---|---|---|---|---|
-| **USDTTMN** | ۲۷۱،۰۳۶ | ۰.۰۱۷٪ | CALM_RANGE | ۷۵٪ | HOLD | ⛔ هولد | ❌ خیر (شبیه‌سازی) |
-| **PEPETMN** | ۱.۱ | ۰.۰۸۰٪ | CALM_RANGE | ۷۵٪ | HOLD | ⛔ هولد | ❌ خیر (شبیه‌سازی) |
-| **BTCTMN** | ۲۲،۲۶۵،۳۴۳،۰۸۷ | ۰.۰۴۹٪ | CALM_RANGE | ۷۵٪ | HOLD | ⛔ هولد | ❌ خیر (شبیه‌سازی) |
-| **PUMPTMN** | ۱،۳۰۴ | ۰.۱۵۰٪ | CALM_RANGE | ۷۵٪ | HOLD | ⛔ هولد | ❌ خیر (شبیه‌سازی) |
-| **ETHTMN** | ۶۵۳،۰۰۰،۰۰۵ | ۰.۰۹۹٪ | CALM_RANGE | ۷۵٪ | HOLD | ⛔ هولد | ❌ خیر (شبیه‌سازی) |
+| **USDTTMN** | 271,036 | 0.017% | CALM_RANGE | 75% HOLD | ⛔ Hold | ❌ No (Simulation) |
+| **PEPETMN** | 1.1 0.080% | CALM_RANGE | 75% HOLD | ⛔ Hold | ❌ No (Simulation) |
+| **BTCTMN** | 22,265,343,087 | 0.049% | CALM_RANGE | 75% HOLD | ⛔ Hold | ❌ No (Simulation) |
+| **PUMPTMN** | 1,304 | 0.150% | CALM_RANGE | 75% HOLD | ⛔ Hold | ❌ No (Simulation) |
+| **ETHTMN** | 653,000,005 | 0.099% | CALM_RANGE | 75% HOLD | ⛔ Hold | ❌ No (Simulation) |
 
 ---
 
-## ۴. ممیزی نتایج و محدودیت‌های آزمون
+## 4. Audit results and test limitations
 
 > [!WARNING]
-> اجرای ۳ چرخه تست در سایه صرفاً یک **آزمون ارزیابی عملکرد و یکپارچگی سیستمی (Smoke Test)** برای اثبات سلامت خطوط ارتباطی، سرعت پردازش زیر ۳۰۰ میلی‌ثانیه و ثبت بدون خطای لاگ‌های JSONL است. این آزمون نباید به عنوان اثبات قطعی سودآوری بلندمدت تلقی گردد. پایش ممتد در طول رویداد الزامی است.
+> Running 3 test cycles in the shadow is just a **system integrity and performance evaluation test (Smoke Test)** to prove the health of communication lines, processing speed below 300 milliseconds and error-free recording of JSONL logs. This test should not be considered as definitive proof of long-term profitability. Continuous monitoring is required during the event.

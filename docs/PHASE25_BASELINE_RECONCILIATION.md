@@ -1,63 +1,63 @@
-# تطبیق و کالبدشکافی حسابداری خط مبنای فاز ۲۴ (Phase 25 Baseline Reconciliation)
+# Phase 25 Baseline Reconciliation
 ## Forensic Resolution of Arithmetic Inconsistencies and Trade-Ledger Audit
 
-> **مخزن:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **شاخه پژوهشی:** `research/phase25-validation`  
-> **کامیت مبنای منجمد:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **سرمایه اولیه هر پنجره:** ۵،۰۰۰،۰۰۰ تومان نقد ($N = 29$ پنجره مستقل ۷۲ ساعته)  
-> **وضعیت معاملات زنده:** `live_execution_authorized = False` (کاملاً مسدود و ایمن)
+> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Research branch:** `research/phase25-validation`  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Initial capital of each window:** 5,000,000 Tomans in cash ($N = 29$ independent window of 72 hours)  
+> **Status of live transactions:** `live_execution_authorized = False' (fully blocked and secure)
 
 ---
 
-## ۱. حل قطعی تناقض محاسباتی فاز ۲۴ (Resolution of Arithmetic Discrepancy)
+## 1. Resolution of Arithmetic Discrepancy Phase 24
 
-### صورت مسئله:
-در گزارش متنی فاز ۲۴ اشاره شده بود:
-- پنجره W09: سود ۳۶،۸۰۰+ تومان
-- پنجره W23: سود ۱۶،۲۰۹+ تومان
-- مجموع ۲۷ پنجره دیگر مسابقه: گزارش‌شده به عنوان ۳۵،۸۰۰- تومان زیان
-- مجموع گزارش‌شده اولیه: ۴۷،۲۴۱+ تومان
+### Statement of the problem:
+It was mentioned in the text report of phase 24:
+- Window W09: profit 36,800+ Tomans
+- Window W23: Profit 16,209+ Tomans
+- Total of 27 other match windows: reported as -35,800 Tomans loss
+- Initial reported total: 47,241+ Tomans
 
-مجموع این ارقام برابر است با:
+The sum of these figures is equal to:
 $$36,800 + 16,209 - 35,800 = +17,209 \neq +47,241 \text{ TMN}$$
 
-### ریشه‌یابی و تطبیق عددی دقیق (Forensic Root Cause):
-ممیزی دفتر کل معاملات (Trade Ledger) نشان داد که در نگارش گزارش فاز ۲۴، **ارقام دو مرحله آزمایشی متفاوت به اشتباه با یکدیگر ترکیب (Conflated) شده بودند**:
-1. رقم **۳۶،۸۰۰+ تومان (W09)** و رقم **۴۷،۲۴۱+ تومان (مجموع)** متعلق به **مرحله ۱ (Candidate E Raw - دترمینیستیک با میانگین کل ATR و خروج Close)** بودند. در این مرحله، مجموع ۲۷ پنجره دیگر مسابقه دقیقاً برابر با **۵،۷۶۸.۶۰- تومان** بوده است:
+### rooting and accurate numerical matching (Forensic Root Cause):
+The audit of the trade ledger showed that in the writing of the phase 24 report, **the numbers of two different test phases were mistakenly combined with each other (Conflated):
+1. The figure **36,800+ Tomans (W09)** and the figure **47,241+ Tomans (Total)** belonged to **Step 1 (Candidate E Raw - Deterministic with total average ATR and Close exit)**. At this stage, the total of 27 other windows of the competition was exactly equal to **5,768.60 Tomans**:
    $$+36,800.18 + 16,209.11 - 5,768.60 = \mathbf{+47,240.68 \text{ TMN}}$$
-2. رقم **۳۵،۸۰۰- تومان** متعلق به **مرحله ۳ (Candidate E با فیلتر عامل AI و پنجره گسترش‌یابنده)** بوده است. در مرحله ۳، سود پنجره W09 به ۲۸،۸۳۴.۶۳ تومان کاهش یافته بود و مجموع ۲۷ پنجره دیگر دقیقاً **۳۵،۸۰۰.۶۴- تومان** بود که حاصل‌جمع آن سود نهایی ۹،۲۴۳.۱۰ تومانی فاز ۲۳ را تشکیل می‌داد:
+2. The figure **35,800 Tomans** belongs to **stage 3 (Candidate E with AI agent filter and expandable window)**. In phase 3, the profit of the W09 window was reduced to 28,834.63 Tomans, and the total of the other 27 windows was exactly **-35,800.64 Tomans**, the sum of which constituted the final profit of 9,243.10 Tomans for phase 23:
    $$+28,834.63 + 16,209.11 - 35,800.64 = \mathbf{+9,243.10 \text{ TMN}}$$
-3. نویسنده گزارش قبلی، برآیند ۲۷ پنجره مرحله ۳ (-۳۵،۸۰۰ تومان) را اشتباهاً در کنار ارقام مرحله ۱ (+۳۶،۸۰۰ تومان و +۴۷،۲۴۱ تومان) درج کرده بود که منجر به ایجاد تناقض صوری $17,209 \neq 47,241$ شد.
+3. The author of the previous report had mistakenly included the results of the 27 windows of stage 3 (-35,800 Tomans) next to the figures of stage 1 (+36,800 Tomans and +47,241 Tomans), which led to a formal contradiction of $17,209 \neq $47,241.
 
 ---
 
-## ۲. جدول جامع تطبیق حسابداری در تمام مراحل توسعه و ممیزی ($N = 29$)
+## 2. Comprehensive table of accounting adjustment in all stages of development and audit ($N = $29)
 
-| مرحله مدلسازی و نسخه استراتژی | سود پنجره W09 (تومان) | سود پنجره W23 (تومان) | مجموع W09 + W23 | مجموع ۲۷ پنجره دیگر | سود خالص کل (تومان) | وضعیت بررسی تراز ($Sum$) |
+| Modeling stage and strategy version Window profit W09 (Toman) | Profit window W23 (Toman) | Total W09 + W23 | A total of 27 other windows Total net profit (tomans) | Balance check status ($Sum$) |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|
-| **مرحله ۱ (فاز ۲۲ خام - Global ATR, Close)** | ۳۶،۸۰۰.۱۸+ | ۱۶،۲۰۹.۱۱+ | ۵۳،۰۰۹.۲۸+ | **۵،۷۶۸.۶۰-** | **۴۷،۲۴۰.۶۸+** | ✅ دقیق ($0.00$ خطا) |
-| **مرحله ۲ (پاکسازی نشت - Expanding ATR, Close)** | ۲۹،۳۴۷.۶۶+ | ۱۶،۲۰۹.۱۱+ | ۴۵،۵۵۶.۷۷+ | **۱۳،۳۷۰.۸۹-** | **۳۲،۱۸۵.۸۸+** | ✅ دقیق ($0.00$ خطا) |
-| **مرحله ۳ (فاز ۲۳ صنعتی - Expanding ATR + AI)** | ۲۸،۸۳۴.۶۳+ | ۱۶،۲۰۹.۱۱+ | ۴۵،۰۴۳.۷۴+ | **۳۵،۸۰۰.۶۴-** | **۹،۲۴۳.۱۰+** | ✅ دقیق ($0.00$ خطا) |
-| **مرحله ۴ (اجرای واقعی - Intra-bar High/Low Wicks)** | ۱۵،۱۹۲.۳۴+ | ۱۳،۲۱۰.۰۰+ | ۲۸،۴۰۲.۳۴+ | **۴۰،۶۸۶.۴۳-** | **۱۲،۲۸۴.۰۹-** | ✅ دقیق ($0.00$ خطا) |
+| **Stage 1 (Raw Phase 22 - Global ATR, Close)** | 36,800.18+ | 16,209.11+ | 53,009.28+ | **5,768.60-** | **47,240.68+** | ✅ Accurate ($0.00 error) |
+| **Step 2 (Cleaning the leak - Expanding ATR, Close)** | 29,347.66+ | 16,209.11+ | 45,556.77+ | **13,370.89-** | **32,185.88+** | ✅ Accurate ($0.00 error) |
+| **Phase 3 (Industrial Phase 23 - Expanding ATR + AI)** | 28,834.63+ | 16,209.11+ | 45,043.74+ | **35,800.64-** | **9,243.10+** | ✅ Accurate ($0.00 error) |
+| **Step 4 (Real Execution - Intra-bar High/Low Wicks)** | 15,192.34+ | 13,210.00+ | 28,402.34+ | **40,686.43-** | **12,284.09-** | ✅ Accurate ($0.00 error) |
 
 ---
 
-## ۳. بازتولید مستقل خروجی‌های فرضیات فاز ۲۴ (Independent Reproduction)
+## 3. Independent reproduction of phase 24 hypothesis outputs (Independent Reproduction)
 
-کدهای اجرایی فاز ۲۴ در ماژول [`src/experimental/phase24_research_engine.py`](file:///root/starcoach-hack/wallex/src/experimental/phase24_research_engine.py) به صورت مستقل روی کش خام داده‌های والکس بازتولید شدند:
+Phase 24 executable codes in module [`src/experimental/phase24_research_engine.py`](file:///root/starcoach-hack/wallex/src/experimental/phase24_research_engine.py) were reproduced independently on raw Wallex data cache:
 
-| نام فرضیه / استراتژی | سود خالص کل گزارش‌شده (TMN) | سود خالص بازتولیدشده (TMN) | تعداد معامله | آماره تی ($t$) | نرخ برد پنجره‌ها | تطبیق محاسباتی |
+| The name of the hypothesis / strategy Reported Total Net Profit (TMN) | Reproduced Net Profit (TMN) | Number of transactions T statistic ($t$) | Windows win rate Computational matching
 |---|:---:|:---:|:---:|:---:|:---:|:---:|
-| **کاندیدای E تصحیح‌شده (مرحله ۴)** | ۱۲،۲۸۴- | **۱۲،۲۸۴.۱-** | ۲۸ | ۰.۴۵- | ۳۴.۵٪ | ✅ ۱۰۰٪ PASS |
-| **H1: روند ساختاری چندزمانه** | ۳۵،۷۹۳+ | **۳۵،۷۹۳.۴+** | ۱۹ | ۰.۶۴+ | ۲۷.۶٪ | ✅ ۱۰۰٪ PASS |
-| **H2: بازگشت پس از سقوط (Dip)** | ۱۱،۸۰۳+ | **۱۱،۸۰۳.۰+** | ۱۳ | ۰.۴۳+ | ۲۰.۷٪ | ✅ ۱۰۰٪ PASS |
-| **H3: نشت شتاب از BTC به آلت‌کوین** | ۳۴،۷۳۵+ | **۳۴،۷۳۴.۵+** | ۵ | ۱.۷۰+ | ۱۳.۸٪ | ✅ ۱۰۰٪ PASS |
-| **H4: فرا-مدل یادگیری ماشین Walk-Forward** | ۱۱،۹۷۳- | **۱۱،۹۷۳.۰-** | ۱ | ۱.۰۰- | ۰.۰٪ | ✅ ۱۰۰٪ PASS |
+| **Corrected E candidate (stage 4)** | 12,284-| **12,284.1-** | 28 | -0.45 34.5% ✅ 100% PASS
+| **H1: multitemporal structural trend** | 35,793+ | **35,793.4+** | 19 | 0.64+ | 27.6% ✅ 100% PASS
+| **H2: Return after the fall (Dip)** | 11,803+ | **11,803.0+** | 13 | 0.43+ | 20.7% ✅ 100% PASS
+| **H3: Acceleration leakage from BTC to Altcoins** | 34,735+ | **34,734.5+** | 5 | 1.70+ 13.8% ✅ 100% PASS
+| **H4: Walk-Forward machine learning meta-model** | 11,973- | **11,973.0-** | 1 1.00- | 0.0% | ✅ 100% PASS
 
 ---
 
-## ۴. جمع‌بندی وضعیت خط مبنا برای فاز ۲۵
+## 4. Baseline status summary for phase 25
 
-1. **ابهام حسابی به طور کامل حل شد:** تراز پورتفوی در تمامی ۲۹ پنجره مسابقه در چهار مرحله به دقت سنت به سنت تایید شد.
-2. **کاندیدای E کاملاً کنار گذاشته شد:** هیچ توجیهی برای استفاده از کاندیدای E در مسابقه وجود ندارد؛ چرا که در اجرای واقعی با سایه کندل ۱۲،۲۸۴- تومان زیان می‌سازد.
-3. **فرضیات H1 و H3 محور اصلی فاز ۲۵ خواهند بود:** هر دو فرضیه سودآوری مثبت دارند اما چالش‌های اساسی آن‌ها (تعداد معاملات بسیار اندک H3 با ۵ ترید، و افول سود برون-نمونه H1 در W16-W29) نیازمند کالبدشکافی مستقل، آزمون‌های پیشرفته و تست‌های اجرایی دقیق است.
+1. ** Arithmetic uncertainty is completely resolved:** The balance of the portfolio in all 29 windows of the competition in four stages was confirmed accurately cent by cent.
+2. **candidate E completely excluded:** There is no justification for using candidate E in the contest; Because in actual implementation with candle shadow, it makes a loss of -12,284 tomans.
+3. **Hypotheses H1 and H3 will be the focus of Phase 25:** Both hypotheses have positive profitability, but their fundamental challenges (very small number of H3 trades with 5 trades, and decline of H1 out-of-sample profit in W16-W29) require independent dissection, advanced tests, and rigorous execution tests.

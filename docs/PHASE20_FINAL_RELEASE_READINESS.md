@@ -1,25 +1,25 @@
-# بسته جامع نهایی تحویل مسابقه و بیانیه انجماد رهایش (فاز ۲۰)
+# Final comprehensive package of competition delivery and release freezing statement (phase 20)
 # Phase 20 Final Release Readiness & Competition Submission Freeze
 
-> **تاریخ گزارش:** ۲۲ اکتبر ۲۰۲۶ (۱ آبان ۱۴۰۵)  
-> **نسخه نهایی نرم‌افزار:** `v1.0.0-phase20-frozen-release`  
-> **شاخه گیت:** `master`  
-> **کامیت پایه ممیزی‌شده:** `5936a3f5774d82c4fc04e16ea194c85b2c2501f3`  
-> **هش مانیفست استراتژی منجمد:** `249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66`  
-> **نتایج آزمون‌های خودکار:** **۶۲ تست موفق از ۶۲ تست (۱۰۰٪ قبولی)** با **۸۱٪ پوشش کد**  
-> **وضعیت گیت امنیتی معامله لایو:** کاملاً مسدود با گیت نرم‌افزاری سطح کد (`live_execution_authorized = False`)
+> **Report date:** October 22, 2026 (November 1, 1405)  
+> **Final software version:** `v1.0.0-phase20-frozen-release`  
+> **gate branch:** `master`  
+> **Audited base commit:** `5936a3f5774d82c4fc04e16ea194c85b2c2501f3`  
+> **Frozen Strategy Manifest Hash:** `249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66`  
+> **Results of automated tests:** **62 successful tests out of 62 (100% pass)** with **81% code coverage**  
+> **Live transaction security gate status:** Fully blocked with code-level software gate (`live_execution_authorized = False')
 
 ---
 
-## ۱. بیانیه رسمی رده‌بندی وضعیت نهایی (Final Outcome Classification)
+## 1. Official statement of final outcome classification
 
-مطابق رده‌بندی‌های سه‌گانه تعیین‌شده در پرامپت فاز ۲۰، وضعیت سیستم بدین‌وسیله رسماً اعلام می‌گردد:
+According to the three classifications established in the phase 20 prompt, the status of the system is hereby officially declared:
 
 ```
 ╔═════════════════════════════════════════════════════════════════════════════════════════╗
 ║                                                                                         ║
-║   رده‌بندی نهایی مصوب:                                                                  ║
-║   ۳. بسته نهایی فنی تایید و منجمد شد؛ تایید نهایی برگزارکنندگان مسابقه معلق است         ║
+║   Final ranking approved:                                                                  ║
+║   3. The final technical package was approved and frozen; The final confirmation of the race organizers is pending         ║
 ║   Outcome 3: Final technical release package verified; organizer confirmation pending   ║
 ║                                                                                         ║
 ╚═════════════════════════════════════════════════════════════════════════════════════════╝
@@ -27,68 +27,68 @@
 
 ```mermaid
 flowchart TD
-    A["بسته نرم‌افزاری و مهندسی ۱۰۰٪ ممیزی و منجمد شد\n(۶۲ تست، ۸۱٪ پوشش، ممیزی دیتاست و P&L، ران‌بوک کامل)\nوضعیت: TECHNICAL RELEASE PACKAGE VERIFIED ✅"] --> C{"موانع پنج‌گانه بیرونی برگزارکننده\n(B-01 تا B-05)"}
-    B["امنیت سرمایه و گیت نرم‌افزاری سطح کد\nlive_execution_authorized=False 🔒"] --> C
-    C -- "عدم وصول تقویم رسمی، کلیدها و تاییدیه مالی" --> D["رده‌بندی قطعی فاز ۲۰:\nFinal technical release package verified; organizer confirmation pending 🟡"]
-    D --> E["گام نهایی:\nارسال رسمی docs/ORGANIZER_BLOCKER_REQUEST_FA.md توسط راهبر انسانی\nو اجرای چک‌لیست ۸ بندی مجوز انسانی"]
+    A["The software and engineering package was 100% audited and frozen\n(62 tests, 81% coverage, Dataset and P&L audit, complete runbook)\nStatus: TECHNICAL RELEASE PACKAGE VERIFIED ✅"] --> C{"The five external obstacles of the organizer\n(B-01 to B-05)"}
+    B["Capital security and code level software gate\nlive_execution_authorized=False 🔒"] --> C
+    C -- "Non-receipt of official calendar, keys and financial confirmation" --> D["Definitive classification of phase 20:\nFinal technical release package verified; organizer confirmation pending 🟡"]
+    D --> E["Final step:\nOfficial submission docs/ORGANIZER_BLOCKER_REQUEST_FA.md by Human Leader\nand the implementation of the 8-item checklist of human permission"]
 ```
 
 ---
 
-## ۲. چک‌لیست اقلام تحویلی نهایی مسابقه (Release Deliverables Package)
+## 2. Checklist of the final deliverables of the competition (Release Deliverables Package)
 
-تمامی ۱۱ قلم تحویلی مورد نیاز برای ارزیابی داوران هکاتون استارکوچ و صرافی والکس در مخزن آماده و تایید گردید:
+All 11 deliverables required for the evaluation of Hackathon Starkoch judges and Wallex Exchange were prepared and approved in the repository:
 
-| # | قلم تحویلی | مسیر فایل در مخزن | وضعیت اعتبارسنجی |
+| #| Delivery pen File path in the repository Validation status
 |---|---|---|---|
-| **۱** | **کدهای منبع استراتژی و موتورها** | [`src/strategy/regime_momentum.py`](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py)<br>[`src/agents/regime_agent.py`](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py)<br>[`src/risk/engine.py`](file:///root/starcoach-hack/wallex/src/risk/engine.py)<br>[`src/exchange/adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py)<br>[`src/portfolio/accounting.py`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py)<br>[`src/data/fetcher.py`](file:///root/starcoach-hack/wallex/src/data/fetcher.py) | ✅ تایپ‌هینت، ماژولار، با پوشش کد ۸۱٪ |
-| **۲** | **مانیفست استراتژی منجمد** | [`config/frozen_strategy_manifest_v0.6.0.json`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json) | ✅ هش معتبر: `249c1e4af...` |
-| **۳** | **فهرست محدودیت بازارهای مسابقه** | [`config/market_restrictions.json`](file:///root/starcoach-hack/wallex/config/market_restrictions.json)<br>[`config/allowed_markets.json`](file:///root/starcoach-hack/wallex/config/allowed_markets.json) | ✅ ۳۵۷ نماد مسدود، ۲۱ نماد مسابقه مسدود |
-| **۴** | **راهنمای فارسی و ران‌بوک عملیاتی** | [`README.md`](file:///root/starcoach-hack/wallex/README.md)<br>[`docs/COMPETITION_RUNBOOK.md`](file:///root/starcoach-hack/wallex/docs/COMPETITION_RUNBOOK.md) | ✅ مستندات فارسی کامل با دستورالعمل حادثه |
-| **۵** | **گزارش‌های ممیزی کمی و ریزساختار** | [`docs/PHASE18_EXECUTION_COST_VALIDATION.md`](file:///root/starcoach-hack/wallex/docs/PHASE18_EXECUTION_COST_VALIDATION.md)<br>[`docs/PHASE19_EXECUTION_MODEL_RECONCILIATION.md`](file:///root/starcoach-hack/wallex/docs/PHASE19_EXECUTION_MODEL_RECONCILIATION.md)<br>[`docs/PHASE19_FINAL_QUANTITATIVE_AUDIT.md`](file:///root/starcoach-hack/wallex/docs/PHASE19_FINAL_QUANTITATIVE_AUDIT.md) | ✅ تحلیل اسپرد، اسلیپیج و بازدهی‌ها |
-| **۶** | **ممیزی یکپارچگی دیتاست تاریخی** | [`docs/PHASE20_DATASET_INTEGRITY_AUDIT.md`](file:///root/starcoach-hack/wallex/docs/PHASE20_DATASET_INTEGRITY_AUDIT.md) | ✅ هش SHA-256 و حل مغایرت‌های شمارش |
-| **۷** | **ممیزی تطبیق سود و زیان (P&L)** | [`docs/PHASE20_PNL_RECONCILIATION.md`](file:///root/starcoach-hack/wallex/docs/PHASE20_PNL_RECONCILIATION.md) | ✅ اثبات عدم دوباره‌شماری اسلیپیج |
-| **۸** | **سوئیت آزمون‌های خودکار** | [`tests/`](file:///root/starcoach-hack/wallex/tests/) (۹ فایل آزمون مجزا) | ✅ ۶۲ تست موفق از ۶۲ تست (۱۰۰٪ قبولی) |
-| **۹** | **لاگ‌های ساختاریافته تصمیمات** | [`logs/production_rehearsal_phase16.jsonl`](file:///root/starcoach-hack/wallex/logs/production_rehearsal_phase16.jsonl)<br>[`logs/trading_decisions.jsonl`](file:///root/starcoach-hack/wallex/logs/trading_decisions.jsonl) | ✅ ردپای حسابرسی با استاندارد JSONL |
-| **۱۰**| **سناریوی پرزنت ویدیوی ۵ دقیقه‌ای** | [`docs/DEMO_SCRIPT.md`](file:///root/starcoach-hack/wallex/docs/DEMO_SCRIPT.md) | ✅ سناریوی زمان‌بندی‌شده پرزنت داوری |
-| **۱۱**| **فایل نمونه پیکربندی بدون کلید** | [`.env.example`](file:///root/starcoach-hack/wallex/.env.example) | ✅ فاقد هرگونه کلید سکرت یا توکن |
+| **1** **Strategy source codes and engines** | [`src/strategy/regime_momentum.py`](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py)<br>[`src/agents/regime_agent.py`]( file:///root/starcoach-hack/wallex/src/agents/regime_agent.py)<br>[`src/risk/engine.py`](file:///root/starcoach-hack/wallex/src/risk/engine .py)<br>[`src/exchange/adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py)<br>[`src/portfolio/accounting.py`](file:// /root/starcoach-hack/wallex/src/portfolio/accounting.py)<br>[`src/data/fetcher.py`](file:///root/starcoach-hack/wallex/src/data/fetcher.py) | ✅ Typehint, modular, with 81% code coverage
+| **2** **Frozen Strategy Manifesto** | [`config/frozen_strategy_manifest_v0.6.0.json`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json) | ✅ valid hash: `249c1e4af...` |
+| **3** **List of competition market restrictions** | [`config/market_restrictions.json`](file:///root/starcoach-hack/wallex/config/market_restrictions.json)<br>[`config/allowed_markets.json`](file:///root/starcoach-hack/wallex/config/allowed_markets.json) | ✅ 357 blocked symbols, 21 blocked race symbols
+| **4** **Persian manual and operational runbook** | [`README.md`](file:///root/starcoach-hack/wallex/README.md)<br>[`docs/COMPETITION_RUNBOOK.md`](file:///root/starcoach-hack/wallex/docs/COMPETITION_RUNBOOK.md) | ✅ Complete Persian documentation with accident instructions
+| **5** **Quantitative and microstructure audit reports** | [`docs/PHASE18_EXECUTION_COST_VALIDATION.md`](file:///root/starcoach-hack/wallex/docs/PHASE18_EXECUTION_COST_VALIDATION.md)<br>[`docs/PHASE19_EXECUTION_MODEL_RECONCILIATION.md`](file:///root/s tarcoach-hack/wallex/docs/PHASE19_EXECUTION_MODEL_RECONCILIATION.md)<br>[`docs/PHASE19_FINAL_QUANTITATIVE_AUDIT.md`](file:///root/starcoach-hack/wallex/docs/PHASE19_FINAL_QUANTITATIVE_AUDIT.md) | ✅ Analysis of spread, slippage and returns
+| **6** **Historical dataset integrity audit** | [`docs/PHASE20_DATASET_INTEGRITY_AUDIT.md`](file:///root/starcoach-hack/wallex/docs/PHASE20_DATASET_INTEGRITY_AUDIT.md) | ✅ SHA-256 hash and resolve counting discrepancies
+| **7** | **Profit and Loss Reconciliation (P&L) Audit** | [`docs/PHASE20_PNL_RECONCILIATION.md`](file:///root/starcoach-hack/wallex/docs/PHASE20_PNL_RECONCILIATION.md) | Proof of non-recounting of slippage
+| **8** | **Automatic tests suite** | [`tests/`](file:///root/starcoach-hack/wallex/tests/) (9 separate test files) | ✅ 62 successful tests out of 62 tests (100% pass).
+| **9** **Structured logs of decisions** | [`logs/production_rehearsal_phase16.jsonl`](file:///root/starcoach-hack/wallex/logs/production_rehearsal_phase16.jsonl)<br>[`logs/trading_decisions.jsonl`](file:///root/starcoach-hack/wallex/logs/trading_decisions.jsonl) | Audit trail with JSONL standard
+| **10**| **Scenario of the 5-minute video presentation** | [`docs/DEMO_SCRIPT.md`](file:///root/starcoach-hack/wallex/docs/DEMO_SCRIPT.md) | ✅ The scheduled scenario of the arbitration presentation
+| **11**| **Sample configuration file without key** | [`.env.example`](file:///root/starcoach-hack/wallex/.env.example) | ✅ No secret key or token
 
 ---
 
-## ۳. تفکیک ساختاری حقایق، ادعاها، مفروضات، محدودیت‌ها و توصیه‌ها
+## 3. Structural separation of facts, claims, assumptions, limitations and recommendations
 
-| ستون ارزیابی | شرح تفصیلی موارد |
+| Evaluation column Detailed description of cases
 |---|---|
-| **حقایق راستی‌آزمایی‌شده (Verified Facts)** | • ۶۲ تست آزمون خودکار با فریم‌ورک Pytest به صورت ۱۰۰٪ موفق پاس شدند (۸۱٪ پوشش کد).<br>• هش مانیفست استراتژی منجمد دست‌نخورده است (`249c1e4af...`).<br>• فایل‌های دیتاست دارای هش‌های تغییرناپذیر SHA-256 هستند (BTC: 8,636 کندل، ETH: 8,634 کندل، SOL: 8,635 کندل).<br>• اثبات شد که اسلیپیج در قیمت‌های اجرا تعبیه شده و به هیچ وجه دوباره کسر نمی‌شود.<br>• گیت نرم‌افزاری سطح کد در غیاب مجوز صریح، هرگونه سفارش لایو را وتو می‌کند (`live_execution_authorized=False`). |
-| **ادعاهای تاریخی اصلاح‌شده (Superseded Claims)** | • ادعای پیشین مبنی بر وجود ۸،۶۳۷ کندل در اتریوم، ناشی از اشتباه رونویسی خطوط فیزیکی فایل بیت‌کوین (`wc -l`) بود؛ تعداد خالص دیتای اتریوم ۸،۶۳۴ کندل است.<br>• واژه «اینترلاک سخت‌افزاری» که در یادداشت‌های قدیمی به صورت استعاری به کار رفته بود، اصلاح گردید؛ مکانیزم امنیتی یک «گیت نرم‌افزاری در سطح کد» است. |
-| **مفروضات شبیه‌سازی (Simulation Assumptions)** | • جدول کارمزد سطح ۱ والکس (۰.۲۵٪ Maker و ۰.۳۰٪ Taker).<br>• اسلیپیج نامساعد ۰.۱۵٪ در سفارش‌های تهاجمی ورودی و خروجی.<br>• سرمایه پایه ۵،۰۰۰،۰۰۰ تومان. |
-| **محدودیت‌های آماری و بیرونی (Unresolved Limitations)** | • عدم اعلام تقویم رسمی و ددلاین ارسال از سوی دبیرخانه هکاتون (موانع B-01 و B-02).<br>• عدم تحویل مشخصات حساب مسابقه و کلیدهای API اختصاصی از سوی والکس (موانع B-03 و B-04).<br>• فقدان تاییدیه کتبی معافیت از کارمزد شبانه اعتبار (مانع B-05).<br>• حجم نمونه ۲۹ پنجره ۳ روزه برای ادعای قطعیت با فاصله اطمینان بالا از نظر آماری محدود است. |
-| **توصیه‌های اجرایی نهایی (Recommendations)** | • ارسال دستی پیش‌نویس استعلام رسمی [`docs/ORGANIZER_BLOCKER_REQUEST_FA.md`](file:///root/starcoach-hack/wallex/docs/ORGANIZER_BLOCKER_REQUEST_FA.md) توسط راهبر انسانی.<br>• حفظ پرچم `live_execution_authorized = False` تا پیش از حل قطعی موانع بیرونی.<br>• اجرای چک‌لیست نهایی مجوز انسانی در [`docs/PHASE18_FINAL_AUTHORIZATION_GATE.md`](file:///root/starcoach-hack/wallex/docs/PHASE18_FINAL_AUTHORIZATION_GATE.md) پس از وصول تاییدیه‌ها. |
+| **Verified Facts** | • 62 automated test tests with Pytest framework passed 100% (81% code coverage).<br>• Frozen strategy manifest hash is intact (`249c1e4af...`).<br>• Dataset files have immutable SHA-256 hashes (BTC: 8,636 candles, ETH: 8,634 candles, SOL: 8,635 candle).<br>• Proven that slippage is built into execution prices and never re-deducted.<br>• Code-level software gate vetoes any live orders in the absence of explicit authorization (`live_execution_authorized=False`). |
+| **Superseded Claims** | • The previous claim that there are 8,637 candles in Ethereum was caused by a mistake in overwriting the physical lines of the Bitcoin file (`wc -l'); The net number of ethereum data is 8,634 candles.<br>• The term "hardware interlock" that was used metaphorically in the old notes has been corrected; The security mechanism is a "code-level software gate". |
+| **Simulation Assumptions** | • Wallex level 1 commission table (0.25% Maker and 0.30% Taker).<br>• Unfavorable slippage of 0.15% in aggressive incoming and outgoing orders.<br>• Base capital 5,000,000 Tomans. |
+| **Statistical and external limitations (Unresolved Limitations)** | • Failure to announce the official calendar and submission deadline from the Hackathon secretariat (barriers B-01 and B-02).<br>• Failure to deliver the contest account details and exclusive API keys from Wallex (barriers B-03 and B-04).<br>• Lack of written confirmation of exemption from overnight credit fees (barrier B-05). |
+| **final executive recommendations (Recommendations)** | • Manual submission of the official request draft [`docs/ORGANIZER_BLOCKER_REQUEST_FA.md`](file:///root/starcoach-hack/wallex/docs/ORGANIZER_BLOCKER_REQUEST_FA.md) by the human operator.<br>• Keeping the flag `live_execution_authorized = False' until the final resolution of external obstacles.<br>• Running the final human authorization checklist in [`docs/PHASE18_FINAL_AUTHORIZATION_GATE.md`](file:///root/starcoach-hack/wallex/docs/PHASE18_FINAL_AUTHORIZATION_GATE.md) After receiving the approvals. |
 
 ---
 
-## ۴. دستورات استاندارد بازتولید کلیه نتایج (Reproducibility Commands)
+## 4. Standard commands to reproduce all results (Reproducibility Commands)
 
-داوران و ارزیابان محترم مسابقه می‌توانند صحت تمامی ادعاها و نتایج فوق را با دستورات زیر در محیط پروژه بازتولید نمایند:
+Respected judges and evaluators of the competition can reproduce the accuracy of all the above claims and results with the following commands in the project environment:
 
 ```bash
-# ۱. اجرای کامل سوئیت ۶۲ آزمون خودکار به همراه ارزیابی پوشش کد
+# 1. Complete execution of 62 automated test suites along with code coverage evaluation
 .venv/bin/pytest --cov=src tests/
 
-# ۲. اعتبارسنجی هش رمزنگاری مانیفست استراتژی منجمد
+# 2. Cryptographic Hash Validation of the Frozen Strategy Manifesto
 sha256sum config/frozen_strategy_manifest_v0.6.0.json
-# خروجی معتبر: 249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66
+# Valid output: 249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66
 
-# ۳. ممیزی تمامیت دیتاست‌های تاریخی و هش فایل‌ها
+# 3. Auditing the integrity of historical datasets and hash files
 .venv/bin/python -c "import hashlib; print('BTCTMN SHA256:', hashlib.sha256(open('data/cache/BTCTMN_15m_90d.csv','rb').read()).hexdigest())"
-# خروجی معتبر: 54292673b433a9a95e19ebab0dc446fdfc1458c9b8e4ea5672a6b5ad51775a9e
+# Valid output: 54292673b433a9a95e19ebab0dc446fdfc1458c9b8e4ea5672a6b5ad51775a9e
 
-# ۴. اجرای مانور عملیاتی در سایه بر روی داده‌های زنده والکس (حالت امن بدون سفارش واقعی)
+# 4. Executing a shadow operation maneuver on Wallex live data (safe mode without real order)
 .venv/bin/python scripts/run_shadow.py --symbol BTCTMN --cycles 5
 ```
 
 ---
 
-## ۵. نتیجه‌گیری نهایی فاز ۲۰
+## 5. The final conclusion of phase 20
 
-سامانه الگوریتمی مسابقه استارکوچ × والکس پس از ۲۱ فاز مهندسی و ممیزی سیستماتیک، به اوج بلوغ فنی، استحکام ریاضی، شفافیت گزارش‌گری و امنیت نرم‌افزاری رسیده است. پرونده توسعه و ممیزی نرم‌افزار بدین‌وسیله **رسماً بسته و منجمد (Frozen)** اعلام می‌گردد و سیستم در وضعیت پایدار و آماده به کار در انتظار دریافت مجوز از راهبر انسانی قرار دارد.
+After 21 phases of engineering and systematic audit, the algorithmic system of the Starcoch x Wallex competition has reached the peak of technical maturity, mathematical strength, transparency of reporting and software security. The software development and audit file is hereby declared **officially closed and frozen (Frozen)**, and the system is in a stable and ready-to-operate state, awaiting permission from the human operator.

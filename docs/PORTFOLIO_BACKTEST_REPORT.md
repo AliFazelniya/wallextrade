@@ -1,27 +1,27 @@
-# گزارش جامع شبیه‌سازی سبد سرمایه‌گذاری مشترک چندنمادی (فاز ۱۲)
+# Comprehensive report on the simulation of the multi-symbol joint investment portfolio (phase 12)
 ### Multi-Symbol Shared Portfolio Backtest & Discrepancy Reconciliation
-**مخزن:** [`wallex`](file:///root/starcoach-hack/wallex) | **سرمایه اولیه مشترک:** ۵،۰۰۰،۰۰۰ تومان | **موتور شبیه‌سازی:** [`PortfolioBacktestEngine`](file:///root/starcoach-hack/wallex/src/backtest/portfolio_engine.py)
+**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Initial joint capital:** 5,000,000 Tomans **Simulation Engine:** [`PortfolioBacktestEngine`](file:///root/starcoach-hack/wallex/src/backtest/portfolio_engine.py)
 
 ---
 
-## ۱. تطبیق قطعی مغایرت‌های گزارش‌های پیشین (Baseline Reconciliation)
+## 1. Baseline Reconciliation
 
-### ۱.۱. ریشه‌یابی و حل مغایرت بازدهی اتریوم (-۰.۸۶٪ در برابر -۰.۸۹٪)
-در گزارش‌های فازهای پیشین، دو بازدهی متفاوت برای نماد اتریوم (`ETHTMN`) درج شده بود:
-- در [`docs/BACKTEST_REPORT.md`](file:///root/starcoach-hack/wallex/docs/BACKTEST_REPORT.md): بازدهی خالص **۰.۸۶-٪** (زیان ۴۳،۱۷۴- تومان با کارمزد ۱۶،۱۶۰ تومان).
-- در [`docs/PRE_COMPETITION_READINESS.md`](file:///root/starcoach-hack/wallex/docs/PRE_COMPETITION_READINESS.md): بازدهی خالص **۰.۸۹-٪** (زیان ۴۴،۷۰۴- تومان با کارمزد ۱۷،۶۹۰ تومان).
+### 1.1. Rooting and resolving Ethereum yield discrepancies (-0.86% vs. -0.89%)
+In the reports of the previous phases, two different returns were included for the Ethereum token (`ETHTMN'):
+- In [`docs/BACKTEST_REPORT.md`](file:///root/starcoach-hack/wallex/docs/BACKTEST_REPORT.md): net return **-0.86%** (loss -43,174 Tomans with commission 16,160 Tomans).
+- In [`docs/PRE_COMPETITION_READINESS.md`](file:///root/starcoach-hack/wallex/docs/PRE_COMPETITION_READINESS.md): net return **-0.89%** (loss of -44,704 Tomans with a fee of 17,690 Tomans).
 
-**توضیح ممیزی‌شده علت ریاضی مغایرت:**
-این اختلاف دقیقاً **۱،۵۳۰ تومان (۰.۰۳٪ کل سرمایه ۵ میلیونی)** است. در اجرای اول، فرض شده بود که سفارش‌های ورود به عنوان سفارش میکر محدود (`Maker Limit` با کارمزد ۰.۲۵٪ یعنی ۱،۲۵۰ تومان به ازای هر سفارش ۵۰۰ هزار تومانی) پر شده‌اند. اما در اجرای دوم (سناریوی تهاجمی‌تر)، سفارش ورود به عنوان سفارش مارکت‌پذیر متقاطع با دفتر سفارش (`Marketable Taker` با کارمزد ۰.۳۰٪ یعنی ۱،۵۰۰ تومان به ازای هر سفارش) مدل‌سازی گردید. به ازای ۶ معامله اتریوم، این تفاوت کارمزد (۲۵۰ تومان در هر ورود به علاوه اسلیپیج نقدینگی خروج) دقیقاً اختلاف ۱،۵۳۰ تومانی را ایجاد کرده بود. هر دو اجرا در محیط آزمون بازتولید و ثبت گردید.
+**The audited explanation of the mathematical reason for the discrepancy:**
+This difference is exactly **1,530 Tomans (0.03% of the total capital of 5 million)**. In the first run, it was assumed that entry orders were filled as maker limit orders (`Maker Limit' with a fee of 0.25%, i.e. 1,250 Tomans per order of 500,000 Tomans). But in the second implementation (more aggressive scenario), the entry order was modeled as a marketable order crossed with the order book (`Marketable Taker' with a fee of 0.30%, i.e. 1,500 Tomans per order). For 6 Ethereum transactions, this fee difference (250 Tomans per entry plus exit liquidity slippage) had exactly created a difference of 1,530 Tomans. Both performances were reproduced and recorded in the test environment.
 
-### ۱.۲. تخصیص فرضی مستقل در برابر سبد سرمایه مشترک واقعی
-در فازهای پیشین، شبیه‌سازی‌های نمادهای `BTCTMN` و `ETHTMN` به صورت **دو اجرای شبیه‌سازی مستقل با سرمایه فرضی ۵،۰۰۰،۰۰۰ تومان برای هر یک** انجام شده بود.
-اما در قوانین رسمی مسابقه والکس × استارکوچ، تیم **تنها یک حساب ۵ میلیون تومانی** دارد. اگر بیت‌کوین و اتریوم همزمان سیگنال خرید صادر کنند، باید از همان نقدینگی مشترک بهره ببرند و مجموع ارزش دارایی‌ها تحت محدودیت‌های سقف ریسک (حداکثر مواجهه ۶۰٪ معادل ۳ میلیون تومان و سقف ۳ موقعیت همزمان) مدیریت شود.
-در فاز ۱۲، موتور جدید [`PortfolioBacktestEngine`](file:///root/starcoach-hack/wallex/src/backtest/portfolio_engine.py) پیاده‌سازی شد تا این واقعیت را به طور ۱۰۰٪ دقیق و همگام با زمان شبیه‌سازی کند.
+### 1.2. Hypothetical independent allocation against the actual common portfolio
+In previous phases, simulations of ``BTCTMN'' and ``ETHTMN'' symbols were performed as **two independent simulation runs with a hypothetical capital of 5,000,000 Tomans for each**.
+But in the official rules of the Wallex x Starcoach match, the team has **only one account of 5 million tomans**. If Bitcoin and Ethereum issue a buy signal at the same time, they must benefit from the same common liquidity and the total value of assets is managed under the limits of the risk ceiling (maximum exposure of 60% equivalent to 3 million Tomans and a limit of 3 simultaneous positions).
+In phase 12, a new engine [`PortfolioBacktestEngine`](file:///root/starcoach-hack/wallex/src/backtest/portfolio_engine.py) was implemented to simulate this fact 100% accurately and in time.
 
 ---
 
-## ۲. ساختار و معماری موتور سبد چندنمادی (Portfolio Backtest Architecture)
+## 2. The structure and architecture of the portfolio backtest architecture
 
 ```mermaid
 sequenceDiagram
@@ -31,54 +31,54 @@ sequenceDiagram
     participant S as Strategy & AI Agent
     participant R as Risk Engine (Deterministic Veto)
 
-    loop هر گام زمانی ۱۵ دقیقه‌ای (Strict Chronological Step)
-        D->>E: به‌روزرسانی قیمت‌های پایانی تمام نمادها
-        E->>E: بررسی حد سود (TP) و حد ضرر (SL) موقعیت‌های باز
-        alt شرط خروج برقرار است
-            E->>E: اجرای نقد کردن و کسر کارمزد تیکر/میکر
+    loop Each time step is 15 minutes (Strict Chronological Step)
+        D->>E: Update closing prices of all symbols
+        E->>E: Checking the profit limit (TP) and the limit of loss (SL) Open positions
+        alt The exit condition is met
+            E->>E: Implementation of cashing and deducting the ticker/maker fee
         end
-        D->>S: ارسال داده‌های تا گام فعلی (No Future Lookahead)
-        S->>R: پیشنهاد سیگنال خرید جدید
-        R->>R: بررسی نقدینگی موجود، سقف مواجهه ۶۰٪ و سقف ۳ موقعیت
-        alt تایید ریسک (Approved)
-            R->>E: تخصیص حداکثر ۵۰۰ هزار تومان از مانده نقدینگی مشترک
-            E->>E: ثبت معامله و به‌روزرسانی ارزش روز کل سبد
-        else رد ریسک (Veto)
-            R-->>S: ثبت لاگ ابطال سیگنال و حفظ نقدینگی
+        D->>S: Send data up to the current step (No Future Lookahead)
+        S->>R: New buy signal offer
+        R->>R: Review of available liquidity, exposure limit of 60% and limit of 3 positions
+        alt Confirmation of risk (Approved)
+            R->>E: Allocation of a maximum of 500 thousand Tomans from the common cash balance
+            E->>E: Record the transaction and update the daily value of the entire portfolio
+        else Risk rejection (Veto)
+            R-->>S: Recording the signal cancellation log and maintaining liquidity
         end
     end
-    Note over E: پایان مسابقه: نقد کردن ۱۰۰٪ دارایی‌ها به تومان
+    Note over E: End of the match: Cashing out 100% of assets in Tomans
 ```
 
 ---
 
-## ۳. نتایج تجربی شبیه‌سازی سبد مشترک در بازه ۳۶ روزه
+## 3. Experimental results of common basket simulation in 36 days
 
-شبیه‌سازی بر روی سبد ترکیبی از نمادهای `BTCTMN`, `ETHTMN`, `SOLTMN` با سرمایه پایه ۵،۰۰۰،۰۰۰ تومان اجرا شد:
+The simulation was carried out on a combined basket of ``BTCTMN'', ``ETHTMN'', ``SOLTMN'' symbols with a base capital of 5,000,000 Tomans:
 
-| شاخص ارزیابی پورتفولیو | استراتژی روندی با هوش مصنوعی (AI-Assisted) | استراتژی روندی بدون هوش مصنوعی (Deterministic) | استراتژی صیانت از سرمایه (Capital Preservation) |
+| Portfolio evaluation index Trend strategy with artificial intelligence (AI-Assisted) | Trend strategy without artificial intelligence (Deterministic). Capital Preservation Strategy
 |---|---|---|---|
-| **سرمایه اولیه اسمی** | ۵،۰۰۰،۰۰۰ تومان | ۵،۰۰۰،۰۰۰ تومان | ۵،۰۰۰،۰۰۰ تومان |
-| **موجودی نهایی پس از کسر کارمزد** | **۴،۹۵۸،۶۵۹ تومان** | ۴،۹۵۷،۹۹۴ تومان | **۴،۹۸۹،۲۹۸ تومان** |
-| **بازدهی خالص سبد (Net Return)** | **۰.۸۳-٪** | ۰.۸۴-٪ | **۰.۲۱-٪** |
-| **سود/زیان ناخالص (Gross P&L)** | ۷۹،۹۷۹+ تومان | ۹۹،۳۲۸+ تومان | ۲۲،۴۵۰+ تومان |
-| **مجموع کارمزدهای کسرشده والکس** | **۱۲۱،۳۲۰ تومان** | **۱۴۱،۳۳۴ تومان** | **۳۳،۱۵۲ تومان** |
-| **کارمزد میکر پرداختی (۰.۲۵٪)** | ۵۴،۸۰۰ تومان | ۶۲،۱۰۰ تومان | ۱۴،۵۰۰ تومان |
-| **کارمزد تیکر پرداختی (۰.۳۰٪)** | ۶۶،۵۲۰ تومان | ۷۹،۲۳۴ تومان | ۱۸،۶۵۲ تومان |
-| **حداکثر دراوداون پورتفولیو (Max DD)** | **۳.۴۹٪ (پایدار و مجاز)** | **۵.۷۰٪ (🛑 نقض سقف ۵٪ مسابقه)** | **۱.۰۰٪ (فوق‌العاده ایمن)** |
-| **وضعیت توقف اضطراری (Emergency Halt)** | **✅ فعال نشد (دراوداون زیر ۵٪ حفظ شد)** | **🛑 فعال شد (بسته شدن پورتفولیو در افت ۵.۰۳٪)** | **✅ فعال نشد** |
-| **تعداد کل معاملات بسته‌شده** | ۴۲ معامله | ۴۹ معامله | ۲۳ معامله |
-| **نرخ برد معاملات (Win Rate)** | ۴۵.۲۴٪ | ۴۶.۹۴٪ | ۴۷.۸۳٪ |
-| **سیگنال‌های وتوشده توسط هوش مصنوعی** | **۶۴۳ سیگنال ورود فیلتر شد** | ۰ (سیگنال‌های تکنیکال فیلتر نشدند) | ۰ |
-| **تبدیل ۱۰۰٪ دارایی‌ها به نقد در پایان** | **✅ بله (۱۰۰٪ موجودی تومان نقد)** | **✅ بله (۱۰۰٪ موجودی تومان نقد)** | **✅ بله (۱۰۰٪ موجودی تومان نقد)** |
+| **Nominal initial capital** | 5,000,000 tomans 5,000,000 tomans 5,000,000 tomans
+| **Final balance after deducting fees** | **4,958,659 Tomans** | 4,957,994 Tomans **4,989,298 Tomans** |
+| **Net return of the portfolio** | **-0.83%** | -0.84% **-0.21%** |
+| **Gross profit/loss (Gross P&L)** | 79,979+ Tomans 99,328+ Tomans 22,450+ Tomans
+| **Total fees deducted by Valax** | **121,320 Tomans** | **141,334 Tomans** | **33,152 Tomans** |
+| **Maker fee paid (0.25%)** | 54,800 Tomans 62,100 Tomans 14,500 Tomans
+| ** Paid ticker fee (0.30%)** | 66,520 Tomans 79,234 Tomans 18,652 Tomans
+| **Maximum portfolio drawdown (Max DD)** | **3.49% (sustainable and authorized)** | **5.70% (🛑 Violation of the 5% limit of the competition)** | **1.00% (super safe)** |
+| **Emergency Halt** | ** ✅ Not activated (drawdown kept below 5%)** | **🛑 Activated (portfolio closing at 5.03% drop)** | ** Cannot be activated ** |
+| **Total number of closed transactions** | 42 transactions 49 deals 23 transactions
+| **Win Rate** | 45.24% 46.94% 47.83%
+| **Signals vetoed by artificial intelligence** | **643 input signals were filtered** | 0 (technical signals were not filtered) | 0 |
+| **100% conversion of assets to cash at the end** | ** ✅ Yes (100% cash Toman balance)** | ** ✅ Yes (100% cash Toman balance)** | ** ✅ Yes (100% cash Toman balance)** |
 
 ---
 
-## ۴. یافته‌های کلیدی مهندسی و مدیریت ریسک
+## 4. Key findings of engineering and risk management
 
-1. **جلوگیری هوش مصنوعی از نقض سقف دراوداون ۵٪ مسابقه:**
-   مهم‌ترین و حیاتی‌ترین دستاورد فنی این آزمون این است که در استراتژی قطعی بدون هوش مصنوعی، حداکثر افت ارزش پورتفولیو به **۵.۷۰٪** رسید که سقف مجاز ۵٪ هکاتون را نقض کرده و سامانه را وارد توقف اضطراری نمود. در مقابل، ایجنت هوش مصنوعی با تشخیص رژیم‌های پرنوسان و فرسایشی، مانع از باز شدن موقعیت‌های اضافی شد و حداکثر افت سرمایه را در **۳.۴۹٪** مهار کرد.
-2. **صرفه‌جویی ۲۰،۰۱۴ تومانی در کارمزد مبادلاتی:**
-   فیلتر رژیم هوش مصنوعی با وتو کردن ۶۴۳ سیگنال کاذب ورود در بازارهای متلاطم و رِنج، بیش از ۲۰ هزار تومان از سرمایه تیم را در برابر کارمزد صرافی حفظ نمود.
-3. **مزیت استراتژی صیانت از سرمایه ([`CapitalPreservationStrategy`](file:///root/starcoach-hack/wallex/src/strategy/capital_preservation.py)):**
-   این رویکرد با کاهش حجم هر معامله به ۲۵۰ هزار تومان (۵٪ ارزش کل حساب) و ورود صرفاً در اطمینان‌های بالای ۸۵٪، کل زیان ناشی از نوسانات شدید بازار را به **۰.۲۱-٪ (فقط ۱۰ هزار تومان)** محدود کرد و حداکثر دراوداون را در سطح حیرت‌انگیز **۱.۰۰٪** نگه داشت.
+1. **Preventing artificial intelligence from violating the drawdown ceiling of 5% of the match:**
+   The most important and vital technical achievement of this test is that in the deterministic strategy without artificial intelligence, the maximum loss of the portfolio value reached **5.70%**, which violated the 5% limit of Hackathon and brought the system to an emergency stop. On the other hand, the AI ​​agent, by detecting volatile and erosion regimes, prevented the opening of additional positions and contained the maximum capital loss at **3.49%**.
+2. **Saving 20,014 Tomans in exchange fees:**
+   By vetoing 643 false entry signals in turbulent markets, the artificial intelligence filter saved more than 20,000 Tomans of the team's capital against exchange fees.
+3. **Advantage of capital preservation strategy ([`CapitalPreservationStrategy'](file:///root/starcoach-hack/wallex/src/strategy/capital_preservation.py)):**
+   By reducing the volume of each transaction to 250 thousand Tomans (5% of the total account value) and entering only at confidence levels above 85%, this approach limited the total loss due to extreme market fluctuations to **-0.21% (only 10 thousand Tomans)** and kept the maximum drawdown at an astonishing level of **1.00%**.

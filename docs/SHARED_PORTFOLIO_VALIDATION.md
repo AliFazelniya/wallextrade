@@ -1,67 +1,67 @@
-# اعتبارسنجی سبد سرمایه‌گذاری مشترک و ریشه‌یابی عملکرد دارایی‌ها (فاز ۱۳)
+# Validation of joint investment portfolio and rooting of asset performance (Phase 13)
 ### Multi-Symbol Shared Portfolio Validation & Root-Cause Friction Diagnosis
-**مخزن:** [`wallex`](file:///root/starcoach-hack/wallex) | **سرمایه اولیه مشترک:** ۵،۰۰۰،۰۰۰ تومان | **افق داده‌ها:** ۹۰ روز کامل (۸،۶۳۵ کندل ۱۵ دقیقه‌ای)
+**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Initial joint capital:** 5,000,000 Tomans **Data horizon:** 90 full days (8,635 15-minute candles)
 
 ---
 
-## ۱. ساختار شبیه‌سازی سبد مشترک واقعی ۵ میلیون تومانی
+## 1. The simulation structure of the real joint portfolio of 5 million tomans
 
-بر اساس قوانین رسمی مسابقه والکس × استارکوچ، هر تیم معاملاتی دارای **یک حساب واحد ۵،۰۰۰،۰۰۰ تومانی** است. در موتور [`PortfolioBacktestEngine`](file:///root/starcoach-hack/wallex/src/backtest/portfolio_engine.py)، تمامی نمادها به صورت همگام در زمان از یک استخر نقدینگی مشترک بهره می‌برند و سقف‌های زیر توسط [`RiskEngine`](file:///root/starcoach-hack/wallex/src/risk/engine.py) اعمال می‌شود:
-- **سقف سفارش منفرد:** حداکثر ۵۰۰،۰۰۰ تومان (۱۰٪ کل سرمایه).
-- **سقف کل مواجهه رمزارزی پورتفولیو:** حداکثر ۶۰٪ (۳،۰۰۰،۰۰۰ تومان در مجموع دارایی‌ها).
-- **سقف موقعیت‌های همزمان:** حداکثر ۳ نماد.
-- **سقف دراوداون اضطراری:** ۵.۰٪ (توقف فوری معاملات در صورت نقض).
+According to the official rules of Wallex x Starkoch competition, each trading team has **a single account of 5,000,000 Tomans**. In the [`PortfolioBacktestEngine`](file:///root/starcoach-hack/wallex/src/backtest/portfolio_engine.py) engine, all symbols use a common liquidity pool synchronously in time, and the following caps are enforced by the [`RiskEngine`](file:///root/starcoach-hack/wallex/src/risk/engine.py):
+- **Individual order ceiling:** Maximum 500,000 Tomans (10% of the total capital).
+- **Total cryptocurrency exposure ceiling of the portfolio:** Maximum 60% (3,000,000 Tomans in total assets).
+- **Simultaneous position limit:** Maximum 3 symbols.
+- **Emergency drawdown ceiling:** 5.0% (immediate suspension of transactions in case of violation).
 
 ---
 
-## ۲. مقایسه جامع پیکربندی‌های مختلف پورتفولیو
+## 2. Comprehensive comparison of different portfolio configurations
 
-| پیکربندی پورتفولیو | دوره زمانی آزمون | بازدهی خالص (Net Ret) | حداکثر دراوداون (Max DD) | تعداد معامله | نرخ برد | مجموع کارمزد صرافی |
+| Portfolio configuration Exam time period Net return (Net Ret) | Maximum Drawdown (Max DD) | Number of transactions Win rate Total exchange fee
 |---|---|---|---|---|---|---|
-| **۱. سبد مشترک متوازن با هوش مصنوعی (A. Equal Shared AI)** | ۹۰ روز کامل | **۰.۶۲-٪** | **۳.۴۹٪** | ۱۰۶ | ۴۸.۱٪ | ۳۰۵،۶۰۲ تومان |
-| 🔹 همان سبد در دوره برون‌نمونه‌ای (OOS) | ۴۵ روز دوم | **۲.۰۶-٪** | **۳.۵۳٪** | ۴۸ | ۴۱.۷٪ | ۱۳۸،۹۲۸ تومان |
-| **۲. سبد مشترک سنتی بدون AI (B. Equal Shared No-AI)** | ۹۰ روز کامل | **۲.۴۷-٪** | **۳.۶۰٪** | ۱۶ | ۲۵.۰٪ | ۴۶،۷۳۶ ت (توقف در ریزش) |
-| **۳. سبد متمرکز اختصاصی بیت‌کوین با AI (C. Dedicated BTC AI)** | **۹۰ روز کامل** | **+۰.۴۳٪** | **۱.۳۱٪** | **۲۴** | **۵۰.۰٪** | **۶۹،۱۶۲ تومان** |
-| 🔹 **بیت‌کوین در دوره برون‌نمونه‌ای (OOS)** | **۴۵ روز دوم** | **+۰.۶۲٪** | **۰.۸۶٪** | **۹** | **۵۵.۶٪** | **۲۵،۸۷۴ تومان** |
-| **۴. بنچ‌مارک نقدینگی ۱۰۰٪ تومان (Cash Toman)** | ۹۰ روز کامل | **۰.۰۰٪** | **۰.۰۰٪** | **۰** | - | **۰ تومان** |
+| **1. Balanced shared portfolio with artificial intelligence (A. Equal Shared AI)** | 90 full days **-0.62%** | **3.49%** | 106 | 48.1% 305,602 Tomans
+| 🔹 The same basket in the out-of-sample period (OOS). 45 second day **-2.06%** | **3.53%** | 48 | 41.7% 138,928 Tomans
+| **2. Traditional shared portfolio without AI (B. Equal Shared No-AI)** | 90 full days **-2.47%** | **3.60%** | 16 | 25.0% | 46,736 t (stop in falling) |
+| **3. Dedicated Bitcoin wallet with AI (C. Dedicated BTC AI)** | **90 full days** | **+0.43%** | **1.31%** | **24** **50.0%** | **69,162 Tomans** |
+| 🔹 **Bitcoin in out-of-sample period (OOS)** | **45 second day** | **+0.62%** | **0.86%** | **9** **55.6%** | **25,874 Tomans** |
+| **4. 100% liquidity benchmark (Cash Toman)** | 90 full days **0.00%** | **0.00%** | **0** - | **0 tomans** |
 
 ```mermaid
 graph TD
-    A["مقایسه بازدهی خالص برون‌نمونه‌ای (OOS 45d)"] --> B["سبد اختصاصی بیت‌کوین با AI: +۰.۶۲٪ سود خالص (DD: ۰.۸۶٪)"]
-    A --> C["بنچ‌مارک نقدینگی تومان: ۰.۰۰٪ (DD: ۰.۰۰٪)"]
-    A --> D["سبد مشترک متوازن با AI: -۲.۰۶٪ زیان (DD: ۳.۵۳٪)"]
-    A --> E["سبد مشترک سنتی بدون AI: -۲.۴۷٪ زیان (Emergency Halt)"]
+    A["Comparison of out-of-sample net efficiency (OOS 45d)"] --> B["Dedicated Bitcoin Portfolio with AI: +0.62% Net Profit (DD: 0.86%)"]
+    A --> C["Toman liquidity benchmark: 0.00% (DD: 0.00%)"]
+    A --> D["Balanced mutual portfolio with AI: -2.06% loss (DD: 3.53%)"]
+    A --> E["Traditional common portfolio without AI: -2.47% loss (Emergency Halt)"]
 ```
 
 ---
 
-## ۳. ریشه‌یابی و کالبدشکافی علت افت بازدهی در سبد مشترک (Root-Cause Diagnosis)
+## 3. Root-Cause Diagnosis
 
-**پرسش بنیادین فاز ۱۳:**
-> *چرا سبد سرمایه‌گذاری مشترک با هوش مصنوعی بازدهی منفی ۰.۶۲-٪ تا ۲.۰۶-٪ ثبت کرده است، در حالی که نماد بیت‌کوین به صورت مجزا کاملاً سودآور (+۰.۴۳٪ تا +۰.۶۲٪) بوده است؟*
+**Fundamental question of phase 13:**
+> *Why has the AI mutual fund posted a negative return of -0.62% to -2.06%, while the Bitcoin symbol in isolation has been quite profitable (+0.43% to +0.62%)?*
 
-تحلیل جزء‌به‌جزء تراکنش‌های استخراج‌شده در [`research/phase13_validation_results.json`](file:///root/starcoach-hack/wallex/research/phase13_validation_results.json) علت دقیق این پدیده را فاش می‌کند:
+A piece-by-piece analysis of the extracted transactions in [`research/phase13_validation_results.json`](file:///root/starcoach-hack/wallex/research/phase13_validation_results.json) reveals the exact cause of this phenomenon:
 
-| دارایی در سبد مشترک | سود/زیان خالص پس از کارمزد (Net P&L) | کارمزد پرداختی به صرافی | تعداد معامله | نسبت کارمزد به سود ناخالص | نقش در پورتفولیو |
+| Assets in the common portfolio Net profit/loss after fees (Net P&L) | Fee paid to the exchange Number of transactions Ratio of fee to gross profit role in the portfolio
 |---|---|---|---|---|---|
-| **بیت‌کوین (BTCTMN)** | **+۵۷،۵۱۵ تومان** | ۶۹،۱۶۲ تومان | ۲۴ | ۵۴٪ | 🟢 **مولد سود مثبت و پایدار** |
-| **اتریوم (ETHTMN)** | **+۷۰،۴۹۶ تومان** | ۱۰۳،۶۹۲ تومان | ۳۶ | ۵۹٪ | 🟡 **سودآور اما فرسایش شدید کارمزد** |
-| **سولانا (SOLTMN)** | **۲- تومان (سربه‌سر زیان‌بار)** | **۱۳۲،۷۴۸ تومان** | ۴۶ | **۱۰۰٪ (بلعیدن کل سود)** | 🔴 **چاه کارمزد (Fee Sink)** |
-| **مجموع سبد** | **۱۲۷،۹۸۱+ تومان (ناخالص)** | **۳۰۵،۶۰۲ تومان (کارمزد)** | ۱۰۶ | **۲۳۸٪ کارمزد نسبت به بازده** | افت بازدهی کل به دلیل کارمزد |
+| **Bitcoin (BTCTMN)** | **+57,515 Tomans** | 69,162 Tomans 24 | 54% 🟢 **Positive and stable profit generator** |
+| **Ethereum (ETHTMN)** | **+70,496 Tomans** | 103,692 Tomans 36 | 59% 🟡 **Profitable but severe fee erosion** |
+| **Solana (SOLTMN)** | ** 2- Tomans (unprofitable)** | **132,748 Tomans** | 46 | **100% (swallowing the entire profit)** | 🔴 **Fee Sink** |
+| **Basket Total** | **127,981+ Tomans (gross)** | **305,602 Tomans (fee)** | 106 | **238% commission compared to yield** | Loss of total efficiency due to fees
 
-### ۳ سازوکار مخرب آلت‌کوین‌ها بر سبد مشترک (The 3 Altcoin Drag Mechanisms):
-1. **سازوکار ۱: بلعیده شدن سود توسط کارمزد در سولانا (`SOLTMN`):**
-   سولانا به تنهایی **۱۳۲،۷۴۸ تومان کارمزد** (بیش از ۴۳٪ کل کارمزدهای پرداختی پورتفولیو) تولید کرد، اما سود ناخالص آن دقیقاً با کارمزد برابر شد و سود خالص آن **صفر تومان (-۲ تومان)** بود. در واقع، سیستم در سولانا صرفاً برای صرافی کارمزد تولید کرده است!
-2. **سازوکار ۲: تله اسپردهای عریض‌تر در آلت‌کوین‌ها:**
-   اسپرد میانگین سفارشات در سولانا و اتریوم (۰.۱۵٪ تا ۰.۲۵٪) به مراتب از بیت‌کوین (۰.۰۰۸٪) عریض‌تر بود. این امر اسلیپیج پنهان را افزایش داده و خروج‌ها را با زیان مواجه ساخت.
-3. **سازوکار ۳: قفل شدن ظرفیت سرمایه‌گذاری (Capital Lockup):**
-   بر اساس سقف مواجهه ۶۰٪ (۳ میلیون تومان)، باز شدن موقعیت‌های متعدد در سولانا و اتریوم بخشی از نقدینگی را قفل کرد و مانع از آن شد که سیستم بتواند سرمایه را به طور کامل بر روی امواج صعودی پرقدرت بیت‌کوین متمرکز کند.
+### 3 destructive mechanisms of altcoins on the common basket (The 3 Altcoin Drag Mechanisms):
+1. **Mechanism 1: Swallowing profit by fee in Solana (`SOLTMN'):**
+   Solana alone generated **132,748 Tomans in fees** (more than 43% of total portfolio fees paid), but its gross profit exactly equaled the fees, and its net profit was **zero Tomans (-2 Tomans)**. In fact, the system in Solana has generated fees just for the exchange!
+2. **Mechanism 2: Wider telespreads in altcoins:**
+   Average order spreads were much wider in Solana and Ethereum (0.15% to 0.25%) than in Bitcoin (0.008%). This increased hidden slippage and made exits at a loss.
+3. **Mechanism 3: Locking of investment capacity (Capital Lockup):**
+   Based on the exposure cap of 60% (3 million Tomans), the opening of multiple positions in Solana and Ethereum locked up some of the liquidity and prevented the system from fully focusing capital on the strong Bitcoin uptrend.
 
 ---
 
-## ۴. استراتژی منتخب و توصیه‌های تخصیص برای هکاتون
+## 4. Select strategy and allocation recommendations for hackathons
 
-1. **حذف استراتژی‌های پرمعامله بر روی آلت‌کوین‌ها:** در شرایط فعلی کارمزد والکس (۰.۲۵٪ تا ۰.۳۰٪)، اعمال استراتژی مومنتوم بر روی جفت‌ارزهای پرنوسان آلت‌کوین اکیداً مردود است.
-2. **استراتژی بهینه سبد در روز مسابقه (Dedicated Optimal Strategy):**
-   - **تخصیص ۱۰۰٪ به بیت‌کوین (`BTCTMN`):** تنها دارایی که توانسته با اتکا به هوش مصنوعی اصطکاک مبادلاتی را شکست داده و در آزمون برون‌نمونه‌ای بازدهی خالص مثبت **+۰.۶۲٪** با حداکثر دراوداون بسیار امن **۰.۸۶٪** به دست آورد.
-   - دارایی‌های دیگر در وضعیت نقد ۱۰۰٪ تومان نگهداری شوند.
+1. **Remove high-trading strategies on altcoins:** In the current situation of Wallex fees (0.25% to 0.30%), applying momentum strategy on volatile altcoin pairs is strongly discouraged.
+2. **Dedicated Optimal Strategy:**
+   - **100% Allocation to Bitcoin (`BTCTMN'):** The only asset that has been able to defeat the exchange friction by relying on artificial intelligence and in the exemplar test obtained a positive net return of **+0.62%** with a very safe maximum drawdown of **0.86%**.
+   - Other assets should be kept in cash status of 100% Tomans.

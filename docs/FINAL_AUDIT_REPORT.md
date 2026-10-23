@@ -1,51 +1,51 @@
-# گزارش ممیزی جامع و نهایی سیستم معاملاتی الگوریتمی والکس (Final Audit Report)
-### ارزیابی فنی و راستی‌آزمایی مستندات هکاتون استارکوچ × والکس
+# Comprehensive and final audit report of Wallex algorithmic trading system (Final Audit Report)
+### Technical evaluation and verification of Starkoch x Wallex hackathon documentation
 
-این سند گزارش رسمی ممیزی، راستی‌آزمایی شواهد، رفع مغایرت‌ها و ارزیابی آمادگی سیستم معاملاتی پیاده‌سازی‌شده در مخزن [`wallex`](file:///root/starcoach-hack/wallex) را ارائه می‌دهد.
-
----
-
-## ۱. حقایق اعتبارسنجی‌شده و شواهد رسمی (Verified Facts & Evidence)
-
-1. **ارتباط زنده با رابط برنامه‌نویسی والکس:**
-   - با فراخوانی مستقیم شبکه اثبات شد که صرافی والکس دارای **۳۷۳ بازار فعال** است که شامل **۱۸۷ جفت‌ارز بر پایه تومان (`*TMN`)** و **۱۸۶ جفت‌ارز بر پایه تتر (`*USDT`)** می‌باشد.
-   - ساختار احراز هویت اندپوینت‌های خصوصی با هدر `x-api-key: YOUR_KEY` تایید شد (ارسال هدر اشتباه منتهی به خطای رسمی صرافی با کد ۱۲۰۱ گردید).
-2. **پشتیبانی از انواع سفارشات (Order Types):**
-   - استخراج متادیتای والکس نشان داد که فیلد `isMarketTypeEnable` صرفاً برای **۴ نماد** (`USDTTMN`, `BTCTMN`, `ETHTMN`, `XAUTTMN`) فعال است. تمامی ۱۸۳ نماد تومانی دیگر **صرفاً از سفارش محدود (`LIMIT`) پشتیبانی می‌کنند**.
-3. **حداقل ارزش سفارش (`minNotional`):**
-   - حداقل ارزش هر سفارش در کلیه بازارهای تومانی والکس برابر با **۵۰،۰۰۰ تومان** است.
-4. **ساختار رسمی کارمزدها (Fee Schedule):**
-   - بر اساس جدول رسمی سطح ۱ والکس برای بازارهای تومانی، کارمزد سفارش‌گذار (Maker) معادل **۰.۲۵٪** و کارمزد سفارش‌بردار (Taker) معادل **۰.۳۰٪** است.
-5. **رفتار اندپوینت UDF تریدینگ‌ویو والکس:**
-   - اثبات شد که اندپوینت `/v1/udf/history?resolution=15` در سرور والکس، داده‌های خام را با گام زمانی **۶۰ ثانیه‌ای (۱ دقیقه‌ای)** تا سقف ۲۷،۳۴۵ رکورد (~۱۹ روز) بازمی‌گرداند.
+This document provides an official audit report, evidence verification, conflict resolution, and readiness assessment of the trading system implemented in the [`wallex'](file:///root/starcoach-hack/wallex) repository.
 
 ---
 
-## ۲. ادعاهای تاییدنشده و ابهامات باز (Unverified Claims & Open Questions)
+## 1. Verified Facts & Evidence
 
-1. **تاریخ‌های دقیق تقویمی مسابقه:**
-   - تاریخ شروع، پایان و ضرب‌الاجل دقیق ارسال مدارک در بریف مسابقه به صورت روز و ساعت معین ذکر نشده است. این موارد به عنوان ابهامات باز در [`docs/OPEN_QUESTIONS.md`](file:///root/starcoach-hack/wallex/docs/OPEN_QUESTIONS.md) ثبت شده‌اند و از جعل تاریخ‌های ساختگی خودداری شده است.
-2. **شرایط دقیق مالی حساب اعتباری ۵ میلیون تومانی:**
-   - در سایت عمومی والکس، طرح‌های اعتباری دارای کارمزد روزانه تمدید اعتبار و تعهد بازپرداخت هستند، در حالی که در توضیحات هکاتون ذکر شده که تیم‌ها مسئولیتی در قبال زیان‌های احتمالی اصل سرمایه نخواهند داشت. تفکیک این دو پیش از فعال‌سازی لایو نیازمند تاییدیه کتبی برگزارکننده است.
-
----
-
-## ۳. مغایرت‌های کشف‌شده و راه‌حل مهندسی (Discrepancies & Resolutions)
-
-### ۳.۱. مغایرت تعداد کندل‌های بک‌تست (۲۷،۳۴۴ در برابر ۵،۷۶۰)
-- **شرح مغایرت:** در گزارش اولیه، تعداد ۲۷،۳۴۴ کندل برای یک دوره ۳۰ روزه ۱۵ دقیقه‌ای اعلام شده بود، در حالی که ۳۰ روز با تایم‌فریم ۱۵ دقیقه حداکثر معادل ۲،۸۸۰ کندل (و برای دو نماد جمعاً ۵،۷۶۰ کندل) است.
-- **ریشه‌یابی فنی:** با ممیزی درخواست‌های شبکه مشخص شد که سرور والکس برای پارامتر `resolution=15`، داده‌های خام ۱ دقیقه‌ای (گام ۶۰ ثانیه) را ارسال می‌کند که تعداد ۲۷،۳۴۵ کندل آن دقیقاً معادل ۱۹ روز داده ۱ دقیقه‌ای است.
-- **راه‌حل پیاده‌سازی‌شده:** در کلاس [`MarketDataFetcher`](file:///root/starcoach-hack/wallex/src/data/fetcher.py#L21-L150)، یک پایپ‌لاین بازنمونه‌برداری زمانی خودکار (`resample('15min')`) اضافه شد که کندل‌های خام ۱ دقیقه‌ای را به طور دقیق بر روی بازه‌های زمانی ۱۵ دقیقه‌ای استاندارد تجمیع کرده و **۱،۸۲۵ کندل معتبر ۱۵ دقیقه‌ای** تولید می‌کند.
-
-### ۳.۲. اصلاح فرمول کارمزد (تفکیک Maker و Taker)
-- **شرح مغایرت:** در نسخه قبلی کارمزد تمام معاملات به صورت ثابت ۰.۲۵٪ فرض شده بود.
-- **راه‌حل پیاده‌سازی‌شده:** در ماژول [`PortfolioEngine`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py#L42-L210)، سفارش‌های ورود محدود با نرخ **۰.۲۵٪ (Maker)** و خروج‌های اضطراری حد ضرر و تسویه پایان دوره با نرخ **۰.۳۰٪ (Taker)** محاسبه و اعمال شدند.
+1. **Live communication with Wallex programming interface:**
+   - By directly calling the network, it was proven that Wallex exchange has **373 active markets**, which includes **187 currency pairs based on Toman (`*TMN')** and **186 currency pairs based on Tether (`*USDT')**.
+   - The authentication structure of private endpoints was confirmed with the `x-api-key: YOUR_KEY' header (sending the wrong header led to the exchange's official error code 1201).
+2. **support of order types:**
+   - Wallex metadata extraction showed that the `isMarketTypeEnable` field is only enabled for **4 symbols** (`USDTTMN`, `BTCTMN`, `ETHTMN`, `XAUTTMN`). All other 183 Toman symbols **only support limit order (`LIMIT')**.
+3. **Minimum order value (`minNotional`):**
+   - The minimum value of each order in all Wallex Toman markets is **50,000 Tomans**.
+4. **Official structure of fees (Fee Schedule):**
+   - According to the official Wallex level 1 table for Tomani markets, the maker fee is equal to **0.25%** and the taker fee is equal to **0.30%**.
+5. **Behavior of UDF TradingView Wallex endpoint:**
+   - Proven that endpoint `/v1/udf/history?resolution=15` on Wallex server returns raw data with **60 second (1 minute)** time step up to 27,345 records (~19 days).
 
 ---
 
-## ۴. نتایج رسمی آزمون‌های خودکار (Automated Test Results)
+## 2. Unverified Claims & Open Questions
 
-آزمون‌های خودکار با ابزار استاندارد `pytest` اجرا شدند:
+1. **Exact calendar dates of the competition:**
+   - The start date, end date and exact deadline for sending the documents are not mentioned in the competition brief as a specific day and time. These are filed as open questions in [`docs/OPEN_QUESTIONS.md`](file:///root/starcoach-hack/wallex/docs/OPEN_QUESTIONS.md) and the falsification of fictitious dates is avoided.
+2. **Exact financial conditions of 5 million Tomans credit account:**
+   - On the Wallex public site, the credit plans have a daily credit extension fee and a repayment obligation, while the hackathon description states that teams will not be held responsible for potential principal losses. The separation of these two requires the written approval of the organizer before activating the live.
+
+---
+
+## 3. Discrepancies & Resolutions
+
+### 3.1. Discrepancy in the number of backtest candles (27,344 vs. 5,760)
+- **Discrepancy explanation:** In the initial report, the number of 27,344 candles was declared for a 30-day 15-minute period, while 30 days with a 15-minute timeframe is equivalent to a maximum of 2,880 candles (and for two symbols a total of 5,760 candles).
+- **Technical Rooting:** By auditing the network requests, it was found that for the parameter `resolution=15`, Wallex server sends 1 minute raw data (60 second step) which is 27,345 candles, which is exactly equivalent to 19 days of 1 minute data.
+- **IMPLEMENTED SOLUTION:** In class [`MarketDataFetcher`](file:///root/starcoach-hack/wallex/src/data/fetcher.py#L21-L150), added an automatic temporal resampling pipeline (`resample('15min')`) that accurately aggregates 1-minute raw candles on standard 15-minute intervals and Produces **1,825 valid 15-minute candles**.
+
+### 3.2. Modification of the fee formula (Separation of Maker and Taker)
+- **Description of discrepancy:** In the previous version, the fee for all transactions was assumed to be 0.25%.
+- **Implemented solution:** In the [`PortfolioEngine'] module (file:///root/starcoach-hack/wallex/src/portfolio/accounting.py#L42-L210), limit entry orders at the rate of **0.25% (Maker)** and emergency exits of the loss limit and settlement at the end of the period at the rate of **0.30% (Taker)** were calculated and applied.
+
+---
+
+## 4. Official results of automated tests (Automated Test Results)
+
+Automated tests were run with the standard ``pytest'' tool:
 
 ```
 tests/test_ai_agent.py ......................... [PASSED] (3 tests)
@@ -57,85 +57,85 @@ tests/test_risk_engine.py ..................... [PASSED] (7 tests)
 ============================== 27 passed in 0.42s ==============================
 ```
 
-- **تعداد آزمون‌های اجراشده:** ۲۷
-- **تعداد موفق (Passed):** ۲۷ (۱۰۰٪)
-- **تعداد ناموفق (Failed):** ۰
-- **تعداد نادیده‌گرفته‌شده (Skipped):** ۰
-- **حوزه‌های پوشش‌داده‌شده:**
-  - فیلتر کامل بازارهای غیرفعال و مسدود
-  - اعمال لیست سفید (Allowlist) بلافاصله پیش از ارسال سفارش
-  - کنترل حداقل ارزش سفارش (۵۰،۰۰۰ TMN) و اعشار
-  - تفکیک کارمزد میکر و تیکر و محاسبه سود ناخالص و خالص
-  - تطبیق سفارش‌های نامطمئن و شبیه‌سازی پر شدن ناقص (Partial Fills)
-  - جلوگیری از ارسال سفارش تکراری (Duplicate Order Prevention)
-  - بررسی کهنگی داده‌های بازار (Stale Data Detection)
-  - تطبیق موجودی با گزارشات صرافی
-  - سقف سفارش ۵۰۰ هزار تومانی و سقف دراوداون ۵٪
-  - اعتبارسنجی خروجی هوش مصنوعی با شِمای ساختاریافته Pydantic
-  - توقف اضطراری (Emergency Halt) و نقد کردن ۱۰۰٪ دارایی‌ها به تومان
+- **Number of tests performed:** 27
+- **Passed number:** 27 (100%)
+- **Number of failed (Failed):** 0
+- **Number of ignored (Skipped):** 0
+- **Areas covered:**
+  - Complete filter of inactive and blocked markets
+  - Apply the white list (Allowlist) immediately before sending the order
+  - Controlling the minimum order value (50,000 TMN) and decimals
+  - Separation of maker and taker fees and calculation of gross and net profit
+  - Adapting uncertain orders and simulating partial fills
+  - Avoid sending duplicate orders (Duplicate Order Prevention)
+  - Stale Data Detection
+  - Reconciliation of balance with exchange reports
+  - The order limit is 500 thousand tomans and the drawdown limit is 5%
+  - Validation of artificial intelligence output with Pydantic structured schema
+  - Emergency Halt and liquidate 100% of assets in Tomans
 
 ---
 
-## ۵. متدولوژی و نتایج ممیزی‌شده بک‌تست تاریخی (Audited Backtest Results)
+## 5. Audited Backtest Results and methodology
 
-شبیه‌سازی بر روی **کندل‌های واقعی ۱۵ دقیقه‌ای تجمیع‌شده والکس** (بازه ۳ اکتبر تا ۲۲ اکتبر ۲۰۲۶) با احتساب کارمزد میکر (۰.۲۵٪)، تیکر (۰.۳۰٪) و اسلیپیج (۰.۱۵٪) انجام شد:
+The simulation was performed on **real 15-minute aggregate Wallex candles** (period October 3-October 22, 2026) including Maker (0.25%), Ticker (0.30%) and Slippage (0.15%) fees:
 
-| شاخص / معیار | بیت‌کوین به تومان (**BTCTMN**) | اتریوم به تومان (**ETHTMN**) |
+| Indicator/criterion Bitcoin to Toman (**BTCTMN**) | Ethereum to Toman (**ETHTMN**) |
 |---|---|---|
-| **تعداد رکوردهای خام دریافتی از والکس** | ۲۷،۳۴۵ کندل (گام زمانی ۶۰ ثانیه) | ۲۷،۳۱۸ کندل (گام زمانی ۶۰ ثانیه) |
-| **تعداد کندل‌های ۱۵ دقیقه‌ای معتبر** | **۱،۸۲۵ کندل** | **۱،۸۲۳ کندل** |
-| **کندل‌های مفقود / تکراری** | ۱۵ مفقود / ۰ تکراری | ۴۱ مفقود / ۰ تکراری |
-| **سرمایه اولیه اسمی** | ۵،۰۰۰،۰۰۰ تومان | ۵،۰۰۰،۰۰۰ تومان |
-| **سود/زیان ناخالص (Gross P&L)** | ۱۲،۶۳۵- تومان | ۲۷،۰۱۴- تومان |
-| **مجموع کارمزدهای کسرشده صرافی** | ۵،۴۶۲ تومان | ۱۶،۱۶۰ تومان |
-| **سود/زیان خالص نهایی (Net P&L)** | **۱۸،۰۹۷- تومان (-۰.۳۶٪)** | **۴۳،۱۷۴- تومان (-۰.۸۶٪)** |
-| **موجودی نهایی پس از کسر کارمزد** | **۴،۹۸۱،۹۰۳ تومان** | **۴،۹۵۶،۸۲۶ تومان** |
-| **حداکثر دراوداون پورتفولیو (Max Drawdown)** | **۰.۵۰٪** (محاسبه روی ارزش کل دارایی) | **۱.۲۰٪** (محاسبه روی ارزش کل دارایی) |
-| **تعداد کل معاملات بسته‌شده** | ۲ معامله رفت‌وبرگشت | ۶ معامله رفت‌وبرگشت |
-| **تبدیل ۱۰۰٪ دارایی‌ها به نقد در پایان** | **✅ بله (۱۰۰٪ موجودی نقد تومان)** | **✅ بله (۱۰۰٪ موجودی نقد تومان)** |
+| **Number of raw records received from Wallex** | 27,345 candles (time step 60 seconds) | 27,318 candles (time step 60 seconds) |
+| **Number of valid 15-minute candles** | **1,825 candles** | **1,823 candles** |
+| **Missing/duplicate candles** | 15 missing / 0 duplicates 41 missing / 0 duplicate |
+| **Nominal initial capital** | 5,000,000 tomans 5,000,000 tomans
+| **Gross profit/loss (Gross P&L)** | 12,635 tomans 27,014-Tomans
+| **Total fees deducted by the exchange** | 5,462 Tomans 16,160 Tomans
+| **Final net profit/loss (Net P&L)** | **-18,097 Tomans (-0.36%)** | **-43,174 Tomans (-0.86%)** |
+| **Final balance after deducting fees** | **4,981,903 Tomans** | **4,956,826 Tomans** |
+| **Maximum Portfolio Drawdown (Max Drawdown)** | **0.50%** (calculated on the total asset value) | **1.20%** (calculated on the total asset value) |
+| **Total number of closed transactions** | 2 round-trip transactions 6 round trip transactions
+| **100% conversion of assets to cash at the end** | ** ✅ Yes (100% Toman cash balance)** | ** ✅ Yes (100% Toman cash balance)** |
 
 > [!NOTE]
-> **تحلیل علمی نتایج:** نتیجه فوق نشان‌دهنده عملکرد صادقانه سیستم در مواجهه با اصطکاک مبادلاتی صرافی والکس است. استراتژی مومنتوم در بازارهای رِنج و فرسایشی با کسر کارمزدهای ۰.۲۵٪ و ۰.۳۰٪ با افتی اندک مواجه شده، اما موتور ریسک با موفقیت حداکثر افت سرمایه را زیر **۱.۲٪** نگه داشته و از هرگونه دراوداون سنگین جلوگیری کرده است.
+> **Scientific analysis of the results:** The above result shows the honest performance of the system in the face of exchange friction of Wallex exchange. The Momentum strategy has experienced a slight drawdown in range and erosion markets with 0.25% and 0.30% fee deductions, but the risk engine has successfully kept the maximum drawdown below **1.2%** and prevented any heavy drawdowns.
 
 ---
 
-## ۶. شواهد تست در سایه (Shadow Test Evidence)
+## 6. Shadow Test Evidence
 
-- ۳ چرخه تست در سایه بر روی داده‌های زنده و عمق واقعی بازار والکس در نمادهای `USDTTMN`, `PEPETMN`, `BTCTMN`, `PUMPTMN`, `ETHTMN` اجرا شد.
-- **تاییدیه عدم ارسال سفارش واقعی:** کلیه عملیات صرفاً بر روی اندپوینت‌های عمومی استعلام داده متمرکز بوده و هیچ سفارشی به سرور معامله والکس ارسال نگردید (`live_execution_authorized=False`).
-- ثبت کامل ۱۵ رکورد تصمیم‌گیری و ارزیابی ریسک در فایل [`logs/trading_decisions.jsonl`](file:///root/starcoach-hack/wallex/logs/trading_decisions.jsonl).
-
----
-
-## ۷. وضعیت جهان معاملاتی و طبقه‌بندی نمادها (Market Universe Status)
-
-بر اساس اجرای اسکریپت خودکار [`scripts/build_market_universe.py`](file:///root/starcoach-hack/wallex/scripts/build_market_universe.py):
-- **کل نمادهای والکس:** ۳۷۳ نماد
-- **جهان معاملاتی مجاز تاییدشده ([`config/allowed_markets.json`](file:///root/starcoach-hack/wallex/config/allowed_markets.json)):** ۱۶ نماد تومانی با حجم معاملات بالای ۵ میلیارد تومان و اسپرد زیر ۰.۳۵٪.
-- **نمادهای غیرفعال / فاقد نقدینگی در حساب اعتباری:** ۲۱ نماد مسدودشده در [`config/market_restrictions.json`](file:///root/starcoach-hack/wallex/config/market_restrictions.json).
-- **نمادهای تتری کنار گذاشته‌شده:** ۱۸۶ نماد.
-- **نمادهای با نقدینگی پایین یا اسپرد بالا:** ۱۵۰ نماد.
+- 3 shadow test cycles were run on live data and real depth of the Wallex market in the symbols `USDTTMN`, `PEPETMN`, `BTCTMN`, `PUMPTMN`, `ETHTMN`.
+- **Confirmation of real order not being sent:** All operations were focused only on public data query endpoints and no orders were sent to Wallex transaction server (`live_execution_authorized=False`).
+- Full recording of 15 decision and risk assessment records in the file [`logs/trading_decisions.jsonl'] (file:///root/starcoach-hack/wallex/logs/trading_decisions.jsonl).
 
 ---
 
-## ۸. موانع باقیمانده پیش از معامله لایو (Blockers Before Live Activation)
+## 7. The status of the trading world and classification of symbols (Market Universe Status)
 
-۱. تایید کتبی برگزارکنندگان در خصوص وجود یا عدم وجود کارمزد شبانه روی حساب اعتباری هکاتون.
-۲. صدور مجوز رسمی و پرچم `live_execution_authorized=True` توسط کاربر.
-
----
-
-## ۹. هش قطعی کامیت گیت ممیزی (Exact Git Commit Hash)
-
-- **کامیت ممیزی و تثبیت‌شده نهایی:** `5a3e86dd5500056c76ed220e486cb861775d0686`
-- **تگ گیت:** `v0.2.0-audited` (بر مبنای نسخه اولیه `v0.1.0-hackathon-prep`)
+Based on the automatic script execution [`scripts/build_market_universe.py`](file:///root/starcoach-hack/wallex/scripts/build_market_universe.py):
+- **Total Wallex symbols:** 373 symbols
+- **Verified authorized trading world ([`config/allowed_markets.json`](file:///root/starcoach-hack/wallex/config/allowed_markets.json)):** 16 Toman symbols with trading volume above 5 billion Tomans and spread below 0.35%.
+- **Inactive symbols / no liquidity in credit account:** 21 symbols blocked in [`config/market_restrictions.json`](file:///root/starcoach-hack/wallex/config/market_restrictions.json).
+- **Abandoned Tetri symbols:** 186 symbols.
+- **Symbols with low liquidity or high spread:** 150 symbols.
 
 ---
 
-## ۱۰. تعیین سطح آمادگی سامانه (Readiness Determination)
+## 8. Blockers Before Live Activation
 
-| سطح آمادگی | وضعیت | توضیحات |
+1. Written confirmation from the organizers regarding the presence or absence of overnight fees on the Hackathon credit account.
+2. Issuance of official authorization and `live_execution_authorized=True' flag by the user.
+
+---
+
+## 9. Exact Git Commit Hash
+
+- **Audit and final fixed commit:** `5a3e86dd5500056c76ed220e486cb861775d0686`
+- **Gate tag:** `v0.2.0-audited` (based on the initial `v0.1.0-hackathon-prep` version)
+
+---
+
+## 10. Determining the readiness level of the system (Readiness Determination)
+
+| Level of preparation Status | Description
 |---|---|---|
-| **تست آفلاین و بک‌تست (Offline Testing)** | ✅ **آماده و ۱۰۰٪ اعتبارسنجی‌شده** | اجرای کامل آزمون‌های خودکار و شبیه‌سازی داده‌های واقعی |
-| **تست در سایه (Shadow Testing)** | ✅ **آماده و فعال** | پایش پیوسته عمق بازار بدون ارسال سفارش حقیقی |
-| **معاملات زنده (Live Execution)** | 🛑 **قفل ایمن و غیرفعال** | تا زمان شفاف‌سازی کارمزد شبانه و صدور مجوز مستقیم کاربر مسدود است |
+| **Offline testing and backtesting (Offline Testing)** | ✅ **ready and 100% validated** | Full implementation of automated tests and simulation of real data
+| **Shadow Testing** | ✅ **ready and active** | Continuous monitoring of market depth without sending real orders
+| **Live Transactions (Live Execution)** | 🛑 **safe and inactive lock** | It is blocked until the clarification of the nightly fee and the issuance of a direct user license

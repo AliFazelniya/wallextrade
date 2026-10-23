@@ -1,41 +1,41 @@
-# گزارش جامع آزمون زنده در سایه و پایش عمق بازار (فاز ۱۳)
+# Comprehensive report of the live test in the shadow and market depth monitoring (phase 13)
 ### Prospective Forward Shadow Testing & Live Orderbook Microstructure Report
-**مخزن:** [`wallex`](file:///root/starcoach-hack/wallex) | **تاریخ اجرا:** ۲۲ اکتبر ۲۰۲۶ | **فایل لاگ زنده:** [`logs/shadow_forward_phase13.jsonl`](file:///root/starcoach-hack/wallex/logs/shadow_forward_phase13.jsonl)
+**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Performance date:** October 22, 2026 **Live log file:** [`logs/shadow_forward_phase13.jsonl`](file:///root/starcoach-hack/wallex/logs/shadow_forward_phase13.jsonl)
 
 ---
 
-## ۱. هدف و فلسفه آزمون در سایه (Forward Shadow Methodology)
+## 1. The purpose and philosophy of the test in the shadow (Forward Shadow Methodology)
 
-هدف از تست در سایه (Forward Shadow Testing) اتصال کامل سامانه معاملاتی به رابط‌های زنده صرافی والکس بدون ارسال سفارش حقیقی است:
-1. ارزیابی تاخیر زمانی شبکه (Network Latency) و پاسخگویی اندپوینت‌های والکس.
-2. پایش اسپردهای واقعی دفتر سفارش (Orderbook Spread Distribution).
-3. اعتبارسنجی کارکرد درگاه‌های مهار ریسک و فیلتر اسپرد در مواجهه با تیک‌های لحظه‌ای بازار.
-4. **تضمین ۱۰۰٪ عدم ارسال سفارش واقعی:** فعال بودن تغییرناپذیر پرچم `live_execution_authorized=False`.
+The purpose of forward shadow testing is to fully connect the trading system to the live interfaces of the Wallex exchange without sending a real order:
+1. Evaluation of Network Latency and responsiveness of Wallex endpoints.
+2. Monitoring of real spreads of the order book (Orderbook Spread Distribution).
+3. Validation of the operation of the risk containment portals and the spread filter in the face of momentary ticks of the market.
+4. **100% guarantee that the real order will not be sent:** The immutable activation of the `live_execution_authorized=False` flag.
 
 ---
 
-## ۲. مشخصات و نتایج آماری پایش زنده بازار والکس
+## 2. Specifications and statistical results of live monitoring of Wallex market
 
-در جریان اجرای اسکریپت [`scripts/run_forward_shadow_eval.py`](file:///root/starcoach-hack/wallex/scripts/run_forward_shadow_eval.py)، داده‌های لحظه‌ای عمق بازار (`/v1/depth`) و کندل‌های جاری (`/v1/udf/history`) برای نمادهای اصلی جهان مجاز دریافت و پردازش شد:
+During the execution of the script [`scripts/run_forward_shadow_eval.py`](file:///root/starcoach-hack/wallex/scripts/run_forward_shadow_eval.py), real-time market depth data (`/v1/depth`) and current candles (`/v1/udf/history`) were received and processed for the major symbols of the permitted world:
 
-| شاخص پایش زنده | مقدار اندازه‌گیری‌شده | استاندارد پذیرش سامانه | وضعیت انطباق |
+| Live monitoring index Measured value System acceptance standard Compliance status
 |---|---|---|---|
-| **میانگین تاخیر فراخوانی API (Mean Latency)** | **۲۹۱.۲ میلی‌ثانیه** | کمتر از ۱،۰۰۰ میلی‌ثانیه | ✅ **بسیار سریع و پایدار** |
-| **صدک ۹۵ تاخیر API (P95 Latency)** | **۴۳۸.۲ میلی‌ثانیه** | کمتر از ۲،۰۰۰ میلی‌ثانیه | ✅ **عالی** |
-| **کمترین تاخیر ثبت‌شده (Min Latency)** | **۲۳۱.۴ میلی‌ثانیه** | - | ✅ بهینه |
-| **بیشترین تاخیر ثبت‌شده (Max Latency)** | **۷۹۶.۹ میلی‌ثانیه** | کمتر از ۳،۰۰۰ میلی‌ثانیه | ✅ پایدار در نوسانات شبکه |
-| **تعداد خطاهای شبکه و HTTP 429 (Rate Limit)** | **۰ مورد (Zero Errors)** | ۰ مورد | ✅ **انطباق کامل با سقف ترافیک والکس** |
-| **سفارشات حقیقی ارسال‌شده به والکس** | **۰ سفارش (Zero Orders)** | ۰ سفارش | ✅ **قفل ایمنی ۱۰۰٪ فعال** |
+| **Average API call delay (Mean Latency)** | **291.2 milliseconds** | Less than 1,000 milliseconds ✅ **very fast and stable** |
+| ** API 95th percentile delay (P95 Latency)** | **438.2 milliseconds** | Less than 2,000 milliseconds ✅ **excellent** |
+| **The lowest recorded delay (Min Latency)** | **231.4 milliseconds** | - | ✅ Optimum
+| **Maximum recorded delay (Max Latency)** | **796.9 milliseconds** | Less than 3,000 milliseconds ✅ Stable in network fluctuations
+| **The number of network errors and HTTP 429 (Rate Limit)** | **0 items (Zero Errors)** | 0 items ✅ **Complete compliance with Valax traffic ceiling** |
+| **Real orders sent to Wallex** | **0 orders (Zero Orders)** | 0 orders ✅ **100% active safety lock** |
 
 ---
 
-## ۳. تحلیل ریزساختار و توزیع اسپرد لحظه‌ای در نمادهای مجاز
+## 3. Analysis of the microstructure and distribution of momentary spread in permitted symbols
 
 ```mermaid
 bar
-    title اسپرد لحظه‌ای در دفتر سفارشات والکس (درصد)
-    x-axis نمادهای بازار
-    y-axis "اسپرد (درصد)"
+    title Instant spread in the Wallex order book (percentage)
+    x-axis Market symbols
+    y-axis "spread (percentage)"
     "USDTTMN" : 0.0009
     "BTCTMN" : 0.0080
     "PEPETMN" : 0.0580
@@ -44,27 +44,27 @@ bar
     "PUMPTMN" : 0.4382
 ```
 
-### مشاهدات تجربی دفتر سفارشات:
-1. **عمق فوق‌العاده در نمادهای بیت‌کوین و تتر:**
-   - اسپرد در `USDTTMN` برابر با **۰.۰۰۰۹٪** و در `BTCTMN` برابر با **۰.۰۰۸۰٪** بود. این امر تایید می‌کند که اسلیپیج در این دو نماد عملاً نزدیک به صفر است و بالاترین کارایی نقدینگی را ارائه می‌دهند.
-2. **عملکرد گیت مهار اسپرد در نماد `PUMPTMN`:**
-   - اسپرد در نماد `PUMPTMN` در طول چرخه پایش به **۰.۴۳۸۲٪** رسید (فراتر از سقف مجاز ۰.۳۵٪).
-   - موتور استراتژی و موتور ریسک با موفقیت این نماد را مسدود کردند:
+### Experimental observations of the orders office:
+1. **Extraordinary depth in Bitcoin and Tether symbols:**
+   - The spread in ``USDTTMN'' was equal to **0.0009%** and in ``BTCTMN'' was equal to **0.0080%**. This confirms that the slippage in these two symbols is practically close to zero and they offer the highest liquidity efficiency.
+2. **The operation of the spread containment gate in the ``PUMPTMN'' symbol:**
+   - The spread in the symbol ``PUMPTMN'' reached **0.4382%** during its monitoring cycle (beyond the permissible limit of 0.35%).
+   - Strategy Engine and Risk Engine have successfully blocked this icon:
      `[INFO] Spread too wide (0.387% > 0.350%) for PUMPTMN. No signal generated.`
-   - این مشاهده اثبات کرد که گیت‌های ایمنی در برابر بازارهای کم‌عمق کاملاً هوشیار هستند.
+   - This observation proved that safety gates are very alert against shallow markets.
 
 ---
 
-## ۴. ثبت ردپای حسابرسی و وقایع (Decision Audit Trail)
+## 4. Recording the audit trail and events (Decision Audit Trail)
 
-کلیه ارزیابی‌های رژیم هوش مصنوعی، قیمت‌های ورودی و وضعیت نقدینگی پورتفولیو در فایل [`logs/shadow_forward_phase13.jsonl`](file:///root/starcoach-hack/wallex/logs/shadow_forward_phase13.jsonl) با ساختار استاندارد JSONL ذخیره شده است. هر رکورد شامل اطلاعات زیر است:
-- برچسب زمانی دقیق UTC بر اساس استاندارد ISO-8601.
-- قیمت‌های Best Bid و Best Ask و اسپرد محاسبه‌شده.
-- مقادیر ویژگی‌های استخراج‌شده ($RSI$, $ATR\%$, نسبت حجم).
-- وضعیت پورتفولیو (نقدینگی ۵ میلیون تومان، مواجهه رمزارزی ۰ تومان).
+All AI regime evaluations, input prices and portfolio liquidity status are stored in the file [`logs/shadow_forward_phase13.jsonl`](file:///root/starcoach-hack/wallex/logs/shadow_forward_phase13.jsonl) with standard JSONL structure. Each record contains the following information:
+- Precise UTC timestamp based on ISO-8601 standard.
+- Best Bid and Best Ask prices and calculated spread.
+- Values ​​of extracted features ($RSI$, $ATR\%$, volume ratio).
+- Portfolio status (liquidity 5 million Tomans, cryptocurrency exposure 0 Tomans).
 
 ---
 
-## ۵. نتیجه‌گیری آزمون در سایه
+## 5. The conclusion of the test in the shadow
 
-آزمون تست در سایه اثبات می‌کند که سیستم نرم‌افزاری از نظر تعامل با سرورهای والکس، تاب‌آوری شبکه، مدیریت خطاها و فیلترهای ریزساختاری، **کاملاً آماده استقرار عملیاتی در محیط مسابقه** است. با این حال، همان‌طور که در الزامات ممیزی تصریح شده، یک آزمون در سایه کوتاه‌مدت صرفاً سلامت فنی پایپ‌لاین را اثبات می‌کند و تضمین‌کننده سودآوری آینده نیست.
+The shadow test proves that the software system is **completely ready for operational deployment in the competition environment** in terms of interaction with Wallex servers, network resilience, error management and microstructural filters. However, as stipulated in the audit requirements, a short-term shadow test merely proves the technical soundness of the pipeline and does not guarantee future profitability.

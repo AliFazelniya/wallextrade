@@ -1,110 +1,110 @@
-# ممیزی تطبیق سود و زیان (P&L)، هزینه‌های اجرا و اثبات ریاضی ساختار حسابداری
+# Audit of profit and loss reconciliation (P&L), implementation costs and mathematical proof of accounting structure
 # Phase 20 P&L and Execution-Cost Reconciliation Report
 
-> **تاریخ گزارش:** ۲۲ اکتبر ۲۰۲۶ (۱ آبان ۱۴۰۵)  
-> **نسخه نرم‌افزار:** `v0.11.0-phase19-audited`  
-> **ماژول‌های مورد ممیزی:**  
-> - [`src/portfolio/accounting.py`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py) (موتور حسابداری و پورتفولیو)  
-> - [`src/backtest/engine.py`](file:///root/starcoach-hack/wallex/src/backtest/engine.py) (موتور شبیه‌سازی تاریخی)  
-> - [`tests/test_portfolio.py`](file:///root/starcoach-hack/wallex/tests/test_portfolio.py) (سوئیت آزمون‌های رگرسیون حسابداری)
+> **Report date:** October 22, 2026 (November 1, 1405)  
+> **Software version:** `v0.11.0-phase19-audited`  
+> **Modules to be audited:**  
+> - [`src/portfolio/accounting.py`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py) (Accounting and Portfolio Engine)  
+> - [`src/backtest/engine.py`](file:///root/starcoach-hack/wallex/src/backtest/engine.py) (historical simulation engine)  
+> - [`tests/test_portfolio.py`](file:///root/starcoach-hack/wallex/tests/test_portfolio.py) (Accounting regression test suite)
 
 ---
 
-## ۱. هدف ممیزی حسابداری فاز ۲۰
+## 1. Objective of accounting audit phase 20
 
-این ممیزی به بررسی روابط ریاضی میان **سود/زیان ناخالص معاملاتی (Gross Trading P&L)**، **اسلیپیج قیمت اجرا (Execution Slippage)**، **کارمزدهای صرافی (Exchange Fees)**، **سود/زیان خالص (Net P&L)** و **بازده کل سرمایه (Return on Capital)** می‌پردازد تا اثبات نماید که اسلیپیج در قیمت‌های اجرا تعبیه شده و هرگز دچار دوباره‌شماری یا حذف پنهان نگردیده است.
+This audit examines the mathematical relationships between **Gross Trading P&L**, **Execution Slippage**, **Exchange Fees**, **Net P&L** and **Return on Capital** to prove that slippage is embedded in execution prices and has never been recalculated or hidden.
 
 ---
 
-## ۲. اثبات ریاضی ساختار حسابداری پورتفولیو
+## 2. Mathematical proof of portfolio accounting structure
 
-### ۲.۱. جریان سفارش خرید (Entry Fill):
-- قیمت اجرای خرید با اسلیپیج تهاجمی:
+### 2.1. Purchase order flow (Entry Fill):
+- The price of buying with aggressive slippage:
   $$P_{exec, buy} = P_{target, buy} \times (1 + \frac{s}{100}) = P_{target, buy} \times 1.0015$$
-- ارزش اسمی خرید: $\text{Notional}_{buy} = Q \times P_{exec, buy}$
-- کارمزد تیکر ورود (۰.۳۰٪): $\text{Fee}_{buy} = \text{Notional}_{buy} \times 0.0030$
-- وجه کسرشده از نقدینگی حساب:
+- Nominal purchase value: $\text{Notional}_{buy} = Q \times P_{exec, buy}$
+- Entry ticker fee (0.30%): $\text{Fee}_{buy} = \text{Notional}_{buy} \times 0.0030$
+- Money deducted from account liquidity:
   $$\text{Cash Deducted} = \text{Notional}_{buy} + \text{Fee}_{buy}$$
-- بهای تمام‌شده پوزیشن (`cost_basis`):
+- The finished price of the position (`cost_basis`):
   $$\text{Cost Basis} = \text{Notional}_{buy} = Q \times P_{exec, buy}$$
 
-### ۲.۲. جریان سفارش فروش (Exit Fill):
-- **حالت الف: حد سود (Take Profit - پسیو لیمیت):**  
-  سفارش در مظنه می‌نشیند $\implies$ بدون اسلیپیج ($P_{exec, sell} = P_{target, sell}$) با کارمزد مِیکر ۰.۲۵٪.
-- **حالت ب: حد ضرر یا تسویه اضطراری (Stop Loss / Liquidation - تهاجمی):**  
-  سفارش با نفوذ در صف خرید پر می‌شود:
+### 2.2. Sales order flow (Exit Fill):
+- **Mode A: Take Profit - Passive Limit:**  
+  The order sits at the quote $\implies$ without slippage ($P_{exec, sell} = P_{target, sell}$) with a maker fee of 0.25%.
+- **Mode B: Loss limit or emergency settlement (Stop Loss / Liquidation - Aggressive):**  
+  The order is filled by infiltrating the shopping queue:
   $$P_{exec, sell} = P_{target, sell} \times (1 - \frac{s}{100}) = P_{target, sell} \times 0.9985$$
-  کارمزد تیکر خروج (۰.۳۰٪): $\text{Fee}_{sell} = \text{Notional}_{sell} \times 0.0030$
-- وجه حاصل از فروش واریزی به نقدینگی:
+  Exit ticker fee (0.30%): $\text{Fee}_{sell} = \text{Notional}_{sell} \times 0.0030$
+- Proceeds from the sale of cash deposit:
   $$\text{Net Proceeds} = \text{Notional}_{sell} - \text{Fee}_{sell}$$
 
-### ۲.۳. رابطه قطعی سود ناخالص و اسلیپیج:
-در متد [`record_fill`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py#L151):
+### 2.3. The definitive relationship between gross profit and slippage:
+In the method [`record_fill`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py#L151):
 $$\text{Gross Realized P\&L} = \text{Notional}_{sell} - \text{Cost Basis} = Q \times (P_{exec, sell} - P_{exec, buy})$$
 
 > [!IMPORTANT]
-> **اثبات تعبیه اسلیپیج در سود ناخالص:**  
-> اگر معامله بدون اسلیپیج اجرا می‌شد، سود ناخالص ایده‌آل برابر بود با:
+> **Proof of embedding slippage in gross profit:**  
+> If the trade was executed without slippage, the ideal gross profit would be:
 > $$\text{Gross P\&L}_{\text{ideal}} = Q \times (P_{target, sell} - P_{target, buy})$$
-> هزینه ریالی اسلیپیج ورود و خروج عبارت است از:
+> The Riyal slippage fee for entry and exit is:
 > $$\text{Slippage Cost} = Q \times (P_{exec, buy} - P_{target, buy}) + Q \times (P_{target, sell} - P_{exec, sell})$$
-> بنابراین، سود ناخالص واقعی سیستم دقیقاً برابر است با:
+> Therefore, the actual gross profit of the system is exactly equal to:
 > $$\text{Gross Realized P\&L} = \text{Gross P\&L}_{\text{ideal}} - \text{Slippage Cost}$$
-> **نتیجه قطعی:** هزینه اسلیپیج **قبلاً در سود ناخالص کسر شده است**!
+> **Definite result:** Slippage cost is **already deducted in gross profit**!
 
-### ۲.۴. رابطه سود خالص، کارمزد و ارزش نهایی پورتفولیو:
+### 2.4. The relationship between net profit, fee and final portfolio value:
 $$\text{Net Realized P\&L} = \text{Gross Realized P\&L} - \text{Total Exchange Fees}$$
 $$\text{Ending Equity} - \text{Initial Capital} = \text{Net Realized P\&L}$$
-- **چرا اسلیپیج دوبار کسر نمی‌شود؟**  
-  چنانچه کسی علاوه بر سود ناخالص، اسلیپیج را مجدداً از سود تفریق کند، مرتکب دوباره‌شماری شده است.
-- **چرا اسلیپیج حذف نشده است؟**  
-  چنانچه سود ناخالص بر اساس $P_{target}$ محاسبه می‌شد و اسلیپیج کسر نمی‌گردید، هزینه حذف شده بود. در سیستم ما سود ناخالص بر مبنای $P_{exec}$ است؛ لذا اسلیپیج دقیقاً یک‌بار و به صورت واقعی لحاظ شده است.
+- **Why is the slippage not deducted twice?**  
+  If someone, in addition to the gross profit, again subtracts the slippage from the profit, he has committed recalculation.
+- **Why is the slippage not removed?**  
+  If the gross profit was calculated based on $P_{target}$ and the slippage was not deducted, the cost was eliminated. In our system, the gross profit is based on $P_{exec}$; Therefore, the slippage is included exactly once and in a real way.
 
 ---
 
-## ۳. جدول ممیزی تطبیق P&L در تمامی سقف‌های اسپرد (AI در برابر No-AI)
+## 3. P&L reconciliation audit table in all spread caps (AI vs. No-AI)
 
-داده‌های زیر حاصل شبیه‌سازی ۸،۶۳۶ کندل ۹۰ روزه جفت‌ارز `BTCTMN` سرمایه ۵،۰۰۰،۰۰۰ تومان هستند:
+The following data are the results of the simulation of 8,636 90-day candles of the ``BTCTMN'' currency pair with a capital of 5,000,000 Tomans:
 
-| ردیف | سناریوی استراتژی | سقف اسپرد | معاملات | سود ناخالص قبل کارمزد (تومان) | هزینه اسلیپیج مستتر (تومان) | کارمزدهای صرافی (تومان) | سود خالص نهایی (تومان) | بازدهی نهایی روی سرمایه (%) | اثبات تراز حسابداری ($\text{Gross} - \text{Fees} = \text{Net}$) |
+| row | Strategy scenario Spread ceiling Transactions Gross profit before fees (tomans) | hidden slippage cost (tomans) | Exchange fees (tomans) | Final net profit (tomans) | Final return on capital (%) | Proof of accounting balance ($\text{Gross} - \text{Fees} = \text{Net}$) |
 |---|---|---|---|---|---|---|---|---|---|
-| **۱** | استراتژی هوش مصنوعی | **۰.۱۵٪** | ۱۸ | +۸۵،۹۰۸ | ۲۰،۱۰۸ | ۵۱،۹۲۱ | **+۳۳،۹۸۷** | **+۰.۶۸٪** | $85,908 - 51,921 = 33,987$ ✅ |
-| **۲** | استراتژی هوش مصنوعی | **۰.۱۸٪** | ۲۲ | +۹۲،۹۴۴ | ۲۴،۵۵۹ | ۶۳،۴۲۳ | **+۲۹،۵۲۱** | **+۰.۵۹٪** | $92,944 - 63,423 = 29,521$ ✅ |
-| **۳** | **استراتژی هوش مصنوعی (منجمد)** | **۰.۲۰٪** | **۲۲** | **+۹۴،۹۸۴** | **۲۴،۵۶۲** | **۶۳،۴۲۹** | **+۳۱،۵۵۵** | **+۰.۶۳٪** | $94,984 - 63,429 = 31,555$ ✅ |
-| **۴** | استراتژی هوش مصنوعی | **۰.۲۵٪** | ۲۲ | +۹۴،۹۸۴ | ۲۴،۵۶۲ | ۶۳،۴۲۹ | **+۳۱،۵۵۵** | **+۰.۶۳٪** | $94,984 - 63,429 = 31,555$ ✅ |
-| **۵** | استراتژی هوش مصنوعی | **۰.۳۵٪** | ۲۴ | +۱۰۰،۰۲۲ | ۲۶،۷۹۱ | ۶۹،۱۸۵ | **+۳۰،۸۳۷** | **+۰.۶۲٪** | $100,022 - 69,185 = 30,837$ ✅ |
-| **۶** | دتر مینیستیک بدون هوش مصنوعی | **۰.۱۵٪** | ۳۴ | +۱۳۷،۸۹۷ | ۳۷،۹۵۰ | ۹۸،۰۰۱ | **+۳۹،۸۹۶** | **+۰.۸۰٪** | $137,897 - 98,001 = 39,896$ ✅ |
-| **۷** | دتر مینیستیک بدون هوش مصنوعی | **۰.۱۸٪** | ۳۵ | +۱۲۴،۱۳۱ | ۳۹،۴۳۹ | ۱۰۰،۹۶۳ | **+۲۳،۱۶۸** | **+۰.۴۶٪** | $124,131 - 100,963 = 23,168$ ✅ |
-| **۸** | **دتر مینیستیک بدون هوش مصنوعی** | **۰.۲۰٪** | **۳۶** | **+۱۱۲،۰۷۸** | **۴۰،۹۱۶** | **۱۰۳،۹۲۶** | **+۸،۱۵۲** | **+۰.۱۶٪** | $112,078 - 103,926 = 8,152$ ✅ |
-| **۹** | دتر مینیستیک بدون هوش مصنوعی | **۰.۲۵٪** | ۳۷ | +۱۰۰،۷۵۶ | ۴۲،۳۹۹ | ۱۰۶،۸۹۲ | **-۶،۱۳۶** | **-۰.۱۲٪** | $100,756 - 106,892 = -6,136$ ✅ |
-| **۱۰**| دتر مینیستیک بدون هوش مصنوعی | **۰.۳۵٪** | ۳۹ | +۱۰۵،۷۹۸ | ۴۴،۶۲۸ | ۱۱۲،۶۴۷ | **-۶،۸۴۹** | **-۰.۱۴٪** | $105,798 - 112,647 = -6,849$ ✅ |
+| **1** Artificial intelligence strategy **0.15%** | 18 | +85,908 | 20,108 | 51,921 | **+33,987** | **+0.68%** | $85,908 - 51,921 = $33,987 ✅ |
+| **2** Artificial intelligence strategy **0.18%** | 22 | +92,944 | 24,559 | 63,423 | **+29,521** | **+0.59%** | $92,944 - 63,423 = $29,521 ✅ |
+| **3** **Artificial Intelligence Strategy (Frozen)** | **0.20%** | **22** **+94,984** | **24,562** | **63,429** | **+31,555** | **+0.63%** | $94,984 - 63,429 = $31,555 ✅ |
+| **4** Artificial intelligence strategy **0.25%** | 22 | +94,984 | 24,562 | 63,429 | **+31,555** | **+0.63%** | $94,984 - 63,429 = $31,555 ✅ |
+| **5** Artificial intelligence strategy **0.35%** | 24 | +100,022 | 26,791 | 69,185 | **+30,837** | **+0.62%** | $100,022 - 69,185 = $30,837 ✅ |
+| **6** Deter ministic without artificial intelligence **0.15%** | 34 | +137,897 | 37,950 | 98,001 | **+39,896** | **+0.80%** | $137,897 - 98,001 = $39,896 ✅ |
+| **7** | Deter ministic without artificial intelligence **0.18%** | 35 | +124,131 | 39,439 | 100,963 | **+23,168** | **+0.46%** | $124,131 - 100,963 = $23,168 |
+| **8** | **deter ministic without artificial intelligence** | **0.20%** | **36** **+112,078** | **40,916** | **103,926** | **+8,152** | **+0.16%** | $112,078 - 103,926 = $8,152 ✅ |
+| **9** Deter ministic without artificial intelligence **0.25%** | 37 | +100,756 | 42,399 | 106,892 | **-6,136** | **-0.12%** | $100,756 - 106,892 = -$6,136 ✅ |
+| **10**| Deter ministic without artificial intelligence **0.35%** | 39 | +105,798 | 44,628 | 112,647 | **-6,849** | **-0.14%** | $105,798 - 112,647 = -$6,849 ✅ |
 
 ---
 
-## ۴. ریشه‌یابی برتری هوش مصنوعی: تعداد معاملات، کارمزدها یا کیفیت سود؟ (Task 3)
+## 4. Rooting for AI superiority: number of trades, fees or quality of profits? (Task 3)
 
-مقایسه ردیف ۳ (هوش مصنوعی در سقف ۰.۲۰٪) با ردیف ۸ (دتر مینیستیک در سقف ۰.۲۰٪) علل برتری استراتژی AI را به طور آماری اثبات می‌کند:
+The comparison of row 3 (artificial intelligence at the ceiling of 0.20%) with row 8 (deter ministic at the ceiling of 0.20%) statistically proves the reasons for the superiority of the AI ​​strategy:
 
 ```mermaid
 flowchart TD
-    A["مزیت اقتصادی هوش مصنوعی\nاختلاف سود: +23,403 تومان (+0.47%)"] --> B["۱. کاهش تعداد معاملات (ترید کمتر)\nکاهش از ۳۶ معامله به ۲۲ معامله (-۳۹٪)"]
-    A --> C["۲. صرفه‌جویی شدید در کارمزد و اسلیپیج\nصرفه‌جویی کارمزد: ۴۰،۴۹۷ تومان\nکاهش اسلیپیج: ۱۶،۳۵۴ تومان"]
-    A --> D["۳. بهبود برآیند معاملات (کیفیت سیگنال)\nحذف ۸ معامله بازنده در فازهای رنج (CALM_RANGE)"]
+    A["The economic advantage of artificial intelligence\nProfit difference: +23,403 Tomans (+0.47%)"] --> B["1. Reducing the number of transactions (fewer trades)\nDecrease from 36 transactions to 22 transactions (-39%)"]
+    A --> C["2. Great savings on fees and slippage\nFee savings: 40,497 Tomans\nSlippage reduction: 16,354 Tomans"]
+    A --> D["3. Improving trading results (signal quality)\nRemoving 8 losing trades in range phases (CALM_RANGE)"]
 ```
 
-1. **معاملات کمتر و کارمزد کمتر:**  
-   ایجنت هوش مصنوعی تعداد معاملات را از ۳۶ به ۲۲ کاهش داد (۳۹٪ معامله کمتر). این امر باعث شد کارمزد پرداختی از ۱۰۳،۹۲۶ تومان به ۶۳،۴۲۹ تومان افت کند (**۴۰،۴۹۷ تومان صرفه‌جویی خالص در کارمزد**).
-2. **صرفه‌جویی در اسلیپیج:**  
-   کاهش معاملات غیرضروری، هزینه اسلیپیج را از ۴۰،۹۱۶ تومان به ۲۴،۵۶۲ تومان کاهش داد (**۱۶،۳۵۴ تومان صرفه‌جویی در اسلیپیج**).
-3. **فیلتر بازارهای فرسایشی:**  
-   هوش مصنوعی با شناسایی وضعیت `CALM_RANGE`، ۸ معامله زیان‌ده متوالی در بازارهای خنثی را وتو کرد و نرخ برد را ارتقا بخشید.
-4. **نتیجه‌گیری:** برتری هوش مصنوعی ناشی از یک عامل منفرد نیست، بلکه نتیجه **هم‌افزایی کاهش فرسایش کارمزد (Friction Reduction) و حذف معاملات حد ضرر در بازار رنج** است.
+1. ** Fewer transactions and lower fees:**  
+   The AI agent reduced the number of trades from 36 to 22 (39% fewer trades). This caused the fee paid to drop from 103,926 Tomans to 63,429 Tomans (**40,497 Tomans net savings in fees**).
+2. **Saving in slippage:**  
+   Reducing unnecessary transactions reduced the cost of slippage from 40,916 tomans to 24,562 tomans (**16,354 tomans saved in slippage**).
+3. **Filter of erosive markets:**  
+   Detecting the ``CALM_RANGE'' condition, the AI vetoed 8 consecutive losing trades in neutral markets and improved the win rate.
+4. **Conclusion:** The superiority of artificial intelligence is not caused by a single factor, but it is the result of **synergy of fee erosion reduction (Friction Reduction) and elimination of loss limit transactions in the pain market**.
 
 ---
 
-## ۵. آزمون‌های رگرسیون خودکار حسابداری (Regression Tests)
+## 5. Automatic accounting regression tests (Regression Tests)
 
-تست واحد [`test_accounting_slippage_and_fee_reconciliation_identity`](file:///root/starcoach-hack/wallex/tests/test_portfolio.py#L62) به عنوان گارد اعتبارسنجی در مخزن تثبیت شد تا تضمین کند:
-- اسلیپیج منحصراً در بهای تمام‌شده و سود ناخالص می‌نشیند.
-- سود خالص همواره برابر با تفاضل سود ناخالص و مجموع کارمزدها است.
-- تراز پایان دوره پورتفولیو بدون حتی ۱ ریال خطا با حقوق صاحبان سهام تطبیق دارد.
+The unit test [`test_accounting_slippage_and_fee_reconciliation_identity`](file:///root/starcoach-hack/wallex/tests/test_portfolio.py#L62) was fixed as a validation guard in the repository to ensure:
+- Slippage sits exclusively on cost price and gross profit.
+- Net profit is always equal to the difference between gross profit and total fees.
+- The balance at the end of the portfolio period matches the equity without even 1 rial of error.

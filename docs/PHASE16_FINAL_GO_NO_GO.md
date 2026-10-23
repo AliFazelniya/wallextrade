@@ -1,140 +1,140 @@
-# بیانیه نهایی گیت تصمیم‌گیری و ممیزی رفع موانع مسابقه (فاز ۱۶)
+# The final statement of the decision-making gate and the audit of removing competition obstacles (phase 16)
 ### Phase 16 Final Go/No-Go Decision Gate & Competition Blocker Resolution Audit
-**مخزن:** [`wallex`](file:///root/starcoach-hack/wallex) | **تاریخ ممیزی:** ۲۲ اکتبر ۲۰۲۶ | **تگ پایه ورودی:** `v0.7.0-phase15-rehearsed` (`1a90cdf`) | **تگ نهایی فاز ۱۶:** `v0.8.0-phase16-audited` (`7485677`) | **وضعیت تست‌ها:** ۵۹ از ۵۹ تست موفق (پوشش کد ۸۰٪)
+**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Audit date:** October 22, 2026 **Input base tag:** `v0.7.0-phase15-rehearsed` (`1a90cdf`) | **Final tag of phase 16:** `v0.8.0-phase16-audited` (`7485677`) | **Status of tests:** 59 out of 59 successful tests (80% code coverage)
 
 ---
 
-## ۱. بیانیه رسمی گیت تصمیم‌گیری (Official Go/No-Go Decision)
+## 1. Official Go/No-Go Decision statement
 
-تیم مشترک مهندسی کمّی، معماری سیستم و مدیریت ریسک، پس از ممیزی کامل کدهای اجرایی، بازتولید مستقل آزمون‌ها، اعتبارسنجی پایپ‌لاین افزایشی داده‌ها و بررسی شواهد مستند موانع مسابقه، خروجی قطعی گیت تصمیم‌گیری را رسماً اعلام می‌دارد:
+The joint team of quantitative engineering, system architecture and risk management, after a thorough audit of the execution code, independent reproduction of the tests, validation of the incremental data pipeline and review of the documented evidence of the race barriers, officially announces the final output of the decision gate:
 
 > [!IMPORTANT]
-> ### نتیجه قطعی تصمیم‌گیری:
+> ### The final result of the decision:
 > ## **TECHNICAL GO, COMPETITION BLOCKED**
-> ### (تایید فنی کامل نرم‌افزار؛ مسابقه مسدود به دلیل عدم حل موانع سازمانی)
+> ### (complete technical approval of the software; the competition is blocked due to the lack of resolution of organizational obstacles)
 >
-> **شرح تصمیم:**
-> 1. **بخش فنی (Technical GO):** تمامی ماژول‌های مهندسی، اعتبارسنجی داده‌ها، استخراج فیچرها، موتور هوش مصنوعی، فیلترهای ریسک، حسابداری، تست‌های تاب‌آوری عملیاتی و مانور در سایه بر روی داده‌های زنده صرافی والکس با **۵۹ تست موفق (۱۰۰٪ پاس) و ۸۰٪ پوشش کد** مورد تایید قطعی قرار گرفتند.
-> 2. **بخش مسابقه (Competition BLOCKED):** به دلیل فقدان تاریخ تقویمی شروع و پایان در بریف، عدم صدور کلیدهای دسترسی اختصاصی حساب مسابقه از سوی والکس، و عدم تایید کتبی معافیت از کارمزدهای شبانه تمدید اعتبار، **سیستم به هیچ وجه اجازه اتصال زنده ندارد و پرچم `live_execution_authorized = False` تا زمان اقدام رسمی برگزارکننده به صورت قفل سخت‌افزاری حفظ می‌گردد.**
+> **decision description:**
+> 1. **Technical GO:** All engineering modules, data validation, feature extraction, artificial intelligence engine, risk filters, accounting, operational resilience tests and maneuvering in the shadow on the live data of Wallex exchange were definitely approved with **59 successful tests (100% pass) and 80% code coverage**.
+> 2. **Competition BLOCKED:** Due to the lack of start and end calendar dates in the brief, the non-issue of exclusive access keys for the competition account by Wallex, and the lack of written confirmation of exemption from overnight fees for credit renewal, **the system is not allowed to connect live in any way, and the flag ``live_execution_authorized = False'' will be kept as a hardware lock until the official action of the organizer.**
 
 ---
 
-## ۲. دفتر ثبت مستند موانع مسابقه (Evidence-Backed Blocker Register)
+## 2. Evidence-Backed Blocker Register
 
-مطابق الزامات ایمنی فاز ۱۶، هیچ مانعی بدون ارائه شواهد مستند و عینی «حل‌شده» تلقی نمی‌شود. جدول زیر وضعیت دقیق هر یک از ۵ مانع کلیدی را نشان می‌دهد:
+According to the safety requirements of Phase 16, no obstacle is considered "resolved" without the provision of documented and objective evidence. The table below shows the exact status of each of the 5 key barriers:
 
-| شناسه مانع | شرح مانع | مالک اقدام (Owner) | آخرین زمان بررسی | وضعیت قطعی | شواهد عینی و مستندات | اقدام بعدی لازم |
+| Obstacle ID Description of the obstacle Action owner (Owner) | Last check time Definite situation Objective evidence and documentation Necessary next action
 |---|---|---|---|---|---|---|
-| **B-01** | **تاریخ و ساعت دقیق تقویمی شروع مسابقه** | برگزارکنندگان مسابقه (استارکوچ × والکس) | ۲۲ اکتبر ۲۰۲۶ - ساعت ۱۵:۳۰ | 🔴 **مسدود (BLOCKED)** | در متن بریف تنها عبارت عمومی «سه روز» ذکر شده و هیچ تاریخ ISO 8601 یا ساعت و دقیقه رسمی اعلام نشده است. | اعلام کتبی تاریخ، ساعت و دقیقه دقیق آغاز پنجره معاملات توسط برگزارکننده. |
-| **B-02** | **زمان قطعی پایان معاملات و ددلاین ارسال** | برگزارکنندگان مسابقه (استارکوچ × والکس) | ۲۲ اکتبر ۲۰۲۶ - ساعت ۱۵:۳۰ | 🔴 **مسدود (BLOCKED)** | ددلاین دقیق آپلود ویدیوی دمو، ثبت کامیت نهایی مخزن گیت‌هاب و موعد تسویه اجباری به تومان در اسناد تصریح نشده است. | اعلام رسمی ددلاین‌های ارسال مستندات و ساعت توقف قطعی الگوریتم. |
-| **B-03** | **صدور مشخصات و دسترسی حساب اختصاصی مسابقه** | پشتیبانی فنی و مالی صرافی والکس | ۲۲ اکتبر ۲۰۲۶ - ساعت ۱۵:۳۰ | 🔴 **مسدود (BLOCKED)** | هیچ‌گونه حساب ۵ میلیون تومانی ویژه مسابقه، شناسه کاربری یا کلید API اختصاصی به محیط تحویل نشده است. دسترسی به داده‌های عمومی بازار به معنای داشتن دسترسی حساب خصوصی نیست. | والکس باید کلیدهای `x-api-key` حساب اعتباری ویژه مسابقه را صادر و تحویل نماید. |
-| **B-04** | **ارتباط و احراز هویت با اندپوینت‌های خصوصی API** | تیم مهندسی و والکس | ۲۲ اکتبر ۲۰۲۶ - ساعت ۱۵:۳۰ | 🔴 **مسدود (BLOCKED)** | به دلیل عدم تحویل کلیدهای B-03، تست فقط-خواندنی (Read-Only) متدهای احراز هویت، تراز موجودی و استعلام سفارشات خصوصی ممکن نیست (کد خطای ۴۰۱). | اجرای اسکریپت تست فقط-خواندنی اتصال پس از تحویل کلیدهای B-03 (بدون ارسال سفارش). |
-| **B-05** | **شفاف‌سازی کارمزدهای شبانه اعتبار و تسویه مالی** | واحد مالی والکس / داوران مسابقه | ۲۲ اکتبر ۲۰۲۶ - ساعت ۱۵:۳۰ | 🟡 **مسدود (BLOCKED)** | حساب‌های اعتباری عادی والکس مشمول کارمزد شبانه تمدید اعتبار و بازپرداخت تعهدات هستند. هرچند در تبلیغات به عدم تعهد تیم‌ها برای زیان اشاره شده، تاییدیه کتبی معافیت از کارمزد تمدید موجود نیست. | اخذ تاییدیه کتبی از برگزارکننده مبنی بر صفر بودن یا معافیت کامل از هرگونه Rollover Fee در طول مسابقه. |
+| **B-01** | **Exact calendar date and time of the start of the competition** | Organizers of the match (Starkuch × Valks) | October 22, 2026 - 15:30 | 🔴 **BLOCKED** | In the text of the brief, only the general phrase "three days" is mentioned, and no official ISO 8601 date or hour and minute is announced. | Written notification of the exact date, hour and minute of the start of the trading window by the organizer. |
+| **B-02** | **Definite time of end of transactions and delivery deadline** | Organizers of the match (Starkuch × Valks) | October 22, 2026 - 15:30 | 🔴 **BLOCKED** | The exact deadline for uploading the demo video, registering the final commit of the GitHub repository, and the deadline for the mandatory payment to Tomans are not specified in the documents. | The official announcement of the deadlines for sending documents and the algorithm's definitive stop time. |
+| **B-03** | ** Issuance of details and access to the exclusive account of the competition** | Technical and financial support of Wallex exchange October 22, 2026 - 15:30 | 🔴 **BLOCKED** | No account of 5 million tomans special for the competition, user ID or API key has been delivered to the environment. Access to public market data does not mean private account access. | Wallex must issue and deliver the ``x-api-key'' keys of the special credit account for the competition. |
+| **B-04** | **Communication and authentication with private API endpoints** | Engineering team and Wallex October 22, 2026 - 15:30 | 🔴 **BLOCKED** | Due to non-delivery of B-03 keys, read-only testing of authentication methods, inventory balance and private order inquiry is not possible (error code 401). | Run the connection read-only test script after delivering the B-03 keys (without sending the order). |
+| **B-05** | **Clarification of overnight credit and financial settlement fees** | Financial unit Wallex / competition referees October 22, 2026 - 15:30 | 🟡 **BLOCKED** | Wallex regular credit accounts are subject to a nightly fee for extending credit and repaying obligations. Although the advertisement mentions that the teams are not liable for losses, there is no written confirmation of the exemption from the renewal fee. | Obtaining written confirmation from the organizer that there is zero or complete exemption from any Rollover Fee during the competition. |
 
 ---
 
-## ۳. تطبیق و راستی‌آزمایی پارامترهای استراتژی منجمد (Frozen Strategy Audit)
+## 3. Adaptation and verification of frozen strategy parameters (Frozen Strategy Audit)
 
-تک‌تک پارامترهای مصوب در سورس‌کد و مانیفست رسمی مورد بازرسی خط‌به‌خط قرار گرفتند:
+Each approved parameter in the source code and official manifest was inspected line by line:
 
-- **فایل مانیفست استراتژی:** [`config/frozen_strategy_manifest_v0.6.0.json`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json)
-- **هش اعتبارسنجی SHA-256:**
+- **Strategy manifest file:** [`config/frozen_strategy_manifest_v0.6.0.json`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json)
+- **SHA-256 validation hash:**
   `249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66`
-- **جدول تطبیق پارامترها در سورس‌کد اجرایی:**
+- **Parameter matching table in executable source code:**
 
-| پارامتر مصوب | مقدار مصوب مانیفست | مقدار پیاده‌سازی‌شده در کد | وضعیت تطبیق | فایل و خط مرجع |
+| Approved parameter | The approved amount of the manifest The value implemented in the code | Matching status File and reference line
 |---|---|---|---|---|
-| **نماد معاملاتی (Symbol)** | `BTCTMN` | `BTCTMN` | ✅ انطباق ۱۰۰٪ | [`manifest`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json#L9) |
-| **تایم‌فریم کندل‌ها (Timeframe)** | ۱۵ دقیقه (`15`) | ۱۵ دقیقه (`15`) | ✅ انطباق ۱۰۰٪ | [`manifest`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json#L10) |
-| **کندل‌های پیش‌گرمایش (Warm-up)** | ۶۰ کندل | ۶۰ کندل | ✅ انطباق ۱۰۰٪ | [`manifest`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json#L11) |
-| **حد سود (Take Profit)** | ۳.۵٪ | ۳.۵٪ (`take_profit_pct=3.5`) | ✅ انطباق ۱۰۰٪ | [`regime_momentum.py`](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py#L28) |
-| **حد ضرر (Stop Loss)** | ۲.۰٪ | ۲.۰٪ (`stop_loss_pct=2.0`) | ✅ انطباق ۱۰۰٪ | [`regime_momentum.py`](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py#L27) |
-| **حداقل ضریب اطمینان (Confidence)** | ۰.۷۰ | ۰.۷۰ (`min_confidence=0.70`) | ✅ انطباق ۱۰۰٪ | [`regime_momentum.py`](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py#L25) |
-| **رفتار پیش‌فرض (Default Action)** | `NO_TRADE` | بازگرداندن `None` در غیاب شرط | ✅ انطباق ۱۰۰٪ | [`regime_momentum.py`](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py#L117) |
-| **سقف هر سفارش (Max Order Size)** | ۵۰۰،۰۰۰ تومان | ۵۰۰،۰۰۰ تومان | ✅ انطباق ۱۰۰٪ | [`engine.py`](file:///root/starcoach-hack/wallex/src/risk/engine.py#L46) |
-| **سقف تعهد پورتفولیو (Max Exposure)** | ۶۰.۰٪ | ۶۰.۰٪ | ✅ انطباق ۱۰۰٪ | [`engine.py`](file:///root/starcoach-hack/wallex/src/risk/engine.py#L47) |
-| **سقف افت سرمایه (Max Drawdown)** | ۵.۰٪ | ۵.۰٪ | ✅ انطباق ۱۰۰٪ | [`engine.py`](file:///root/starcoach-hack/wallex/src/risk/engine.py#L48) |
-| **سقف موقعیت همزمان (Max Positions)** | ۱ موقعیت | ۱ موقعیت | ✅ انطباق ۱۰۰٪ | [`manifest`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json#L26) |
+| **Trading symbol (Symbol)** | ``BTCTMN'' | ``BTCTMN'' | 100% compliance [`manifest`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json#L9) |
+| **Timeframe of candles (Timeframe)** | 15 minutes (`15`) | 15 minutes (`15`) | 100% compliance [`manifest`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json#L10) |
+| **Warm-up candles** | 60 candles 60 candles 100% compliance [`manifest`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json#L11) |
+| **Take Profit** | 3.5% 3.5% (`take_profit_pct=3.5`) | 100% compliance [`regime_momentum.py`](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py#L28) |
+| **Loss Limit (Stop Loss)** | 2.0% 2.0% (`stop_loss_pct=2.0`) | 100% compliance [`regime_momentum.py`](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py#L27) |
+| **Minimum confidence factor** | 0.70 | 0.70 (`min_confidence=0.70`) | 100% compliance [`regime_momentum.py`](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py#L25) |
+| **Default Action** | ``NO_TRADE'' | Return ``None'' in the absence of the condition | 100% compliance [`regime_momentum.py`](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py#L117) |
+| **Ceiling of each order (Max Order Size)** | 500,000 Tomans 500,000 Tomans 100% compliance [`engine.py`](file:///root/starcoach-hack/wallex/src/risk/engine.py#L46) |
+| **Portfolio Commitment Ceiling (Max Exposure)** | 60.0% 60.0% 100% compliance [`engine.py`](file:///root/starcoach-hack/wallex/src/risk/engine.py#L47) |
+| ** Capital loss ceiling (Max Drawdown)** | 5.0% 5.0% 100% compliance [`engine.py`](file:///root/starcoach-hack/wallex/src/risk/engine.py#L48) |
+| **Simultaneous position ceiling (Max Positions)** | 1 position 1 position 100% compliance [`manifest`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json#L26) |
 
 ---
 
-## ۴. تقویت اعتبارسنجی عملیاتی و اثبات تطابق پایپ‌لاین داده‌های افزایشی (Task 4)
+## 4. Strengthen operational validation and prove compliance of incremental data pipeline (Task 4)
 
-### ۴.۱. تحلیل مسئله دانلود مکرر تاریخچه ۵ روزه:
-در تست فاز ۱۵، در هر چرخه کل ۵ روز تاریخچه (~۴۸۰ کندل) مجدداً از والکس دانلود می‌شد که باعث تاخیر شبکه ۱.۵ ثانیه‌ای و ریسک قطعی بیهوده بود.
+### 4.1. Analysis of the problem of repeatedly downloading the 5-day history:
+In the Phase 15 test, a total of 5 days of history (~480 candles) was re-downloaded from Wallex per cycle, causing a 1.5 second network delay and unnecessary outage risk.
 
-### ۴.۲. پیاده‌سازی و اثبات پایپ‌لاین افزایشی ([`fetch_incremental_ohlcv`](file:///root/starcoach-hack/wallex/src/data/fetcher.py)):
-متد دریافت افزایشی پیاده‌سازی شد:
-1. در چرخه اول، تاریخچه لازم لود و کش می‌شود.
-2. در چرخه‌های بعدی، فقط کندل‌های جدید با هم‌پوشانی ۳۰ دقیقه‌ای دریافت و با متد `clean_and_deduplicate_dataframe` ادغام می‌شوند.
+### 4.2. Implementation and proof of incremental pipeline ([`fetch_incremental_ohlcv`](file:///root/starcoach-hack/wallex/src/data/fetcher.py)):
+The incremental receive method was implemented:
+1. In the first cycle, the required history is loaded and cached.
+2. In subsequent cycles, only new candles with a 30-minute overlap are received and merged with the `clean_and_deduplicate_dataframe` method.
 
-**اثبات ریاضی یکپارچگی فیچرها (Feature Invariant Proof):**
-آزمون تجربی مقایسه مقادیر شاخص‌ها بر روی دیتای کامل در برابر دیتای افزایشی کش‌شده نتایج زیر را ثبت کرد:
-- اختلاف قیمت پایانی (`close`): **۰.۰۰۰۰۰۰ تومان**
-- اختلاف میانگین متحرک نمایی (`EMA_20`): **۰.۰۰۰۰۰۰**
-- اختلاف شاخص قدرت نسبی (`RSI_14`): **۰.۰۰۰۰۰۰**
-- **نتیجه:** خروجی فیچرها و تصمیمات استراتژی ۱۰۰٪ همگرا و یکسان با سورس مبنا باقی ماند.
+**Mathematical proof of the integrity of features (Feature Invariant Proof):**
+The experimental test comparing the index values on the complete data against the cached incremental data recorded the following results:
+- Final price difference (`close'): **0.000000 Tomans**
+- Exponential moving average difference (`EMA_20`): **0.000000**
+- Difference of relative strength index (`RSI_14`): **0.000000**
+- **Result:** The output of features and strategy decisions remained 100% convergent and identical to the base source.
 
-### ۴.۳. نتایج مانور عملیاتی ۱۰ چرخه‌ای روی داده‌های زنده والکس:
-- **تعداد چرخه‌ها:** ۱۰ چرخه متوالی روی نماد `BTCTMN`
-- **مدت‌زمان کل:** ۱۹.۵۰ ثانیه
-- **تاخیر چرخه اول (فول دانلود):** ۱،۶۹۴.۵ میلی‌ثانیه
-- **میانگین تاخیر چرخه‌های افزایشی (۲ تا ۱۰):** **۱،۲۳۶ میلی‌ثانیه** (کاهش چشمگیر بار شبکه)
-- **اسپرد واقعی بازار:** **۰.۰۹۰۴٪**
-- **رژیم شناسایی‌شده توسط AI:** وضعیت `CALM_RANGE` با ضریب اطمینان ۷۵٪ و تصمیم `HOLD`
-- **سفارشات صادرشده:** ۰ معامله (استراتژی بدون ترید هیجانی در بازار رنج، ۱۰۰٪ نقدینگی ۵ میلیون تومانی را حفظ نمود).
-
----
-
-## ۵. ممیزی مفروضات کارمزد و هزینه‌های اجرا (Execution-Cost Verification)
-
-سورس‌کد حسابداری پورتفولیو ([`src/portfolio/accounting.py`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py)) و آداپتور اجرا ([`src/exchange/adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py)) به طور کامل ممیزی شدند:
-
-1. **سفارشات ورود (Entry):**
-   - به همراه اسلیپیج نامساعد ۰.۱۵٪ محاسبه می‌شوند (`target_price * 1.0015`).
-   - کارمزد مِیکر ۰.۲۵٪ یا کارمزد تیکر ۰.۳۰٪ از مانده نقد کسر می‌شود.
-2. **سفارشات حد سود (Take Profit Exit):**
-   - به عنوان سفارش لیمیت ثبت شده و کارمزد سفارش‌گذار (Maker) معادل ۰.۲۵٪ به آن تعلق می‌گیرد.
-3. **سفارشات حد ضرر و خروج اضطراری (Stop Loss / Emergency Exit):**
-   - به صورت سفارش بازار با اعمال ۰.۱۵٪ اسلیپیج و کسر کارمزد سفارش‌بردار (Taker) معادل ۰.۳۰٪ نقد می‌شوند.
-4. **سفارشات نیمه‌پرشده (Partial Fills):**
-   - دقیقا به میزان حجم پرشده کارمزد کسر شده و باقیمانده سرمایه بدون تعهد در حساب نقد می‌ماند.
-5. **تسویه اجباری پایان مسابقه (Toman Liquidation):**
-   - متد `liquidate_all_to_toman()` به صورت تضمینی ۱۰۰٪ پورتفولیو را با کارمزد تیکر ۰.۳۰٪ نقد می‌کند.
-6. **ابهام باقیمانده کارمزد:**
-   - جدول پیش‌فرض بر اساس سطح یک والکس (۰.۲۵٪ / ۰.۳۰٪) است. در صورت اعمال تخفیف یا ریبیت ویژه مسابقه توسط برگزارکننده، عملکرد واقعی استراتژی نسبت به این پیش‌فرض محافظه‌کارانه بهتر خواهد بود.
+### 4.3. The results of the 10-cycle operational maneuver on Wallex live data:
+- **Number of cycles:** 10 consecutive cycles on the symbol `BTCTMN'
+- **Total duration:** 19.50 seconds
+- **Delay of the first cycle (full download):** 1,694.5 milliseconds
+- **Average delay of incremental cycles (2 to 10):** **1,236 milliseconds** (significant reduction of network load)
+- **Actual market spread:** **0.0904%**
+- **Mode detected by AI:** `CALM_RANGE' status with 75% confidence factor and `HOLD' decision
+- **Orders issued:** 0 transactions (strategy without emotional trading in range market, maintained 100% liquidity of 5 million tomans).
 
 ---
 
-## ۶. ممیزی اقلام تحویلی و آزمون‌های خودکار (Compliance & Deliverables Audit)
+## 5. Execution-Cost Verification
 
-تمامی اقلام مورد نیاز برای ارزیابی داوران و رقابت نهایی در مخزن تایید و فریز شدند:
+The portfolio accounting source code ([`src/portfolio/accounting.py`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py)) and the implementation adapter ([`src/exchange/adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py)) have been fully audited:
 
-- [x] کدهای پایتون ۳.۱۲ منطبق بر اصول مهندسی تمیز در پوشه `src/`.
-- [x] راهنمای فارسی [`README.md`](file:///root/starcoach-hack/wallex/README.md) و ران‌بوک عملیاتی مسابقه [`docs/COMPETITION_RUNBOOK.md`](file:///root/starcoach-hack/wallex/docs/COMPETITION_RUNBOOK.md).
-- [x] مانیفست استراتژی منجمد با هش اعتبارسنجی در `config/frozen_strategy_manifest_v0.6.0.json`.
-- [x] مسدودی قطعی ۲۱ بازار غیرفعال در `config/market_restrictions.json`.
-- [x] گزارش‌های ممیزی علمی P&L فاز ۱۴ و فاز ۱۵ در پوشه `docs/`.
-- [x] سناریوی ویدیوی دمو ۵ دقیقه‌ای برای پرزنت داوران در `docs/DEMO_SCRIPT.md`.
-- [x] لاگ‌های تصمیمات شبیه‌سازی در قالب JSONL در پوشه `logs/`.
-- [x] پیکربندی فاقد کلید و سکرت هاردکدشده در `.env.example`.
-- [x] **سوئیت آزمون‌های خودکار:** **۵۹ تست از ۵۹ تست موفق (۱۰۰٪ پاس)** با پوشش کد ۸۰٪ در کل ماژول‌های `src/`.
+1. Entry orders:
+   - They are calculated with an unfavorable slippage of 0.15% (`target_price * 1.0015`).
+   - Maker fee 0.25% or ticker fee 0.30% is deducted from cash balance.
+2. **Take Profit Exit orders:**
+   - It is registered as a limit order and a maker fee equal to 0.25% is assigned to it.
+3. **Stop Loss / Emergency Exit orders:**
+   - In the form of market orders, they are cashed by applying 0.15% slippage and deducting the order taker's fee equal to 0.30%.
+4. **Partial Fills:**
+   - The fee is deducted exactly to the amount filled and the remaining capital remains in the cash account without obligation.
+5. **Compulsory settlement at the end of the match (Toman Liquidation):**
+   - ``liquidate_all_to_toman()'' method guarantees to liquidate 100% of the portfolio with a ticker fee of 0.30%.
+6. **Uncertainty of the remaining fee:**
+   - The default table is based on the level of a Wallex (0.25% / 0.30%). The actual performance of the strategy will be better than this conservative default if the organizer applies a special discount or rebate.
 
 ---
 
-## ۷. نقشه راه رفع موانع تا آغاز مسابقه (Pre-Launch Action Plan)
+## 6. Audit of deliverables and automated tests (Compliance & Deliverables Audit)
 
-برای تغییر وضعیت سیستم از **TECHNICAL GO, COMPETITION BLOCKED** به وضعیت معامله زنده، اقدامات زیر باید به ترتیب توسط تیم انسانی طی شود:
+All the items required for the evaluation of the judges and the final competition were confirmed and frozen in the tank:
+
+- [x] Python 3.12 codes according to clean engineering principles in `src/` folder.
+- [x] Persian guide [`README.md`](file:///root/starcoach-hack/wallex/README.md) and operational runbook of the competition [`docs/COMPETITION_RUNBOOK.md`](file:///root/starcoach-hack/wallex/docs/COMPETITION_RUNBOOK.md).
+- [x] Frozen strategy manifest with validation hash in `config/frozen_strategy_manifest_v0.6.0.json`.
+- [x] Permanent blocking of 21 inactive markets in `config/market_restrictions.json`.
+- [x] P&L scientific audit reports of phase 14 and phase 15 in `docs/` folder.
+- [x] 5-minute demo video scenario for judges presentation in `docs/DEMO_SCRIPT.md`.
+- [x] Simulation decision logs in JSONL format in `logs/` folder.
+- [x] Configuration without hardcoded key and secret in `.env.example`.
+- [x] **Automated test suite:** **59 out of 59 tests passed (100% pass)** with 80% code coverage across all `src/` modules.
+
+---
+
+## 7. Pre-Launch Action Plan
+
+To change the system status from **TECHNICAL GO, COMPETITION BLOCKED** to LIVE TRADING status, the following actions must be taken by the human team in order:
 
 ```mermaid
 flowchart TD
-    A["وضعیت فعلی: TECHNICAL GO, COMPETITION BLOCKED\n(قفل سخت‌افزاری live_execution_authorized=False)"] --> B{"اقدام برگزارکننده:\nاعلام زمان تقویمی مسابقه\n(حل موانع B-01 و B-02)"}
-    B -- بله --> C{"اقدام والکس:\nصدور کلیدهای API اختصاصی مسابقه\n(حل مانع B-03)"}
-    C -- بله --> D["تست ارتباط فقط-خواندنی (Read-Only):\nاستعلام موجودی و احراز هویت\n(حل مانع B-04)"]
-    D --> E{"تاییدیه کتبی معافیت از کارمزد اعتبار\n(حل مانع B-05)"}
-    E -- بله --> F["ارزیابی نهایی توسط راهبر ارشد تیم انسانی\n(Human Authorization Review)"]
-    F --> G["تغییر دستی پرچم به live_execution_authorized=True\nو آغاز ترید خودکار"]
+    A["Current status: TECHNICAL GO, COMPETITION BLOCKED\n(hardware lock live_execution_authorized=False)"] --> B{"Action of the organizer:\nAnnouncing the calendar time of the competition\n(resolving obstacles B-01 and B-02)"}
+    B -- yes --> C{"Valax action:\nIssue exclusive contest API keys\n(resolving obstacle B-03)"}
+    C -- yes --> D["Read-only communication test:\nInventory inquiry and authentication\n(resolving obstacle B-04)"]
+    D --> E{"Written confirmation of exemption from credit fees\n(resolving obstacle B-05)"}
+    E -- yes --> F["Final evaluation by the senior leader of the human team\n(Human Authorization Review)"]
+    F --> G["Manually changing the flag to live_execution_authorized=True\nAnd the start of automatic trading"]
 ```
 
 > [!CAUTION]
-> تا قبل از طی شدن تک‌تک مراحل فوق، ربات در حالت شبیه‌سازی و تست در سایه باقی می‌ماند و هیچ تراکنش حقیقی در بازار انجام نخواهد داد.
+> Before going through each of the above steps, the robot will remain in the simulation and test mode in the shadow and will not make any real transactions in the market.

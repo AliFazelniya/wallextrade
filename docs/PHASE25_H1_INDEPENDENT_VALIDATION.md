@@ -1,92 +1,92 @@
-# اعتبارسنجی مستقل فرضیه ۱: روند ساختاری چندزمانه (H1 Independent Validation)
+# Independent validation of hypothesis 1: multi-temporal structural process (H1 Independent Validation)
 ## Multi-Timeframe Structural Trend Hypothesis Audit
 
-> **مخزن:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **شاخه پژوهشی:** `research/phase25-validation`  
-> **کامیت مبنای منجمد:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **فرضیه ۱:** روند ساختاری ۱ ساعته + ورود ۱۵ دقیقه + حد ضرر ساختاری ۲.۲٪- + حد سود ۴.۵٪+
+> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Research branch:** `research/phase25-validation`  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Hypothesis 1:** 1-hour structural trend + 15-minute entry + structural loss limit -2.2% + profit limit +4.5%
 
 ---
 
-## ۱. پاسخ به ۱۰ پرسش کلیدی ممیزی فرضیه ۱ (Ten Critical Research Inquiries)
+## 1. Answers to 10 key questions of hypothesis 1 audit (Ten Critical Research Inquiries)
 
-### ۱. آیا سیگنال‌ها فقط از کندل‌های کاملاً بسته‌شده استفاده می‌کنند؟
-✅ **بله (PASS):** محاسبات اندیکاتورهای EMA، RSI، ATR و ADX در شاخص کندل $t$ همگی بر اساس قیمت Close کندل بسته‌شده ۱۵ دقیقه‌ای انجام می‌شوند. تصمیم‌گیری در انتهای کندل ثبت شده و هیچ اتکایی به قیمت ناتمام کندل جاری وجود ندارد.
+### 1. Do the signals only use fully closed candles?
+✅ **Yes (PASS):** The calculations of EMA, RSI, ATR and ADX indicators in the $t$ candle index are all based on the Close price of the 15-minute closed candle. The decision is recorded at the end of the candle and there is no reliance on the unfinished price of the current candle.
 
-### ۲. آیا داده‌های ۱ ساعته با برچسب‌های زمانی ۱۵ دقیقه‌ای هماهنگ هستند؟
-✅ **بله (PASS):** آزمون انطباق تجربی نشان داد که تقریب متحرک پیوسته (۸۰ کندل ۱۵ دقیقه‌ای برای میانگین متحرک نمایی ۲۰ ساعته و ۲۰۰ کندل برای ۵۰ ساعته) دارای **۹۹.۰۰٪ انطباق جهت روند** با کندل‌های بازنمونه‌گیری‌شده واقعی ۱ ساعته است (با میانگین خطای اندک ۰.۰۶۲۸٪). این روش علاوه بر حفظ دقت، از خطای مرز ساعت در شروع پنجره‌های مسابقه نیز جلوگیری می‌کند.
+### 2. Is the 1-hour data consistent with the 15-minute timestamps?
+✅ **YES (PASS):** The empirical conformity test showed that the continuous moving approximation (80 15-minute candles for the 20-hour EMA and 200 candles for the 50-hour EMA) has **99.00% trend direction concordance** with the real 1-hour resampled candles (with a small average error of 0.0628%). In addition to maintaining accuracy, this method also avoids the clock boundary error at the start of the match windows.
 
-### ۳. آیا فرضیه ۱ دچار نشت داده به آینده (Lookahead Contamination) است؟
-✅ **خیر (PASS):** برخلاف کاندیدای E اولیه که از میانگین کل ۹۰ روزه ATR استفاده می‌کرد، در فرضیه ۱ نرمال‌سازی اسپرد پویا به صورت انحصاری از **پنجره گسترش‌یابنده گذشته‌نگر (`expanding(min_periods=60).mean()`)** استفاده می‌کند و نشت آینده به طور کامل صفر است.
+### 3. Does hypothesis 1 suffer from data leakage to the future (Lookahead Contamination)?
+✅ **No (PASS):** Unlike the initial candidate E that used the 90-day total ATR average, in hypothesis 1 the dynamic spread normalization exclusively uses the **expanding retrospective window (`expanding(min_periods=60).mean()`)** and the future leakage is completely zero.
 
-### ۴. آیا حد ضرر ۲.۲٪- و حد سود ۴.۵٪ بر اساس نگاه به گذشته انتخاب شده‌اند؟
-⚠️ **هشدار سوگیری داده (SELECTION AWARENESS):**  
-حد سود ۴.۵٪ و حد ضرر ۲.۲٪ پس از مشاهده شکست استاپ‌های فشرده کاندیدای E (-۱.۵٪) فرمول‌بندی شدند. از نظر علمی، این پارامترها دارای سوگیری مشاهده گذشته (Data Snooping) بر روی کش ۹۰ روزه هستند و نباید بدون آزمون تعمیم‌پذیری به عنوان پارامتر بهینه قطعی پذیرفته شوند.
+### 4. Are the -2.2% loss limit and 4.5% profit limit selected based on hindsight?
+⚠️ **Data bias warning (SELECTION AWARENESS):**  
+Profit limit of 4.5% and stop loss of 2.2% were formulated after observing the failure of candidate E's tight stops (-1.5%). From a scientific point of view, these parameters have a past observation bias (data snooping) on ​​the 90-day cache and should not be accepted as definitive optimal parameters without a generalizability test.
 
-### ۵. آیا عملکرد H1 تحت سلطه دوره‌های استثنایی روند است؟
-⚠️ **تایید وابستگی به روند (Trend Regime Dependency):**  
-- در نیمه اول (W01 تا W15 که بیت‌کوین ۵۷٪ رشد کرد): سود **۳۵،۴۴۶+ تومان** با ۴ برد از ۱۵ پنجره.
-- در نیمه دوم (W16 تا W29 که بازار خنثی و نوسانی شد): سود **۳۴۷+ تومان** با ۴ برد از ۱۴ پنجره.
-استراتژی در بازار رنج زیان سنگین نمی‌دهد (سرمایه حفظ می‌شود)، اما عمده سود خود را در امواج ترند صعودی می‌سازد.
+### 5. Is the performance of H1 dominated by exceptional periods of the trend?
+⚠️ **Trend Regime Dependency Confirmation:**  
+- In the first half (W01 to W15 when Bitcoin grew by 57%): Profit **35,446+ Tomans** with 4 wins from 15 windows.
+- In the second half (W16 to W29 when the market became neutral and volatile): Profit **347+ Tomans** with 4 wins from 14 windows.
+The strategy does not suffer heavy losses in the market (capital is preserved), but it makes most of its profits in uptrend waves.
 
-### ۶. آیا بازده تعدیل‌شده با ریسک (Risk-Adjusted Return) قابل قبول است؟
-✅ **بله (PASS):**
-- سود خالص کل: **۳۵،۷۹۳.۴+ تومان**
-- حداکثر افت سرمایه (Max DD): **۰.۵۶٪** (تنها ۲۸ هزار تومان افت در برابر سقف مجاز ۵٪ صرافی).
-- نسبت سود به حداکثر دراوداون: **۱.۲۸** (بسیار برتر از خط مبناهای فاز ۲۱).
+### 6. Is risk-adjusted return acceptable?
+✅ **Yes (PASS):**
+- Total net profit: **35,793.4+ Tomans**
+- Maximum capital loss (Max DD): **0.56%** (only 28 thousand Tomans loss against the 5% limit of the exchange).
+- Ratio of profit to maximum drawdown: **1.28** (much better than the baseline of phase 21).
 
-### ۷. آیا استراتژی در برابر هزینه‌های واقعی مبادله دوام می‌آورد؟
-✅ **بله (PASS):**
-- سناریوی پایه (اسلیپیج ۰.۱۵٪ و کارمزد ۰.۲۵/۰.۳۰٪): **۳۵،۷۹۳+ تومان سود**
-- سناریوی کارمزد تیکر بالا (۰.۴۰٪ تیکر): **۲۳،۳۵۱+ تومان سود**
-- سناریوی اسلیپیج دوبرابر (۰.۳۰٪ اسلیپیج): **۹،۵۹۲+ تومان سود**  
-به دلیل پهنای مناسب تارگت (+۴.۵٪) و کاهش تعداد معاملات به ۱۹ عدد، اصطکاک مبادله (۷۲،۵۸۷ تومان) توان نابودی حاشیه سود را ندارد.
+### 7. Does the strategy hold up against real transaction costs?
+✅ **Yes (PASS):**
+- Basic scenario (slippage 0.15% and fee 0.25/0.30%): **35,793 Tomans+ profit**
+- High ticker fee scenario (0.40% ticker): **23,351 Tomans+ profit**
+- Double slippage scenario (0.30% slippage): **9,592+ Tomans profit**  
+Due to the appropriate width of the target (+4.5%) and the reduction of the number of transactions to 19, the exchange friction (72,587 Tomans) cannot destroy the profit margin.
 
-### ۸. آیا عملکرد در بین BTC، ETH و SOL پایدار است؟
-❌ **عدم تقارن شدید (SOL Dominated):**
-- **سولانا (SOL):** ۹ معامله | سود خالص **۳۱،۹۵۵.۹+ تومان** (۸۹.۳٪ از کل سود!).
-- **اتریوم (ETH):** ۴ معامله | سود خالص **۸،۵۵۱.۵+ تومان**.
-- **بیت‌کوین (BTC):** ۶ معامله | زیان خالص **۴،۷۱۳.۹- تومان** (۳۳٪ نرخ برد).  
-بیت‌کوین به دلیل بتای پایین‌تر در بازه ۲۴ ساعته به ندرت به تارگت ۴.۵٪ می‌رسد، در حالی که نوسانات سولانا آن را به بهترین بستر برای استراتژی ساختاری تبدیل کرده است.
+### 8. Is performance stable between BTC, ETH and SOL?
+❌ **Severe asymmetry (SOL Dominated):**
+- Solana (SOL): 9 transactions Net profit **31,955.9+ Tomans** (89.3% of the total profit!).
+- **Ethereum (ETH):** 4 transactions Net profit **8,551.5+ Tomans**.
+- **Bitcoin (BTC):** 6 transactions Net loss **-4,713.9 Tomans** (33% win rate).  
+Bitcoin rarely reaches the 4.5% target on a 24-hour period due to its lower beta, while Solana's volatility makes it the best platform for a structured strategy.
 
-### ۹. آیا طول مدت معاملات با ضرب‌الاجل ۷۲ ساعته سازگار است؟
-✅ **بله (PASS):**
-- میانگین زمان باز بودن معاملات: **۲۲.۹ ساعت**.
-- حداقل زمان: ۴.۸ ساعت | حداکثر زمان: ۴۵.۰ ساعت.
-- تنها ۱ معامله از ۱۹ معامله به تصفیه مرز ۷۲ ساعته برخورد کرد (-۶،۰۷۶ تومان)؛ در ۶ معامله مکانیزم بادبان پایانی (خروج پسیو پس از ساعت ۶۶) سود را با کارمزد میکر ذخیره کرد (+۳۴،۵۳۶ تومان).
+### 9. Is the duration of transactions consistent with the 72-hour deadline?
+✅ **Yes (PASS):**
+- Average trading time: **22.9 hours**.
+- Minimum time: 4.8 hours Maximum time: 45.0 hours.
+- Only 1 out of 19 transactions cleared the 72-hour limit (-6,076 Tomans); In 6 trades, the final sail mechanism (passive exit after 66 hours) saved the profit with the maker fee (+34,536 Tomans).
 
-### ۱۰. آیا حد ضرر ۲.۲٪- حساب را در معرض افت سرمایه غیرقابل‌قبول قرار می‌دهد؟
-✅ **خیر (PASS):**  
-حجم هر پوزیشن ۵۰۰،۰۰۰ تومان (۱۰٪ کل سرمایه ۵ میلیونی) است. زیان ناخالص ۲.۲٪ همراه با کارمزد و اسلیپیج، حداکثر زیان هر استاپ را به **۱۳،۹۶۷- تومان (معادل ۰.۲۸٪ از کل حساب)** محدود می‌کند. حتی ۵ استاپ متوالی تنها ۱.۴٪ از حساب را کاهش می‌دهد که با حاشیه امن ۵ درصدی مسابقه کاملاً همخوانی دارد.
+### 10. Does the -2.2% loss limit expose the account to unacceptable capital loss?
+✅ **No (PASS):**  
+The size of each position is 500,000 Tomans (10% of the total capital of 5 million). The gross loss of 2.2% along with fees and slippage limits the maximum loss of each stop to **-13,967 Tomans (equivalent to 0.28% of the total account)**. Even 5 stops in a row only reduces the account by 1.4%, which is perfectly in line with the 5% safe margin of the match.
 
 ---
 
-## ۲. دفتر کل تفصیلی ۱۹ معامله H1
+## 2. Detailed ledger of 19 H1 transactions
 
-| پنجره | نماد | زمان ورود (UTC) | زمان خروج (UTC) | علت خروج | سود خالص (TMN) | نوع سفارش خروج |
+| window | Symbol | Entry Time (UTC) | Departure Time (UTC) | The reason for leaving Net Profit (TMN) | Exit order type
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **W01** | SOL | 2026-07-27 01:00 | 2026-07-27 20:45 | بادبان پایانی پسیو | ۱۰۳.۵- | میکر |
-| **W02** | ETH | 2026-07-28 23:15 | 2026-07-30 20:15 | بادبان پایانی پسیو | ۲،۱۷۳.۲+ | میکر |
-| **W04** | BTC | 2026-08-03 19:15 | 2026-08-05 13:30 | حد ضرر ساختاری (-۲.۲٪) | ۱۳،۹۶۷.۰- | تیکر |
-| **W09** | BTC | 2026-08-18 14:00 | 2026-08-19 15:15 | حد سود ساختاری (+۴.۵٪) | ۱۹،۶۹۳.۸+ | میکر |
-| **W09** | SOL | 2026-08-20 04:15 | 2026-08-20 20:15 | بادبان پایانی پسیو | ۸،۳۱۴.۲+ | میکر |
-| **W11** | BTC | 2026-08-24 10:45 | 2026-08-24 17:15 | استاپ نقطه سر‌به‌سر | ۱،۰۰۹.۹- | میکر |
-| **W14** | ETH | 2026-09-03 10:15 | 2026-09-04 04:30 | حد سود ساختاری (+۴.۵٪) | ۱۹،۶۹۳.۷+ | میکر |
-| **W15** | ETH | 2026-09-05 11:30 | 2026-09-06 15:15 | استاپ نقطه سر‌به‌سر | ۶۵۱.۵+ | میکر |
-| **W16** | BTC | 2026-09-09 09:00 | 2026-09-11 02:00 | تصفیه اجباری مرز ۷۲h | ۶،۰۷۶.۵- | تیکر |
-| **W19** | SOL | 2026-09-18 08:00 | 2026-09-18 15:45 | حد سود ساختاری (+۴.۵٪) | ۱۹،۶۹۳.۸+ | میکر |
-| **W19** | SOL | 2026-09-18 20:30 | 2026-09-19 21:15 | حد ضرر ساختاری (-۲.۲٪) | ۱۳،۹۶۷.۰- | تیکر |
-| **W20** | SOL | 2026-09-21 01:30 | 2026-09-21 09:30 | حد سود ساختاری (+۴.۵٪) | ۱۹،۶۹۳.۷+ | میکر |
-| **W20** | SOL | 2026-09-21 13:00 | 2026-09-22 22:30 | بادبان پایانی پسیو | ۲۶۳.۲+ | میکر |
-| **W21** | SOL | 2026-09-24 21:30 | 2026-09-25 20:15 | بادبان پایانی پسیو | ۱۳،۲۷۶.۶+ | میکر |
-| **W22** | BTC | 2026-09-27 09:00 | 2026-09-28 20:15 | بادبان پایانی پسیو | ۱۰،۶۱۲.۷+ | میکر |
-| **W23** | ETH | 2026-09-29 10:30 | 2026-09-29 15:15 | حد ضرر ساختاری (-۲.۲٪) | ۱۳،۹۶۷.۰- | تیکر |
-| **W24** | SOL | 2026-10-03 11:00 | 2026-10-04 11:00 | استاپ نقطه سر‌به‌سر | ۱،۲۴۸.۲- | میکر |
-| **W28** | BTC | 2026-10-14 11:30 | 2026-10-15 02:15 | حد ضرر ساختاری (-۲.۲٪) | ۱۳،۹۶۷.۰- | تیکر |
-| **W28** | SOL | 2026-10-15 22:00 | 2026-10-16 15:00 | حد ضرر ساختاری (-۲.۲٪) | ۱۳،۹۶۷.۰- | تیکر |
+| **W01** | Sol 2026-07-27 01:00 | 2026-07-27 20:45 | Passive final sail 103.5- | maker |
+| **W02** | ETH | 2026-07-28 23:15 | 2026-07-30 20:15 | Passive final sail 2,173.2+ | maker |
+| **W04** | BTC | 2026-08-03 19:15 | 2026-08-05 13:30 | Structural loss limit (-2.2%) | 13,967.0- | Ticker
+| **W09** | BTC | 2026-08-18 14:00 | 2026-08-19 15:15 | Structural profit limit (+4.5%) | 19,693.8+ | maker |
+| **W09** | Sol 2026-08-20 04:15 | 2026-08-20 20:15 | Passive final sail 8,314.2+ | maker |
+| **W11** | BTC | 2026-08-24 10:45 | 2026-08-24 17:15 | End point stop 1,009.9-| maker |
+| **W14** | ETH | 2026-09-03 10:15 | 2026-09-04 04:30 | Structural profit limit (+4.5%) | 19,693.7+ | maker |
+| **W15** | ETH | 2026-09-05 11:30 | 2026-09-06 15:15 | End point stop 651.5+ | maker |
+| **W16** | BTC | 2026-09-09 09:00 | 2026-09-11 02:00 | Mandatory clearing of the 72h border 6,076.5- | Ticker
+| **W19** | Sol 2026-09-18 08:00 | 2026-09-18 15:45 | Structural profit limit (+4.5%) | 19,693.8+ | maker |
+| **W19** | Sol 2026-09-18 20:30 | 2026-09-19 21:15 | Structural loss limit (-2.2%) | 13,967.0- | Ticker
+| **W20** | Sol 2026-09-21 01:30 | 2026-09-21 09:30 | Structural profit limit (+4.5%) | 19,693.7+ | maker |
+| **W20** | Sol 2026-09-21 13:00 | 2026-09-22 22:30 | Passive final sail 263.2+ | maker |
+| **W21** | Sol 2026-09-24 21:30 | 2026-09-25 20:15 | Passive final sail 13,276.6+ | maker |
+| **W22** | BTC | 2026-09-27 09:00 | 2026-09-28 20:15 | Passive final sail 10,612.7+ | maker |
+| **W23** | ETH | 2026-09-29 10:30 | 2026-09-29 15:15 | Structural loss limit (-2.2%) | 13,967.0- | Ticker
+| **W24** | Sol 2026-10-03 11:00 | 2026-10-04 11:00 | End point stop 1,248.2- | maker |
+| **W28** | BTC | 2026-10-14 11:30 | 2026-10-15 02:15 | Structural loss limit (-2.2%) | 13,967.0- | Ticker
+| **W28** | Sol 2026-10-15 22:00 | 2026-10-16 15:00 | Structural loss limit (-2.2%) | 13,967.0- | Ticker
 
 ---
 
-## ۳. نتیجه‌گیری ممیزی H1
+## 3. H1 audit conclusion
 
-H1 از نظر ریزساختاری و مالی معتبر است؛ تارگت‌های پهن آن امکان بقا در برابر نوسانات سایه کندل و هزینه‌های والکس را ایجاد می‌کنند. با این حال، به دلیل تمرکز بازدهی روی SOL و افت سود در W16-W29، نمی‌توان آن را به تنهایی یک تضمین قطعی دانست.
+H1 is microstructurally and financially valid; Its wide targets make it possible to survive candle shadow fluctuations and Wallex costs. However, due to the concentration of returns on SOL and the drop in profits in W16-W29, it cannot be considered a definitive guarantee on its own.

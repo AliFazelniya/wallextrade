@@ -1,119 +1,119 @@
-# تطبیق و یکپارچه‌سازی مدل قیمت اجرای معاملات و قراردادهای اصطکاک بازار
+# Adaptation and integration of the price model for the execution of trades and market friction contracts
 # Phase 19 Execution-Price Model Reconciliation & Microstructure Audit
 
-> **تاریخ تنظیم:** ۲۲ اکتبر ۲۰۲۶ (۱ آبان ۱۴۰۵)  
-> **نسخه نرم‌افزار:** `v0.10.0-phase18-audited`  
-> **هش مانیفست استراتژی منجمد:** `249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66`  
-> **ماژول‌های مورد ممیزی:**  
-> - [`src/exchange/adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py) (آداپتور اجرای سفارشات)  
-> - [`src/portfolio/accounting.py`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py) (حسابداری پورتفولیو و تسویه)  
-> - [`src/data/fetcher.py`](file:///root/starcoach-hack/wallex/src/data/fetcher.py) (دریافت داده‌های UDF و عمق اوردر بوک)  
-> - [`src/backtest/engine.py`](file:///root/starcoach-hack/wallex/src/backtest/engine.py) (موتور شبیه‌سازی تاریخی)
+> **Setting date:** October 22, 2026 (November 1, 1405)  
+> **Software version:** `v0.10.0-phase18-audited`  
+> **Frozen Strategy Manifest Hash:** `249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66`  
+> **Modules to be audited:**  
+> - [`src/exchange/adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py) (order execution adapter)  
+> - [`src/portfolio/accounting.py`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py) (portfolio accounting and settlement)  
+> - [`src/data/fetcher.py`](file:///root/starcoach-hack/wallex/src/data/fetcher.py) (get UDF data and orderbook depth)  
+> - [`src/backtest/engine.py`](file:///root/starcoach-hack/wallex/src/backtest/engine.py) (historical simulation engine)
 
 ---
 
-## ۱. هدف و دامنه ممیزی ساختار اجرای معاملات
+## 1. The purpose and scope of the transaction execution structure audit
 
-این سند قراردادهای شفاف و بدون ابهامی را برای قیمت مرجع، نحوه محاسبه اسپرد، اسلیپیج، تفکیک مِیکر/تیکر و اصطکاک‌های رفت‌وبرگشت در دو محیط **بک‌تست تاریخی مبتنی بر کندل** و **معاملات در سایه / لایو مبتنی بر دفتر سفارش** تدوین و ممیزی می‌نماید تا از هرگونه دوباره‌شماری یا حذف پنهان هزینه‌ها جلوگیری شود.
+This document compiles and audits clear and unambiguous contracts for the reference price, how to calculate the spread, slippage, maker/taker separation and back-and-forth frictions in two environments ** historical backtest based on candlesticks ** and ** transactions in the shadow / live based on the order book ** in order to avoid any recalculation or hidden removal of costs.
 
 ---
 
-## ۲. قرارداد قیمت مرجع در بک‌تست تاریخی در برابر بازار زنده
+## 2. Reference price contract in historical backtest against live market
 
-### ۲.۱. در شبیه‌سازی تاریخی (Candle-Based Backtesting):
-- **محدودیت ذاتی داده‌های تاریخی:** داده‌های تاریخی UDF صرافی والکس منحصراً شامل کندل‌های ۱۵ دقیقه‌ای (OHLCV) هستند و ردپای لحظه‌ای دفتر سفارش (Tick-level L2 Orderbook Depth) در گذشته در دسترس نیست.
-- **قیمت مرجع صدور سیگنال ($P_{ref}$):** قیمت پایانی کندل ۱۵ دقیقه‌ای ($P_{close}$).
-- **قیمت میانه فرضی ($P_{mid}$):** با توجه به تقارن نوسانات درون‌کندلی، قیمت پایانی کندل به عنوان پروکسی قیمت میانه در لحظه بسته شدن کندل فرض می‌شود.
-- **محدودیت شبیه‌سازی اجرای لیمیت پسیو:** شرط لمس قیمت (`current_low <= limit_price`) شرط لازم برای پر شدن است، اما شرط کافی نیست؛ چرا که اولویت زمانی صف (Time Priority) در دیتای کندلی قابل بازسازی دقیق نیست.
+### 2.1. In historical simulation (Candle-Based Backtesting):
+- **Inherent limitation of historical data:** Wallex UDF historical data consists exclusively of 15-minute candlesticks (OHLCV) and historical trace of the order book (Tick-level L2 Orderbook Depth) is not available.
+- **Signal issuing reference price ($P_{ref}$):** Final price of 15-minute candle ($P_{close}$).
+- **Hypothetical middle price ($P_{mid}$):** Due to the symmetry of intra-candle fluctuations, the closing price of the candle is assumed as a proxy of the middle price at the moment the candle closes.
+- **Passive Limit Execution Simulation Limitation:** The price touch condition (`current_low <= limit_price`) is a necessary condition to be filled, but not a sufficient condition; Because the time priority of the queue (Time Priority) in the candle data cannot be reconstructed accurately.
 
-### ۲.۲. در مشاهدات بازار زنده و تست در سایه (Live Shadow Observations):
-در محیط زنده والکس، داده‌های لحظه‌ای مستقیماً از اندپوینت‌های `/v1/depth` و `/v1/trades` دریافت می‌شوند و تعاریف به صورت قطعی تفکیک می‌گردند:
-- **بهترین مظنه خرید (Best Bid - $P_{bid}$):** بالاترین قیمت در صف خریداران.
-- **بهترین مظنه فروش (Best Ask - $P_{ask}$):** پایین‌ترین قیمت در صف فروشندگان.
-- **قیمت میانه (Midpoint - $P_{mid}$):**
+### 2.2. In live market observations and testing in the shadow (Live Shadow Observations):
+In the live Wallex environment, real-time data is received directly from the `/v1/depth' and `/v1/trades' endpoints, and the definitions are strictly separated:
+- **Best Bid - $P_{bid}$:** The highest price in the queue of buyers.
+- **Best Ask - $P_{ask}$:** The lowest price in the queue of sellers.
+- **Midpoint price (Midpoint - $P_{mid}$):**
   $$P_{mid} = \frac{P_{bid} + P_{ask}}{2}$$
-- **قیمت اجرای مورد انتظار (Expected Execution Price):**
-  - در خرید تهاجمی (Marketable Buy): $P_{exec} \ge P_{ask}$
-  - در فروش تهاجمی (Marketable Sell): $P_{exec} \le P_{bid}$
-- **قیمت فیل‌شده واقعی (Actual Fill Price):** قیمت قطعی گزارش‌شده توسط موتور تطبیق صرافی والکس در پاسخ API.
+- **Expected Execution Price:**
+  - In aggressive purchase (Marketable Buy): $P_{exec} \ge P_{ask}$
+  - In aggressive sales (Marketable Sell): $P_{exec} \le P_{bid}$
+- **Actual Fill Price:** Final price reported by Wallex exchange matching engine in API response.
 
 ---
 
-## ۳. قرارداد محاسبه اسپرد و هزینه عبور از نیم‌اسپرد
+## 3. Contract to calculate the spread and the cost of crossing the half spread
 
-### ۳.۱. فرمول محاسبه اسپرد در صرافی والکس:
-مطابق پیاده‌سازی متد [`MarketDataFetcher.fetch_current_spread`](file:///root/starcoach-hack/wallex/src/data/fetcher.py#L179):
+### 3.1. Spread calculation formula in Wallex exchange:
+According to the implementation of the [`MarketDataFetcher.fetch_current_spread`] method (file:///root/starcoach-hack/wallex/src/data/fetcher.py#L179):
 $$\text{Spread (\%)} = \frac{P_{ask} - P_{bid}}{P_{bid}} \times 100$$
-این قرارداد نسبت به فرمول بر مبنای میانه ($\frac{Ask - Bid}{Mid}$)، اندکی محافظه‌کارانه‌تر (بزرگتر) است.
+This contract is slightly more conservative (larger) than the median-based formula ( $\frac{Ask - Bid}{Mid}$ ).
 
-### ۳.۲. نیم‌اسپرد و هزینه نفوذ در مظنه:
+### 3.2. Semi-spread and price penetration cost:
 $$\text{Half-Spread (\%)} = \frac{\text{Spread (\%)}}{2}$$
-در بازار `BTCTMN` والکس، اسپرد واقعی بازار به طور معمول بین **۰.۰۹٪ تا ۰.۱۹۶٪** نوسان می‌کند؛ بنابراین هزینه عبور از نیم‌اسپرد برای تبدیل یک سفارش از قیمت میانه به مظنه فروش معادل **۰.۰۴۵٪ تا ۰.۰۹۸٪** است.
+In the Wallex ``BTCTMN'' market, the actual market spread typically fluctuates between **0.09% and 0.196%**; Therefore, the cost of passing through the half spread to convert an order from the middle price to the selling quote is equivalent to **0.045% to 0.098%**.
 
 ---
 
-## ۴. کالبدشکافی اسلیپیج ۰.۱۵٪: شمول یا عدم شمول هزینه اسپرد؟
+## 4. Autopsy of 0.15% slippage: To include or not to include the cost of the spread?
 
-یکی از مهم‌ترین مسائل ممیزی تعیین دقیق نحوه تعامل اسلیپیج و اسپرد است:
+One of the most important audit issues is to determine the exact interaction between slippage and spread:
 
 ```mermaid
 flowchart LR
-    subgraph Candle_Model["مدل بک‌تست کندلی (مرجع: Close / Mid)"]
+    subgraph Candle_Model["Candlestick backtest model (reference: Close / Mid)"]
         direction TB
-        M["قیمت پایانی (P_close / Mid)"] -->|"+0.07% تا +0.09%\nعبور از نیم‌اسپرد"| A["مظنه فروش (Best Ask)"]
-        A -->|"+0.06% تا +0.08%\nنفوذ در عمق بوک و تاخیر"| E["قیمت اجرای شبیه‌ساز\nP_exec = P_close * 1.0015"]
+        M["Closing price (P_close / Mid)"] -->|"+0.07% to +0.09%\nCrossing the half spread"| A["Best Ask"]
+        A -->|"+0.06% to +0.08%\nPenetration in the depth of book and delay"| E["The price of running the simulator\nP_exec = P_close * 1.0015"]
     end
-    subgraph Live_Model["مدل بازار زنده (مرجع: Order Book)"]
+    subgraph Live_Model["Live market model (reference: Order Book)"]
         direction TB
-        LA["بهترین مظنه فروش (P_ask)\n(اسپرد قبلاً رد شده است)"] -->|"+0.06% اسلیپیج عمق\n(Slippage beyond Ask)"| LE["قیمت اجرای لایو\nP_exec = P_ask * (1 + s)"]
+        LA["The best sales quote (P_ask)\n(The spread has already been rejected)"] -->|"+0.06% depth slippage\n(Slippage beyond Ask)"| LE["The price of live performance\nP_exec = P_ask * (1 + s)"]
     end
 ```
 
-### ۴.۱. در مدل شبیه‌سازی کندلی:
-- قیمت اجرای خرید با فرمول $P_{exec} = P_{close} \times (1 + 0.0015)$ محاسبه می‌شود.
-- از آنجا که $P_{close}$ معادل قیمت میانه است، افزایش ۱۵ پیپ (+۰.۱۵٪) مستقیماً شامل:
-  ۱. **عبور از نیم‌اسپرد:** حدود ۷ تا ۹ پیپ (۰.۰۷٪ تا ۰.۰۹٪).
-  ۲. **نفوذ در عمق دفتر سفارش و تاخیر شبکه:** حدود ۶ تا ۸ پیپ (۰.۰۶٪ تا ۰.۰۸٪).
-- **نتیجه:** در مدل کندلی، اسلیپیج ۰.۱۵٪ شامل هزینه عبور از اسپرد **است** و هزینه نیم‌اسپرد حذف نگردیده است.
+### 4.1. In the candlestick simulation model:
+- The purchase execution price is calculated by the formula $P_{exec} = P_{close} \times (1 + 0.0015)$.
+- Since $P_{close}$ is equivalent to the middle price, the increase of 15 pips (+0.15%) directly includes:
+  1. **Crossing Half Spread:** About 7 to 9 pips (0.07% to 0.09%).
+  2. **Penetration in order book depth and network latency:** About 6 to 8 pips (0.06% to 0.08%).
+- **Result:** In the Kendley model, the slippage of 0.15% includes the cost of crossing the spread, and the cost of half the spread has not been removed.
 
-### ۴.۲. در مدل بازار زنده و دفتر سفارش:
-- اگر سفارش به عنوان سفارش لیمیت با قیمت برابر یا بالاتر از $P_{ask}$ ارسال شود، اسپرد قبلاً توسط قیمت ورودی رد شده است؛ بنابراین اعمال مجدد ۰.۱۵٪ اسلیپیج فراتر از $P_{ask}$ منحصراً به معنای مصرف عمق لایه‌های دوم و سوم اوردر بوک خواهد بود.
-- **اثبات عدم دوباره‌شماری:** سیستم هرگز هزینه اسپرد را یک بار در قیمت و بار دیگر به صورت کارمزد نقدی تفریق نمی‌کند. اسلیپیج صرفاً حجم دریافتی رمزارز را با قیمت موزون تعدیل می‌نماید.
+### 4.2. In the live market and order book model:
+- If the order is sent as a limit order with a price equal to or higher than $P_{ask}$, the spread has already been rejected by the entry price; So re-applying 0.15% slippage beyond $P_{ask}$ will exclusively mean consuming the depth of the second and third layers of the order book.
+- **Proof of no recalculation:** The system never subtracts the cost of the spread once in the price and again as a cash fee. Slippage simply adjusts the received volume of cryptocurrency with the balanced price.
 
 ---
 
-## ۵. ماتریس ممیزی ۵ مسیر اجرای سفارش در آداپتور اجرا
+## 5. Audit matrix of 5 order execution paths in the execution adapter
 
-کلیه مسیرهای ۵ گانه اجرای سفارش به طور مستقل در آزمون [`test_comprehensive_five_execution_paths_separately`](file:///root/starcoach-hack/wallex/tests/test_exchange_adapter.py#L285) با نتایج زیر اعتبارسنجی شدند:
+All five order execution paths were validated independently in the [`test_comprehensive_five_execution_paths_separately'] test (file:///root/starcoach-hack/wallex/tests/test_exchange_adapter.py#L285) with the following results:
 
-| # | مسیر سفارش | نوع سفارش | رفتار با اسپرد | طبقه‌بندی کارمزد | نرخ کارمزد | اسلیپیج اعمالی | فرمول قیمت اجرا |
+| #| Order route Order type Dealing with the spread Fee classification Fee rate Applied slippage Execution price formula
 |---|---|---|---|---|---|---|---|
-| **۱** | **لیمیت پسیو (Passive Limit)** | `LIMIT` | در بوک منتظر می‌ماند | **Maker (سفارش‌گذار)** | ۰.۲۵٪ | ۰.۰۰٪ | $P_{exec} = P_{target}$ |
-| **۲** | **لیمیت تهاجمی (Marketable Limit)** | `LIMIT` | اسپرد را می‌شکند | **Taker (سفارش‌بردار)** | ۰.۳۰٪ | ۰.۱۵٪ | $P_{exec} = P_{target} \times 1.0015$ |
-| **۳** | **سفارش بازار (Market Order)** | `MARKET` | نقدینگی برمی‌دارد | **Taker (سفارش‌بردار)** | ۰.۳۰٪ | ۰.۱۵٪ | $P_{exec} = P_{target} \times 1.0015$ |
-| **۴** | **خروج حد ضرر (Stop-Loss Exit)** | `MARKET` | صف خرید را می‌زند | **Taker (سفارش‌بردار)** | ۰.۳۰٪ | ۰.۱۵٪- | $P_{exec} = P_{target} \times 0.9985$ |
-| **۵** | **تسویه اجباری به تومان (Toman Liquidation)** | `MARKET` | ۱۰۰٪ دارایی نقد می‌شود | **Taker (سفارش‌بردار)** | ۰.۳۰٪ | ۰.۱۵٪- | $P_{exec} = P_{target} \times 0.9985$ |
+| **1** **Limit passive (Passive Limit)** | ``LIMIT'' | It is waiting in the book **Maker (customer)** | 0.25% 0.00% | $P_{exec} = P_{target}$ |
+| **2** **Aggressive Limit (Marketable Limit)** | ``LIMIT'' | Breaks the spread **Taker** | 0.30% 0.15% $P_{exec} = P_{target} \times 1.0015$ |
+| **3** **Market Order** | ``MARKET'' | Takes cash **Taker** | 0.30% 0.15% $P_{exec} = P_{target} \times 1.0015$ |
+| **4** **Stop-Loss Exit** | ``MARKET'' | Queuing up to buy **Taker** | 0.30% 0.15%-| $P_{exec} = P_{target} \times 0.9985$ |
+| **5** **Compulsory settlement in Toman (Toman Liquidation)** | ``MARKET'' | 100% of assets are liquidated **Taker** | 0.30% 0.15%-| $P_{exec} = P_{target} \times 0.9985$ |
 
 > [!CAUTION]
-> هیچ سفارش لیمیتی به صورت کورکورانه Maker فرض نمی‌شود. هر سفارش لیمیتی که با قیمتی مساوی یا بالاتر از مظنه فروش (برای خرید) ارسال شود، بلافاصله در نقش Taker فیل شده و مشمول کارمزد ۰.۳۰٪ است.
+> No limit orders are assumed blindly by the Maker. Any limit order that is sent with a price equal to or higher than the selling price (for buying) is immediately filled as a Taker and is subject to a 0.30% commission.
 
 ---
 
-## ۶. حسابداری سفارش‌های نیمه‌پرشده و تسویه نهایی به تومان
+## 6. Accounting of half-filled orders and final settlement in Tomans
 
-1. **حداقل ارزش سفارش در والکس:** تمامی سفارش‌های خرید زیر ۵۰،۰۰۰ تومان بلافاصله توسط گیت نرم‌افزاری [`ExchangeAdapter`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py#L111) وتو می‌شوند.
-2. **سفارش‌های نیمه‌پرشده (Partial Fills):**
-   - کارمزد منحصراً بر ارزش اسمی بخش پرشده ($Q_{fill} \times P_{exec}$) ضرب و از حساب نقد کسر می‌گردد.
-   - بخش پرنشده سفارش لغو شده و سرمایه تومانی آن بدون تعهد در حساب آزاد می‌ماند.
-   - میانگین بهای تمام‌شده بر مبنای میانگین موزون حجم ($VWAP$) محاسبه و به‌روزرسانی می‌شود.
-3. **تسویه اجباری پایان مسابقه (Toman Liquidation Protocol):**
-   - ۳۰ دقیقه پیش از موعد پایان رقابت، متد [`liquidate_all_to_toman`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py#L205) کلیه موجودی‌های رمزارزی را با اسلیپیج نامساعد ۰.۱۵٪ و کارمزد تیکر ۰.۳۰٪ به تومان تبدیل می‌کند.
-   - در پایان، موجودی کریپتو دقیقاً صفر شده و ارزش کل پورتفولیو با موجودی نقد تومانی برابر می‌گردد.
+1. **Minimum order value in Wallex:** All purchase orders under 50,000 Tomans are immediately vetoed by the software gate [`ExchangeAdapter'](file:///root/starcoach-hack/wallex/src/exchange/adapter.py#L111).
+2. **Partial Fills:**
+   - The fee is multiplied exclusively by the nominal value of the filled part ($Q_{fill} \times P_{exec}$) and deducted from the cash account.
+   - The unfilled part of the order is canceled and its Toman capital remains free in the account without obligation.
+   - The average cost price is calculated and updated based on the volume weighted average ($VWAP$).
+3. **Compulsory settlement at the end of the match (Toman Liquidation Protocol):**
+   - 30 minutes before the end of the competition, the method [`liquidate_all_to_toman'](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py#L205) converts all cryptocurrency balances into Tomans with an unfavorable slippage of 0.15% and a ticker fee of 0.30%.
+   - At the end, the crypto balance is exactly zero and the total value of the portfolio is equal to the Toman cash balance.
 
 ---
 
-## ۷. بیانیه صریح و شفاف محدودیت‌های داده‌های تاریخی (Data Limitations)
+## 7. Clear statement of historical data limitations (Data Limitations)
 
-تیم مهندسی تأکید می‌نماید که به دلیل عدم دسترسی به داده‌های تیک به تیک و عمق تاریخی دفتر سفارش در طول ۹۰ روز گذشته در والکس:
-1. هیچ ادعایی مبنی بر بازسازی قطعی میکروثانیه‌ای اجرای سفارشات لیمیت مطرح نمی‌شود.
-2. به جای ادعای دقت ساختگی، سیستم رفتار واقعی را در بازه‌ای از سناریوهای استرس (اسلیپیج‌های ۰.۰۵٪ تا ۰.۳۵٪ و اسپردهای ۰.۰۶٪ تا ۰.۳۵٪) شبیه‌سازی نموده تا مرزهای اطمینان آماری استراتژی مشخص گردد.
+The engineering team emphasizes that due to the lack of access to tick-by-tick data and the historical depth of the order book during the last 90 days in Wallex:
+1. No claims are made regarding exact microsecond reconstruction of limit order execution.
+2. Instead of claiming false accuracy, the system simulates real behavior in a range of stress scenarios (slippages from 0.05% to 0.35% and spreads from 0.06% to 0.35%) to determine the statistical confidence limits of the strategy.

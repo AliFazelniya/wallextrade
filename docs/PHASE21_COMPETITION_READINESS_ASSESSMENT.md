@@ -1,106 +1,106 @@
-# ارزیابی آمادگی استراتژی منجمد برای مسابقه ۳ روزه (Phase 21)
+# Evaluating the readiness of the frozen strategy for the 3-day competition (Phase 21)
 ## Competition-Focused 72-Hour Strategy Readiness Assessment
 
-> **وضعیت ارزیابی:** نهایی، بازتولیدشده و مستند به شواهد آماری (Independently Reconciled & Audited)  
-> **مخزن:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **کامیت منجمد رهایش:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **تگ‌های معتبر:** `v1.0.0-phase20-frozen-release` و `v0.12.0-phase20-audited`  
-> **هش مانیفست استراتژی منجمد:** `249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66`  
-> **مجوز معاملات زنده:** `live_execution_authorized = False` (کاملاً مسدود و غیرفعال)
+> **Evaluation status:** Final, reproduced and documented by statistical evidence (Independently Reconciled & Audited)  
+> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **release frozen commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **valid tags:** `v1.0.0-phase20-frozen-release` and `v0.12.0-phase20-audited`  
+> **Frozen Strategy Manifest Hash:** `249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66`  
+> **Live execution authorization:** `live_execution_authorized = False` (completely blocked and disabled)
 
 ---
 
-## ۱. پاسخ قطعی به پرسش محوری مسابقه (Executive Verdict)
+## 1. Definitive answer to the central question of the competition (Executive Verdict)
 
-> **پرسش کلیدی ممیزی:**  
-> **آیا استراتژی منجمد دارای شواهد معتبر از سودآوری خالص مثبت در یک پنجره مستقل ۷۲ ساعته مسابقه (پس از کسر هزینه‌های مبادله و تصفیه اجباری نهایی) است؟**
+> **Key Audit Question:**  
+> **Does the frozen strategy have credible evidence of positive net profitability in an independent 72-hour match window (after deducting transaction costs and final mandatory clearing)?**
 
-### پاسخ مستند به شواهد محاسباتی:
-**خیر (NO).**  
-شواهد تجربی بازتولیدشده در ۲۹ پنجره مستقل مسابقه‌ای نشان می‌دهد:
-1. **امید ریاضی منفی در افق کوتاه:** میانگین بازدهی استراتژی هوش مصنوعی در پنجره‌های مستقل ۷۲ ساعته برابر با **۰.۰۱۹۹٪-** (مجموعاً **۲۸،۸۷۱- تومان زیان**) است.
-2. **نرخ برد پایین پنجره‌ها:** در کل ۲۹ پنجره کامل، تنها **۶ پنجره (۲۰.۶۹٪)** سودده بوده‌اند؛ ۱۲ پنجره (۴۱.۳۸٪) زیان‌ده و ۱۱ پنجره (۳۷.۹۳٪) خنثی مانده‌اند.
-3. **ریسک عدم فعالیت الگوریتمی (Zero-Trade Risk):** در **۱۰ پنجره از ۲۹ پنجره (۳۴.۴۸٪)**، سیستم هوش مصنوعی به دلیل وتوی رژیم بازار **دقیقاً صفر معامله** انجام داده است. در یک مسابقه ۳ روزه، احتمال بیش از یک‌سوم (۳۴.۵٪) وجود دارد که الگوریتم هیچ تراکنشی ثبت نکند و امتیاز فعالیت دریافت ننماید.
-4. **تخریب سود توسط تصفیه اجباری (Boundary Liquidation Drag):** علت سودآوری پیوسته ۹۰ روزه (+۳۱،۵۵۵ تومان)، باز نگه داشتن پوزیشن‌ها در طول چندین روز متوالی بوده است. در مسابقه ۳ روزه با تصفیه اجباری در ساعت ۷۲، استراتژی متحمل **۱۱ تصفیه اضطراری** به ارزش **۱۱،۰۷۵- تومان زیان خالص** گردیده که روند معاملات برنده را ناتمام قطع کرده است.
+### Documented answer to computational evidence:
+**No (NO).**  
+Experimental evidence reproduced in 29 independent racing windows shows:
+1. **Negative mathematical hope in the short horizon:** The average yield of the artificial intelligence strategy in independent 72-hour windows is equal to **-0.0199%** (total loss **-28,871 Tomans**).
+2. **Low win rate of windows:** Out of 29 complete windows, only **6 windows (20.69%)** have been profitable; 12 windows (41.38%) are unprofitable and 11 windows (37.93%) remain neutral.
+3. **Algorithmic inactivity risk (Zero-Trade Risk):** In **10 windows out of 29 windows (34.48%)**, the artificial intelligence system has made **exactly zero trades** due to the veto of the market regime. In a 3-day competition, there is more than a third (34.5%) chance that the algorithm will not record any transactions and receive no activity points.
+4. **Destruction of profit by forced liquidation (Boundary Liquidation Drag):** The reason for continuous profit of 90 days (+31,555 Tomans) was keeping positions open during several consecutive days. In the 3-day competition with forced liquidation at 72 hours, the strategy suffered **11 emergency liquidations** worth **-11,075 Tomans net loss**, which interrupted the process of winning transactions.
 
 ---
 
-## ۲. تفکیک دقیق فعالیت معاملاتی پنجره‌های ۲۹ گانه (Task 1 — Window Trading Activity)
+## 2. Detailed breakdown of the trading activity of the 29 windows (Task 1 — Window Trading Activity)
 
-در گزارش فاز ۲۰.۳، تعداد پنجره‌های خنثی ۱۱ و تعداد پنجره‌های فعال ۱۸ عدد ذکر شده بود که در این فاز کالبدشکافی دقیق شد:
+In the report of phase 20.3, the number of neutral windows was 11 and the number of active windows was 18, which was detailed in this phase of autopsy:
 
-### ۲.۱. ریشه‌یابی پنجره W11:
-- پنجره **W11** شامل **۲ معامله بسته‌شده** (یک حد سود و یک حد ضرر) بود که به زیان جزئی **۲۳- تومان** (بازدهی **۰.۰۰۰۴۶٪-**) منجر شد.
-- چون $|-0.00046\%| \le 0.001\%$ بود، این پنجره به درستی از نظر سودآوری در دسته «خنثی» قرار گرفت؛ اما این پنجره یک **پنجره فعال معاملاتی** بوده است، نه بدون معامله!
-- بنابراین تعداد پنجره‌های واقعاً بدون معامله (Zero-Trade) برابر با **۱۰ پنجره** است، نه ۱۱ پنجره.
-- تعداد پنجره‌های فعال معاملاتی برابر با **۱۹ پنجره** است ($29 - 10 = 19$).
-- کسر پنجره‌های برنده در میان پنجره‌های فعال:
+### 2.1. Rooting Windows 11:
+- **W11** window included **2 closed trades** (one profit limit and one loss limit), which led to a partial loss of **-23 Tomans** (return **-0.00046%**).
+- Because $|-0.00046\%| \le 0.001\%$, this window was correctly classified as "neutral" in terms of profitability; But this window has been an **active trading window**, not without trading!
+- So the number of truly zero-trade windows is **10 windows**, not 11 windows.
+- The number of active trading windows is equal to **19 windows** ($29 - 10 = $19).
+- Deduction of winning windows among active windows:
   $$\text{Win Rate on Active Windows} = \frac{6}{19} = \mathbf{31.58\%}$$
-  (مقدار قبلی $6/18 = 33.33\%$ به دلیل تفکیک نکردن پنجره خنثی فعال از پنجره بدون معامله رخ داده بود که تصحیح شد).
+  (The previous value $6/18 = 33.33\%$ occurred due to not distinguishing the active neutral window from the no-trade window, which was corrected).
 
-### ۲.۲. جدول دسته‌بندی پنجره‌های ۷۲ ساعته (N = 29):
+### 2.2. Classification table of 72-hour windows (N = 29):
 
-| دسته‌بندی مفهومی پنجره | تعریف کمّی و شرط ریاضی | استراتژی هوش مصنوعی (AI) | استراتژی دتر مینیستیک (Det) |
+| Conceptual classification of windows Quantitative definition and mathematical condition Artificial intelligence (AI) strategy Deter ministic strategy (Det) |
 |---|---|:---:|:---:|
-| **پنجره‌های بدون معامله (Zero-Trade)** | $\text{Trades Count} = 0$ (۱۰۰٪ نقد) | **۱۰ پنجره (۳۴.۴۸٪)** | **۰ پنجره (۰.۰۰٪)** |
-| **پنجره‌های فعال معاملاتی (Active)** | $\text{Trades Count} \ge 1$ | **۱۹ پنجره (۶۵.۵۲٪)** | **۲۹ پنجره (۱۰۰.۰۰٪)** |
-| **پنجره‌های خنثی از نظر بازدهی (Neutral)** | $|\text{Net Return}| \le 0.001\%$ | **۱۱ پنجره (۳۷.۹۳٪)** | **۰ پنجره (۰.۰۰٪)** |
-| **پنجره‌های سودده (Profitable / WIN)** | $\text{Net Return} > +0.001\%$ | **۶ پنجره (۲۰.۶۹٪)** | **۱۲ پنجره (۴۱.۳۸٪)** |
-| **پنجره‌های زیان‌ده (Losing / LOSS)** | $\text{Net Return} < -0.001\%$ | **۱۲ پنجره (۴۱.۳۸٪)** | **۱۷ پنجره (۵۸.۶۲٪)** |
-| **نرخ برد پنجره‌های کل (Overall Win Rate)** | $\text{WIN} \div 29$ | **۲۰.۶۹٪** | **۴۱.۳۸٪** |
-| **نرخ برد پنجره‌های فعال (Active Win Rate)** | $\text{WIN} \div \text{Active}$ | **۳۱.۵۸٪** (۶ از ۱۹) | **۴۱.۳۸٪** (۱۲ از ۲۹) |
+| **Zero-Trade windows** | $\text{Trades Count} = 0$ (100% cash) | **10 windows (34.48%)** | **0 windows (0.00%)** |
+| **active trading windows (Active)** | $\text{Trades Count} \ge 1$ | **19 windows (65.52%)** | **29 windows (100.00%)** |
+| **Neutral windows in terms of efficiency** | $|\text{Net Return}| \le 0.001\%$ | **11 windows (37.93%)** | **0 windows (0.00%)** |
+| **Profitable windows (WIN)** | $\text{Net Return} > +0.001\%$ | **6 windows (20.69%)** | **12 windows (41.38%)** |
+| **Losing windows (Losing / LOSS)** | $\text{Net Return} < -0.001\%$ | **12 windows (41.38%)** | **17 windows (58.62%)** |
+| **Overall Win Rate** | $\text{WIN} \div 29$ | **20.69%** | **41.38%** |
+| **Active Win Rate** | $\text{WIN} \div \text{Active}$ | **31.58%** (6 out of 19) | **41.38%** (12 of 29) |
 
 ---
 
-## ۳. تطبیق ساختاری بک‌تست پیوسته در برابر پنجره‌های مستقل (Task 2 — Continuous vs Independent)
+## 3. Structural matching of continuous vs independent windows (Task 2 — Continuous vs Independent)
 
-### ۳.۱. جدول مقایسه ارقام دو آزمایش:
+### 3.1. Comparison table of figures of two tests:
 
-| شاخص عملکرد | هوش مصنوعی پیوسته (Continuous) | هوش مصنوعی پنجره‌ای (Independent) | دتر مینیستیک پیوسته (Continuous) | دتر مینیستیک پنجره‌ای (Independent) |
+| performance index Continuous artificial intelligence Window artificial intelligence (Independent) | Deter ministic continuous (Continuous) | Deter ministic window (Independent) |
 |---|:---:|:---:|:---:|:---:|
-| **تعداد کل معاملات** | ۲۲ معامله | **۲۶ معامله** | ۳۶ معامله | **۵۰ معامله** |
-| **سود خالص تومانی کل** | **+۳۱،۵۵۵ تومان** | **۲۸،۸۷۱- تومان** | **+۸،۱۵۳ تومان** | **۹۶،۴۷۱- تومان** |
-| **بازدهی کل دوره / میانگین** | **+۰.۶۳٪** | **۰.۰۱۹۹٪-** (در هر ۳ روز) | **+۰.۱۶٪** | **۰.۰۶۶۵٪-** (در هر ۳ روز) |
-| **هزینه کل کارمزد پرداختی** | ۶۳،۴۲۹ تومان | ۷۶،۳۲۱ تومان | ۱۰۳،۹۲۶ تومان | ۱۴۶،۷۷۸ تومان |
-| **هزینه کل اسلیپیج اجرا** | ۲۴،۵۶۲ تومان | ۳۳،۶۰۰ تومان | ۴۰،۹۱۶ تومان | ۶۴،۹۴۳ تومان |
-| **مجموع اصطکاک معاملاتی** | **۸۷،۹۹۱ تومان** | **۱۰۹،۹۲۱ تومان** (+۲۵٪) | **۱۴۴،۸۴۲ تومان** | **۲۱۱،۷۲۱ تومان** (+۴۶٪) |
+| **Total number of transactions** | 22 deals **26 transactions** | 36 transactions **50 transactions** |
+| **Tomani net profit** | **+31,555 Tomans** | **28,871 Tomans** | **+8,153 Tomans** | **96,471-Tomans** |
+| **return of the whole period / average** | **+0.63%** | **0.0199%-** (every 3 days) | **+0.16%** | **0.0665%-** (every 3 days) |
+| **Total fee paid** | 63,429 Tomans 76,321 Tomans 103,926 Tomans 146,778 Tomans
+| **The total cost of implementation slippage** | 24,562 Tomans 33,600 Tomans 40,916 Tomans 64,943 Tomans
+| **Total trading friction** | **87,991 Tomans** | **109,921 Tomans** (+25%) | **144,842 Tomans** | **211,721 Tomans** (+46%) |
 
-### ۳.۲. علل ساختاری تفاوت فاحش عملکرد:
-1. **تصفیه اجباری در مرز ۷۲ ساعت (Boundary Liquidation Drag):**  
-   در استراتژی پیوسته، معاملات تا زمان فعال‌سازی حد سود یا حد ضرر (که گاهی ۱ الی ۴ روز طول می‌کشد) باز می‌مانند. در شبیه‌سازی پنجره‌ای، **۱۱ پوزیشن هوش مصنوعی** و **۱۹ پوزیشن دتر مینیستیک** در پایان ۷۲ ساعت با قیمت لحظه‌ای و با کارمزد تیکر (۰.۳۰٪) به صورت اجباری بسته شدند. این ۱۱ تصفیه اجباری به تنهایی متحمل **۱۱،۰۷۵- تومان زیان** شدند و روند رشد پوزیشن‌های موفق را به اجبار قطع کردند.
-2. **انباشت اصطکاک مبادله ناشی از افزایش معاملات:**  
-   چون در پایان هر پنجره پوزیشن نقد می‌شود، پنجره بعدی با دست خالی شروع به معامله می‌کند. این امر موجب شد تعداد معاملات هوش مصنوعی از ۲۲ به ۲۶ و معاملات دتر مینیستیک از ۳۶ به ۵۰ معامله افزایش یابد. در نتیجه، اصطکاک معاملاتی هوش مصنوعی **۲۱،۹۳۰ تومان** افزایش یافت و حاشیه سود نازک استراتژی را کاملاً بلعید.
-3. **تغییر توالی ورود به دلیل عدم حمل پوزیشن (Path Dependency):**  
-   بررسی متناظر ورودها نشان داد که ۲۰ معامله در هر دو آزمایش مشترک بودند؛ اما **۶ معامله جدید** در پنجره‌های مستقل باز شدند (مانند معاملات جدید در W09, W11, W13, W23) که در بک‌تست پیوسته به دلیل باز بودن پوزیشن‌های قبلی فیلتر شده بودند.
+### 3.2. Structural reasons for the drastic difference in performance:
+1. **Mandatory liquidation within 72 hours (Boundary Liquidation Drag):**  
+   In the continuous strategy, trades remain open until the profit limit or loss limit is activated (which sometimes takes 1-4 days). In the window simulation, **11 positions of artificial intelligence** and **19 positions of deterministic** were closed compulsorily at the end of 72 hours at the spot price and with the ticker fee (0.30%). These 11 forced liquidations alone suffered a loss of -11,075 Tomans and forcibly stopped the growth of successful positions.
+2. **accumulation of exchange friction due to the increase in transactions:**  
+   Because the position is liquidated at the end of each window, the next window starts trading empty-handed. This caused the number of artificial intelligence transactions to increase from 22 to 26, and Deterministic transactions from 36 to 50 transactions. As a result, the AI ​​trading friction increased by **21,930 Tomans** and completely swallowed the strategy's thin profit margin.
+3. **Changing the entry sequence due to not carrying the position (Path Dependency):**  
+   A corresponding review of the entries showed that 20 transactions were common to both experiments; But **6 new trades** were opened in independent windows (eg new trades in W09, W11, W13, W23) which were filtered out in the continuous backtest due to previous open positions.
 
 ---
 
-## ۴. توزیع آماری عملکرد مسابقه‌ای در افق ۷۲ ساعته (Task 3 — 72-Hour Distribution)
+## 4. Statistical distribution of racing performance in the 72-hour horizon (Task 3 — 72-Hour Distribution)
 
-### ۴.۱. جدول آماری جامع عملکرد ۲۹ پنجره مستقل ۷۲ ساعته (N = 29):
+### 4.1. Comprehensive statistical table of the performance of 29 independent 72-hour windows (N = 29):
 
-| متغیر آماری (72-Hour Distribution) | استراتژی هوش مصنوعی (AI) | استراتژی دتر مینیستیک (Det) | تحلیل ممیزی مقایسه‌ای |
+| Statistical variable (72-Hour Distribution) | Artificial intelligence (AI) strategy Deter ministic strategy (Det) | Comparative audit analysis
 |---|:---:|:---:|---|
-| **مجموع سود خالص محقق‌شده** | **۲۸،۸۷۰.۸۱- تومان** | **۹۶،۴۷۱.۳۸- تومان** | هر دو استراتژی در مجموع زیان‌ده شدند |
-| **میانگین بازدهی ۷۲ ساعته (Mean)** | **۰.۰۱۹۹٪-** | **۰.۰۶۶۵٪-** | بازدهی مورد انتظار تاریخی منفی است |
-| **میانه بازدهی ۷۲ ساعته (Median)** | **۰.۰۰۰۰٪** | **۰.۱۳۵۱٪-** | هوش مصنوعی به دلیل نقد بودن میانه صفر دارد |
-| **انحراف معیار بازدهی (Std Dev)** | **۰.۲۷۷۷٪** | **۰.۳۸۱۲٪** | نوسان‌پذیری بازدهی در AI کمتر است |
-| **خطای استاندارد میانگین (SEM)** | **۰.۰۵۱۶٪** | **۰.۰۷۰۸٪** | با $N=29$ عدم قطعیت قابل توجه است |
-| **بهترین پنجره ۷۲ ساعته (Best)** | **۱.۲۰۱۸٪+ (W09)** | **۰.۹۹۳۱٪+ (W09)** | ثبت سود ۶۰،۰۹۱ تومانی در روند پرقدرت |
-| **بدترین پنجره ۷۲ ساعته (Worst)** | **۰.۴۴۳۲٪- (W12)** | **۰.۶۹۵۴٪- (W25)** | حداکثر زیان در دتر مینیستیک عمیق‌تر است |
-| **میانگین بازدهی در پنجره‌های فعال** | **۰.۰۳۰۴٪-** (در ۱۹ پنجره) | **۰.۰۶۶۵٪-** (در ۲۹ پنجره) | حتی در زمان معامله، میانگین سود منفی است |
-| **میانگین زمان در معرض ریسک (Exposure)** | **۱۹.۵۷ ساعت (۲۷.۲٪ بازه)** | **۴۹.۲۸ ساعت (۶۸.۵٪ بازه)** | هوش مصنوعی زمان بسیار کمتری در ریسک بود |
-| **میانگین دراوداون پنجره‌ای** | **۰.۱۹۰۹٪** | **۰.۳۶۳۹٪** | کنترل ریسک هوش مصنوعی بسیار بهتر است |
-| **حداکثر دراوداون پنجره‌ای** | **۰.۵۱۲۶٪** | **۰.۷۲۳۳٪** | هیچ پنجره‌ای از سقف ۵.۰٪ عدول نکرد |
-| **میانگین تعداد معامله در هر پنجره** | **۰.۹۰ معامله** | **۱.۷۲ معامله** | فرکانس معامله هوش مصنوعی کمتر از ۱ است |
+| **Total realized net profit** | **28,870.81 Tomans** | **96,471.38 Tomans** | Both strategies lost in total
+| **Average 72-hour yield (Mean)** | **0.0199%-** | **0.0665%-** | The historical expected return is negative
+| ** 72-hour median yield (Median)** | **0.0000%** | **0.1351%-** | Artificial intelligence has zero mean due to its liquidity
+| **Standard deviation of efficiency (Std Dev)** | **0.2777%** | **0.3812%** | The yield volatility is less in AI
+| **Standard error of the mean (SEM)** | **0.0516%** | **0.0708%** | With $N=29$, the uncertainty is significant |
+| **The best 72-hour window (Best)** | **1.2018%+ (W09)** | **0.9931%+ (W09)** | Registering a profit of 60,091 tomans in a strong trend
+| **The worst 72-hour window (Worst)** | **0.4432%- (W12)** | **0.6954%- (W25)** | The maximum loss is deeper in the ministic detre
+| **Average efficiency in active windows** | **0.0304%-** (in 19 windows) | **0.0665%-** (in 29 windows) | Even during trading, the average profit is negative
+| **Average exposure time** | **19.57 hours (27.2% interval)** | **49.28 hours (68.5% interval)** | Artificial intelligence was much less time at risk
+| **Window Drawdown Average** | **0.1909%** | **0.3639%** | AI risk control is much better
+| **Window maximum drawdown** | **0.5126%** | **0.7233%** | No window exceeded the 5.0% ceiling
+| **Average number of transactions per window** | **0.90 transaction** | **1.72 transactions** | Artificial intelligence trading frequency is less than 1
 
 ---
 
-## ۵. تحلیل سودآوری در افق کوتاه و محدودیت‌های آماری (Task 4 — Short-Horizon Edge)
+## 5. Analysis of short-horizon profitability and statistical limitations (Task 4 — Short-Horizon Edge)
 
-### ۵.۱. آزمون فرضیه آماری برای برتری در افق ۷۲ ساعته:
-- **فرضیه صفر ($H_0$):** بازدهی مورد انتظار استراتژی کمتر یا مساوی صفر است ($\mu \le 0$).
-- **فرضیه مقابل ($H_1$):** استراتژی دارای امید ریاضی مثبت است ($\mu > 0$).
+### 5.1. Statistical hypothesis test for superiority in the 72-hour horizon:
+- **Null hypothesis ($H_0$):** The expected return of the strategy is less than or equal to zero ($\mu \le 0$).
+- **Counter hypothesis ($H_1$):** The strategy has a positive mathematical expectation ($\mu > 0$).
 
 $$\text{Sample Mean } (\bar{x}) = -0.0199\%$$
 $$\text{Standard Error } (\text{SEM}) = \frac{s}{\sqrt{n}} = \frac{0.2777\%}{\sqrt{29}} = 0.0516\%$$
@@ -108,85 +108,85 @@ $$\text{T-Statistic} = \frac{\bar{x} - 0}{\text{SEM}} = \frac{-0.0199}{0.0516} =
 $$\text{95\% Confidence Interval} = \bar{x} \pm t_{0.025, 28} \times \text{SEM} = [-0.0199 \pm 2.048 \times 0.0516] = \mathbf{[-0.1255\%, +0.0857\%]}$$
 
 > [!CAUTION]
-> **نتیجه قطعی آزمون آماری:**  
-> آماره تی منفی ($-0.3861$) و بازه اطمینان ۹۵٪ که از **۰.۱۳٪- تا ۰.۰۹٪+** گسترده است و عدد صفر را به طور کامل در بر می‌گیرد، اثبات می‌کند که **فرضیه وجود لبه سودآور معنادار (Positive Statistical Edge) در افق ۷۲ ساعته به طور قطعی رد می‌شود**. هیچ ادعای آماری مبنی بر سودآوری تضمین‌شده در یک مسابقه ۳ روزه قابل دفاع نیست.
+> **The definitive result of the statistical test:**  
+> The negative t-statistic ($-0.3861$) and the 95% confidence interval, which extends from **-0.13% to +0.09%** and completely covers zero, prove that **the hypothesis of the presence of a significant profitable edge (Positive Statistical Edge) in the 72-hour horizon is definitely rejected**. No statistical claim of guaranteed profitability in a 3 day race can be defended.
 
-### ۵.۲. تضاد بین فیلتر رژیم هوش مصنوعی و امتیاز فعالیت مسابقه:
-- فیلتر هوش مصنوعی عملکرد درخشانی در جلوگیری از زیان‌های فرسایشی دارد (کاهش زیان از ۹۶ هزار به ۲۸ هزار تومان).
-- اما بهای این حفاظت، **عدم معامله در ۳۴.۵٪ زمان‌ها** است.
-- در معیارهای ارزیابی مسابقات Agentic AI، اگر هیئت داوران یا فرمول امتیازدهی مسابقه برای عدم فعالیت الگوریتمی جریمه لحاظ کنند، ربات در ۱ پنجره از هر ۳ پنجره نمره فعالیت معاملاتی را به طور کامل از دست خواهد داد.
+### 5.2. Contrast between AI regime filter and match activity score:
+- The artificial intelligence filter has a brilliant performance in preventing erosive losses (loss reduction from 96 thousand to 28 thousand tomans).
+- But the price of this protection is **not trading 34.5% of the time**.
+- In the Agentic AI competition evaluation criteria, if the jury or competition scoring formula includes a penalty for algorithmic inactivity, the bot will lose trading activity score completely in 1 out of every 3 windows.
 
 ---
 
-## ۶. ممیزی استحکام و آزمون‌های تنش اصطکاک مبادله (Task 5 — Robustness & Stress Testing)
+## 6. Task 5 — Robustness & Stress Testing
 
-عملکرد استراتژی هوش مصنوعی و خط مبنای دتر مینیستیک در ۸ سناریوی استرس شدید به صورت متناظر در ۲۹ پنجره آزموده شد:
+The performance of artificial intelligence strategy and Deterministic baseline was tested in 8 extreme stress scenarios correspondingly in 29 windows:
 
-| سناریوی آزمون تنش (Stress Scenario) | سود کل AI (TMN) | نرخ برد کل AI | سود کل Det (TMN) | نرخ برد کل Det | ارزیابی تاب‌آوری استراتژی |
+| Stress Scenario AI Total Profit (TMN) | AI total win rate | Total Profit Det (TMN) | Total win rate Det | Assessing the resilience of the strategy
 |---|:---:|:---:|:---:|:---:|---|
-| **۱. خط مبنا (اسلیپیج ۰.۱۵٪، کارمزد والکس ۰.۲۵/۰.۳۰٪)** | ۲۸،۸۷۱- | ۲۰.۷٪ | ۹۶،۴۷۱- | ۴۱.۴٪ | مبنای فعلی شبیه‌سازی |
-| **۲. اسلیپیج بالا (۰.۳۰٪ اسلیپیج نقدینگی)** | ۵۰،۲۲۹- | ۱۰.۳٪ | ۱۴۸،۸۳۶- | ۳۴.۵٪ | افت شدید نرخ برد AI به ۱۰٪ |
-| **۳. اسلیپیج بحرانی (۰.۵۰٪ اسلیپیج در ریزش)** | ۸۵،۳۴۰- | ۱۰.۳٪ | ۲۴۶،۱۱۸- | ۳۱.۰٪ | تخریب عمیق حساب دتر مینیستیک |
-| **۴. افزایش ۵۰٪ اسپرد بازار (گیت اسپرد فعال‌تر)** | ۶،۸۵۶- | ۱۳.۸٪ | ۷۰،۲۰۴- | ۴۱.۴٪ | وتوی بیشتر معاملات زیان را کم کرد |
-| **۵. تاخیر اجرایی (۱ کندل تاخیر در ورود)** | ۲۲،۶۱۸- | ۲۴.۱٪ | ۱۰۳،۷۷۲- | ۴۱.۴٪ | عملکرد نسبتاً خنثی در برابر تاخیر |
-| **۶. اجرای لیمیت جزئی حد سود (۵۰٪ میکر / ۵۰٪ تیکر)** | ۳۳،۰۳۵- | ۲۰.۷٪ | ۱۰۳،۷۲۴- | ۳۷.۹٪ | کاهش سودآوری در پر نشدن لیمیت‌ها |
-| **۷. سناریوی کارمزد تشویقی مسابقه (۰.۰۸٪ کارمزد ثابت)** | **۲۶،۶۱۳+** | **۳۱.۰٪** | **۱۰،۲۶۷+** | **۴۴.۸٪** | **تنها سناریوی سودآور برای هر دو سیستم** |
-| **۸. سناریوی کارمزد تیکر بالا (۰.۴۰٪ تیکر صرافی)** | ۵۳،۰۹۷- | ۱۳.۸٪ | ۱۴۳،۱۴۹- | ۳۴.۵٪ | تشدید زیان ناشی از تصفیه‌های اجباری |
+| **1. Baseline (slippage 0.15%, Wallex fee 0.25/0.30%)** | 28,871- | 20.7% 96,471- | 41.4% The current basis of simulation
+| **2. High slippage (0.30% liquidity slippage)** | 50,229 | 10.3% 148,836-| 34.5% Drastic drop in AI win rate to 10%
+| **3. Critical slippage (0.50% slippage in falling)** | 85,340 | 10.3% 118-246 | 31.0% Deep destruction of Deter Ministic's account
+| **4. 50% increase in market spread (gate spread is more active)** | 6,856- | 13.8% 204-70 | 41.4% Vetoi reduced the losses in most of the transactions
+| **5. Executive delay (1 candle delay in entry)** | 22,618- | 24.1% 103,772- | 41.4% Relatively neutral performance against delay
+| **6. Implementation of partial profit limit (50% maker / 50% taker)** | 33,035 | 20.7% 103,724-| 37.9% Decrease in profitability in not filling the limits
+| **7. Competition incentive fee scenario (0.08% fixed fee)** | **26,613+** | **31.0%** | **10,267+** | **44.8%** | **The only profitable scenario for both systems** |
+| **8. High ticker fee scenario (0.40% exchange ticker)** | 53,097- | 13.8% 149-143 34.5% Intensification of losses caused by forced liquidations
 
 > [!IMPORTANT]
-> **یافته حیاتی آزمون‌های تنش:**  
-> تنها حالتی که در آن استراتژی منجمد در افق ۳ روزه مسابقه به سودآوری خالص مثبت می‌رسد، **سناریوی کارمزد تشویقی ۰.۰۸٪ (Promo Fee)** است. تحت کارمزدهای رسمی سطح یک صرافی والکس (۰.۲۵٪ میکر و ۰.۳۰٪ تیکر)، هزینه‌های اصطکاک صرافی به همراه اسلیپیج، برآیند عملکرد ۷۲ ساعته را در تمام سناریوهای دیگر منفی نگه می‌دارد.
+> **Critical findings of stress tests:**  
+> The only situation in which the frozen strategy reaches a positive net profit in the 3-day horizon of the competition is the **0.08% Promo Fee scenario**. Under official Wallex exchange level one fees (0.25% maker and 0.30% taker), exchange friction costs plus slippage keep the 72-hour performance negative in all other scenarios.
 
 ---
 
-## ۷. تفکیک پنج‌گانه وضعیت‌های ارزیابی سیستم (Task 6 — Five-Tier Status Classification)
+## 7. Task 6 - Five-Tier Status Classification
 
-برای شفافیت سازمانی، وضعیت مؤلفه‌های پروژه بر اساس شواهد ممیزی تفکیک گردید:
+For organizational transparency, the status of project components was separated based on audit evidence:
 
 ```mermaid
 flowchart LR
-    A["۱. سلامت فنی کد\n(Code & Pipeline)"] -->|تایید کامل| S1["✅ TECHNICALLY VERIFIED\n(62 آزمون پاس، بدون نقص عددی)"]
-    B["۲. سودآوری ۹۰ روزه\n(Continuous 90-Day)"] -->|تایید تاریخی| S2["✅ HISTORICALLY PROFITABLE\n(+31,555 TMN / +0.63%)"]
-    C["۳. عملکرد ۳ روزه مسابقه\n(72h Independent Windows)"] -->|رد آماری| S3["❌ NOT PROFITABLE IN 72H\n(-28,871 TMN / میانگین منفی)"]
-    D["۴. لبه آماری کوتاه‌مدت\n(Short-Horizon Edge)"] -->|رد آماری| S4["❌ NO STATISTICAL EDGE\n(T-stat = -0.38, بازه 95% منفی)"]
-    E["۵. آمادگی اجرای لایو\n(Live Execution)"] -->|مسدود| S5["🛑 NOT AUTHORIZED\n(live_execution_authorized = False)"]
+    A["1. Technical health of the code\n(Code & Pipeline)"] -->|Full approval| S1["✅ TECHNICALLY VERIFIED\n(62 passing tests, without numerical defects)"]
+    B["2. Profitability for 90 days\n(Continuous 90-Day)"] -->|Historical confirmation| S2["✅ HISTORICALLY PROFITABLE\n(+31,555 TMN / +0.63%)"]
+    C["3. Performance of the 3-day competition\n(72h Independent Windows)"] -->|Statistical rejection| S3["❌ NOT PROFITABLE IN 72H\n(-28,871 TMN / negative average)"]
+    D["4. Short-term statistical edge\n(Short-Horizon Edge)"] -->|Statistical rejection| S4["❌ NO STATISTICAL EDGE\n(T-stat = -0.38, negative 95% interval)"]
+    E["5. Preparation for live performance\n(Live Execution)"] -->|blocked| S5["🛑 NOT AUTHORIZED\n(live_execution_authorized = False)"]
 ```
 
-1. **صحت فنی و بازتولیدپذیری (TECHNICALLY VERIFIED):**  
-   ✅ **PASS** — تمامی ۶۲ آزمون واحد و یکپارچگی پاس شدند، فرآیند اجرای سفارشات بدون باگ است و ترازهای حسابداری به صورت ۱۰۰٪ متناظر تطبیق یافتند.
-2. **سودآوری تاریخی در افق پیوسته ۹۰ روزه (HISTORICALLY PROFITABLE OVER 90 DAYS):**  
-   ✅ **PASS** — استراتژی در اجرای ممتد ۹۰ روزه با ۲۲ معامله سود خالص ۳۱،۵۵۵+ تومان (+۰.۶۳٪) ساخته و از خط مبنای دتر مینیستیک (+۸،۱۵۳ تومان) بهتر عمل کرده است.
-3. **سودآوری در پنجره‌های آزمون ۷۲ ساعته مسابقه (PROFITABLE IN 72-HOUR TEST WINDOWS):**  
-   ❌ **FAILED** — در ۲۹ پنجره مستقل مسابقه‌ای، استراتژی مجموعاً ۲۸،۸۷۱- تومان زیان ثبت کرده و نرخ برد پنجره‌ها تنها ۲۰.۷٪ است.
-4. **وجود لبه آماری قابل دفاع در افق کوتاه (STATISTICALLY SUPPORTED SHORT-HORIZON EDGE):**  
-   ❌ **FAILED** — فرضیه لبه سودآور مثبت در سطح اطمینان ۹۵٪ رد شد (امید ریاضی ۰.۰۲٪- در هر ۳ روز).
-5. **آمادگی عملیاتی برای معاملات زنده (OPERATIONALLY READY FOR LIVE EXECUTION):**  
-   🛑 **NOT AUTHORIZED** — به دلیل عدم دریافت کلیدهای API از برگزارکننده، عدم پشتیبانی صرافی والکس از استاپ‌لاس بومی، و ریسک بالای عدم سودآوری در افق ۳ روزه، ارسال سفارش واقعی اکیداً ممنوع است.
+1. Technical accuracy and reproducibility (TECHNICALLY VERIFIED):**  
+   **PASS** — All 62 unit and integrity tests are passed, the order execution process is bug-free, and accounting balances are 100% matched.
+2. **HISTORICALLY PROFITABLE OVER 90 DAYS:**  
+   ✅ **PASS** — The strategy has made a net profit of +31,555 Tomans (+0.63%) in the continuous execution of 90 days with 22 trades and has performed better than the Deter Ministic baseline (+8,153 Tomans).
+3. **PROFITABLE IN 72-HOUR TEST WINDOWS:**  
+   ❌ **FAILED** — In 29 independent racing windows, the strategy registered a total loss of -28,871 Tomans and the window win rate is only 20.7%.
+4. **Statistically supported short-horizon edge:**  
+   ❌ **FAILED** — The hypothesis of a positive profitable edge is rejected at the 95% confidence level (mathematical expectation -0.02% every 3 days).
+5. **OPERATIONALLY READY FOR LIVE EXECUTION:**  
+   🛑 **NOT AUTHORIZED** — Due to the lack of API keys from the organizer, the lack of native stoploss support from Wallex exchange, and the high risk of not being profitable in the 3-day horizon, it is strictly forbidden to send real orders.
 
 ---
 
-## ۸. اولویت‌بندی اقدامات اصلاحی و پژوهشی (Actionable Recommendations)
+## 8. Prioritizing corrective and research measures (Actionable Recommendations)
 
-با حفظ انجماد کامل استراتژی فعلی، مسیرهای فنی زیر برای ارتقای سیستم مسابقه‌ای توصیه می‌شود:
+Keeping the current strategy completely frozen, the following technical paths are recommended to improve the racing system:
 
-1. **مذاکره برای تخفیف کارمزد مسابقه (Organizer Fee Exemption):**  
-   شواهد بخش ۶ اثبات کرد که با کارمزد تشویقی ۰.۰۸٪، استراتژی بلافاصله به سودآوری مثبت (+۲۶،۶۱۳ تومان) در افق ۷۲ ساعته می‌رسد. استعلام از برگزارکنندگان در مورد اعمال تخفیف مسابقه‌ای اولویت نخست است.
-2. **اصلاح قانون خروج در مرز ۷۲ ساعت (Graceful Wind-Down Logic):**  
-   تعبیه منطق خروج تدریجی در ساعات پایانی مسابقه (مثلاً عدم ورود در ۱۲ ساعت پایانی و بستن سفارشات به صورت پسیو میکر) می‌تواند زیان ۱۱ هزار تومانی ناشی از تصفیه اضطراری تیکر را از بین ببرد.
-3. **تطبیق حد سود/ضرر با افق زمانی مسابقه (Time-Horizonal Target Tuning):**  
-   تارگت‌های فعلی استراتژی (حد سود ۴٪ و حد ضرر ۲٪ بر مبنای ATR) برای روندهای چندروزه طراحی شده‌اند. برای یک مسابقه ۷۲ ساعته، تارگت‌های کوتاه‌تر (مثلاً حد سود ۱.۵٪ تا ۲.۰٪) اجازه خروج سودآور قبل از پایان مسابقه را می‌دهند.
-4. **تعبیه مکانیزم پایش و ارسال استاپ‌لاس سریع (Client-side OCO Watcher):**  
-   به دلیل فقدان استاپ‌لاس سمت سرور در والکس، پیاده‌سازی سرویس ناظر پرسرعت (Websocket-based Stop Trigger) جهت حداقل کردن اسلیپیج در زمان خروج‌های اضطراری الزامی است.
+1. **Negotiation for discounting the competition fee (Organizer Fee Exemption):**  
+   The evidence in Section 6 proved that with an incentive fee of 0.08%, the strategy immediately achieves positive profitability (+26,613 Tomans) over a 72-hour horizon. Inquiries from the organizers regarding the application of competition discounts are the first priority.
+2. **Amendment of the exit law within 72 hours (Graceful Wind-Down Logic):**  
+   Embedding the logic of gradual exit in the final hours of the competition (for example, not entering in the last 12 hours and closing orders as a passive maker) can eliminate the loss of 11 thousand tomans caused by the emergency liquidation of the ticker.
+3. **Adjustment of the profit/loss limit with the time horizon of the competition (Time-Horizontal Target Tuning):**  
+   The current targets of the strategy (profit limit 4% and loss limit 2% based on ATR) are designed for multi-day trends. For a 72-hour match, shorter targets (eg profit limits of 1.5% to 2.0%) allow for profitable exits before the end of the match.
+4. **Embedding the monitoring mechanism and sending fast stoploss (Client-side OCO Watcher):**  
+   Due to the lack of server-side stoploss in Wallex, it is necessary to implement a high-speed monitoring service (Websocket-based Stop Trigger) to minimize slippage during emergency exits.
 
 ---
 
-## ۹. حکم نهایی ممیزی فاز ۲۱ (Final Release Verdict)
+## 9. Final Release Verdict of Phase 21
 
-> **بعد ممیزی فنی و محاسباتی:**  
-> ✅ **VERIFIED & AUDITED** — مغایرت‌های پنجره‌ها شفاف‌سازی شد، ارقام به طور دقیق تفکیک گردید و تحلیل آماری کامل شد.
+> **Dimensions of technical and computational audit:**  
+> ✅ **VERIFIED & AUDITED** — Window discrepancies were clarified, figures were accurately separated, and statistical analysis was completed.
 >
-> **بعد ارزیابی آمادگی مسابقه ۳ روزه:**  
-> ⚠️ **NOT READY FOR 72-HOUR HORIZON** — استراتژی برای اجرای پیوسته میان‌مدت طراحی شده و در فرمت رقابت مستقل ۳ روزه با تصفیه اجباری، امید ریاضی سودآوری ندارد.
+> **After evaluating the preparation of the 3-day competition:**  
+> ⚠️ **NOT READY FOR 72-HOUR HORIZON** — The strategy is designed for medium-term continuous execution and has no mathematical hope of profitability in a 3-day independent competition format with mandatory clearing.
 >
-> **بعد مجوز فعال‌سازی معاملات زنده:**  
-> 🛑 **NOT AUTHORIZED** — متغیر [`live_execution_authorized = False`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json) بدون تغییر حفظ شده و ارسال هرگونه سفارش واقعی به صرافی اکیداً ممنوع است.
+> **after permission to activate live transactions:**  
+> 🛑 **NOT AUTHORIZED** — The variable [`live_execution_authorized = False`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json) is kept unchanged and sending any real orders to the exchange is strictly prohibited.

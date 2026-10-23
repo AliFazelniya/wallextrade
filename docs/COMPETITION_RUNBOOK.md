@@ -1,162 +1,152 @@
-# راهنمای جامع عملیاتی روز مسابقه هکاتون (Competition Runbook)
+#Competition Runbook
 ### Wallex × Starcoach Algorithmic Trading Operations Manual
-**مخزن:** [`wallex`](file:///root/starcoach-hack/wallex) | **نسخه منجمد:** `v0.6.0-phase14-audited` (`d49bd69`) | **تاریخ تدوین:** ۲۲ اکتبر ۲۰۲۶
+**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Frozen version:** `v0.6.0-phase14-audited` (`d49bd69`) | **Compilation date:** October 22, 2026
 
 ---
 
-## ۱. مقدمه و اصول راهبردی عملیات
+## 1. Introduction and strategic principles of operations
 
-این سند، دستورالعمل عملیاتی گام‌به‌گام و استاندارد (SOP) برای آماده‌سازی، راه‌اندازی، پایش، توقف اضطراری و تسویه نهایی ربات الگوریتمی در هکاتون والکس × استارکوچ است.
+This document is a step-by-step standard operating procedure (SOP) for the preparation, commissioning, monitoring, emergency stop, and final settlement of the algorithmic robot in the Wallex x Starcoach Hackathon.
 
 > [!IMPORTANT]
-> **تفکیک تصمیم‌گیری انسانی از الگوریتمی:**
-> کلیه پیش‌نیازهای زیرساختی، احراز هویت، فعال‌سازی حالت اجرا و بررسی موانع قانونی (Blockers) به صورت دستی توسط اپراتور انسانی انجام می‌گیرد. اما پس از صدور مجوز رسمی اجرا، **تمام تصمیمات ورود، خروج، مدیریت حد سود/زیان و حجم سفارشات به صورت ۱۰۰٪ الگوریتمی و خودکار** توسط ماژول‌های سیستم انجام خواهد شد.
+> **Separation of human decision making from algorithm:**
+> All infrastructure prerequisites, authentication, activation of execution mode and check of legal obstacles (Blockers) are done manually by a human operator. But after issuing the official execution license, **all entry, exit, profit/loss limit management and order volume decisions will be made 100% algorithmically and automatically** by the system modules.
 
 ---
 
-## ۲. آماده‌سازی محیط و نصب وابستگی‌ها (Environment Setup)
+## 2. Preparing the environment and installing dependencies (Environment Setup)
 
-### ۲.۱. کلون مخزن و استقرار کد منجمد مسابقه:
-```bash
-# رفتن به دایرکتوری پروژه
+### 2.1. Repository clone and frozen contest code deployment:```bash
+# Go to the project directory
 cd /root/starcoach-hack/wallex
 
-# اطمینان از قرار داشتن روی نسخه بازرسی‌شده و منجمد
+# Ensuring you are on the inspected and frozen copy
 git checkout master
 git verify-tag v0.6.0-phase14-audited || git status
 ```
 
-### ۲.۲. آماده‌سازی محیط مجازی پایتون:
-سیستم نیازمند پایتون نسخه ۳.۱۲ است:
-```bash
-# بررسی وجود محیط مجازی و فعال‌سازی
+### 2.2. Preparing the Python virtual environment:
+The system requires Python version 3.12:```bash
+# Checking the existence of the virtual environment and activation
 source .venv/bin/activate
 
-# نصب یا به‌روزرسانی پکیج‌ها طبق pyproject.toml
+# Install or update packages according to pyproject.toml
 pip install -e .
 ```
 
-### ۲.۳. اعتبارسنجی متغیرهای محیطی (`.env`):
-نمونه فایل تنظیمات را در صورت نیاز کپی کنید:
-```bash
+### 2.3. Validation of environment variables (`.env`):
+Copy the sample settings file if needed:```bash
 cp .env.example .env
-```
-محتوای `.env` باید به شکل زیر باشد (هرگز کلیدها را در گیت کامیت نکنید):
-```ini
-WALLEX_API_KEY=""                # کلید API ارائه‌شده توسط والکس برای حساب مسابقه
+```The content of `.env` should look like this (never commit the keys in gitcommit):```ini
+WALLEX_API_KEY=""                # API key provided by Wallex for the contest account
 WALLEX_BASE_URL="https://api.wallex.ir"
-TRADING_MODE="SHADOW"            # تا پیش از تایید رسمی: SHADOW
-LIVE_EXECUTION_AUTHORIZED="False" # تا پیش از تایید رسمی: گیت نرم‌افزاری سطح کد False
-GEMINI_API_KEY=""                # اختیاری؛ در غیاب آن، فال‌بک قطعی به صورت ۱۰۰٪ خودکار فعال است
+TRADING_MODE="SHADOW"            # Until official confirmation: SHADOW
+LIVE_EXECUTION_AUTHORIZED="False" # Until official confirmation: False code level software gate
+GEMINI_API_KEY=""                # optional; In its absence, the definitive fallback is 100% automatically enabled
 ```
 
 ---
 
-## ۳. بررسی صحت تنظیمات و یکپارچگی کد (Sanity Checks)
+## 3. Checking the accuracy of settings and code integrity (Sanity Checks)
 
-پیش از هرگونه استقرار، دستورات زیر را برای اطمینان از سلامت کامل ۶۱ تست خودکار اجرا کنید:
+Before any deployment, run the following commands to ensure the 61 automated tests are fully healthy:
 
 ```bash
-# اجرای کامل سوئیت تست‌های یکپارچگی و خرابی‌های عملیاتی
+# Complete execution of integrity tests suite and operational failures
 pytest tests/ -v
 
-# راستی‌آزمایی هش مانیفست استراتژی منجمد
+# Freeze strategy manifest hash verification
 sha256sum config/frozen_strategy_manifest_v0.6.0.json
-# مقدار معتبر باید با 249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66 مطابقت داشته باشد.
+# Valid value must match 249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66.
 ```
 
 ---
 
-## ۴. راه‌اندازی و اجرای حالت تست در سایه (Shadow Mode Execution)
+## 4. Setting up and running the test mode in the shadow (Shadow Mode Execution)
 
-برای اتصال به وب‌سرویس والکس و دریافت جریان داده‌های زنده بدون ارسال هیچ‌گونه سفارش حقیقی:
+To connect to Valax web service and receive live data stream without sending any real order:
 
 ```bash
-# اجرای پایش زنده و ثبت لاگ تصمیمات در پس‌زمینه
+# Running live monitoring and logging decisions in the background
 python scripts/run_production_rehearsal.py
 ```
 
-### پایش بلادرنگ فرآیند (Monitoring):
-برای مشاهده جریان تصمیم‌گیری الگوریتم:
-```bash
-# پایش زنده لاگ متنی رویدادها
+### Real-time monitoring of the process (Monitoring):
+To see the decision flow of the algorithm:```bash
+# Live monitoring text log of events
 tail -f logs/production_rehearsal_phase15.jsonl | jq .
 
-# بررسی خلاصه چرخه معاملاتی اخیر
+# A summary review of the recent trading cycle
 cat research/phase15_rehearsal_results.json | jq .
 ```
 
 ---
 
-## ۵. راهنمای پایش سلامت داده‌ها و مدیریت خطاها (Health & Error Handling)
+## 5. Guide for data health monitoring and error handling (Health & Error Handling)
 
-### ۵.۱. بررسی تازگی داده‌ها (Data Freshness Check):
-سیستم به صورت خودکار با متد [`validate_data_freshness`](file:///root/starcoach-hack/wallex/src/data/fetcher.py) سن کندل‌ها را بررسی می‌کند. در صورتی که فاصله زمانی آخرین کندل با زمان سرور بیش از ۳۰ دقیقه باشد، هشدار `STALE_DATA` ثبت شده و از ورود به معامله جلوگیری می‌شود.
+### 5.1. Data Freshness Check:
+The system automatically checks the age of candles with the [`validate_data_freshness`](file:///root/starcoach-hack/wallex/src/data/fetcher.py) method. If the time interval between the last candle and the server time is more than 30 minutes, the STALE_DATA warning will be recorded and the transaction will be prevented.
 
-### ۵.۲. مدیریت محدودیت نرخ والکس (HTTP 429):
-- کلاینت والکس دارای قفل زمان‌بندی داخلی (`min_request_interval = 1.0s`) است.
-- در صورت دریافت خطای ۴۲۹، کلاینت به صورت خودکار ۲ ثانیه متوقف شده (`backoff`) و سپس تلاش مجدد می‌کند.
+### 5.2. Wallex Rate Limit Management (HTTP 429):
+- Wallex client has a built-in timing lock (`min_request_interval = 1.0s`).
+- If the 429 error is received, the client automatically stops for 2 seconds (`backoff') and then tries again.
 
-### ۵.۳. قطع ارتباط یا خطای مدل هوش مصنوعی (AI Timeout / Invalid JSON):
-- در صورت بروز هرگونه قطعی شبکه، خطای ۵۰۰ یا تایم‌اوت ۵ ثانیه‌ای در تماس با Gemini، ماژول [`RegimeClassificationAgent`](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py) بلافاصله **فال‌بک قطعی آماری (Deterministic Fallback)** را فعال می‌کند.
-- در فازهای رنج یا پرنوسان، سیستم وضعیت `HOLD` را انتخاب کرده و مانع از هدررفت سرمایه می‌شود.
+### 5.3. Connection disconnection or artificial intelligence model error (AI Timeout / Invalid JSON):
+- In case of any network outage, 500 error or 5 second timeout when contacting Gemini, the [`RegimeClassificationAgent'](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py) module will immediately activate **Deterministic Fallback**.
+- In range or volatile phases, the system selects ``HOLD'' status and prevents the loss of capital.
 
 ---
 
-## ۶. توقف اضطراری، بازیابی پس از کرش و رفع مغایرت (Emergency & Recovery)
+## 6. Emergency stop, recovery after crash and resolution of discrepancies (Emergency & Recovery)
 
-### ۶.۱. تریگر توقف اضطراری دستی (Manual Emergency Stop):
-در صورتی که اپراتور انسانی تصمیم به توقف آنی کلیه فعالیت‌ها بگیرد:
-1. فشردن `Ctrl + C` در ترمینال یا ارسال سیگنال `SIGTERM`:
-   ```bash
+### 6.1. Manual Emergency Stop trigger:
+If the human operator decides to immediately stop all activities:
+1. Press `Ctrl + C` in the terminal or send `SIGTERM` signal:```bash
    pkill -f run_production_rehearsal.py
-   ```
-2. فعال‌سازی پرچم توقف اضطراری در موتور ریسک با تنظیم `emergency_halt = True` یا اجرای دستور نقد کردن فوری.
+   ```2. Enabling the emergency stop flag in the risk engine by setting ``emergency_halt = True'' or executing the immediate cashout command.
 
-### ۶.۲. بازیابی وضعیت پورتفولیو پس از راه‌اندازی مجدد (Crash Recovery):
-پورتفولیو در هر چرخه با متد `export_state()` وضعیت خود را ذخیره می‌کند. در هنگام شروع مجدد:
-```python
+### 6.2. Restoring the state of the portfolio after restarting (Crash Recovery):
+The portfolio saves its state in each cycle with ``export_state()'' method. On restart:```python
 from src.portfolio.accounting import PortfolioEngine
 import json
 
-# بارگذاری وضعیت ذخیره‌شده پیش از کرش
+# Load pre-crash save state
 with open("logs/portfolio_state_checkpoint.json", "r") as f:
     saved_state = json.load(f)
 
-# بازسازی دقیق وضعیت دارایی، نقدینگی و P&L
+# Detailed reconstruction of asset position, liquidity and P&L
 portfolio = PortfolioEngine.from_state(saved_state)
 ```
 
-### ۶.۳. تطبیق مغایرت موجودی با صرافی (Balance Reconciliation):
-پیش از هر چرخه جدید، متد `reconcile_with_exchange()` موجودی ریالی و رمزارزی را با خروجی `/v1/account/balances` تطبیق می‌دهد. در صورت وجود اختلاف بیش از ۱،۰۰۰ تومان، هشدار صادر شده و معامله جدید مسدود می‌شود.
+### 6.3. Balance reconciliation with the exchange:
+Before each new cycle, the `reconcile_with_exchange()` method reconciles the riyal and cryptocurrency balance with the `/v1/account/balances` output. If there is a difference of more than 1,000 Tomans, a warning is issued and the new transaction is blocked.
 
 ---
 
-## ۷. پروتکل تسویه اجباری پایان مسابقه (End-of-Competition Liquidation)
+## 7. End-of-Competition Liquidation Protocol
 
-طبق بند قوانین هکاتون، راس ساعت پایان مسابقه، پورتفولیو باید به طور ۱۰۰٪ به تومان تبدیل شده باشد:
+According to the hackathon rules, at the end of the competition, the portfolio must be 100% converted into Tomans:
 
 ```bash
-# اجرای اسکریپت نقد کردن کلیه موقعیت‌های باز رمزارزی به تومان با سفارش Marketable Taker
+# Execution of the script to cash out all open cryptocurrency positions in Tomans with the order of Marketable Taker
 python scripts/liquidate_to_toman.py
-```
-- این دستور تمام موقعیت‌های باز در نمادها را با اعمال اسلیپیج و کسر کارمزد تیکر به نقد تبدیل کرده و خروجی تراز نهایی پورتفولیو را چاپ می‌کند.
-- وضعیت نهایی پورتفولیو باید `len(positions) == 0` و `all_holdings_liquidated_to_toman = True` باشد.
+```- This command converts all open positions in symbols into cash by applying slippage and deducting the ticker fee and prints the output of the final balance of the portfolio.
+- The final position of the portfolio should be `len(positions) == 0' and `all_holdings_liquidated_to_toman = True'.
 
 ---
 
-## ۸. چک‌لیست تغییر وضعیت به معاملات زنده (Live Trading Go-Live Checklist)
+## 8. Live Trading Go-Live Checklist
 
 > [!CAUTION]
-> **قفل ایمنی:** تا زمانی که تک‌تک موارد جدول زیر به تایید کتبی و رسمی برگزارکنندگان نرسیده باشد، هیچ مجوزی برای تغییر وضعیت به لایو وجود ندارد:
+> **SAFETY LOCK:** There is no permission to change the status to live until each item in the table below has been officially approved by the organizers:
 
-| ردیف | پیش‌نیاز عملیاتی | مسئول تایید | وضعیت فعلی |
+| row | Operational prerequisite Responsible for approval Current status
 |---|---|---|---|
-| ۱ | اعلام رسمی روز، ساعت و دقیقه دقیق آغاز مسابقه | برگزارکننده هکاتون | ❌ نامشخص (Blocker) |
-| ۲ | اعلام تاریخ و ساعت دقیق پایان معاملات و ددلاین ارسال | برگزارکننده هکاتون | ❌ نامشخص (Blocker) |
-| ۳ | تحویل کلیدهای API حساب اختصاصی مسابقه با دسترسی معامله | تیم پشتیبانی والکس | ❌ تحویل نشده (Blocker) |
-| ۴ | تایید کتبی معافیت از کارمزد شبانه تمدید اعتبار و عدم بدهی | برگزارکننده هکاتون | ⚠️ ابهام ثانویه (Blocker) |
-| ۵ | پاس شدن کامل ۵۸ تست خودکار در مخزن گیت‌هاب | تیم مهندسی | ✅ تایید شد (۵۸/۵۸ پاس) |
-| ۶ | راستی‌آزمایی تست در سایه بر روی داده‌های زنده والکس | تیم مهندسی | ✅ تایید شد (۵ چرخه موفق) |
-| ۷ | قفل بودن کامل ۲۱ بازار غیرفعال و عدم امکان ارسال سفارش | تیم مهندسی | ✅ تایید شد (گیت دوگانه) |
-| ۸ | تایید صریح و دستی اپراتور انسانی (`live_execution_authorized=True`) | راهبر ارشد تیم | ⏳ در انتظار رفع موانع ۱ تا ۴ |
+| 1 The official announcement of the exact day, hour and minute of the start of the competition Hackathon organizer ❌ Unknown (Blocker) |
+| 2 | Announcing the exact date and time of the end of transactions and the deadline for sending Hackathon organizer ❌ Unknown (Blocker) |
+| 3 Delivery of API keys to the exclusive account of the competition with transaction access Wallex support team ❌ Undelivered (Blocker) |
+| 4 | Written confirmation of exemption from the overnight fee for credit extension and no debt Hackathon organizer ⚠️ Secondary ambiguity (Blocker) |
+| 5 | Complete passing of 58 automated tests in the GitHub repository Engineering team ✅ Approved (58/58 pass) |
+| 6 | Shadow test verification on Wallex live data Engineering team ✅ Confirmed (5 successful cycles) |
+| 7 | The complete locking of 21 inactive markets and the inability to send orders Engineering team ✅ Confirmed (double gate) |
+| 8 | Explicit and manual approval of the human operator (`live_execution_authorized=True`) | Senior team leader ⏳ Waiting for the removal of obstacles 1 to 4

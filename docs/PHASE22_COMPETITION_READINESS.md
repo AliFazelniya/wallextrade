@@ -1,79 +1,79 @@
-# ارزیابی آمادگی مسابقه‌ای استراتژی‌های پژوهش‌شده (Phase 22)
+# Evaluation of competitive readiness of researched strategies (Phase 22)
 ## Competition Readiness Assessment & Regulatory Rule Alignment
 
-> **رویداد:** مسابقه معامله‌گری هوش مصنوعی والکس (Wallex Agentic AI Hackathon)  
-> **شاخه پژوهشی:** `research/phase22-discovery`  
-> **افق رقابت:** ۷۲ ساعت پیوسته  
-> **سرمایه اولیه:** ۵،۰۰۰،۰۰۰ تومان نقد
+> **Event:** Wallex Agentic AI Hackathon  
+> **Research branch:** `research/phase22-discovery`  
+> **Horizon of competition:** 72 continuous hours  
+> **Initial capital:** 5,000,000 Tomans in cash
 
 ---
 
-## ۱. ارزیابی جامع معیارهای مسابقه (Eight-Pillar Evaluation)
+## 1. Comprehensive evaluation of competition criteria (Eight-Pillar Evaluation)
 
-### ۱. سودآوری خالص واقعی (Trading Profitability):
-* **خط مبنای منجمد فاز ۲۱:** ❌ **رد (FAILED)** — میانگین بازدهی ۷۲ ساعته منفی (۰.۰۱۹۹٪-)، مجموع زیان ۲۸،۸۷۱- تومان در ۲۹ پنجره مستقل مسابقه‌ای.
-* **کاندیدای برتر پژوهشی (کاندیدای E):** ✅ **قبول (PASSED)** — سود خالص مثبت تومانی (**۴۷،۲۴۱+ تومان** در ۲۹ پنجره مسابقه)، میانگین بازدهی **۰.۰۳۳٪+**، بازدهی برون-نمونه **۰.۰۶۳٪+** (سود ۴۳،۷۸۷ تومانی در نیمه دوم).
-
----
-
-### ۲. اعتبار و استحکام آماری (Statistical Credibility):
-* **اندازه نمونه و استقلال:** ارزیابی در ۲۹ پنجره مستقل و بدون همپوشانی ۷۲ ساعته انجام شد.
-* **آماره آزمون:** آماره تی کاندیدای E برابر با **۰.۷۲۶+** و در بخش برون-نمونه **۱.۱۹۹+** است که نشان‌دهنده شیفت مثبت توزیع بازدهی است.
-* **شفافیت آماری:** با وجود بازدهی مثبت تاریخی، بازه اطمینان ۹۵٪ همچنان شامل مقادیر اندک منفی (۰.۰۵۹٪-) است؛ لذا هیچگونه «تضمین قطعی ریاضی» ادعا نمی‌شود و نتیجه صرفاً به عنوان یک «لبه آماری تاریخی مشاهده‌شده» گزارش می‌گردد.
+### 1. Real Net Profitability (Trading Profitability):
+* **Phase 21 Frozen Baseline:** ❌ **FAILED** — Negative 72-hour average return (-0.0199%), total loss -28,871 Tomans in 29 independent racing windows.
+* **Superior research candidate (Candidate E):** ✅ **PASSED** — positive net profit of Tomans (**47,241+ Tomans** in 29 competition windows), average return **0.033%+**, out-of-sample return **0.063%+** (profit 43,787 Tomans in the second half).
 
 ---
 
-### ۳. سطح فعالیت الگوریتمی و امتیاز داوری (Trading Activity Scoring):
-* **خط مبنای فاز ۲۱:** ⚠️ **هشدار ریسک (HIGH INACTIVITY RISK)** — در ۱۰ پنجره از ۲۹ پنجره (۳۴.۵٪)، ربات هیچ معامله‌ای انجام نداد.
-* **کاندیدای برتر E:** ✅ **قبول (OPTIMAL ACTIVITY)** — تعداد پنجره‌های فعال به ۲۲ پنجره (۷۵.۹٪) ارتقا یافت و تعداد کل معاملات به ۳۳ معامله هدفمند رسید که تعادل مناسبی میان فعالیت الگوریتمی و اجتناب از اصطکاک کارمزد برقرار می‌سازد.
+### 2. Statistical Credibility:
+* **Sample size and independence:** Evaluation was done in 29 independent and non-overlapping windows of 72 hours.
+* **Test statistics:** The t-statistic of candidate E is equal to **0.726+** and in the out-sample section **1.199+**, which indicates a positive shift in the yield distribution.
+* **Statistical Transparency:** Despite historical positive returns, the 95% confidence interval still includes small negative values ​​(-0.059%); Therefore, no "mathematical certainty" is claimed, and the result is simply reported as an "observed historical statistical edge".
 
 ---
 
-### ۴. مدیریت ریسک و حفظ سرمایه (Risk Management):
-* **حداکثر افت سرمایه (Max Drawdown):** حداکثر دراوداون مشاهده‌شده در کاندیدای E برابر با **۰.۴۸٪** است که فاصله ایمن فوق‌العاده‌ای با سقف مجاز مسابقه (۵.۰٪) دارد.
-* **سقف سرمایه در هر پوزیشن:** اکیداً محدود به ۱۰.۰٪ پورتفولیو (۵۰۰،۰۰۰ تومان) در هر معامله.
-* **تک پوزیشن همزمان:** در هر لحظه تنها یک موقعیت فعال در کل سبد مجاز است و از تجمیع ریسک همبستگی ارزها جلوگیری می‌شود.
+### 3. Algorithmic activity level and trading activity scoring:
+* **Phase 21 Baseline:** ⚠️ **HIGH INACTIVITY RISK** — In 10 out of 29 windows (34.5%), the bot did not make any trades.
+* **Top candidate E:** ✅ **Accept (OPTIMAL ACTIVITY)** — The number of active windows increased to 22 windows (75.9%) and the total number of trades reached 33 targeted trades, which establishes a good balance between algorithmic activity and avoiding fee friction.
 
 ---
 
-### ۵. نقش و ارزش‌افزوده واقعی هوش مصنوعی (Genuine AI Contribution):
-* **غربالگری رژیم و فیلتر سیگنال‌ها:** عامل هوشمند نقش حیاتی در فیلتر کردن رژیم‌های فرسایشی ایفا می‌کند.
-* **امتیازدهی مقطعی پویا:** عامل هوشمند در هر کندل ۱۵ دقیقه‌ای ماتریس ویژگی‌های نوسان، شتاب و اسپرد سه دارایی را پردازش کرده و تخصیص سرمایه را به صورت دینامیک به قوی‌ترین دارایی هدایت می‌نماید.
-* **عدم استفاده از پوسته صوری LLM:** کلیه تصمیمات هوش مصنوعی از طریق خروجی‌های ساخت‌یافته و ثبت در ژورنال تصمیم‌گیری (Decision Journal) کاملاً شفاف و قابل دفاع در برابر داوران مسابقه است.
+### 4. Risk management and capital preservation (Risk Management):
+**Maximum Drawdown:** The maximum drawdown observed in candidate E is **0.48%**, which is a great safe distance from the competition ceiling (5.0%).
+* **Capital limit per position:** Strictly limited to 10.0% of the portfolio (500,000 Tomans) per transaction.
+* **Simultaneous single position:** At any moment, only one active position is allowed in the entire portfolio, and the aggregation of currency correlation risk is avoided.
 
 ---
 
-### ۶. واقع‌گرایی در مدلسازی ریزساختار و اجرا (Execution Realism):
-* **کارمزد واقعی صرافی:** میکر ۰.۲۵٪ و تیکر ۰.۳۰٪ بر مبنای جدول رسمی سطح یک والکس.
-* **اسلیپیج بازار:** ۰.۱۵٪ لغزش قیمت در تمام ورودها و خروج‌های تیکر منظور شده است.
-* **اسپرد دینامیک:** مدل نوسان‌پایه با سقف ۰.۳۵٪ و کف ۰.۰۶٪ در تمام محاسبات جاری بوده است.
-* **تاب‌آوری در تاخیر:** کاندیدای E در آزمون تاخیر ۱ کندلی شبکه سودآوری خود را با سود ۹،۹۵۸+ تومان حفظ کرد.
+### 5. The role and real added value of artificial intelligence (Genuine AI Contribution):
+* Regime screening and signal filtering: The intelligent agent plays a vital role in filtering erosive regimes.
+* **Dynamic cross-sectional scoring:** The intelligent agent processes the matrix of volatility, acceleration and spread characteristics of three assets in each 15-minute candle and dynamically directs the capital allocation to the strongest asset.
+* **Not using the LLM formal shell:** All artificial intelligence decisions are completely transparent and defensible to the judges of the competition through structured outputs and recording in the Decision Journal.
 
 ---
 
-### ۷. پایداری نرم‌افزاری و قابلیت اطمینان فنی (Technical Reliability):
-* **مجموعه آزمون‌ها:** ۶۲ آزمون واحد و یکپارچگی به صورت ۱۰۰٪ پاس هستند.
-* **تراز حسابداری:** انطباق ۱۰۰٪ بین تراکنش‌های پورتفولیو و موتور لجر.
-* **بازیابی از قطعی:** مکانیزم مدیریت وضعیت بدون تکیه بر سفارشات OCO صرافی.
+### 6. Realism in microstructure modeling and execution (Execution Realism):
+* **Actual exchange fee:** Maker 0.25% and ticker 0.30% based on the official table of Wallex level one.
+* **Market slippage:** 0.15% price slippage is assumed in all ticker entries and exits.
+* **Dynamic spread:** The base volatility model with a ceiling of 0.35% and a floor of 0.06% has been used in all calculations.
+* **Resilience in delay:** Candidate E maintained his profitable network in delay 1 test with a profit of +9,958 Tomans.
 
 ---
 
-### ۸. انطباق با قوانین و محدودیت‌های مسابقه (Competition Compliance):
-* **نمادهای مجاز:** کلیه دارایی‌های مورد معامله (`BTCTMN`, `ETHTMN`, `SOLTMN`) در فهرست نمادهای مجاز با نقدینگی بالای ۵ میلیارد تومان ثبت شده‌اند.
-* **تصفیه پایانی به تومان:** مکانیزم «بادبان پایانی» تضمین می‌کند که ۱۰۰٪ دارایی‌ها قبل از پایان مهلت ۷۲ ساعته به تومان نقد شوند.
-* **حساب نقدی (Spot Only):** هیچ موقعیت شورت، اعتبار، لوریج یا مارجین غیرمجازی استفاده نشده است.
+### 7. Software stability and technical reliability:
+* **Set of tests:** 62 unit and integration tests are 100% pass.
+* **Accounting balance:** 100% compliance between portfolio transactions and ledger engine.
+* **Recovery from outage:** Status management mechanism without relying on exchange OCO orders.
 
 ---
 
-## ۲. خلاصه تطبیق معیارهای آمادگی مسابقه
+### 8. Compliance with competition rules and restrictions (Competition Compliance):
+* **Allowed symbols:** All traded assets (`BTCTMN`, `ETHTMN`, `SOLTMN`) are registered in the list of permitted symbols with liquidity above 5 billion Tomans.
+* **Final Settlement in Tomans:** The "Final Sail" mechanism guarantees that 100% of assets are liquidated in Tomans before the end of the 72-hour period.
+* **Cash Account (Spot Only):** No short position, credit, leverage or illegal margin has been used.
 
-| معیار ارزیابی مسابقه | وضعیت خط مبنای منجمد فاز ۲۱ | وضعیت کاندیدای پژوهشی E | حکم ممیزی |
+---
+
+## 2. Summary of match preparation criteria
+
+| Competition evaluation criteria The status of the frozen baseline of phase 21 The status of research candidate E | Audit verdict
 |---|:---:|:---:|:---:|
-| **۱. سودآوری خالص در افق ۷۲ ساعته** | ❌ FAILED (-28.8k TMN) | ✅ **PASSED (+47.2k TMN)** | ارتقای چشمگیر |
-| **۲. سودآوری برون-نمونه (OOS)** | ❌ FAILED | ✅ **PASSED (+43.7k TMN)** | اثبات عدم اورفیت |
-| **۳. فرکانس معامله و فعالیت الگوریتمی** | ⚠️ HIGH RISK (34.5% Zero-Trade) | ✅ **OPTIMAL (75.9% Active)** | کاهش انفعال |
-| **۴. کنترل افت سرمایه (سقف ۵.۰٪)** | ✅ PASSED (0.51%) | ✅ **PASSED (0.48%)** | فوق‌العاده ایمن |
-| **۵. حضور واقعی و مستند هوش مصنوعی** | ✅ PASSED | ✅ **PASSED** | قابل دفاع در داوری |
-| **۶. انطباق با کارمزدها و اسلیپیج واقعی** | ✅ PASSED | ✅ **PASSED** | مدلسازی محافظه‌کارانه |
-| **۷. انطباق با قوانین تصفیه مسابقه** | ❌ FAILED (11k TMN Drag) | ✅ **PASSED (820 TMN Drag)** | مهار زیان پایانی |
-| **۸. مجوز اجرای زنده (Live Execution)** | 🛑 **NOT AUTHORIZED** | 🛑 **NOT AUTHORIZED** | حفظ خط قرمز ایمنی |
+| **1. Net profitability in the 72-hour horizon** ❌ FAILED (-28.8k TMN) | ✅ **PASSED (+47.2k TMN)** | A significant upgrade
+| **2. Out-of-Sample Profitability (OOS)** | ❌ FAILED ✅ **PASSED (+43.7k TMN)** | Proof of non-orfit
+| **3. Trading frequency and algorithmic activity** | ⚠️ HIGH RISK (34.5% Zero-Trade) | ✅ **OPTIMAL (75.9% Active)** | Reduction of passivity
+| **4. Capital loss control (ceiling 5.0%)** | ✅ PASSED (0.51%) | ✅ **PASSED (0.48%)** | Super safe
+| **5. The real and documented presence of artificial intelligence ✅ PASSED ✅ **PASSED** | Defendable in arbitration
+| **6. Compliance with actual fees and slippage** | ✅ PASSED ✅ **PASSED** | Conservative modeling
+| **7. Compliance with the rules of clearing the competition** | ❌ FAILED (11k TMN Drag) | ✅ **PASSED (820 TMN Drag)** | Containment of final loss
+| **8. Live Execution License** | 🛑 **NOT AUTHORIZED** | 🛑 **NOT AUTHORIZED** | Maintaining the safety red line

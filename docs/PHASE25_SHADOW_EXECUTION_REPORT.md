@@ -1,45 +1,45 @@
-# گزارش پایش زنده و اجرای سایه فاز ۲۵ (Phase 25 Shadow Execution Report)
+# Phase 25 Shadow Execution Report
 ## Real-Time Order Book Liquidity, Spread Dynamics & Live Shadow Observation
 
-> **مخزن:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **شاخه پژوهشی:** `research/phase25-validation`  
-> **کامیت مبنای منجمد:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **اندپوینت‌های برخط:** `https://api.wallex.ir/v1/depth` و `https://api.wallex.ir/v1/markets`  
-> **حالت معامله:** `SHADOW` (شبیه‌سازی کامل بدون ارسال سفارش به صرافی)  
-> **مجوز معاملات واقعی:** `live_execution_authorized = False` (کاملاً مسدود)
+> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Research branch:** `research/phase25-validation`  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Online endpoints:** `https://api.wallex.ir/v1/depth` and `https://api.wallex.ir/v1/markets`  
+> **Trading mode:** `SHADOW' (complete simulation without sending orders to the exchange)  
+> **Live execution authorized:** `live_execution_authorized = False` (completely blocked)
 
 ---
 
-## ۱. استعلام زنده عمق دفتر سفارش و نقدینگی صرافی والکس (Live Order Book Depth)
+## 1. Live order book depth query and liquidity of Wallex exchange (Live Order Book Depth)
 
-در تاریخ ۲۲ اکتبر ۲۰۲۶ (ساعت ۲۰:۱۹ به وقت محلی)، وضعیت برخط دفتر سفارشات ۳ دارایی مورد بررسی قرار گرفت:
+On October 22, 2026 (20:19 local time), the online status of the order book for 3 assets was reviewed:
 
-| دارایی (Symbol) | بهترین مظنه خرید (Best Bid) | بهترین مظنه فروش (Best Ask) | اسپرد جاری صرافی | نقدینگی ۵ مظنه برتر خرید | نقدینگی ۵ مظنه برتر فروش | نسبت اندازه سفارش ما (۵۰۰k) به نقدینگی |
+| Property (Symbol) | Best Bid The best sales quotation (Best Ask) | Exchange current spread Liquidity of the top 5 purchase quotes Liquidity of the top 5 sales quotes The ratio of our order size (500k) to liquidity
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **BTCTMN** | ۲۲،۰۸۰،۰۰۰،۰۰۱ | ۲۲،۱۰۴،۷۸۲،۳۰۴ | **۰.۱۱۲٪** | **۱۹۱.۴ میلیون تومان** | **۱۵،۶۶۳ میلیون تومان** | **۰.۲۶٪ (بسیار ناچیز)** |
-| **ETHTMN** | ۶۴۵،۲۴۴،۴۴۶ | ۶۴۵،۸۱۵،۹۹۸ | **۰.۰۸۹٪** | **۲۱۵.۰ میلیون تومان** | **۷،۳۶۵ میلیون تومان** | **۰.۲۳٪ (بسیار ناچیز)** |
-| **SOLTMN** | ۲۸،۱۷۰،۲۴۶ | ۲۸،۲۰۰،۰۰۰ | **۰.۱۰۶٪** | **۱۶۷.۴ میلیون تومان** | **۳۴۰.۶ میلیون تومان** | **۰.۳۰٪ (بسیار ناچیز)** |
+| **BTCTMN** | 22,080,000,001 | 22,104,782,304 | **0.112%** | **191.4 million Tomans** | **15,663 million Tomans** | **0.26% (very insignificant)** |
+| **ETHTMN** | 645,244,446 645,815,998 | **0.089%** | **215.0 million Tomans** | **7,365 million Tomans** | **0.23% (very insignificant)** |
+| **SOLTMN** | 28,170,246 | 28,200,000 | **0.106%** | **167.4 million Tomans** | **340.6 million tomans** | **0.30% (very insignificant)** |
 
-### یافته‌های کلیدی ریزساختار بازار:
-1. **اسپرد واقعی بازار بسیار مطلوب است:** اسپرد هر سه جفت‌ارز بین **۰.۰۸۹٪ تا ۰.۱۱۲٪** است که بسیار پایین‌تر از سقف فیلتر اسپرد ربات (۰.۱۸٪) است.
-2. **عمق بازار برای جذب سفارش ۵۰۰ هزار تومانی کافی است:** در هر سه بازار، نقدینگی ۵ سطح برتر سفارشات بیش از **۱۶۷ میلیون تومان** است؛ سفارش ۵۰۰،۰۰۰ تومانی ما کمتر از ۰.۳٪ نقدینگی جاری را مصرف می‌کند و عملاً اثر قیمتی (Market Impact) نزدیک به صفر خواهد داشت.
-
----
-
-## ۲. نتایج جلسه اجرای سایه برخط (Live Shadow Session Events)
-
-ربات در حالت `SHADOW` به داده‌های واقعی متصل شد و ۵ سیکل زنده پایش را اجرا نمود:
-* **استعلام قیمت و عمق:** موفقیت‌آمیز در ۱۰۰٪ درخواست‌ها بدون خطای شبکه یا تایم‌اوت.
-* **ارزیابی سیگنال‌ها:** در ساعات مورد پایش، بیت‌کوین در یک بازه نوسانی فشرده قرار داشت و حجم معاملات پایین‌تر از آستانه بریک‌اوت بود.
-* **رفتار سیستم:** ربات بر اساس طراحی هوشمند خود، هیچ سیگنال خامی صادر نکرد و **۱۰۰٪ در حالت نقدینگی امن (Cash Buffer)** باقی ماند.
-* **ثبت رویدادها:** کل پاسخ‌های وب‌سرویس و تصمیمات در [`logs/shadow_session_phase23.json`](file:///root/starcoach-hack/wallex/logs/shadow_session_phase23.json) ذخیره شد.
+### Key findings of market microstructure:
+1. **Actual spread of the market is very favorable:** The spread of all three currency pairs is between **0.089% and 0.112%**, which is much lower than the ceiling of the robot's spread filter (0.18%).
+2. **The depth of the market is enough to attract an order of 500 thousand Tomans:** In all three markets, the liquidity of the top 5 levels of orders is more than **167 million Tomans**; Our order of 500,000 Tomans consumes less than 0.3% of current liquidity and will practically have a price impact (Market Impact) close to zero.
 
 ---
 
-## ۳. افشای شفاف محدودیت زمانی آزمون سایه (Transparent Operational Disclosure)
+## 2. The results of the online shadow session (Live Shadow Session Events)
+
+The robot was connected to the real data in ``SHADOW'' mode and performed 5 live cycles:
+* **Price and depth queries:** 100% successful with no network errors or timeouts.
+* **Evaluation of Signals:** During the monitored hours, Bitcoin was in a tight swing range and trading volume was below the breakout threshold.
+* **System behavior:** Based on its intelligent design, the robot did not issue any raw signal and remained **100% in safe cash mode (Cash Buffer)**.
+* **Event logging:** All web service responses and decisions were saved in [`logs/shadow_session_phase23.json`](file:///root/starcoach-hack/wallex/logs/shadow_session_phase23.json).
+
+---
+
+## 3. Transparent Operational Disclosure
 
 > [!WARNING]
-> ### وضعیت اعتبار پیش‌رو (Forward Validation Status): **ناتمام و غیرقطعی (Explicitly Unfinished)**
-> طبق دستورالعمل صریح کاربر، هیچ‌گونه ادعای جعلی درباره تکمیل آزمون سایه ۷۲ ساعته پیوسته مطرح نمی‌شود.  
-> مدت زمان پایش زنده واقعی در این جلسه محدود به **چند سیکل متوالی برخط** بوده است.  
-> تکمیل یک آزمون سایه کامل ۷۲ ساعته نیازمند اجرای پایدار ربات به مدت ۳ روز کاری پیش از آغاز رسمی مسابقه است و تا آن زمان، اعتبارسنجی پیش‌رو به عنوان **در حال انجام و اثبات‌نشده** طبقه‌بندی می‌گردد.
+> ### Forward Validation Status: **Explicitly Unfinished**
+> According to the user's explicit instructions, no false claims are made about completing the continuous 72-hour shadow test.  
+> The duration of real live monitoring in this session has been limited to **several consecutive online cycles**.  
+> Completion of a full 72-hour shadow test requires the robot to run stably for 3 business days prior to the official start of the competition, and until then, the upcoming validation is classified as **in progress and unproven**.

@@ -1,71 +1,71 @@
-# گزارش ممیزی تطبیق محاسباتی، دقت حسابداری و اعتبارسنجی مقایسه‌ای پنجره‌ها (Phase 20.3)
+# Audit report of computational compliance, accounting accuracy and comparative validation of windows (Phase 20.3)
 
-> **وضعیت ممیزی:** نهایی، بازتولیدشده و کاملاً تطبیق‌یافته (Independently Reconciled & Audited)  
-> **مخزن:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **کامیت منجمد رهایش:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **تگ‌های معتبر:** `v1.0.0-phase20-frozen-release` و `v0.12.0-phase20-audited`  
-> **هش مانیفست استراتژی منجمد:** `249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66`  
-> **مجوز معاملات زنده:** `live_execution_authorized = False` (کاملاً مسدود و غیرفعال)
+> **Audit Status:** Final, Reproduced and Fully Adapted (Independently Reconciled & Audited)  
+> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **release frozen commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **valid tags:** `v1.0.0-phase20-frozen-release` and `v0.12.0-phase20-audited`  
+> **Frozen Strategy Manifest Hash:** `249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66`  
+> **Live execution authorization:** `live_execution_authorized = False` (completely blocked and disabled)
 
 ---
 
-## ۱. تطبیق دقیق حداکثر افت سرمایه (Task 1 — Maximum Drawdown Reconciliation)
+## 1. Accurate matching of maximum drawdown reconciliation (Task 1 — Maximum Drawdown Reconciliation)
 
-### ۱.۱. بازسازی منحنی ارزش روز پورتفولیو (Mark-to-Market Equity Curve)
-بررسی پیاده‌سازی در [`src/portfolio/accounting.py#L235-L242`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py#L235-L242) و [`src/backtest/engine.py#L261-L270`](file:///root/starcoach-hack/wallex/src/backtest/engine.py#L261-L270) نشان می‌دهد که ارزش کل پورتفولیو در هر کندل ۱۵ دقیقه‌ای به صورت **ارزش روز دارایی‌ها (Mark-to-Market Total Equity)** محاسبه می‌شود:
+### 1.1. Reconstruction of the daily value curve of the portfolio (Mark-to-Market Equity Curve)
+Check the implementation in [`src/portfolio/accounting.py#L235-L242`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py#L235-L242) and [`src/backtest/engine.py#L261-L270`](file:///root/starcoach-hack/wallex/src/backtest/engine.py#L261-L270) shows that the total value of the portfolio in each 15-minute candle is calculated as **Mark-to-Market Total Equity**:
 $$\text{Total Equity} = \text{Cash (TMN)} + \sum (\text{Position Quantity} \times \text{Current Price})$$
 
-قله ارزش سرمایه ($\text{Peak}$) به صورت پویا در طول زمان به‌روزرسانی شده و افت سرمایه از رابطه زیر به دست می‌آید:
+The capital value peak ($\text{Peak}$) is dynamically updated over time and the capital loss is obtained from the following relationship:
 $$\text{Drawdown (TMN)} = \text{Peak Equity} - \text{Current Equity}$$
 
 ---
 
-### ۱.۲. ریشه‌یابی درصدها و دوگانگی مخرج کسر (Peak Equity vs Initial Capital)
+### 1.2. Finding the roots of percentages and the duality of the denominator of the fraction (Peak Equity vs Initial Capital)
 
-| شاخص ارزیابی دراوداون | استراتژی هوش مصنوعی (AI) | استراتژی دتر مینیستیک (Det) | تفاضل / کاهش ریسک | وضعیت ممیزی |
+| Drawdown evaluation index Artificial intelligence (AI) strategy Deter ministic strategy (Det) | Difference / risk reduction Audit status
 |---|:---:|:---:|:---:|:---:|
-| **حداکثر افت سرمایه تومانی (Max DD)** | **۶۷،۷۶۰.۰۳ تومان** | **۹۱،۳۹۶.۹۱ تومان** | **۲۳،۶۳۶.۸۸- تومان** | ✅ VERIFIED |
-| **زمان وقوع اوج افت سرمایه (UTC)** | `2026-09-19 06:15:00` | `2026-10-20 01:00:00` | — | ✅ VERIFIED |
-| **قله ارزش سرمایه در لحظه وقوع (Peak)** | ۵،۰۳۱،۱۷۶.۰۴ تومان | ۵،۰۸۰،۶۸۳.۹۱ تومان | — | ✅ VERIFIED |
-| **قعر ارزش سرمایه در لحظه وقوع (Trough)** | ۴،۹۶۳،۴۱۶.۰۰ تومان | ۴،۹۸۹،۲۸۷.۰۰ تومان | — | ✅ VERIFIED |
-| **تعریف استاندارد مالی: درصد از قله پورتفولیو** | **۱.۳۴۶۸٪ $\approx$ ۱.۳۵٪** | **۱.۷۹۸۹٪ $\approx$ ۱.۸۰٪** | **۰.۴۵۲۱٪- پوئن** | ✅ VERIFIED |
-| **تعریف جایگزین: درصد از سرمایه اولیه (۵M)** | **۱.۳۵۵۲٪ $\approx$ ۱.۳۶٪** | **۱.۸۲۷۹٪ $\approx$ ۱.۸۳٪** | **۰.۴۷۲۷٪- پوئن** | ⚠️ **CLARIFIED** |
+| **Maximum capital loss in Tomans (Max DD)** | **67,760.03 Tomans** | **91,396.91 Tomans** | **23,636.88 Tomans** | ✅ VERIFIED |
+| **Time of capital loss peak (UTC)** | `2026-09-19 06:15:00` | `2026-10-20 01:00:00` | — ✅ VERIFIED |
+| **Capital value peak at the moment of occurrence (Peak)** | 5,031,176.04 Tomans 5,080,683.91 Tomans — ✅ VERIFIED |
+| **The bottom of the capital value at the moment of occurrence (Trough)** | 4,963,416.00 Tomans 4,989,287.00 Tomans — ✅ VERIFIED |
+| **Financial standard definition: percentage of the top of the portfolio** | **1.3468% $\approx$ 1.35%** | **1.7989% $\approx$ 1.80%** | **0.4521%- points** | ✅ VERIFIED |
+| **Alternative definition: percentage of initial capital (5M)** | **1.3552% $\approx$ 1.36%** | **1.8279% $\approx$ 1.83%** | **0.4727%- points** | ⚠️ **CLARIFIED** |
 
-### ۱.۳. محاسبات بازتولیدشده مقایسه افت سرمایه:
-1. **اختلاف پولی مطلق افت سرمایه:**
-   $$\Delta \text{Max DD (TMN)} = 91,396.91 - 67,760.03 = \mathbf{23,636.88\text{ تومان}}$$
-2. **اختلاف در درصد سرمایه اولیه (Percentage Points of Initial Capital):**
-   $$\Delta \text{DD}_{\text{init}} = 1.8279\% - 1.3552\% = \mathbf{0.4727\%\text{ پوئن درصد}}$$
-3. **اختلاف در درصد قله سرمایه (Percentage Points of Peak Equity):**
-   $$\Delta \text{DD}_{\text{peak}} = 1.7989\% - 1.3468\% = \mathbf{0.4521\%\text{ پوئن درصد}}$$
-4. **کاهش نسبی افت سرمایه نسبت به استراتژی دتر مینیستیک:**
+### 1.3. Reproduced calculations comparing capital loss:
+1. **Absolute monetary difference of capital loss:**
+   $$\Delta \text{Max DD (TMN)} = 91,396.91 - 67,760.03 = \mathbf{23,636.88\text{Tomans}}$$
+2. **Difference in the percentage of initial capital (Percentage Points of Initial Capital):**
+   $$\Delta \text{DD}_{\text{init}} = 1.8279\% - 1.3552\% = \mathbf{0.4727\%\text{ percentage points}}$$
+3. **Difference in the percentage of peak capital (Percentage Points of Peak Equity):**
+   $$\Delta \text{DD}_{\text{peak}} = 1.7989\% - 1.3468\% = \mathbf{0.4521\%\text{ percentage points}}$$
+4. **Relative reduction of capital loss compared to the ministic strategy:**
    $$\text{Relative DD Reduction} = \frac{23,636.88}{91,396.91} = \mathbf{25.86\%}$$
 
 > [!NOTE]
-> مقادیر ۱.۳۵٪ و ۱.۸۰٪ گزارش‌شده در فاز ۲۰.۲ کاملاً صحیح هستند و مستقیماً از **تقسیم افت تومانی بر قله متناظر ارزش پورتفولیو** ($\text{Peak}$) طبق فرمول کلاسیک مدیریت پورتفولیو محاسبه شده‌اند. در صورتی که مبنا سرمایه اولیه ثابت ۵،۰۰۰،۰۰۰ تومانی قرار گیرد، مقادیر گردشده به دو رقم اعشار به ترتیب برابر با **۱.۳۶٪** و **۱.۸۳٪** خواهد بود.
+> The values of 1.35% and 1.80% reported in phase 20.2 are completely correct and are directly calculated from **dividing the Toman drop by the corresponding peak of the portfolio value** ($\text{Peak}$) according to the classic portfolio management formula. If the fixed initial capital base is 5,000,000 tomans, the amounts rounded to two decimal places will be **1.36%** and **1.83%** respectively.
 
 ---
 
-## ۲. مقایسه متناظر هر دو استراتژی در پنجره‌های مستقل ۷۲ ساعته (Task 2 — Cross-Strategy 72h Windows)
+## 2. Corresponding comparison of both strategies in independent 72-hour windows (Task 2 — Cross-Strategy 72h Windows)
 
-### ۲.۱. شرایط و فرضیات ارزیابی مقایسه‌ای:
-- **مرزهای زمانی:** مبدأ زمانی ارزیابی $T_0 = \text{2026-07-25 02:15:00 UTC}$، پایان $T_{\text{end}} = \text{2026-10-22 11:15:00 UTC}$.
-- **سرمایه و تسویه:** هر پنجره یک دوره مسابقه ۳ روزه مستقل با ۵،۰۰۰،۰۰۰ تومان سرمایه اولیه نقد است؛ در آخرین کندل بازه، هرگونه موقعیت باز تصفیه گردیده و عایدات/زیان تصفیه در عملکرد پنجره منظور می‌شود.
-- **تعریف وضعیت پنجره:**
-  - **سودده (WIN):** بازدهی خالص $> +0.001\%$
-  - **خنثی (NEUTRAL):** بازدهی خالص بین $-0.001\%$ تا $+0.001\%$ (عمدتاً عدم انجام معامله)
-  - **زیان‌ده (LOSS):** بازدهی خالص $< -0.001\%$
+### 2.1. Conditions and assumptions of comparative evaluation:
+- **Time boundaries:** Evaluation time origin $T_0 = \text{2026-07-25 02:15:00 UTC}$, end $T_{\text{end}} = \text{2026-10-22 11:15:00 UTC}$.
+- **Capital and Settlement:** Each window is an independent 3-day competition period with 5,000,000 Tomans initial cash capital; On the last candle of the interval, any open positions are cleared and the clearing gains/losses are included in the window performance.
+- **Definition of window status:**
+  - **Profit (WIN):** Net return $> +0.001\%$
+  - **NEUTRAL:** Net return between $-0.001\%$ and $+0.001\%$ (mainly no trade)
+  - **LOSS:** Net return $< -0.001\%$
 
 ---
 
-### ۲.۲. جدول مقایسه‌ای کامل ۲۹ پنجره ۷۲ ساعته کامل + ۱ پنجره ناقص
+### 2.2. Complete comparative table of 29 full 72-hour windows + 1 incomplete window
 
-| پنجره | تاریخ شروع (UTC) | تاریخ پایان (UTC) | بازدهی AI | بازدهی Det | تفاضل بازدهی (AI - Det) | سود خالص AI (TMN) | سود خالص Det (TMN) | وضعیت AI | وضعیت Det | معاملات AI | معاملات Det | کندل مفقود |
+| window | Start Date (UTC) | End date (UTC) | AI efficiency The efficiency of Det | Efficiency difference (AI - Det) | AI Net Profit (TMN) | Net Profit Det (TMN) | AI Status | Status Det | AI transactions Transactions Det | The missing candle
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **W01** | 2026-07-25 02:15 | 2026-07-28 02:15 | -0.28% | -0.15% | -0.13% | -13,894 | -7,358 | LOSS | LOSS | 1 | 1 | 0 |
-| **W02** | 2026-07-28 02:15 | 2026-07-31 02:15 | +0.02% | +0.14% | -0.12% | +923 | +7,078 | WIN | WIN | 1 | 1 | 0 |
-| **W03** | 2026-07-31 02:15 | 2026-08-03 02:15 | **0.00%** | **-0.38%** | **+0.38%** | **0** | **-18,918** | **NEUTRAL** | **LOSS** | **0** | **2** | 0 |
-| **W04** | 2026-08-03 02:15 | 2026-08-06 02:15 | -0.27% | -0.28% | +0.01% | -13,718 | -14,142 | LOSS | LOSS | 1 | 1 | 0 |
+| **W01** | 2026-07-25 02:15 | 2026-07-28 02:15 | -0.28% -0.15% -0.13% -13,894 | -7,358 | LOSS | LOSS | 1 | 1 | 0 |
+| **W02** | 2026-07-28 02:15 | 2026-07-31 02:15 | +0.02% | +0.14% -0.12% +923 +7,078 | WIN | WIN | 1 | 1 | 0 |
+| **W03** | 2026-07-31 02:15 | 2026-08-03 02:15 | **0.00%** | **-0.38%** | **+0.38%** | **0** | **-18,918** | **NEUTRAL** | **LOSS** | **0** | **2** 0 |
+| **W04** | 2026-08-03 02:15 | 2026-08-06 02:15 | -0.27% -0.28% +0.01% | -13,718 | -14,142 | LOSS | LOSS | 1 | 1 | 0 |
 | **W05** | 2026-08-06 02:15 | 2026-08-09 02:15 | **0.00%** | **-0.19%** | **+0.19%** | **0** | **-9,305** | **NEUTRAL** | **LOSS** | **0** | **1** | 0 |
 | **W06** | 2026-08-09 02:15 | 2026-08-12 02:15 | **0.00%** | **-0.16%** | **+0.16%** | **0** | **-8,012** | **NEUTRAL** | **LOSS** | **0** | **1** | 0 |
 | **W07** | 2026-08-12 02:15 | 2026-08-15 02:15 | **0.00%** | **-0.29%** | **+0.29%** | **0** | **-14,481** | **NEUTRAL** | **LOSS** | **0** | **1** | 0 |
@@ -94,121 +94,118 @@ $$\text{Drawdown (TMN)} = \text{Peak Equity} - \text{Current Equity}$$
 
 ---
 
-### ۲.۳. عملکرد پنجره ناقص W30 (بازه ۵۷ ساعته پایانی)
-- **بازه زمانی:** `2026-10-20 02:15:00 UTC` الی `2026-10-22 11:15:00 UTC` (طول بازه: ۵۷.۰ ساعت تقویمی / ۲۲۹ کندل بدون مفقودی).
-- **عملکرد استراتژی هوش مصنوعی (AI):**  
-  بازدهی: **۰.۰۶٪-** | سود خالص: **۳،۲۴۳.۱۶- تومان** | تعداد معامله: ۱ معامله بسته‌شده.
-- **عملکرد استراتژی دتر مینیستیک (Det):**  
-  بازدهی: **۰.۲۲٪+** | سود خالص: **۱۰،۹۱۱.۶۰+ تومان** | تعداد معامله: ۲ معامله بسته‌شده.
+### 2.3. W30 incomplete window performance (final 57-hour period)
+- **Time interval:** `2026-10-20 02:15:00 UTC` to `2026-10-22 11:15:00 UTC` (interval length: 57.0 calendar hours / 229 candles without missing).
+- **Artificial Intelligence (AI) strategy performance:**  
+  Yield: **0.06%-** | Net profit: **3,243.16 Tomans** | Number of transactions: 1 closed transaction.
+- ** Deter ministic strategy performance (Det):**  
+  Yield: **0.22%+** | Net profit: **10,911.60+ Tomans** | Number of transactions: 2 closed transactions.
 
 > [!IMPORTANT]
-> طبق الزامات صورت‌مسئله، پنجره ۵۷ ساعته W30 به دلیل ناقص بودن از مخرج کسر مقایسه پنجره‌های ۲۹ گانه کنار گذاشته شده و به صورت جداگانه گزارش می‌شود.
+> According to the requirements of the statement, the 57-hour window W30 is excluded from the denominator of the comparison of 29 windows due to its incompleteness and is reported separately.
 
 ---
 
-### ۲.۴. خلاصه مقایسه آماری ۲۹ پنجره کامل ۷۲ ساعته (Cross-Strategy Summary)
+### 2.4. Statistical comparison summary of 29 complete 72-hour windows (Cross-Strategy Summary)
 
-| شاخص ارزیابی در ۲۹ پنجره کامل | استراتژی هوش مصنوعی (AI) | استراتژی دتر مینیستیک (Det) | تحلیل تفاوت ساختاری |
+| Evaluation index in 29 complete windows Artificial intelligence (AI) strategy Deter ministic strategy (Det) | Structural difference analysis
 |---|:---:|:---:|---|
-| **پنجره‌های سودده (WIN)** | **۶ پنجره (۲۰.۶۹٪)** | **۱۲ پنجره (۴۱.۳۸٪)** | سیستم دتر مینیستیک به دلیل معامله مستمر پنجره‌های برنده بیشتری دارد |
-| **پنجره‌های خنثی (NEUTRAL)** | **۱۱ پنجره (۳۷.۹۳٪)** | **۰ پنجره (۰.۰۰٪)** | هوش مصنوعی در ۱۱ پنجره با حفظ ۱۰۰٪ نقدینگی از سرمایه محافظت کرد |
-| **پنجره‌های زیان‌ده (LOSS)** | **۱۲ پنجره (۴۱.۳۸٪)** | **۱۷ پنجره (۵۸.۶۲٪)** | دتر مینیستیک در ۵ پنجره بیشتر دچار زیان قطعی شد |
-| **کل پنجره‌های فعال با معامله** | ۱۸ پنجره | ۲۹ پنجره | هوش مصنوعی ۳۸٪ زمان‌ها نقد ماند؛ دتر مینیستیک ۱۰۰٪ زمان‌ها معامله کرد |
-| **نرخ برد در پنجره‌های فعال** | **۳۳.۳۳٪** (۶ از ۱۸) | **۴۱.۳۸٪** (۱۲ از ۲۹) | نرخ برد پنجره‌های معامله‌شده |
-| **شدیدترین زیان تک‌پنجره‌ای** | **۲۲،۱۶۱- تومان (-۰.۴۴٪)** | **۳۵،۱۲۴- تومان (-۰.۷۰٪)** | زیان دتر مینیستیک در پنجره‌های بد به مراتب عمیق‌تر است |
+| **profitable windows (WIN)** | **6 windows (20.69%)** | **12 windows (41.38%)** | Deter ministic system has more winning windows due to continuous trading
+| **Neutral windows (NEUTRAL)** | **11 windows (37.93%)** | **0 windows (0.00%)** | AI protected capital in 11 windows by maintaining 100% liquidity
+| **Loss windows (LOSS)** | **12 windows (41.38%)** | **17 windows (58.62%)** | Deter Ministic suffered definite loss in 5 more windows
+| **Total active windows with transaction** | 18 windows 29 windows Artificial intelligence remained critical 38% of the time; Deter Ministic traded 100% of the time
+| **Win rate in active windows** | **33.33%** (6 of 18) | **41.38%** (12 of 29) | Win rate of traded windows
+| **The most severe single-window loss** | **-22,161 Tomans (-0.44%)** | **-35,124 Tomans (-0.70%)** | Deter ministic losses are far more profound in bad windows
 
 > [!CAUTION]
-> **بینش کلیدی ممیزی مقایسه‌ای:**  
-> استراتژی دتر مینیستیک در پنجره‌های بیشتری سودده شد (۱۲ در برابر ۶)، اما در بازارهای رنج و فرسایشی (مانند پنجره‌های W03, W05, W06, W07, W17, W21, W25, W26, W27, W29) دچار دراوداون‌های پیاپی سنگین شد (مجموعاً بیش از ۱۸۰،۰۰۰ تومان زیان در این ۱۰ پنجره). در نقطه مقابل، هوش مصنوعی در تمام این ۱۰ پنجره **دقیقاً صفر معامله انجام داد و ۱۰۰٪ نقدینگی را حفظ نمود**.  
-> این شواهد نشان می‌دهد برتری کلی پورتفولیو ناشی از **قدرت حفظ سرمایه در رژیم‌های فرسایشی** است، نه نرخ برد بالاتر پنجره‌ها.
+> **Comparative Audit Key Insights:**  
+> Deterministic strategy was profitable in more windows (12 vs. 6), but in suffering and erosion markets (such as windows W03, W05, W06, W07, W17, W21, W25, W26, W27, W29) suffered consecutive heavy drawdowns (a total of more than 180,000 Tomans losses in these 10 windows). In contrast, the AI ​​made **exactly zero trades and maintained 100% liquidity** in all 10 windows.  
+> This evidence suggests that the overall superiority of the portfolio is due to the **power to preserve capital in erosion regimes**, not the higher win rates of the windows.
 
 ---
 
-## ۳. تطبیق اعشاری و رفع اختلاف ۰.۰۱ تومانی حسابداری (Task 3 — Precision Audit)
+## 3. Decimal adjustment and accounting 0.01 Toman difference resolution (Task 3 — Precision Audit)
 
-### ۳.۱. ریشه‌یابی اختلاف ۰.۰۱ تومانی در گزارش فاز ۲۰.۲:
-در گزارش قبلی اعداد زیر ذکر شده بود:
-- سود ناخالص بدون اسلیپیج: ۱۱۹،۵۴۵.۹۴ تومان
-- هزینه اسلیپیج: ۲۴،۵۶۲.۲۸ تومان
-- تفاضل آن‌ها در ظاهر: $119,545.94 - 24,562.28 = \mathbf{94,983.66\text{ تومان}}$
-- در حالی که سود ناخالص اجرایی گزارش‌شده: **۹۴،۹۸۳.۶۵ تومان** (۰.۰۱ تومان اختلاف).
+### 3.1. Finding the root of the difference of 0.01 Tomans in the report of phase 20.2:
+In the previous report, the following numbers were mentioned:
+- Gross profit without slippage: 119,545.94 Tomans
+- Slippage fee: 24,562.28 Tomans
+- Their difference in appearance: $119,545.94 - 24,562.28 = \mathbf{94,983.66\text{ Tomans}}$
+- While the reported gross operating profit: **94,983.65 Tomans** (0.01 Tomans difference).
 
-### ۳.۲. بازسازی محاسبات با ممیز شناور ۶۴ بیتی استاندارد IEEE-754:
+### 3.2. Reconstruction of calculations with 64-bit standard IEEE-754 floating point:
 
-| متغیر حسابداری | مقدار خام نامحدود ممیز شناور (Float) | مقدار گردشده به ۲ رقم اعشار | جهت گردشدن |
+| Accounting variable Unlimited raw value of floating point (Float) | Amount rounded to 2 decimal places To go around
 |---|:---:|:---:|:---:|
-| **سود ناخالص ایده‌آل (Zero-Slip Gross)** | `119545.93909409` | **۱۱۹،۵۴۵.۹۴ تومان** | به بالا (Round Up) |
-| **هزینه اسلیپیج اجرایی (Slippage Cost)** | `24562.28485271` | **۲۴،۵۶۲.۲۸ تومان** | به پایین (Round Down) |
-| **تفاضل دقیق ریاضی خام** | `94983.65424138` | **۹۴،۹۸۳.۶۵ تومان** | به پایین (Round Down) |
-| **سود ناخالص واقعی مدلسازی‌شده** | `94983.65424138` | **۹۴،۹۸۳.۶۵ تومان** | به پایین (Round Down) |
-| **باقیمانده محاسباتی در ممیز شناور** | `0.00000000000000` | **۰.۰۰ تومان** | **تطبیق مطلق ریاضی** |
+| **Ideal gross profit (Zero-Slip Gross)** | `119545.93909409` | **119,545.94 Tomans** | to the top (Round Up) |
+| **Executive Slippage Cost** | `24562.28485271` | **24,562.28 Tomans** | Down (Round Down) |
+| **exact raw math difference** | `94983.65424138` | **94,983.65 Tomans** | Down (Round Down) |
+| **Actual Modeled Gross Profit** | `94983.65424138` | **94,983.65 Tomans** | Down (Round Down) |
+| **Computational remainder in floating point** | `0.00000000000000` | **0.00 Tomans** | **absolute mathematical adjustment** |
 
-### ۳.۳. نتیجه ممیزی دقت اعشاری:
-1. در سطح موتور حسابداری و مقادیر ممیز شناور داخلی، معادله $\text{Gross}_{\text{zero-slip}} - \text{Slippage} \equiv \text{Gross}_{\text{modeled}}$ با **دقت صفر رقم باقیمانده (Exact Identity)** برقرار است و هیچگونه باگ یا نقص در پیاده‌سازی وجود ندارد.
-2. اختلاف ۰.۰۱ تومانی صرفاً ناشی از یک پدیده متداول آماری به نام **خطای گردکردن مؤلفه‌های مجزا (Independent Rounding Discrepancy)** است؛ زیرا مؤلفه اول به بالا گرد شد (`.939 -> .94`) و مؤلفه دوم به پایین گرد شد (`.284 -> .28`) و در نتیجه تفاضل اعداد گردشده یک صدم بیشتر از گردشده تفاضل واقعی گردید:
+### 3.3. Decimal accuracy audit result:
+1. At the level of the accounting engine and internal floating point values, the equation $\text{Gross}_{\text{zero-slip}} - \text{Slippage} \equiv \text{Gross}_{\text{modeled}}$ is established with **zero accuracy of the remaining digit (Exact Identity)** and there are no bugs or defects in the implementation.
+2. The difference of 0.01 Tomans is simply caused by a common statistical phenomenon called **Independent Rounding Discrepancy**; Because the first component was rounded up (`.939 -> .94`) and the second component was rounded down (`.284 -> .28`) and as a result the difference of the circulated numbers was one hundredth more than the actual difference:
    $$(\text{Round}(A) - \text{Round}(B)) - \text{Round}(A - B) = (119,545.94 - 24,562.28) - 94,983.65 = \mathbf{+0.01\text{ TMN}}$$
-3. **قاعده حسابداری مصوب ممیزی:** تمامی گزارش‌ها باید مقادیر تومانی نهایی را پس از انجام تجمیع بر مبنای ممیز شناور گرد کنند تا خطای جمع صوری رخ ندهد.
+3. **Accounting rule approved by the audit:** All reports must round the final Toman values after summarizing on a floating point basis so that no formal summation error occurs.
 
 ---
 
-## ۴. بازسازی کامل انتساب عملکرد خالص بدون دوبار شماری (Task 4 — P&L Attribution)
+## 4. Complete reconstruction of net performance attribution without double counting (Task 4 — P&L Attribution)
 
-### ۴.۱. جدول تطبیق انتساب سود و زیان نهایی:
+### 4.1. Final profit and loss attribution reconciliation table:
 
-| مؤلفه ارزیابی مالی | استراتژی هوش مصنوعی (AI) | استراتژی دتر مینیستیک (Det) | تفاضل به نفع هوش مصنوعی | نقش و ماهیت در پورتفولیو |
+| Financial evaluation component Artificial intelligence (AI) strategy Deter ministic strategy (Det) | The difference is in favor of artificial intelligence Role and nature in the portfolio
 |---|:---:|:---:|:---:|---|
-| **سود ناخالص بدون اسلیپیج** | ۱۱۹،۵۴۵.۹۴ تومان | ۱۵۲،۹۹۴.۶۸ تومان | **۳۳،۴۴۸.۷۴- تومان** | سود ناخالص فداشده با وتوی معاملات |
-| **هزینه اسلیپیج اجرا** | ۲۴،۵۶۲.۲۸ تومان | ۴۰،۹۱۶.۴۳ تومان | **۱۶،۳۵۴.۱۵+ تومان** | صرفه‌جویی اسلیپیج هوش مصنوعی |
-| **سود ناخالص اجرایی (Modeled Gross)** | ۹۴،۹۸۳.۶۵ تومان | ۱۱۲،۰۷۸.۲۵ تومان | **۱۷،۰۹۴.۶۰- تومان** | تفاضل سود ناخالص واقعی در قیمت‌های اجرایی |
-| **کارمزدهای پرداختی صرافی والکس** | ۶۳،۴۲۹.۰۸ تومان | ۱۰۳،۹۲۵.۵۱ تومان | **۴۰،۴۹۶.۴۳+ تومان** | کاهش کارمزد پرداخت‌شده به صرافی |
-| **مجموع صرفه‌جویی اصطکاک (کارمزد + اسلیپیج)** | — | — | **۵۶،۸۵۰.۵۸+ تومان** | کل هزینه‌های مبادله اجتناب‌شده (۱.۱۴٪ سرمایه) |
-| **سود خالص محقق‌شده نهایی (Net P&L)** | **+۳۱،۵۵۴.۵۷ تومان** | **+۸،۱۵۲.۷۴ تومان** | **+۲۳،۴۰۱.۸۳ تومان** | برتری خالص قطعی در حساب تومانی |
-| **بازدهی روی سرمایه اولیه (Return %)** | **+۰.۶۳٪** | **+۰.۱۶٪** | **+۰.۴۷٪** | بازدهی مازاد خالص کل دوره ۹۰ روزه |
+| **gross profit without slippage** | 119,545.94 Tomans 152,994.68 Tomans **33,448.74 Tomans** | Gross profit sacrificed with trade veto
+| **Execution slippage fee** | 24,562.28 Tomans 40,916.43 Tomans **16,354.15+ Tomans** | Artificial intelligence slippage savings
+| **Gross executive profit (Modeled Gross)** | 94,983.65 Tomans 112,078.25 Tomans **17,094.60 Tomans** | The difference of the real gross profit in the operating prices
+| **paid fees of Wallex exchange** | 63,429.08 Tomans 103,925.51 Tomans **40,496.43+ Tomans** | Reducing the fee paid to the exchange
+| **Total savings of friction (fee + slippage)** | — — **56,850.58+ Tomans** | Total transaction costs avoided (1.14% of capital) |
+| **Final Realized Net Profit (Net P&L)** | **+31,554.57 Tomans** | **+8,152.74 Tomans** | **+23,401.83 Tomans** | Definite net advantage in Tomani account
+| **return on initial capital (Return %)** | **+0.63%** | **+0.16%** | **+0.47%** | Net surplus yield of the entire 90-day period
 
-### ۴.۲. اثبات قطعی عدم دوبار شماری اسلیپیج:
-- در مدل اجرایی، اسلیپیج خرید در قیمت ورود ($P_{\text{entry}} \times 1.0015$) و اسلیپیج فروش در قیمت خروج حد ضرر ($P_{\text{exit}} \times 0.9985$) تعبیه شده است؛ لذا سود ناخالص اجرایی (۹۴،۹۸۳.۶۵ تومان) از قبل اثر اسلیپیج را منعکس کرده است.
-- سود خالص مستقیماً از تفریق کارمزد صرافی از سود ناخالص اجرایی به دست می‌آید:
+### 4.2. Definitive proof of non-double counting of slippage:
+- In the executive model, the purchase slippage is embedded in the entry price ($P_{\text{entry}} \times 1.0015$) and the sell slippage is embedded in the loss limit exit price ($P_{\text{exit}} \times 0.9985$); Therefore, gross operating profit (94,983.65 Tomans) has already reflected the slippage effect.
+- Net profit is obtained directly by subtracting the exchange fee from the gross operating profit:
   $$\text{Net Realized P\&L} = \text{Modeled Gross P\&L} - \text{Total Exchange Fees}$$
   $$94,983.65\text{ TMN} - 63,429.08\text{ TMN} = \mathbf{31,554.57\text{ TMN}}$$
   $$112,078.25\text{ TMN} - 103,925.51\text{ TMN} = \mathbf{8,152.74\text{ TMN}}$$
-- معادله ارتباط برتری خالص:
+- Net superiority relationship equation:
   $$\Delta \text{Net P\&L} = \Delta \text{Fee Savings} - \Delta \text{Gross Sacrificed}$$
   $$40,496.43\text{ TMN} - 17,094.60\text{ TMN} = \mathbf{23,401.83\text{ TMN}} \equiv \Delta \text{Net Realized P\&L}$$
 
 ---
 
-## ۵. شفاف‌سازی ترمینولوژی یکپارچگی دیتاست (Task 5 — Dataset Integrity Terminology)
+## 5. Clarifying Dataset Integrity Terminology (Task 5 — Dataset Integrity Terminology)
 
-برای جلوگیری از هرگونه تناقض مفهومی در گزارش‌های ارزیابی، واژگان تخصصی زیر به صورت دقیق تفکیک شدند:
+In order to avoid any conceptual contradiction in the evaluation reports, the following specialized words were carefully separated:
 
-1. **صحت رکوردها (Record Validity - VERIFIED):**  
-   تمام ۸،۶۳۶ ردیف دیتاست دارای ساختار کامل CSV، ستون‌های عددی معتبر، فاقد نال (`isnull = False`)، و دارای حجم و قیمت‌های مثبت و منطقی هستند.
-2. **توالی زمانی (Timestamp Ordering - VERIFIED):**  
-   توالی زمانی رکوردها به صورت قطعی و اکیداً صعودی یکنواخت است (`is_monotonic_increasing = True`).
-3. **رکوردهای تکراری (Duplicate Timestamps - VERIFIED):**  
-   هیچ ردیف یا برچسب زمانی تکراری در کل دیتاست وجود ندارد (`duplicated = False`).
-4. **پوشش شبکه زمانی مورد انتظار (Expected-Grid Coverage - 99.94%):**  
-   شبکه زمانی منظم ۱۵ دقیقه‌ای در بازه ۹۰ روزه شامل ۸،۶۴۱ نقطه است. دیتاست شامل ۸،۶۳۶ نقطه است (پوشش ۹۹.۹۴۲٪).
-5. **شکاف زمانی ثبت‌شده (Documented Coverage Gaps - VERIFIED):**  
-   دقیقاً ۱ شکاف زمانی به مدت ۹۰ دقیقه (شامل ۵ کندل متوالی) در دیتاست وجود دارد:  
-   `2026-09-22 12:30:00 UTC` تا `2026-09-22 14:00:00 UTC` (معادل ۱۶:۰۰ الی ۱۷:۳۰ به وقت محلی تهران).  
-   *علت:* عملیات نگهداری فنی زیرساخت اعلام‌شده صرافی والکس.
-6. **مدیریت شکاف در شبیه‌سازی (Handling in Backtest):**  
-   تایید می‌شود که هیچ کندل ساختگی (Synthetic)، قیمت تعمیم‌یافته (Forward-filled)، یا فرض نقدینگی در بازه قطعی اعمال نشده است.
+1. **Record Validity - VERIFIED:**  
+   All 8,636 rows of the dataset have full CSV structure, valid numeric columns, non-null (`isnull = False'), and positive and reasonable volumes and prices.
+2. **Timestamp Ordering - VERIFIED:**  
+   The time sequence of records is strictly monotonic increasing (`is_monotonic_increasing = True').
+3. **Duplicate records (Duplicate Timestamps - VERIFIED):**  
+   There are no duplicate rows or timestamps in the entire dataset (`duplicated = False').
+4. **Expected-Grid Coverage - 99.94%:**  
+   The 15-minute regular time grid contains 8,641 points over a 90-day period. The dataset contains 8,636 points (99.942% coverage).
+5. **Documented Coverage Gaps - VERIFIED:**  
+   There is exactly 1 time slot of 90 minutes (including 5 consecutive candles) in the dataset:  
+   ``2026-09-22 12:30:00 UTC'' to ``2026-09-22 14:00:00 UTC'' (equivalent to 16:00 to 17:30 Tehran local time).  
+   *Reason:* technical maintenance operation of the declared infrastructure of Wallex exchange.
+6. **Gap management in simulation (Handling in Backtest):**  
+   It is confirmed that no synthetic candle, forward-filled price, or liquidity assumption has been applied in the cut-off period.
 
-> **عبارت استاندارد مصوب ممیزی:**  
-> «دیتاست دارای رکوردهای کاملاً معتبر و دارای ترتیب زمانی یکنواخت است، همراه با شکاف‌های زمانی مستند ناشی از نگهداری فنی صرافی.» (Valid observed records with documented temporal coverage gaps).
+> **standard phrase approved by the audit:**  
+> "Datatest has fully valid and chronologically consistent records, with documented time gaps caused by technical maintenance of the exchange." (Valid observed records with documented temporal coverage gaps).
 
 ---
 
-## ۶. آزمون‌های رگرسیون و بازتولیدپذیری (Reproducibility & Commands)
+## 6. Regression and reproducibility tests (Reproducibility & Commands)
 
-### ۶.۱. اجرای مجموعه آزمون‌های واحد و سیستم:
-```bash
+### 6.1. Implementation of unit and system tests:```bash
 cd /root/starcoach-hack/wallex && .venv/bin/pytest tests/
-```
-**خروجی آزمون:**
-```
+```**Test output:**```
 tests/test_ai_agent.py ....                                              [  6%]
 tests/test_data_validation.py .....                                      [ 14%]
 tests/test_exchange_adapter.py ...........                               [ 32%]
@@ -223,29 +220,28 @@ tests/test_strategies.py ...                                             [100%]
 ============================== 62 passed in 2.68s ==============================
 ```
 
-### ۶.۲. اعتبارسنجی کامیت گیت:
-```bash
+### 6.2. Validation of commit gate:```bash
 git rev-parse HEAD
-# b494d60e211497f47ef3b79d6ae79a0726471172 (حفظ کامل کامیت منجمد)
+# b494d60e211497f47ef3b79d6ae79a0726471172 (full preservation of frozen commit)
 ```
 
 ---
 
-## ۷. موانع باقیمانده و ریسک‌های عملیاتی (Unresolved Blockers)
+## 7. Remaining obstacles and operational risks (Unresolved Blockers)
 
-1. **مانع B-01 (وابستگی به کلیدهای برگزارکننده):** عدم دریافت کلیدهای دسترسی API مسابقه و احراز هویت سرور مقصد.
-2. **مانع B-02 (فقدان حد ضرر صرافی):** والکس از سفارشات شرطی یا استاپ لاس بومی روی هسته معاملات پشتیبانی نمی‌کند؛ خروج‌های اضطراری به ناچار به صورت لیمیت تیکر نرم‌افزاری ارسال می‌شوند که ریسک قطعی شبکه دارد.
-3. **مانع B-03 (محدودیت نرخ تبادل API):** ریسک ایجاد تاخیر در صورت ارسال بیش از حد سفارشات در نوسانات بالا.
-4. **مانع B-05 (وابستگی به پایش اپراتور انسانی):** لزوم حضور فعال معامله‌گر انسانی در انتهای بازه ۷۲ ساعته مسابقه جهت راستی‌آزمایی تصفیه ۱۰۰٪ مانده به تومان.
+1. **Obstacle B-01 (dependency on the organizer's keys):** Failure to receive competition API access keys and destination server authentication.
+2. **Obstacle B-02 (Lack of exchange loss limit):** Wallex does not support conditional orders or native stop loss on the trading core; Emergency exits are inevitably sent in the form of a software limit ticker, which carries the risk of network outages.
+3. **Obstacle B-03 (API exchange rate limitation):** Risk of delay in case of sending too many orders in high volatility.
+4. **Obstacle B-05 (dependency on human operator monitoring):** The need for the active presence of a human trader at the end of the 72-hour period of the competition to verify the clearing of 100% of the balance in Tomans.
 
 ---
 
-## ۸. حکم نهایی ممیزی فاز ۲۰.۳ (Final Verdict)
+## 8. Final verdict of phase 20.3 audit (Final Verdict)
 
-### بعد صحت فنی و محاسباتی (Technical & Numerical Integrity):
-> **وضعیت: ✅ PASS / NUMERICALLY RECONCILED**  
-> دوگانگی درصد افت سرمایه (۱.۳۵٪ نسبت به قله در برابر ۱.۳۶٪ نسبت به سرمایه اولیه) شفاف‌سازی و اثبات شد. جدول کامل ۲۹ پنجره مقایسه‌ای متناظر هوش مصنوعی و دتر مینیستیک به همراه پنجره ناقص ۵۷ ساعته استخراج گردید. اختلاف ۰.۰۱ تومانی به عنوان اثر طبیعی گردکردن اعداد نامحدود اثبات شد و ترمینولوژی دیتاست استانداردسازی گردید.
+### Technical & Numerical Integrity dimension:
+> **Status: ✅ PASS / NUMERICALLY RECONCILED**  
+> The duality of the capital loss percentage (1.35% compared to the peak vs. 1.36% compared to the initial capital) was clarified and proved. The complete table of 29 corresponding comparative windows of artificial intelligence and deterministics was extracted along with an incomplete window of 57 hours. The difference of 0.01 Tomans was proved as a natural effect of rounding unlimited numbers and the dataset terminology was standardized.
 
-### بعد مجوز معاملات زنده (Live Execution Authorization):
-> **وضعیت: 🛑 NOT AUTHORIZED**  
-> فلگ [`live_execution_authorized = False`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json) بدون تغییر در تمام پیکربندی‌ها حفظ شده است. تا زمان تحویل دسترسی‌های مسابقه و رفع موانع فنی سمت صرافی، هیچگونه ارسال سفارش واقعی به والکس مجاز نمی‌باشد.
+### After Live Execution Authorization:
+> **Status: 🛑 NOT AUTHORIZED**  
+> Flag [`live_execution_authorized = False`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json) is kept unchanged in all configurations. Until the delivery of the access to the competition and the removal of the technical obstacles on the side of the exchange, no actual order is allowed to be sent to Wallex.

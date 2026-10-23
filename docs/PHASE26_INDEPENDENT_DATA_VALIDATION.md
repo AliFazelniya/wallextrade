@@ -1,59 +1,59 @@
-# اعتبارسنجی مستقل برون‌نمونه با داده‌های کاملاً بکر (Phase 26 Independent Data Validation)
+# Independent validation of the sample with completely pristine data (Phase 26 Independent Data Validation)
 ## Strict Blind Out-of-Sample Validation on Unseen Historical Market Data (July 05 - July 24, 2026)
 
-> **مخزن:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **شاخه پژوهشی:** `research/phase26-forensic-validation`  
-> **کامیت مبنای منجمد:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **بازه زمانی داده‌های مستقل (Pristine OOS):** از ۵ ژوئیه ۲۰۲۶ تا ۲۴ ژوئیه ۲۰۲۶ (۱۹ روز متوالی قبل از شروع دیتای مبنا)  
-> **تعداد کندل‌های ۱۵ دقیقه‌ای مستقل:** **۱،۸۲۵ کندل** در هر نماد (`BTCTMN`, `ETHTMN`, `SOLTMN`)  
-> **تعداد پنجره‌های مسابقه مستقل ($N$):** **۶ پنجره کامل ۷۲ ساعته** ($W_{-06}$ تا $W_{-01}$)  
-> **وضعیت اعتبارسنجی آماری:** ⚠️ **فاقد قطعیت / رد فرضیه سودآوری جهان‌شمول (INCONCLUSIVE / REGIME-DEPENDENT)**
+> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Research branch:** `research/phase26-forensic-validation`  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Pristine OOS data period:** From July 5, 2026 to July 24, 2026 (19 consecutive days before the start of the baseline data)  
+> **Number of independent 15-minute candles:** **1,825 candles** per symbol (`BTCTMN`, `ETHTMN`, `SOLTMN`)  
+> **Number of independent match windows ($N$):** **6 full 72-hour windows** ($W_{-06}$ to $W_{-01}$)  
+> **STATISTICAL VALIDATION STATE:** ⚠️ **INCONCLUSIVE / REGIME-DEPENDENT**
 
 ---
 
-## ۱. چرایی نیاز به داده‌های مستقل و بکر (The Contamination Problem)
+## 1. Why the need for independent and pristine data (The Contamination Problem)
 
-در طول فازهای ۲۰ تا ۲۵، مجموعه داده‌های ۹۰ روزه (۲۴ ژوئیه تا ۲۲ اکتبر ۲۰۲۶ شامل ۲۹ پنجره) به دفعات مورد ارزیابی، بازرسی و کالیبراسیون قرار گرفته بودند.  
-در استانداردهای آکادمیک مالی (مانند Harvey, Liu, and Zhu 2016 درباره ریسک آزمون‌های مکرر Data Snooping)، به چنین دیتاستی «داده‌های کشف و پژوهش» (Research Data) گفته می‌شود و دیگر نمی‌توان آن را یک آزمون برون‌نمونه کور و دست‌نخورده دانست.
+During phases 20 to 25, the 90-day dataset (July 24 to October 22, 2026, including 29 windows) was repeatedly evaluated, inspected, and calibrated.  
+In financial academic standards (such as Harvey, Liu, and Zhu 2016 about the risk of frequent data snooping tests), such a dataset is called "Research Data" and it can no longer be considered a blind and intact sample test.
 
-برای شکستن این بن‌بست، تیم ممیزی فاز ۲۶ اقدام به استخراج یک مجموعه داده مستقل ۱۹ روزه متوالی بلافاصله قبل از شروع دیتاست ۹۰ روزه (از ۵ ژوئیه تا ۲۴ ژوئیه ۲۰۲۶) از اندپوینت رسمی UDF صرافی والکس نمود. این دوره زمانی **هرگز در هیچ‌یک از فازهای ۲۵ گانه قبلی دیده، لمس، یا بهینه‌سازی نشده بود**.
+To break this deadlock, the Phase 26 audit team extracted an independent data set of 19 consecutive days immediately before the start of the 90-day data set (from July 5 to July 24, 2026) from the official UDF endpoint of Wallex exchange. This time period has **never been seen, touched, or optimized in any of the previous 25 phases**.
 
 ---
 
-## ۲. جدول نتایج آزمون کور استراتژی‌ها در بازه مستقل برون‌نمونه ($N = 6$ پنجره)
+## 2. The table of the results of the blind test of the strategies in the independent interval of the out-sample ($N = $6 windows)
 
-شرایط ارزیابی کاملاً منطبق بر قوانین منجمد مسابقه: سرمایه اولیه ۵،۰۰۰،۰۰۰ تومان، کارمزد سازنده ۰.۲۵٪، سفارش‌بردار ۰.۳۰٪، لغزش ۰.۱۵٪، پایش سایه کندل و سقف ۲ موقعیت باز هم‌زمان:
+Evaluation conditions fully comply with the frozen competition rules: initial capital 5,000,000 tomans, builder fee 0.25%, order taker 0.30%, slippage 0.15%, candle shadow monitoring and limit of 2 open positions at the same time:
 
-| پیکربندی مدل در آزمون کور | سود خالص کل (TMN) | میانگین بازدهی ۷۲ساعته | نرخ برد پنجره‌ها | تعداد معامله | آماره تی ($t$) | حداکثر افت سرمایه (Max DD) | مجموع اصطکاک صرافی (TMN) |
+| Configuration of the model in the blind test Total Net Profit (TMN) | Average efficiency of 72 hours Windows win rate Number of transactions T statistic ($t$) | Maximum capital loss (Max DD) | Total Exchange Friction (TMN) |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **مدل A: انحصاری H1 (روند ساختاری)** | **۲۳،۵۰۹.۰-** | **۰.۰۷۸٪-** | ۳۳.۳٪ (۲/۶) | ۱۰ | ۰.۷۱- | ۰.۷۵٪ | ۳۸،۹۲۲ |
-| **مدل B: انحصاری H3 (نشت شتاب لید-لگ)** | **۲۹،۵۵۱.۲-** | **۰.۰۹۹٪-** | ۰.۰٪ (۰/۶) | ۳ | ۱.۵۶- | ۰.۵۵٪ | ۱۳،۴۰۷ |
-| **مدل C: تلفیق یکپارچه H1+H3** | **۲۳،۵۰۹.۰-** | **۰.۰۷۸٪-** | ۳۳.۳٪ (۲/۶) | ۱۰ | ۰.۷۱- | ۰.۷۵٪ | ۳۸،۹۲۲ |
+| **Model A: exclusive H1 (structural trend)** | **23,509.0-** | **0.078%-** | 33.3% (2/6) | 10 | -0.71 0.75% 38,922 |
+| **Model B: Exclusive H3 (Lead-Leg Acceleration Leakage)** | **29,551.2-** | **0.099%-** | 0.0% (0/6) | 3 1.56- | 0.55% 13,407 |
+| **Model C: integrated combination of H1+H3** | **23,509.0-** | **0.078%-** | 33.3% (2/6) | 10 | -0.71 0.75% 38,922 |
 
 ---
 
-## ۳. کالبدشکافی علمی علل زیان‌دهی در دوره مستقل (Failure Mechanism Analysis)
+## 3. Scientific autopsy of the causes of damage in the independent period (Failure Mechanism Analysis)
 
-بررسی تک‌تک ۱۰ معامله انجام‌شده در این ۱۹ روز حقایق بسیار مهمی را روشن ساخت:
-1. **بار سنگین اصطکاک صرافی در برابر سود ناخالص:**
-   - سود ناخالص معاملات بدون کارمزد: **۱۵،۴۱۳+ تومان** (سیستم جهت بازار را درست تشخیص داده بود).
-   - مجموع هزینه‌های کارمزد و لغزش: **۳۸،۹۲۲ تومان**!
-   - نتیجه خالص: **۲۳،۵۰۹- تومان زیان!** اصطکاک صرافی بیش از ۲.۵ برابر کل سود ناخالص معاملات را بلعید.
-2. **رفتار متفاوت دارایی‌ها:**
-   - در این بازه، بیت‌کوین ۱۵.۹٪ و اتریوم ۱۹.۶٪ رشد کردند، اما سولانا به عنوان لیدر سودآوری قبلی، رفتاری اصلاحی با رشد ضعیف ۵.۳٪ نشان داد.
-   - نتیجه بر حسب نماد: سولانا **۱۴،۲۲۲- تومان زیان** و بیت‌کوین **۱۳،۶۹۸- تومان زیان** ثبت کردند؛ در حالی که اتریوم تنها دارایی با سود ناچیز (**۴،۴۱۱+ تومان**) بود.
-3. **شکست مدل H3:**
-   - مدل H3 با ۳ معامله و نرخ برد ۰٪، نزدیک به ۳۰ هزار تومان زیان ایجاد کرد؛ زیرا جهش‌های سریع بیت‌کوین در این دوره به دلیل نوسانات فرسایشی به آلت‌کوین‌ها نشت نکرد و با فعال‌سازی حدضرر به پایان رسید.
+Examining each of the 10 transactions made in these 19 days revealed very important facts:
+1. **Heavy burden of exchange friction against gross profit:**
+   - Gross profit of transactions without fees: **15,413+ Tomans** (the system correctly recognized the direction of the market).
+   - Total fee and slip fees: **38,922 Tomans**!
+   - Net result: **23,509-tomans loss!** Exchange friction swallowed more than 2.5 times the total gross profit of transactions.
+2. **Different behavior of assets:**
+   - During this period, Bitcoin rose 15.9% and Ethereum 19.6%, but Solana, the previous profit leader, showed a corrective behavior with a weak growth of 5.3%.
+   - The result according to the symbol: Solana **-14,222-tomans loss** and Bitcoin **-13,698-tomans loss**; While Ethereum was the only asset with a small profit (**4,411+ Tomans**).
+3. **H3 model failure:**
+   - The H3 model caused a loss of nearly 30 thousand tomans with 3 transactions and a 0% win rate; Because Bitcoin's rapid spikes during this period did not leak to altcoins due to erosive volatility and ended with limit activation.
 
 ---
 
-## ۴. درس‌های کلیدی برای هکاتون و اعتبارسنجی آماری
+## 4. Key lessons for hackathons and statistical validation
 
 > [!CAUTION]
-> ### حقیقت بی‌پردۀ علمی:
-> **استراتژی‌های روند ساختاری (H1 و H3) دارای سودآوری پایدار در تمام رژیم‌های بازار نیستند.**  
-> این استراتژی‌ها تنها در دوره‌هایی که امواج پرشتاب با دامنه‌های بیش از ۴.۵٪ رخ می‌دهد سودآورند تا بتوانند اصطکاک سنگین ۰.۷۰٪ تا ۰.۹۰٪ در هر دور معامله صرافی والکس را جبران نمایند.  
-> در رژیم‌های فرسایشی یا نوسانی (مانند این دوره مستقل یا ماه سوم بازه ۹۰ روزه)، معامله‌گری مداوم به فرسایش سرمایه می‌انجامد.
+> ### The scientific truth:
+> **Structural trend strategies (H1 and H3) do not have sustainable profitability in all market regimes.**  
+> These strategies are only profitable during periods of high-speed waves with amplitudes of more than 4.5% to compensate for the heavy friction of 0.70% to 0.90% per trading round of Wallex exchange.  
+> In erosive or fluctuating regimes (such as this independent period or the third month of the 90-day period), continuous trading leads to capital erosion.
 
-### حکم نهایی ممیزی داده‌های مستقل: `INCONCLUSIVE / CONDITIONAL`
-فرضیه سودآوری همیشگی رد شد. در مسابقه ۷۲ ساعته، سیستم منحصراً زمانی شانس موفقیت دارد که شرایط کلان بازار در رژیم صعودی انفجاری باشد؛ در غیر این صورت، استراتژی پیش‌فرض بقا باید **۱۰۰٪ نقدینگی در کیف‌پول تومان** باشد.
+### Final verdict of independent data audit: ``INCONCLUSIVE / CONDITIONAL''
+The constant profitability hypothesis was rejected. In the 72-hour race, the system only has a chance to succeed when macro market conditions are in an explosive bullish regime; Otherwise, the default survival strategy should be **100% liquidity in Toman wallet**.

@@ -1,65 +1,65 @@
-# اعتبارسنجی برون-نمونه، بوت‌استرپ و مهار برازش بیش‌از‌حد (Phase 25 OOS Validation)
+# Out-of-sample validation, bootstrap and overfitting (Phase 25 OOS Validation)
 ## Strict Statistical Validation, Bootstrap Uncertainty & Walk-Forward Audit
 
-> **مخزن:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **شاخه پژوهشی:** `research/phase25-validation`  
-> **کامیت مبنای منجمد:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **رده‌بندی وضعیت آماری:** ⚠️ **فاقد قطعیت آماری (INCONCLUSIVE)**
+> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Research branch:** `research/phase25-validation`  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Classification of statistical status:** ⚠️ **INCONCLUSIVE**
 
 ---
 
-## ۱. افشای شفاف سوگیری نگاه به داده‌ها (Data Snooping Disclosure)
+## 1. Data Snooping Disclosure
 
 > [!IMPORTANT]
-> ### حقیقت علمی درباره ۲۹ پنجره مورد بررسی:
-> ۲۹ پنجره ۷۲ ساعته مسابقه در طول فازهای ۲۰ تا ۲۴ به دفعات مورد تجزیه، تحلیل و بازبینی قرار گرفته‌اند.  
-> بنابراین از منظر استانداردهای بین‌المللی پژوهش کمی، این ۲۹ پنجره **داده‌های پژوهشی (Research Data)** تلقی می‌شوند، نه یک نمونه کور و دست‌نخورده (Pristine Holdout).  
-> هرگونه بهبود در این دیتاست نباید به عنوان اثبات قطعی موفقیت در آینده تعبیر شود.
+> ### The scientific truth about the 29 investigated windows:
+> 29 72-hour windows of competition during phases 20 to 24 have been repeatedly analyzed, analyzed and revised.  
+> Therefore, from the perspective of international quantitative research standards, these 29 windows are considered **Research Data**, not a blind and untouched sample (Pristine Holdout).  
+> Any improvement in this dataset should not be interpreted as definitive proof of future success.
 
 ---
 
-## ۲. آزمون نااطمینانی بازنمونه‌گیری بوت‌استرپ (Bootstrap Uncertainty - 10,000 Iterations)
+## 2. Bootstrap Uncertainty - 10,000 Iterations
 
-برای ارزیابی پایداری میانگین بازدهی ۷۲ ساعته مدل تلفیقی H1+H3، توزیع بازدهی ۲۹ پنجره با ۱۰،۰۰۰ بار بازنمونه‌گیری تصادفی جایگزین‌آمیز (Bootstrap with Replacement) شبیه‌سازی شد:
+To evaluate the stability of the 72-hour mean efficiency of the combined H1+H3 model, the efficiency distribution of 29 windows was simulated with 10,000 random resampling times (Bootstrap with Replacement):
 
-| شاخص آماری بوت‌استرپ | مقدار محاسباتی | تفسیر آماری و ریسک مالی |
+| Bootstrap statistical index Computational value | Statistical interpretation and financial risk
 |---|:---:|---|
-| **میانگین بازدهی مشاهده‌شده** | **۰.۰۴۴۱٪+** | میانگین نمونه اولیه |
-| **فاصله اطمینان ۹۵٪ بوت‌استرپ** | **[۰.۰۸۱۱٪- , ۰.۱۷۹۸٪+]** | **عبور فاصله اطمینان از عدد صفر!** |
-| **احتمال مثبت بودن بازدهی میانگین** | **۷۳.۷۴٪** | شانس سودآوری فراتر از صفر |
-| **پی-ولیو تجربی یک‌طرفه (Empirical p-value)** | **۲۶.۲۶٪** | **عدم رد فرض صفر در سطح ۵٪!** |
+| **Average observed yield** | **0.0441%+** | The mean of the original sample |
+| **95% bootstrap confidence interval** | **[-0.0811%, +0.1798%]** | **Crossing the confidence interval of zero!** |
+| **Probability of positive average yield** | **73.74%** | Profitability beyond zero
+| **one-sided empirical p-value** | **26.26%** | **Not rejecting the null hypothesis at the 5% level!** |
 
-### تفسیر علمی:
-فاصله اطمینان ۹۵٪ شامل مقادیر منفی (تا ۰.۰۸٪- زیان در هر پنجره) است و پی-ولیو برابر با **۲۶.۳٪** است.  
-در علم آمار، زمانی که پی-ولیو از ۵٪ بیشتر باشد ($p > 0.05$)، فرضیه شانس تصادفی رد نمی‌شود. بنابراین سودآوری میانگین این سیستم از نظر آماری **اثبات‌شده قطعی نیست**.
+### Scientific interpretation:
+The 95% confidence interval includes negative values (up to 0.08%-loss in each window) and the p-value is **26.3%**.  
+In statistics, when the p-value is greater than 5% ($p > 0.05$), the hypothesis of random chance is not rejected. Therefore, the average profitability of this system is statistically **proven not definitive**.
 
 ---
 
-## ۳. حساسیت شدید به حذف پنجره‌های پرت (Outlier Sensitivity)
+## 3. Extreme sensitivity to remove outliers (Outlier Sensitivity)
 
-| سناریوی حذف داده‌های پرت | سود خالص کل (TMN) | دلتای تغییر سود | وضعیت سودآوری حساب |
+| Outlier data removal scenario Total Net Profit (TMN) | Profit change delta | Account profitability status
 |---|:---:|:---:|:---:|
-| **کل ۲۹ پنجره مسابقه** | **۶۳،۹۵۴.۷+** | مبنا | سودآور |
-| **حذف تنها پنجره برتر رتبه ۱ (W09)** | **۳،۴۴۰.۸-** | ۶۷،۳۹۵.۵- | ❌ **منفی شد!** |
-| **حذف ۲ پنجره برتر (W09, W20)** | **۸،۶۹۲.۷-** | ۷۲،۶۴۷.۴- | ❌ **منفی** |
-| **حذف ۳ پنجره برتر (W09, W20, W21)** | **۲۱،۹۶۹.۴-** | ۸۵،۹۲۴.۱- | ❌ **منفی عمیق** |
+| **Total 29 match windows** | **63,954.7+** | Basis | Profitable
+| **Remove only top rank window 1 (W09)** | **3,440.8-** | 67,395.5- | ❌ **It was negative!** |
+| **Remove the top 2 windows (W09, W20)** | **8,692.7-** | 72,647.4- | ❌ **Negative** |
+| **Remove the top 3 windows (W09, W20, W21)** | **21,969.4-** | 85,924.1- | ❌ **deep negative** |
 
 > [!CAUTION]
-> **نقطه شکنندگی حیاتی:** کل سودآوری سیستم به **یک پنجره استثنایی (W09)** وابسته است. با حذف W09، کل سیستم زیان‌ده می‌شود (-۳،۴۴۱ تومان).
+> **Critical Fragility Point:** The entire profitability of the system depends on **an exceptional window (W09)**. By removing W09, the whole system loses (-3,441 Tomans).
 
 ---
 
-## ۴. ارزیابی زمانی سه‌بخشی گام‌به‌جلو (Chronological Walk-Forward)
+## 4. Chronological Walk-Forward three-part time evaluation
 
-تقسیم دوره ۹۰ روزه به ۳ دوره ۳۰ روزه متوالی و پیوسته:
+Dividing the 90-day period into 3 consecutive and continuous 30-day periods:
 
-| دوره ارزیابی زمانی | محدوده پنجره‌ها | سود خالص کل (TMN) | میانگین بازدهی ۷۲ساعته | نرخ برد پنجره‌ها | رفتار رژیم بازار |
+| Time evaluation period Range of windows Total Net Profit (TMN) | Average efficiency of 72 hours Windows win rate The behavior of the market regime
 |---|:---:|:---:|:---:|:---:|---|
-| **بخش ۱ (روزهای ۱ تا ۳۰)** | W01 تا W10 | ۲۵،۳۱۲.۷+ | ۰.۰۵۱٪+ | ۲ از ۱۰ (۲۰٪) | ترند صعودی متوسط |
-| **بخش ۲ (روزهای ۳۱ تا ۶۰)** | W11 تا W20 | ۶۲،۶۳۵.۱+ | ۰.۱۲۵٪+ | ۴ از ۱۰ (۴۰٪) | موج صعودی انفجاری تاریخی |
-| **بخش ۳ (روزهای ۶۱ تا ۹۰)** | W21 تا W29 | **۲۳،۹۹۳.۱-** | **۰.۰۵۳٪-** | ۲ از ۹ (۲۲٪) | **اصلاح فرسایشی و نوسانات خرد** |
+| **Part 1 (days 1 to 30)** | W01 to W10 | 25,312.7+ | 0.051%+ | 2 out of 10 (20%) | Average upward trend
+| **Part 2 (days 31 to 60)** | W11 to W20 | 62,635.1+ | 0.125%+ | 4 out of 10 (40%) | Historical explosive upward wave
+| **Part 3 (days 61 to 90)** | W21 to W29 | **23,993.1-** | **0.053%-** | 2 out of 9 (22%) | **Correction of erosion and small fluctuations** |
 
-### کشف بنیادین:
-در ۳۰ روز پایانی (W21 تا W29)، مدل تلفیقی H1+H3 نزدیک به **۲۴،۰۰۰ تومان زیان** ثبت کرده است.  
-اگر مسابقه در شرایطی مشابه ماه سوم بازار برگزار شود، سیستم با زیان مواجه خواهد شد.
-این یافته اثبات می‌کند که استراتژی فاقد پایداری در تمام رژیم‌های بازار است و در صورت عدم وقوع ترند صعودی، نگه‌داری ۱۰۰٪ نقدینگی برتر خواهد بود.
+### Fundamental discovery:
+In the last 30 days (W21 to W29), the combined H1+H3 model has recorded a loss of nearly **24,000 Tomans**.  
+If the match is held in the same conditions as the third month of the market, the system will face losses.
+This finding proves that the strategy lacks stability in all market regimes and in the absence of an uptrend, holding 100% liquidity will be superior.

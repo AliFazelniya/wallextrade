@@ -1,80 +1,80 @@
-# حکم نهایی و ارزیابی دروازه‌های دوازده‌گانه فاز ۲۶ (Phase 26 Final Verdict)
+# The final verdict and evaluation of the twelve gates of Phase 26 (Phase 26 Final Verdict)
 ## The Twelve Decision Gates, Final Competition Readiness & Safety Verdict
 
-> **مخزن:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **شاخه پژوهشی:** `research/phase26-forensic-validation`  
-> **کامیت مبنای منجمد:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **وضعیت کلی فاز ۲۶:** پایان موفقیت‌آمیز ممیزی قانونی، کشف برتری هوش مصنوعی اصیل و اعتبارسنجی مستقل  
-> **مجوز معاملات زنده:** `live_execution_authorized = False` (**کاملاً مسدود و غیرفعال**)
+> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Research branch:** `research/phase26-forensic-validation`  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Overall status of phase 26:** Successful completion of legal audit, discovery of the superiority of original artificial intelligence and independent validation  
+> **Authorization of live transactions:** `live_execution_authorized = False` (**Completely blocked and disabled**)
 
 ---
 
-## ۱. جدول ارزیابی رسمی دروازه‌های دوازده‌گانه تصمیم‌گیری (The 12 Decision Gates)
+## 1. The official evaluation table of the twelve decision gates (The 12 Decision Gates)
 
 ```
 ===================================================================================================================
-شماره | دروازه تصمیم‌گیری (Decision Gate)             | وضعیت نهایی  | خلاصه شواهد تجربی و مبانی فنی
+No | Decision Gate             | Final status  | Summary of empirical evidence and technical foundations
 -------------------------------------------------------------------------------------------------------------------
-۰۱    | اصالت داده‌های خام (Data Authenticity)         | PASS         | تطبیق بایت‌به‌بایت چک‌سام‌های SHA-256 و استخراج رسمی از UDF والکس
-۰۲    | یکپارچگی زمانی (Timestamp Integrity)         | PASS         | صعودی بودن اکید، صفر داده تکراری/آینده، حل خطای روایی فاز ۲۵
-۰۳    | صحت حسابداری پرتفوی (Accounting Integrity)    | PASS         | تراز کامل سود معاملات با پرتفوی با خطای ۰.۰۰ TMN و اثبات ظرفیت ۲ پوزیشن
-۰۴    | درستی اجرای تست‌های استرس (Stress Integrity)   | PASS         | جهش واقعی حالت در ۱۴ سناریو، تطابق خطی ۷۰٪ حجم و اثر پالایشی اسپرد
-۰۵    | انطباق با خردساختار صرافی (Exchange Mechanics) | PASS         | ممیزی قابلیت‌های STOP_LIMIT والکس، محدودیت‌های SOL و منطق استاپ کلاینت
-۰۶    | اعتبارسنجی مستقل برون‌نمونه (Independent OOS)   | INCONCLUSIVE | زیان ۲۳.۵k- تومانی در دیتای مستقل ژوئیه به دلیل اصطکاک سنگین در بازار رنج
-۰۷    | امیدریاضی مثبت معاملاتی (Positive Net Edge)   | PASS (مشروط) | سود خالص +۶۴k در دیتای ۹۰ روزه و +۸۴k با AI؛ منوط به وجود رژیم ترند
-۰۸    | ارزش افزوده مستقل فرضیه H3 (H3 Incremental)    | INCONCLUSIVE | هم‌خطی شدید با H1 و سود حاشیه‌ای ناچیز ۹۲۰ تومان در حالت دترمینیستیک
-۰۹    | مشارکت اصیل هوش مصنوعی (Genuine AI Edge)     | PASS         | مدل رگرسیون لجستیک با دقت تست ۷۰.۶٪ و جهش سود به +۸۴،۰۵۳ تومان با حجم شناور
-۱۰    | قابلیت اتکای معاملات آزمایشی (Shadow Runner)  | PASS         | پایش زنده ۱۰ چرخه بازار با وب‌سرویس والکس و تاخیر ۱.۶۲s بدون قطعی
-۱۱    | انطباق با قوانین مسابقه (Hackathon Compliance)| PASS         | معاملات اسپات نقدی، سرمایه ۵ میلیون، رعایت سقف ریسک و بادبان پایانی
-۱۲    | آمادگی معاملات واقعی (Live Trading Readiness) | FAIL / NO-GO | عدم صدور مجوز معامله زنده با پول واقعی (مسدودسازی قطعی کد)
+01    | Authenticity of raw data (Data Authenticity)         | PASS         | Byte-by-byte matching of SHA-256 checksums and formal extraction from Wallex UDF
+02    | Timestamp Integrity         | PASS         | Strict bullishness, zero repeat/future data, phase 25 validity error resolution
+03    | Accounting Integrity    | PASS         | Full balance of trading profits with a portfolio with an error of 0.00 TMN and proof of the capacity of 2 positions
+04    | Correctness of Stress Integrity Tests   | PASS         | Actual state jump in 14 scenarios, linear fit of 70% volume and spread refinement effect
+05    | Compliance with the microstructure of the exchange (Exchange Mechanics) | PASS         | Auditing Wallex's STOP_LIMIT capabilities, SOL limits, and client stop logic
+06    | Independent validation of the sample (Independent OOS)   | INCONCLUSIVE | Loss of 23.5k Tomans in July independent data due to heavy friction in the range market
+07    | Positive Net Edge   | PASS (conditional) | +64k net profit in 90 days data and +84k with AI; They depend on the existence of the regime
+08    | Independent added value of hypothesis H3 (H3 Incremental)    | INCONCLUSIVE | Strong collinearity with H1 and negligible marginal profit of 920 Tomans in deterministic mode
+09    | Genuine AI Edge participation     | PASS         | Logistic regression model with test accuracy of 70.6% and profit jump to +84,053 Tomans with floating volume
+10    | Reliability of trial transactions (Shadow Runner)  | PASS         | Live monitoring of 10 market cycles with Wallex web service and 1.62s delay without interruption
+11    | Compliance with the competition rules (Hackathon Compliance)| PASS         | Cash spot transactions, capital of 5 million, compliance with risk limit and final sail
+12    | Live Trading Readiness | FAIL / NO-GO | Failure to issue a license to trade live with real money (permanent blocking of the code)
 ===================================================================================================================
 ```
 
 ---
 
-## ۲. خلاصه کشفیات بنیادین فاز ۲۶ (Key Forensic Discoveries)
+## 2. Summary of Key Forensic Discoveries of Phase 26
 
-1. **حل قطعی تناقض تاریخ‌ها:**  
-   ابهام ایجادشده پیرامون «داده‌های مربوط به آینده» ریشه‌یابی شد. داده‌های موجود در کش محلی از ۲۴ ژوئیه ۲۰۲۶ تا ۲۲ اکتبر ۲۰۲۶ (امروز) را پوشش می‌دهند و تاریخ ۳۰ اکتبر در فاز ۲۵ صرفاً یک خطای نگارشی در متن گزارش بوده است. هیچ کندل جعلی یا مربوط به آینده‌ای در دیتاست وجود ندارد.
-2. **کشف راز جهش معاملات از ۱۹ به ۳۳:**  
-   اثبات شد که تغییر معاملات H1 از ۱۹ به ۳۳ معامله ناشی از ارتقای ظرفیت هم‌زمان پرتفوی از ۱ پوزیشن باز (در فاز ۲۴) به ۲ پوزیشن باز هم‌زمان (سقف ۱ میلیون تومان در فاز ۲۵) بوده است. آزمایش معکوس با قید تک‌پوزیشن دقیقاً ۱۹ معامله و ۷۲.۵k اصطکاک فاز ۲۴ را بازتولید کرد.
-3. **اصلاح شبیه‌ساز تست استرس:**  
-   علت یکسانی ۴ سناریوی فاز ۲۵ کشف و اصلاح گردید. با اعمال واقعی پارامترهای جهش حالت، پاسخ خطی دقیق حجم سفارش (کاهش ۳۰٪ سود در پرشدن ۷۰٪) و فیلتر شدن معاملات نویزی در اسپرد ۵۰٪+ اثبات شد.
-4. **حقیقت ناخوشایند در آزمون برون‌نمونه مستقل (OOS):**  
-   اجرای استراتژی بر روی داده‌های ۱۹ روزه کاملاً دست‌نخورده ژوئیه ۲۰۲۶ نشان داد که در یک بازار رنج با دامنه‌های حرکتی کمتر از ۴.۵٪، اصطکاک سنگین صرافی والکس (۰.۷۰٪ تا ۰.۹۰٪ در هر دور معامله) سود ناخالص را می‌بلعد و منجر به ۲۳.۵ هزار تومان زیان می‌شود. این یافته ثابت می‌کند که استراتژی نباید در تمام رژیم‌های بازار به صورت کورکورانه معامله کند.
-5. **پیروزی هوش مصنوعی اصیل و تنظیم شناور حجم (Dynamic Position Sizing):**  
-   با پیاده‌سازی یک مدل یادگیری ماشین اصیل (L2 Regularized Logistic Regression) که روی داده‌های نیمه اول آموزش دید، مدل در داده‌های تست برون‌نمونه به **دقت ۷۰.۵۹٪** دست یافت. اعمال این مدل برای تنظیم شناور حجم پوزیشن (۰.۶x در سیگنال‌های پرریسک و ۱.۲x در امواج پرقدرت) سود سیستم را از ۶۴ هزار تومان به **+۸۴،۰۵۳ تومان** رساند.
+1. **Definitive solution to the contradiction of dates:**  
+   The ambiguity created around "future-related data" was rooted out. The data in the local cache covers from July 24, 2026 to October 22, 2026 (today), and the October 30 date in phase 25 was simply a typo in the text of the report. There are no fake or future candles in the dataset.
+2. **Discovering the secret of trading jump from 19 to 33:**  
+   It was proved that the change of H1 transactions from 19 to 33 transactions was due to the upgrade of the simultaneous portfolio capacity from 1 open position (in phase 24) to 2 open positions at the same time (1 million Toman ceiling in phase 25). The reverse experiment with the single-position constraint reproduced exactly 19 trades and 72.5k of phase 24 friction.
+3. **Modification of the stress test simulator:**  
+   The cause of the sameness of 4 scenarios of phase 25 was discovered and corrected. By actually applying state jump parameters, accurate linear response of order volume (30% reduction in profit at 70% filling) and filtering of noise trades at +50% spread was proven.
+4. **The inconvenient truth in the independent out-of-sample (OOS) test:**
+Running the strategy on 19 days of fully intact July 2026 data showed that in a range market with less than 4.5% swings, Wallex's heavy friction (0.70% to 0.90% per trading round) ate up the gross profit and resulted in a loss of 23.5 thousand tomans. This finding proves that the strategy should not trade blindly in all market regimes.
+5. **Victory of original artificial intelligence and floating volume adjustment (Dynamic Position Sizing):**  
+   By implementing a genuine machine learning model (L2 Regularized Logistic Regression) that was trained on the data of the first half, the model achieved **70.59% accuracy** in the out-of-sample test data. Applying this model to adjust position volume floating (0.6x in high-risk signals and 1.2x in high-power waves) increased the profit of the system from 64 thousand tomans to **+84,053 tomans**.
 
 ---
 
-## ۳. معماری برنده و استراتژی توصیه شده برای مسابقه ۷۲ ساعته هکاتون
+## 3. Winning architecture and recommended strategy for the 72-hour hackathon competition
 
-بر اساس کلیه شواهد علمی و ممیزی‌های انجام‌شده:
+Based on all scientific evidence and audits:
 
 ```mermaid
 flowchart TD
-    MD["داده‌های ورودی زنده والکس\n(BTCTMN, ETHTMN, SOLTMN)"] --> FILTER{"فیلتر نقدینگی و اسپرد\n(اسپرد <= ۰.۱۸٪ و حجم پایدار)"}
-    FILTER -- "اسپرد بالا" --> CASH["حفظ ۱۰۰٪ نقدینگی در کیف‌پول تومان"]
-    FILTER -- "اسپرد مطلوب" --> GEN["تولید فرصت‌های H1 و H3\n(روند 1h + بریک‌اوت 15m)"]
-    GEN --> AI["مدل هوش مصنوعی کالیبره‌شده فاز ۲۶\n(محاسبه احتمال برد P_win و امیدریاضی)"]
-    AI -- "P_win < 48% یا امیدریاضی منفی" --> CASH
-    AI -- "P_win >= 48%" --> SIZING["تنظیم شناور حجم سفارش\n(۳۰۰k تا ۶۰۰k تومان بر اساس اطمینان)"]
-    SIZING --> RISK{"موتور کنترل ریسک و تطبیق محدودیت‌ها\n(سقف ۲ پوزیشن / ساعت < ۶۰)"}
-    RISK -- "تایید" --> EXEC["ارسال سفارش تیکر/لیمیت با شبیه‌ساز یا API"]
-    RISK -- "اشباع ظرفیت" --> CASH
-    EXEC --> WD["بادبان پایانی: خروج سازنده در ساعت ۶۶ / تسویه قطعی در ساعت ۷۰"]
+    MD["Wallex live input data\n(BTCTMN, ETHTMN, SOLTMN)"] --> FILTER{"Liquidity filter and spread\n(Spread <= 0.18% and stable volume)"}
+    FILTER -- "High spread" --> CASH["Maintaining 100% liquidity in Toman wallet"]
+    FILTER -- "Optimal spread" --> GEN["Generation of H1 and H3 opportunities\n(trend 1h + breakout 15m)"]
+    GEN --> AI["Calibrated artificial intelligence model phase 26\n(Calculating the probability of winning P_win and Omidriazi)"]
+    AI -- "P_win < 48% or negative mathematical expectation" --> CASH
+    AI -- "P_win >= 48%" --> SIZING["Floating order volume adjustment\n(300k to 600k tomans based on reliability)"]
+    SIZING --> RISK{"Risk control engine and limit matching\n(ceiling of 2 positions / hours < 60)"}
+    RISK -- "confirmation" --> EXEC["Send ticker/limit order with simulator or API"]
+    RISK -- "capacity saturation" --> CASH
+    EXEC --> WD["Final sail: departure of the manufacturer at 66 hours / final settlement at 70 hours"]
 ```
 
-### اصول سه گانه موفقیت در مسابقه:
-1. **استراتژی پیش‌فرض بقا (Default to 100% Cash):** با توجه به زیان سیستم در دوره‌های رنج، در صورت عدم احراز شرایط ایده آل ترند، حفظ ۱۰۰٪ نقدینگی تومان در تمام طول مسابقه نسبت به معامله‌گری اجباری ارجحیت مطلق دارد.
-2. **استفاده از هوش مصنوعی برای تنظیم حجم نه وتوی صلب:** هوش مصنوعی نباید معاملات بزرگ را حذف کند، بلکه باید در امواج مطمئن حجم را زیاد و در موقعیت‌های متزلزل حجم را کم کند.
-3. **تسویه قطعی در ساعت ۷۰:** تبدیل تمامی دارایی‌ها به تومان نقد پیش از پایان پنجره برای حذف ریسک نوسانات پایانی.
+### The three principles of success in the competition:
+1. Default to 100% Cash strategy: Considering the loss of the system in periods of suffering, if the ideal trend conditions are not met, maintaining 100% Toman liquidity throughout the race is absolutely preferable to forced trading.
+2. **Using artificial intelligence to adjust volume not a solid veto:** Artificial intelligence should not eliminate large trades, but should increase volume in safe waves and decrease volume in volatile situations.
+3. **Definitive settlement at 70:** Converting all assets into cash Tomans before the end of the window to eliminate the risk of final fluctuations.
 
 ---
 
-## ۴. وضعیت نهایی مجوزها و انطباق ایمنی
+## 4. Final status of permits and safety compliance
 
-- `live_execution_authorized = False` به عنوان یک گاردریل تغییرناپذیر در تمامی فایل‌های پیکربندی حفظ گردید.
-- هیچ سفارشی به حساب واقعی صرافی ارسال نشده و کلیه آزمایش‌ها در محیط شبیه‌سازی و سایه انجام گرفته‌اند.
-- کامیت منجمد مبنا [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex) و تگ‌های پیشین کاملاً دست‌نخورده باقی ماندند.
-- **تعداد تست‌های واحد سوئیت:** ۷۸ تست با موفقیت ۱۰۰٪ پاس شدند.
+- `live_execution_authorized = False' was kept as an immutable guardrail in all configuration files.
+- No order has been sent to the real account of the exchange and all tests have been done in the simulation and shadow environment.
+- Base freeze commit [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex) and previous tags left completely intact.
+- **Number of suite unit tests:** 78 tests passed with 100% success.

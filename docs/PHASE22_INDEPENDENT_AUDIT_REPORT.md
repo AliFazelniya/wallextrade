@@ -1,99 +1,98 @@
-# ممیزی مستقل و کالبدشکافی کمی فاز ۲۲ (Phase 22 Independent Forensic Audit)
+# Phase 22 Independent Forensic Audit and Quantitative Autopsy
 ## Verification of Candidate E Profitability, Data Integrity, and AI Contribution
 
-> **مخزن:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **شاخه:** `research/phase22-discovery`  
-> **کامیت مبنای منجمد:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **اسکریپت ممیزی:** [`src/experimental/audit_phase22.py`](file:///root/starcoach-hack/wallex/src/experimental/audit_phase22.py)  
-> **تست‌های خودکار ممیزی:** [`tests/test_phase22_components.py`](file:///root/starcoach-hack/wallex/tests/test_phase22_components.py) (۶ آزمون جدید، جمعاً ۶۸ آزمون پاس‌شده)  
-> **مجوز معاملات زنده:** `live_execution_authorized = False` (کاملاً مسدود)
+> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Branch:** `research/phase22-discovery`  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Audit script:** [`src/experimental/audit_phase22.py`](file:///root/starcoach-hack/wallex/src/experimental/audit_phase22.py)  
+> **Automated audit tests:** [`tests/test_phase22_components.py`](file:///root/starcoach-hack/wallex/tests/test_phase22_components.py) (6 new tests, total 68 passed tests)  
+> **Live execution authorization:** `live_execution_authorized = False` (completely blocked)
 
 ---
 
-## ۱. جدول ماتریس ارزیابی و احکام ۹ گانه ممیزی (Audit Verdict Matrix)
+## 1. Audit Verdict Matrix Table
 
-| ردیف | بند ممیزی و راستی‌آزمایی | نتیجه ممیزی کمی | حکم قطعی (Verdict) | خلاصه شواهد و یافته‌های کلیدی |
+| row | Audit and verification clause Quantitative audit result Verdict | Summary of evidence and key findings
 |:---:|---|:---:|:---:|---|
-| **۱** | **بازتولید ۲۹ پنجره مسابقه از داده‌های خام** | انطباق کامل ($|\Delta| < 0.02$ TMN) | ✅ **PASS** | سود ۴۷،۲۴۰.۷ تومان، میانگین بازده ۰.۰۳۳٪+، ۳۳ معامله و اصطکاک ۱۳۱،۶۱۲ تومانی دقیقاً بازتولید شد. |
-| **۲** | **تطبیق اصطکاک ۱۰۹،۹۲۱ در برابر ۵۳،۴۸۵ تومان** | خطای تایپی در جدول چت | ✅ **PASS (Reconciled)** | اصطکاک واقعی در اسناد مخزن دقیقاً ۱۰۹،۹۲۱ تومان است؛ عدد ۵۳،۴۸۵ یک اشتباه رونویسی در پیام متنی قبلی بود. |
-| **۳** | **بررسی عدم استفاده از داده‌های W16–W29 در طراحی** | افشای تقسیم‌بندی پسینی (Post-Hoc) | ⚠️ **CONDITIONAL PASS** | پارامترها با آگاهی از کل دیتاست ۹۰ روزه تنظیم شدند؛ W16–W29 یک افراز زمانی است نه آزمون کور برون-نمونه. |
-| **۴** | **اصلاح ادعای آماری آماره تی ۱.۱۹۹ و Overfitting** | نقض فرضیه با $p = 0.252$ | ❌ **FAIL (Corrected)** | ادعای «اثبات عدم برازش» ابطال شد؛ آماره تی ۱.۱۹۹ دارای پی-ولیو ۲۵.۲٪ است و از نظر آماری در سطح ۵٪ معنادار نیست. |
-| **۵** | **صحت حسابداری، اجرای سفارش، اسلیپیج و حد ضرر** | سودآوری در فیلتر سایه کندل (+۸،۳۱۴ TMN) | ✅ **PASS** | پایش با Close سود ۴۷.۲k داشت؛ پایش محافظه‌کارانه با سقف/کف کندل (High/Low) سود را به ۸.۳k رساند اما مثبت ماند. |
-| **۶** | **بررسی عدم نشت داده به آینده (Lookahead Bias)** | اصلاح میانگین ایستا به گسترش‌یابنده | ✅ **PASS** | با جایگزینی میانگین کل ATR با پنجره گسترش‌یابنده (Expanding)، استراتژی با سود ۳۲،۱۸۵.۹+ تومان کاملاً ایمن شد. |
-| **۷** | **تحلیل وابستگی سود به دنباله‌های چاق (Fat Tails)** | تمرکز سود بر پنجره‌های W09 و W23 | ⚠️ **WARNING (Fragile)** | ۷۸٪ سود کل در پنجره پرشتاب W09 (+۳۶،۸۰۰ تومان) ساخته شده؛ بدون دو پنجره برتر، بازدهی منفی می‌شود. |
-| **۸** | **ارزیابی مشارکت واقعی هوش مصنوعی (AI Ablation)** | ادغام موفق عامل AI و افزایش سود | ✅ **PASS** | کاندیدای E اولیه ۱۰۰٪ دترمینیستیک بود؛ با ادغام [`RegimeClassificationAgent`](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py)، سود به **۴۸،۵۰۸+ تومان** ارتقا یافت. |
-| **۹** | **افزودن تست‌های خودکار اجزای فاز ۲۲** | ۶ تست جدید جامع | ✅ **PASS** | فایل [`test_phase22_components.py`](file:///root/starcoach-hack/wallex/tests/test_phase22_components.py) اضافه شد و تمامی ۶۸ آزمون واحد و یکپارچگی پاس شدند. |
+| **1** **Reproduction of 29 match windows from raw data** | Perfect compliance ($|\Delta| < 0.02$ TMN) | ✅ **PASS** | Profit of 47,240.7 Tomans, average return of +0.033%, 33 trades and friction of 131,612 Tomans were exactly reproduced. |
+| **2** **Adjustment of friction 109,921 against 53,485 Tomans** | Typing error in the chat table ✅ **PASS (Reconciled)** | The actual friction in the tank documents is exactly 109,921 Tomans; The number 53,485 was a transcription error in the previous text message. |
+| **3** **Inspection of non-use of W16-W29 data in design** | Disclosure of posterior segmentation (Post-Hoc). ⚠️ **CONDITIONAL PASS** | The parameters were adjusted with the knowledge of the entire 90-day dataset; W16–W29 is a time series, not an out-of-sample blind test. |
+| **4** **Correcting the statistical claim of T-statistic 1.199 and Overfitting** | Violation of the hypothesis with $p = 0.252$ | ❌ **FAIL (Corrected)** | The claim of "proof of unfitness" was rejected; The t-statistic of 1.199 has a p-value of 25.2% and is not statistically significant at the 5% level. |
+| **5** ** Accounting accuracy, order execution, slippage and loss limit** | Profitability in candle shadow filter (+8,314 TMN) | ✅ **PASS** | Paish had a profit of 47.2k with Close; A conservative follow-up with high/low candlestick took profit to 8.3k but remained positive. |
+| **6** **Inspection of data leakage to the future (Lookahead Bias)** | Modification of static to expanding average ✅ **PASS** | By replacing the total average ATR with an expanding window, the strategy became completely safe with a profit of +32,185.9 Tomans. |
+| **7** | **Analysis of profit dependence on fat tails** | Profit focus on windows W09 and W23 ⚠️ **WARNING (Fragile)** | 78% of the total profit was made in the high-speed W09 window (+36,800 Tomans); Without the top two windows, the efficiency becomes negative. |
+| **8** | **Evaluation of real participation of artificial intelligence (AI Ablation)** | Successful integration of AI agent and increased profit ✅ **PASS** | The initial candidate E was 100% deterministic; By merging [`RegimeClassificationAgent`](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py), profit increased to **48,508+ Tomans**. |
+| **9** **Adding automatic tests of phase 22 components** | 6 new comprehensive tests ✅ **PASS** | File [`test_phase22_components.py`](file:///root/starcoach-hack/wallex/tests/test_phase22_components.py) was added and all 68 unit and integration tests passed. |
 
 ---
 
-## ۲. کالبدشکافی تفصیلی بندهای ممیزی
+## 2. Detailed autopsy of audit clauses
 
-### بند ۱: بازتولید محاسباتی کاندیدای E در ۲۹ پنجره مسابقه
-اجرای کد مستقل در [`audit_phase22.py`](file:///root/starcoach-hack/wallex/src/experimental/audit_phase22.py) روی داده‌های کش خام (`BTCTMN`، `ETHTMN`، `SOLTMN`):
-- **سود خالص بازتولیدشده:** **۴۷،۲۴۰.۷ تومان** (گزارش‌شده در فاز ۲۲: ۴۷،۲۴۰.۷ تومان — اختلاف: ۰.۰۲ تومان).
-- **تعداد کل معاملات:** **۳۳ معامله** (دقیقاً منطبق).
-- **پنجره‌های برنده / بازنده / بدون معامله:** **۱۳ / ۹ / ۷** (دقیقاً منطبق).
-- **اصطکاک کل مبادله:** **۱۳۱،۶۱۲ تومان** (شامل کارمزد میکر ۰.۲۵٪، تیکر ۰.۳۰٪ و اسلیپیج ۰.۱۵٪).
-- **نتیجه:** صحت محاسباتی شبیه‌سازی ۱۰۰٪ تأیید شد.
+### Paragraph 1: Computational reproduction of candidate E in 29 match windows
+Running the standalone code in [`audit_phase22.py`](file:///root/starcoach-hack/wallex/src/experimental/audit_phase22.py) on raw cache data (`BTCTMN`, `ETHTMN`, `SOLTMN`):
+- **Reproduced net profit:** **47,240.7 Tomans** (reported in phase 22: 47,240.7 Tomans - difference: 0.02 Tomans).
+- **Total number of transactions:** **33 transactions** (exactly matched).
+- **WINNING / LOSING / NO TRADING WINDOWS:** **13 / 9 / 7** (exactly matched).
+- **Total exchange friction:** **131,612 Tomans** (includes maker fee 0.25%, ticker 0.30% and slippage 0.15%).
+- **Result:** The computational accuracy of the simulation was confirmed 100%.
 
-### بند ۲: تطبیق مغایرت اصطکاک ۱۰۹،۹۲۱ تومان و ۵۳،۴۸۵ تومان
-- در گزارش مصوب فاز ۲۱ ([`PHASE21_COMPETITION_READINESS_ASSESSMENT.md`](file:///root/starcoach-hack/wallex/docs/PHASE21_COMPETITION_READINESS_ASSESSMENT.md)):
-  - کارمزد صرافی: ۷۶،۳۲۱ تومان
-  - اسلیپیج اجرا: ۳۳،۶۰۰ تومان
-  - **مجموع اصطکاک معاملاتی:** **۱۰۹،۹۲۱ تومان**
-- در مستندات فاز ۲۲ ([`PHASE22_STRATEGY_COMPARISON.md`](file:///root/starcoach-hack/wallex/docs/PHASE22_STRATEGY_COMPARISON.md#L23)):
-  - رقم دقیقاً **۱۰۹،۹۲۱ TMN** درج شده است.
-- **ریشه مغایرت:** عدد ۵۳،۴۸۵ تومان ناشی از یک خطای تایپی صرف در جدول خلاصه چت توسط دستیار قبلی بوده و هیچ مبنای کدی در مخزن ندارد. رقم رسمی و معتبر ۱۰۹،۹۲۱ تومان است.
+### Paragraph 2: adjustment of friction discrepancy 109,921 Tomans and 53,485 Tomans
+- In the approved report of Phase 21 ([`PHASE21_COMPETITION_READINESS_ASSESSMENT.md`](file:///root/starcoach-hack/wallex/docs/PHASE21_COMPETITION_READINESS_ASSESSMENT.md)):
+  - Exchange fee: 76,321 Tomans
+  - Performance slippage: 33,600 Tomans
+  - **Total trading friction:** **109,921 Tomans**
+- In Phase 22 documentation ([`PHASE22_STRATEGY_COMPARISON.md`](file:///root/starcoach-hack/wallex/docs/PHASE22_STRATEGY_COMPARISON.md#L23)):
+  - The figure is exactly **109,921 TMN**.
+- **The root of the discrepancy:** The number of 53,485 tomans is caused by a simple typing error in the chat summary table by the previous assistant and has no code base in the repository. The official and valid figure is 109,921 Tomans.
 
-### بند ۳ و ۴: راستی‌آزمایی علمی آزمون برون-نمونه (OOS) و ابطال ادعای $t = 1.199$
-در گزارش قبلی ادعا شده بود که آماره تی ۱.۱۹۹ در پنجره‌های W16 تا W29 اثبات‌کننده عدم برازش بیش‌از‌حد است. این ادعا از نظر ریاضی و آماری باطل است:
-1. **محاسبه دقیق پی-ولیو (p-value):**  
-   برای متغیر تصادفی $t = 1.199$ با درجه آزادی $df = 14 - 1 = 13$:
+### Paragraphs 3 and 4: scientific verification of the out-of-sample test (OOS) and invalidation of the claim $t = 1.199$
+A previous report claimed that a t-statistic of 1.199 in windows W16 to W29 was evidence of overfitting. This claim is mathematically and statistically invalid:
+1. **accurate calculation of p-value (p-value):**  
+   For random variable $t = 1.199$ with degree of freedom $df = 14 - 1 = 13$:
    $$p_{\text{one-tailed}} = 0.1259 \quad (12.6\%)$$
    $$p_{\text{two-tailed}} = 0.2518 \quad (25.2\%)$$
-2. **نتیجه‌گیری آماری:** با $p = 0.252$، فرض صفر ($H_0: \mu \le 0$) در هیچ سطح معناداری استانداردی ($\alpha = 0.05$ یا حتی $\alpha = 0.10$) رد نمی‌شود. احتمال رخداد این نتیجه صرفاً بر اثر شانس بیش از ۲۵٪ است.
-3. **نقص روش‌شناسی تقسیم‌بندی داده‌ها:** پارامترهای کاندیدای E با مشاهده نمودارها و نتایج کل ۹۰ روزه تنظیم شدند و سپس دیتاست به ۱۵ پنجره اول و ۱۴ پنجره دوم افراز شد (Post-Hoc Split). بنابراین W16–W29 یک نمونه کور (Blind OOS) تلقی نمی‌شود.
+2. **Statistical conclusion:** With $p = 0.252$, the null hypothesis ($H_0: \mu \le 0$) is not rejected at any standard significance level ($\alpha = 0.05$ or even $\alpha = 0.10$). The probability of this outcome occurring purely by chance is greater than 25%.
+3. **Flaws of data splitting methodology:** The parameters of candidate E were adjusted by viewing the graphs and the total results of 90 days, and then the dataset was divided into 15 first windows and 14 second windows (Post-Hoc Split). Therefore, W16–W29 is not considered a blind sample (Blind OOS).
 
-### بند ۵: حسابداری اجرای سفارش و آزمون نوسانات سایه کندل (Intra-Bar High/Low)
-در نسخه اولیه کاندیدای E، فعال‌سازی حد سود (+۳.۲٪) و حد ضرر (-۱.۵٪) صرفاً روی قیمت Close کندل ۱۵ دقیقه‌ای بررسی می‌شد.  
-در ممیزی سخت‌گیرانه، رفتار الگوریتم در مواجهه با سقف (High) و کف (Low) کندل شبیه‌سازی شد (با فرض بدبینانه فعال‌سازی حد ضرر در صورت لمس هر دو سطح در یک کندل):
-- **سود پایش Close:** +۴۷،۲۴۰.۷ تومان (۳۳ معامله)
-- **سود پایش High/Low:** **+۸،۳۱۴.۴ تومان** (۳۵ معامله)
-- **تفسیر:** نفوذ سایه‌های لحظه‌ای کندل موجب شد ۲ استاپ‌لاس زودرس فعال شود و سود کاهش یابد؛ اما **استراتژی کماکان برآیند سودآور و مثبت خود را حفظ کرد**.
+### Section 5: Order execution accounting and candle shadow fluctuation test (Intra-Bar High/Low)
+In the initial version of candidate E, activation of the profit limit (+3.2%) and stop loss (-1.5%) was checked only on the close price of the 15-minute candle.  
+In a strict audit, the behavior of the algorithm was simulated in the face of the ceiling (High) and the floor (Low) of the candle (with the pessimistic assumption of activation of the loss limit in case of touching both levels in the same candle):
+- **Close monitoring profit:** +47,240.7 Tomans (33 transactions)
+- **High/Low monitoring profit:** **+8,314.4 Tomans** (35 transactions)
+- **Interpretation:** Penetration of momentary shadows of the candle caused 2 early stoplosses to be activated and the profit to decrease; But **the strategy still maintained its profitable and positive result**.
 
-### بند ۶: نشت داده آینده در مهندسی ویژگی‌ها (Lookahead Bias Audit)
-- در خط ۸۲ فایل [`src/experimental/features.py`](file:///root/starcoach-hack/wallex/src/experimental/features.py)، میانگین کل ۹۰ روزه ATR (`out["atr_pct"].mean()`) برای نرمال‌سازی اسپرد پویا استفاده شده بود که نوعی نشت آینده بود.
-- با اصلاح این تابع و استفاده از میانگین گسترش‌یابنده گذشته‌نگر (`expanding(min_periods=30).mean()`):
-  - سود خالص بازتولیدشده: **۳۲،۱۸۵.۹+ تومان**
-  - نتیجه: حتی پس از حذف کامل هرگونه نشت داده، کاندیدای E سود خالص مثبت و معتبری می‌سازد.
+### Paragraph 6: Future data leakage in feature engineering (Lookahead Bias Audit)
+- In line 82 of file [`src/experimental/features.py`](file:///root/starcoach-hack/wallex/src/experimental/features.py), the 90-day total ATR average (`out["atr_pct"].mean()`) was used to normalize the dynamic spread, which was a future leak.
+- By modifying this function and using the retrospective expanding average (`expanding(min_periods=30).mean()`):
+  - Reproduced net profit: **32,185.9+ Tomans**
+  - Result: Even after completely removing any data leakage, Candidate E makes a valid and positive net profit.
 
-### بند ۷: کالبدشکافی وابستگی به پنجره‌های پرت (Fat-Tail / Outlier Dependency)
-توزیع سود در ۲۹ پنجره نشان‌دهنده چولگی مثبت شدید است:
-- **پنجره برتر رتبه ۱ (W09):** سود ۳۶،۸۰۰.۲+ تومان (۷۷.۹٪ از کل سود!)
-- **پنجره برتر رتبه ۲ (W23):** سود ۱۶،۲۰۹.۱+ تومان
-- **پنجره برتر رتبه ۳ (W14):** سود ۱۵،۷۲۶.۹+ تومان
-- **برآیند کل بدون پنجره W09:** سود **۱۰،۴۴۰.۵+ تومان** (همچنان مثبت).
-- **برآیند کل بدون W09 و W23:** زیان **۵،۷۶۸.۶- تومان** (منفی).
-- **نتیجه:** استراتژی در پنجره‌های دارای ترند انفجاری بیشترین بازدهی را دارد. در صورتی که مسابقه در یک بازه ۳ روزه کاملاً رنج و مرده برگزار شود، احتمال خنثی ماندن یا ثبت زیان اندک کارمزد وجود دارد.
+### Paragraph 7: Autopsy of dependence on outlier windows (Fat-Tail / Outlier Dependency)
+The profit distribution in 29 windows shows a strong positive skewness:
+- **Top Rank 1 Window (W09):** Profit 36,800.2+ Tomans (77.9% of total profit!)
+- **Top rank window 2 (W23):** Profit 16,209.1+ Tomans
+- **Top rank window 3 (W14):** Profit 15,726.9+ Tomans
+- **Total result without window W09:** Profit **10,440.5+ Tomans** (still positive).
+- **Total result without W09 and W23:** loss **5,768.6 Tomans** (negative).
+- **Result:** The strategy has the most efficiency in windows with an explosive trend. If the match is held in a period of 3 days completely suffering and dead, there is a possibility to remain neutral or register a small fee loss.
 
-### بند ۸: ارزیابی مشارکت واقعی هوش مصنوعی (AI Ablation Study)
-- کاندیدای E اولیه که در فاز ۲۲ گزارش شد، یک فیلتر دترمینیستیک خالص بود و عامل هوش مصنوعی را فراخوانی نمی‌کرد.
-- در این ممیزی، عامل طبقه‌بندی رژیم ([`RegimeClassificationAgent`](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py)) به طور کامل در موتور فیلتر کاندیدای E ادغام شد:
-  - **کاندیدای E دترمینیستیک:** سود ۴۷،۲۴۰.۷ تومان | ۳۳ معامله | ۱۳ برد | ۷ پنجره صفر
-  - **کاندیدای E با فیلتر AI:** سود **۴۸،۵۰۸.۱ تومان** | ۲۹ معامله | ۱۰ برد | ۱۲ پنجره صفر
-- **دستاورد:** فیلتر هوش مصنوعی با حذف ۴ معامله پرریسک و ناموفق، سود نهایی را **۱،۲۶۷ تومان افزایش داد** و مشارکت عامل AI را در تطابق با قوانین مسابقه مسجل ساخت.
+### Paragraph 8: Evaluation of the real participation of artificial intelligence (AI Ablation Study)
+- The initial E candidate reported in Phase 22 was a pure deterministic filter and did not invoke an AI agent.
+- In this audit, the regime classification agent ([`RegimeClassificationAgent`](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py)) was fully integrated into the E candidate filter engine:
+  - **Candidate E deterministic:** Profit 47,240.7 Tomans 33 transactions 13 wins 7 window zero
+  - **Candidate E with AI filter:** Profit **48,508.1 Tomans** | 29 transactions 10 wins 12 window zero
+- **Achievement:** By removing 4 risky and unsuccessful transactions, the artificial intelligence filter increased the final profit by **1,267 Tomans** and confirmed the participation of the AI agent in accordance with the competition rules.
 
-### بند ۹: تست‌های خودکار یکپارچه‌شده
-فایل جدید [`tests/test_phase22_components.py`](file:///root/starcoach-hack/wallex/tests/test_phase22_components.py) شامل ۶ آزمون واحد و یکپارچگی است:
-1. `test_adx_indicator_computation`: راستی‌آزمایی اندیکاتور ADX
-2. `test_donchian_channels_computation`: راستی‌آزمایی کانال دانچیان
-3. `test_extract_advanced_features_expanding_spread`: راستی‌آزمایی اسپرد پویا بدون نشت آینده
-4. `test_student_t_distribution_functions`: راستی‌آزمایی محاسبات آماری توزیع تی و پی-ولیو
-5. `test_simulation_harness_accounting_and_wind_down`: راستی‌آزمایی حسابداری و بادبان پایانی
-6. `test_candidate_e_ai_gated_execution`: راستی‌آزمایی اجرای کاندیدای E به همراه عامل AI
+### Clause 9: Integrated automated tests
+The new file [`tests/test_phase22_components.py`](file:///root/starcoach-hack/wallex/tests/test_phase22_components.py) contains 6 unit and integration tests:
+1. `test_adx_indicator_computation`: ADX indicator verification
+2. `test_donchian_channels_computation`: Donchian channel verification
+3. `test_extract_advanced_features_expanding_spread`: dynamic spread verification without future leakage
+4. `test_student_t_distribution_functions': verification of statistical calculations of T and p-value distribution
+5. `test_simulation_harness_accounting_and_wind_down`: verification of accounting and wind down
+6. `test_candidate_e_ai_gated_execution`: verification of candidate E execution with AI agent
 
-اجرای کامل تست‌های مخزن:
-```bash
+Full implementation of repository tests:```bash
 .venv/bin/pytest
 # 68 passed in 3.13s
 ```

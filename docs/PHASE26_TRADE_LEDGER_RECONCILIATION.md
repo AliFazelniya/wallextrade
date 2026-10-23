@@ -1,66 +1,66 @@
-# تطبیق و ممیزی مستقل کارنامه معاملاتی و تراز سبد (Phase 26 Trade Ledger Reconciliation)
+# Compilation and independent audit of trading record and portfolio balance (Phase 26 Trade Ledger Reconciliation)
 ## Independent Trade-Level Reconciliation, Capacity Evolution & Portfolio Accounting
 
-> **مخزن:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **شاخه پژوهشی:** `research/phase26-forensic-validation`  
-> **کامیت مبنای منجمد:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **میزان عدم‌تطابق حسابی (Ledger Discrepancy):** **۰.۰۰۰۰۰۰ تومان (تراز کامل و بی‌نقص)**
+> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Research branch:** `research/phase26-forensic-validation`  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Ledger Discrepancy Level:** **0.000000 Tomans (perfect balance)**
 
 ---
 
-## ۱. جدول تطبیق تجمیعی سود معاملات در برابر سود پرتفوی
+## 1. Aggregate reconciliation table of trading profit against portfolio profit
 
-| مدل معاملاتی | تعداد کل معامله | مجموع سود خالص تک‌تک معاملات (TMN) | سود گزارش‌شده کل پرتفوی (TMN) | میزان مغایرت (Discrepancy) | اصطکاک کل مبادله (کارمزد + لغزش) |
+| Trading model Total number of transactions Total net profit of individual transactions (TMN) | Reported Total Portfolio Profit (TMN) | The amount of discrepancy (Discrepancy). Total exchange friction (fee + slip) |
 |---|:---:|:---:|:---:|:---:|:---:|
-| **مدل A: انحصاری H1 (روند ساختاری)** | **۳۳** | **۶۳،۰۳۴.۸۰** | **۶۳،۰۳۴.۸۰** | **۰.۰۰ TMN** | ۱۲۵،۶۴۷.۷۸ TMN |
-| **مدل B: انحصاری H3 (نشت شتاب لید-لگ)** | **۶** | **۴۸،۷۰۷.۸۶** | **۴۸،۷۰۷.۸۶** | **۰.۰۰ TMN** | ۲۲،۱۳۷.۵۰ TMN |
-| **مدل C: تلفیق یکپارچه H1+H3** | **۳۵** | **۶۳،۹۵۴.۶۶** | **۶۳،۹۵۴.۶۶** | **۰.۰۰ TMN** | ۱۳۴،۶۱۱.۷۳ TMN |
+| **Model A: exclusive H1 (structural trend)** | **33** | **63,034.80** | **63,034.80** | **0.00 TMN** | 125,647.78 TMN
+| **Model B: Exclusive H3 (Lead-Leg Acceleration Leakage)** | **6** **48,707.86** | **48,707.86** | **0.00 TMN** | 22,137.50 TMN
+| **Model C: integrated combination of H1+H3** | **35** **63,954.66** | **63,954.66** | **0.00 TMN** | 134,611.73 TMN
 
 > [!NOTE]
-> جمع جبری سود تحقق‌یافته تک‌تک معاملات مندرج در لاگ اجرایی دقیقاً تا ۶ رقم اعشار با تغییرات تراز نقدینگی و ارزش ویژه حساب ($5,000,000 \to 5,063,954.66$) هم‌خوانی دارد. هیچ سود یا زیان ناپیدایی در سیستم وجود ندارد.
+> The algebraic sum of the realized profit of each transaction contained in the executive log matches exactly to 6 decimal places with the changes in the liquidity balance and the equity value of the account ($5,000,000 \to $5,063,954.66). There is no invisible profit or loss in the system.
 
 ---
 
-## ۲. ریشه‌یابی و اثبات تجربی تغییر تعداد معاملات (Evolution from 19 to 33 Trades)
+## 2. Rooting and empirical proof of the change in the number of trades (Evolution from 19 to 33 Trades)
 
-یکی از سوالات بنیادین ممیزی این بود که چرا تعداد معاملات H1 از **۱۹ معامله** در فاز ۲۴ به **۳۳ معامله** در فاز ۲۵ افزایش یافت؟ آیا خطای محاسباتی رخ داده است؟
+One of the fundamental questions of the audit was why the number of H1 transactions increased from **19 transactions** in phase 24 to **33 transactions** in phase 25? Has a calculation error occurred?
 
-### آزمایش کنترل‌شده تغییر ظرفیت پرتفوی:
-برای پاسخ به این سوال، موتور اجرایی فاز ۲۵ با دو محدودیت ظرفیت موقعیت باز اجرا گردید:
+### Controlled experiment of changing portfolio capacity:
+To answer this question, the execution engine of phase 25 was re-executed with two position capacity constraints:
 
 ```python
-# آزمایش محدودیت ظرفیت پوزیشن در src/experimental/ensemble_engine.py
-# آزمون ۱: سقف ۱ پوزیشن هم‌زمان (Phase 24 Single-Position Constraint)
-# آزمون ۲: سقف ۲ پوزیشن هم‌زمان (Phase 25 Multi-Position Constraint)
+# Position capacity limit test in src/experimental/ensemble_engine.py
+# Test 1: Phase 24 Single-Position Constraint
+# Test 2: Phase 25 Multi-Position Constraint
 ```
 
-| قید ظرفیت هم‌زمان پرتفوی | تعداد معاملات H1 | سود خالص H1 (TMN) | اصطکاک کل (TMN) | انطباق با فازهای پروژه |
+| The condition of the simultaneous capacity of the portfolio Number of transactions H1 | H1 net profit (TMN) | Total Friction (TMN) | Compliance with project phases
 |---|:---:|:---:|:---:|---|
-| **حداکثر ۱ موقعیت باز (`max_pos = 1`)** | **۱۹** | **۳۲،۱۳۸.۰۳** | **۷۲،۵۷۵.۸۷** | **دقیقاً منطبق بر فاز ۲۴** (۱۹ معامله و ۷۲.۵k اصطکاک) |
-| **حداکثر ۲ موقعیت باز (`max_pos = 2`)** | **۳۳** | **۶۳،۰۳۴.۸۰** | **۱۲۵،۶۴۷.۷۸** | **دقیقاً منطبق بر فاز ۲۵** (۳۳ معامله و ۱۲۵.۶k اصطکاک) |
+| **Maximum 1 open position (`max_pos = 1`)** | **19** | **32,138.03** | **72,575.87** | **exactly matches phase 24** (19 transactions and 72.5k friction) |
+| **Maximum 2 open positions (`max_pos = 2`)** | **33** | **63,034.80** | **125,647.78** | **exactly matches phase 25** (33 transactions and 125.6k friction) |
 
-### نتیجه ممیزی علت تغییر:
-1. در فاز ۲۴، شبیه‌ساز معاملاتی [`simulation_harness.py`](file:///root/starcoach-hack/wallex/src/experimental/simulation_harness.py#L132) از ساختار تک‌پوزیشن (`open_pos: Optional[Dict]`) استفاده می‌کرد. به این معنی که اگر موقعیتی روی سولانا باز بود، هرگونه سیگنال ساختاری روی اتریوم یا بیت‌کوین بلوکه می‌شد تا موقعیت سولانا بسته شود.
-2. در فاز ۲۵، معماری پرتفوی مشترک اجازه باز شدن تا **۲ موقعیت باز هم‌زمان** (سقف تخصیص ۱ میلیون تومان، معادل ۲۰٪ کل سرمایه) را صادر کرد.
-3. در نتیجه، در امواج صعودی قدرتمند بازار (مانند W09 و W20)، سیستم توانست به طور هم‌زمان پوزیشن‌های برنده سولانا و اتریوم را مدیریت کند؛ بنابراین تعداد معاملات از ۱۹ به ۳۳ و سود از ۳۲.۱ هزار تومان به ۶۳.۰ هزار تومان جهش کرد.
-4. برای مدل H3 نیز، ظرفیت ۲ پوزیشن به سیستم اجازه داد هنگام جهش بیت‌کوین، به طور هم‌زمان نشت شتاب را روی هر دو آلت‌کوین لگرد (SOL و ETH) شکار کند و معاملات را از ۴-۵ به ۶ معامله با سود ۴۸.۷ هزار تومان برساند.
-5. **نتیجه:** این تغییر ۱۰۰٪ ناشی از قواعد مستند معماری پرتفوی بوده و هیچ‌گونه خطای حسابی در آن دخیل نیست.
+### The result of the audit, the reason for the change:
+1. In phase 24, the trading simulator [`simulation_harness.py`](file:///root/starcoach-hack/wallex/src/experimental/simulation_harness.py#L132) used the single-position structure (`open_pos: Optional[Dict]`). This means that if a position was open on Solana, any structural signal on Ethereum or Bitcoin would be blocked to close the Solana position.
+2. In phase 25, the joint portfolio architecture allowed to open up to **2 open positions at the same time** (allocation ceiling of 1 million Tomans, equivalent to 20% of the total capital).
+3. As a result, in strong bullish market waves (such as W09 and W20), the system was able to manage Solana and Ethereum winning positions simultaneously; Therefore, the number of transactions jumped from 19 to 33 and profit from 32.1 thousand tomans to 63.0 thousand tomans.
+4. For the H3 model, the capacity of 2 positions allowed the system to catch the momentum leakage on both sluggish altcoins (SOL and ETH) at the same time when Bitcoin jumps and increase the transactions from 4-5 to 6 transactions with a profit of 48.7 thousand tomans.
+5. **Result:** This change is 100% caused by the documented rules of the portfolio architecture and there is no arithmetic error involved in it.
 
 ---
 
-## ۳. کالبدشکافی توزیع سود و زیان معاملات بر اساس دارایی و دلیل خروج
+## 3. An autopsy of the distribution of trading profits and losses based on assets and the reason for exit
 
-### الف) تفکیک عملکرد بر حسب نماد معاملاتی در مدل A (H1):
-- **سولانا (SOLTMN):** ۱۲ معامله | **۲۰،۷۸۹.۹۸+ تومان سود** | میانگین ۱،۷۳۲+ تومان در هر معامله
-- **اتریوم (ETHTMN):** ۱۰ معامله | **۴۴،۱۷۵.۹۹+ تومان سود** | میانگین ۴،۴۱۷+ تومان در هر معامله
-- **بیت‌کوین (BTCTMN):** ۱۱ معامله | **۱،۹۳۱.۱۷- تومان زیان** | میانگین ۱۷۵- تومان در هر معامله
+### A) Breakdown of performance by trading symbol in model A (H1):
+- **Solana (SOLTMN):** 12 transactions **20,789.98+ tomans profit** | Average 1,732+ Tomans per transaction
+- **Ethereum (ETHTMN):** 10 transactions **44,175.99+ Tomans profit** | Average 4,417+ Tomans per transaction
+- **Bitcoin (BTCTMN):** 11 transactions **Loss 1,931.17 Tomans** | Average - 175 tomans per transaction
 
-### ب) تفکیک بر حسب دلیل خروج از پوزیشن در مدل A (H1):
-- **خروج در هدف سود (`H1_TP` با حد سود ۴.۵٪+):** ۸ معامله | **۱۵۷،۵۵۰+ تومان سود** (سازنده نقدینگی Maker)
-- **خروج اضطراری حد ضرر (`H1_SL` با حد ضرر ۲.۲٪-):** ۹ معامله | **۱۳۲،۲۸۴- تومان زیان** (سفارش‌بردار Taker)
-- **خروج حد ضرر متحرک سربه‌سر (`TRAILING_BE`):** ۵ معامله | **۳،۶۳۳- تومان زیان حاشیه‌ای** (کارمزد ورود و خروج)
-- **خروج در بادبان پایانی ۷۲ ساعته (`WIND_DOWN` در ساعت ۶۶ با سود):** ۱۰ معامله | **۴۷،۴۷۸+ تومان سود** (سازنده نقدینگی Maker)
-- **تسویه اجباری پایانی مرز ۷۲ ساعت (`FORCED_BOUNDARY_LIQUIDATION`):** ۱ معامله | **۶،۰۷۶- تومان زیان**
+### b) Separation according to the reason for leaving the position in model A (H1):
+- **Exit in profit target (`H1_TP' with a profit limit of 4.5%+):** 8 transactions **157,550+ Tomans Profit** (Maker Liquidity Generator)
+- **Emergency exit of loss limit (`H1_SL' with a loss limit of -2.2%):** 9 transactions **Loss of 132,284 Tomans** (Order Taker)
+- **Break-even moving loss limit exit (`TRAILING_BE'):** 5 transactions **3,633-tomans marginal loss** (entry and exit fees)
+- **Exit in the final 72-hour sail (`WIND_DOWN' at 66 hours with profit):** 10 trades | **47,478+ Tomans Profit** (Maker Liquidity Builder)
+- **FORCED_BOUNDARY_LIQUIDATION final boundary of 72 hours:** 1 transaction | **Loss of 6,076 Tomans**
 
-### نتیجه‌گیری و تاییدیه ممیزی: `PASS`
-تراز حسابی، کارنامه تک‌تک معاملات، فرآیند اجرای سفارشات و منطق محاسباتی پرتفوی بدون کوچک‌ترین خطا تایید شد.
+### Audit conclusion and approval: ``PASS''
+The account balance, record of individual transactions, the order execution process and the calculation logic of the portfolio were confirmed without the slightest error.

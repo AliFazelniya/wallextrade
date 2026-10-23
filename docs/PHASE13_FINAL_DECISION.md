@@ -1,106 +1,102 @@
-# سند تصمیم‌گیری نهایی، ممیزی حاکمیتی و انتخاب راهبرد مسابقه (فاز ۱۳)
+# Final decision document, governance audit and competition strategy selection (Phase 13)
 ### Phase 13 Final Decision Gate, Strategy Selection & Competition Readiness
-**مخزن:** [`wallex`](file:///root/starcoach-hack/wallex) | **تاریخ گزارش:** ۲۲ اکتبر ۲۰۲۶ | **سرمایه مسابقه:** ۵،۰۰۰،۰۰۰ تومان
+**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Report date:** October 22, 2026 **Competition capital:** 5,000,000 Tomans
 
 ---
 
-## ۱. ارزیابی قواعد گزینش استراتژی از پیش‌تعیین‌شده (Predefined Selection Rules)
+## 1. Evaluating Predefined Selection Rules
 
-پیش از بررسی نتایج نهایی برون‌نمونه‌ای، ۶ معیار کمی و سخت‌گیرانه برای پذیرش یا رد استراتژی‌ها تعریف شد:
+Before examining the final results of the sample, 6 quantitative and strict criteria were defined for accepting or rejecting the strategies:
 
-| شماره | معیار گزینش استراتژی | شرط پذیرش ریاضی | نتیجه اندازه‌گیری‌شده در داده‌های واقعی | وضعیت انطباق |
+| No Strategy selection criteria Math acceptance condition Measured result on real data Compliance status
 |---|---|---|---|---|
-| **۱** | **بازدهی خالص برون‌نمونه‌ای (OOS Net Return)** | $NetReturn > 0.0\%$ پس از کسر تمامی کارمزدها و اسلیپیج | **+۰.۶۲٪ (سود خالص بیت‌کوین در ۴۵ روز دوم)** | ✅ **پاس شد (PASSED)** |
-| **۲** | **حداکثر افت سرمایه برون‌نمونه‌ای (OOS Max DD)** | $MaxDD \le 3.5\%$ (فاصله امن با سقف ۵٪ مسابقه) | **۰.۸۶٪ (دراوداون بسیار ناچیز در بیت‌کوین)** | ✅ **پاس شد (PASSED)** |
-| **۳** | **نرخ برد پنجره‌های ۳ روزه مسابقه (Walk-Forward Win Rate)** | درصد پنجره‌های سودآور ۳ روزه $> 50\%$ | **۲۰.۷٪ سودآور / ۳۷.۹٪ نقدینگی ۱۰۰٪ / ۴۱.۴٪ زیان ناچیز** | ❌ **رد شد (FAILED)** |
-| **۴** | **ارزش اقتصادی خالص هوش مصنوعی (Net AI Value-Add)** | سودمندی خالص ریالی ایجنت $> 0$ تومان | **+۱،۷۵۸،۲۰۲ تومان (+۳۵.۲٪ کل حساب)** | ✅ **پاس شد (PASSED)** |
-| **۵** | **تاب‌آوری در استرس کارمزد ۰.۳۵٪ صرافی** | $MaxDD \le 4.5\%$ در کارمزد ۰.۳۵٪ | **۰.۹۱٪ دراوداون با حفظ سودآوری (+۰.۳۵٪)** | ✅ **پاس شد (PASSED)** |
-| **۶** | **سودآوری سبد مشترک متوازن در آزمون برون‌نمونه‌ای** | بازدهی سبد مشترک (BTC+ETH+SOL) $> 0.0\%$ | **۲.۰۶-٪ (زیان ناشی از فرسایش کارمزد آلت‌کوین‌ها)** | ❌ **رد شد (FAILED)** |
+| **1** **Example Net Return (OOS Net Return)** | $NetReturn > 0.0%$ after deducting all fees and slippage **+0.62% (Bitcoin net profit in 2nd 45 days)** | ✅ **passed (PASSED)** |
+| **2** **Maximum out-of-sample capital loss (OOS Max DD)** | $MaxDD \le 3.5\%$ (safe distance with 5% match ceiling) | **0.86% (very small drawdown in Bitcoin)** | ✅ **passed (PASSED)** |
+| **3** **Walk-Forward Win Rate for 3-day windows of the competition** | Percentage of 3-day profitable windows $> 50\%$ | **20.7% profitable / 37.9% liquidity 100% / 41.4% insignificant loss** | ❌ **rejected (FAILED)** |
+| **4** **Net AI Value-Add** | The agent's net benefit is $> 0$ tomans **+1,758,202 Tomans (+35.2% of the total account)** | ✅ **passed (PASSED)** |
+| **5** ** Resilience in the stress of 0.35% exchange fee** | $MaxDD \le 4.5\%$ at a fee of 0.35% | **0.91% drawdown while maintaining profitability (+0.35%)** | ✅ **passed (PASSED)** |
+| **6** **Profitability of the balanced common portfolio in the out-of-sample test** | Common portfolio return (BTC+ETH+SOL) $> 0.0\%$ | **-2.06% (loss due to altcoin fee erosion)** | ❌ **rejected (FAILED)** |
 
 ---
 
-## ۲. تصمیم نهایی گزینش استراتژی (Strategy Selection Verdict)
+## 2. Strategy Selection Verdict
 
-بر اساس تطبیق معیارهای بالا با شواهد تجربی:
+Based on matching the above criteria with empirical evidence:
 
 ```mermaid
 graph TD
-    A["تصمیم‌گیری حاکمیتی استراتژی برای هکاتون"] --> B{"سبد چندنمادی متوازن (BTC+ETH+SOL)"}
-    B -->|رد صلاحیت قطعی| C["🛑 مردود: فرسایش کارمزد در آلت‌کوین‌ها (سولانا ۲۳۶ هزار تومان کارمزد بلعید)"]
+    A["Governance Decision Making Strategy for Hackathon"] --> B{"Balanced polynomial portfolio (BTC+ETH+SOL)"}
+    B -->|Final disqualification| C["🛑 Rejected: fee erosion in altcoins (Solana swallowed 236 thousand tomans fee)"]
     
-    A --> D{"استراتژی روندی بیت‌کوین با هوش مصنوعی (BTCTMN Dedicated)"}
-    D -->|تایید مشروط| E["✅ پذیرفته‌شده: سود برون‌نمونه‌ای +۰.۶۲٪ با دراوداون امن ۰.۸۶٪"]
+    A --> D{"Bitcoin trend strategy with artificial intelligence (BTCTMN Dedicated)"}
+    D -->|Conditional approval| E["Accepted: Out-of-sample profit +0.62% with a safe drawdown of 0.86%"]
     
-    A --> F{"رویکرد دارایی‌های ثانویه (Altcoins & Cash)"}
-    F -->|سیاست صیانت کامل| G["🛡️ حفظ ۱۰۰٪ نقدینگی به تومان (کارمزد صفر، ریسک صفر)"]
+    A --> F{"Approach to secondary assets (Altcoins & Cash)"}
+    F -->|Full protection policy| G["🛡️ maintaining 100% liquidity in Tomans (zero fee, zero risk)"]
 ```
 
-### ۱. رد کامل سبد چندنمادی متوازن (Rejection of Equal Shared Portfolio):
-اجرای همزمان استراتژی روندی بر روی آلت‌کوین‌ها (`SOLTMN` و `ETHTMN`) اکیداً رد می‌شود؛ چرا که در افق ۹۰ روزه، سولانا به تنهایی **۱۳۲،۷۴۸ تومان کارمزد صرافی** مصرف کرده بدون آنکه سود خالصی عاید پورتفولیو کند و بازدهی سبد را به ۲.۰۶-٪ کاهش داده است.
+### 1. Complete rejection of balanced polynomial portfolio (Rejection of Equal Shared Portfolio):
+Simultaneous execution of trend strategy on altcoins (`SOLTMN' and `ETHTMN') is strictly prohibited; Because in the 90-day horizon, Solana alone has spent **132,748 Tomans in exchange fees** without making a net profit for the portfolio and has reduced the portfolio yield to -2.06%.
 
-### ۲. گزینش استراتژی اختصاصی بیت‌کوین با هوش مصنوعی (Selected Competition Strategy):
-استراتژی [`RegimeMomentumStrategy`](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py) همراه با فیلتر رژیم بازار هوش مصنوعی بر روی جفت‌ارز **بیت‌کوین به تومان (`BTCTMN`)** به عنوان **تنها استراتژی معاملاتی مجاز تیم** برگزیده می‌شود:
-- بازدهی برون‌نمونه‌ای مثبت (+۰.۶۲٪).
-- ارزش افزوده خالص اثبات‌شده هوش مصنوعی (+۱.۷۵ میلیون تومان).
-- دراوداون استثنایی زیر ۱٪ (۰.۸۶٪ در شرایط عادی و ۰.۹۱٪ تحت استرس شدید).
-- دارایی‌های دیگر در وضعیت **۱۰۰٪ نقد به تومان** باقی می‌مانند.
+### 2. Selection of Bitcoin exclusive strategy with artificial intelligence (Selected Competition Strategy):
+The [`RegimeMomentumStrategy'](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py) strategy along with the artificial intelligence market regime filter on the **Bitcoin to Toman (`BTCTMN')** currency pair is selected as **the team's only allowed trading strategy**:
+- Positive out-of-sample yield (+0.62%).
+- Proven net added value of artificial intelligence (+1.75 million Tomans).
+- Exceptional drawdown below 1% (0.86% under normal conditions and 0.91% under extreme stress).
+- Other assets remain in the state of **100% cash in Tomans**.
 
 ---
 
-## ۳. طبقه‌بندی قطعی وضعیت سامانه (Final Decision Gate Classification)
+## 3. Final Decision Gate Classification
 
-از میان ۴ رده‌بندی استاندارد ابلاغ‌شده:
+Among the 4 announced standard classifications:
 - *No viable positive-net-return strategy demonstrated*
 - *Promising candidate, insufficient out-of-sample evidence*
 - *Positive out-of-sample results, execution validation incomplete*
 - *Ready for final human review of competition-account and live-trading prerequisites*
 
-### رده‌بندی مصوب سامانه:
+### Approved classification of the system:
 > ### 🟡 **Promising candidate, insufficient out-of-sample evidence**
-> **(کاندیدای بسیار امیدبخش، اما شواهد آماری ناکافی در افق کوتاه ۳ روزه مسابقه)**
+**(very promising candidate, but insufficient statistical evidence in the short horizon of 3 days of the competition)**
 
-### دلایل و شواهد علمی این رده‌بندی:
-1. **جنبه‌های مثبت و اثبات‌شده:**
-   - استراتژی بیت‌کوین در آزمون برون‌نمونه‌ای ۴۵ روزه (+۰.۶۲٪) و آزمون تاریخی ۹۰ روزه (+۰.۴۳٪) بازدهی مثبت پایدار با دراوداون زیر ۱٪ کسب کرده است.
-   - لایه هوش مصنوعی بیش از ۱.۷۵ میلیون تومان ارزش افزوده خالص ایجاد کرده و ۶۸.۴٪ سیگنال‌های زیان‌ده را وتو کرده است.
-   - زیرساخت نرم‌افزاری در تست در سایه با تاخیر میانگین ۲۹۱ میلی‌ثانیه و بدون خطا کار می‌کند.
-2. **علت عدم ارتقا به رده نهایی آماده معامله لایو (Live-Ready):**
-   - تحلیل فرارونده در ۲۹ پنجره ۳ روزه مسابقه نشان می‌دهد که نرخ برد پنجره‌های ۳ روزه تنها **۲۰.۷٪** است؛ در حالی که در **۳۷.۹٪** پنجره‌ها استراتژی هیچ معامله‌ای انجام نداده و در نقدینگی مانده است.
-   - در یک رویداد کوتاه ۷۲ ساعته (۳ روز)، احتمال بالایی وجود دارد که بازار در فاز رِنج قرار گرفته و سیستم هیچ معامله‌ای باز نکند (بازدهی ۰٪) یا با یک خروج نوسانی کوچک مواجه شود.
-   - بنابراین، اگرچه سیستم برای حفظ سرمایه و مدیریت ریسک در بالاترین سطح استاندارد قرار دارد، اما اثبات قطعی سودآوری در یک بازه تصادفی ۳ روزه از نظر آماری غیرممکن است و نباید ادعای نادرست مطرح شود.
-
----
-
-## ۴. وضعیت قفل‌های ایمنی و عدم ارسال سفارش واقعی
-
-- **قفل تغییرناپذیر درگاه لایو:** `live_execution_authorized=False` همچنان به طور ۱۰۰٪ فعال و پابرجا است.
-- **تضمین حاکمیتی:** هیچ دستوری به سرور معامله والکس ارسال نشده و نخواهد شد مگر آنکه کاربر صریحاً پس از آغاز رسمی هکاتون و رفع ابهامات کارمزد شبانه، پرچم فعال‌سازی را صادر کند.
+### Reasons and scientific evidence for this classification:
+1. **Positive and proven aspects:**
+   - The Bitcoin strategy has achieved stable positive returns with a drawdown below 1% in the 45-day out-of-sample test (+0.62%) and the 90-day historical test (+0.43%).
+   - The artificial intelligence layer created more than 1.75 million Tomans of net added value and vetoed 68.4% of the losing signals.
+   - The software infrastructure works in the shadow test with an average delay of 291 milliseconds and without errors.
+2. **The reason for not being upgraded to the final Live-Ready category:**
+   - Analysis of performance in 29 3-day windows of the match shows that the win rate of 3-day windows is only **20.7%**; While in **37.9%** windows, the strategy did not make any trades and remained in liquidity.
+   - In a short 72-hour event (3 days), there is a high probability that the market will enter the range phase and the system will not open any trades (0% return) or face a small swing exit.
+   - Therefore, although the system for capital preservation and risk management is at the highest standard level, it is statistically impossible to definitively prove profitability in a random 3-day period, and false claims should not be made.
 
 ---
 
-## ۵. دستورات بازتولید، هش‌ها و کامیت قطعی گیت (Reproduction & Audit Trail)
+## 4. The status of safety locks and not sending the actual order
 
-### ۵.۱. هش‌های قطعی فایل‌های داده (SHA-256 Dataset Hashes)
-- `BTCTMN_15m_90d.csv`: `54292673b433a9a95e19ebab0dc446fdfc1458c9b8e4ea5672a6b5ad51775a9e` (۸،۶۳۶ کندل)
-- `ETHTMN_15m_90d.csv`: `106970901976cf4015a1de237486ea79f3daa93d8b321b697d6f74d8b41df0d9` (۸،۶۳۴ کندل)
-- `SOLTMN_15m_90d.csv`: `27a82f586859eb92a608abf1db9c8cdceef2fe4f29e1570e8d77de5618702f0a` (۸،۶۳۵ کندل)
+- ** Live port immutable lock:** `live_execution_authorized=False' is still 100% active and persistent.
+- **Sovereignty guarantee:** No command has been sent to Wallex transaction server and will not be sent unless the user explicitly issues the activation flag after the official start of the hackathon and the clearing of the ambiguity of the nightly fee.
 
-### ۵.۲. دستور بازتولید ۱۰۰٪ نتایج توسط داوران
-```bash
+---
+
+## 5. Reproduction & Audit Trail commands
+
+### 5.1. definitive hashes of data files (SHA-256 Dataset Hashes)
+- `BTCTMN_15m_90d.csv`: `54292673b433a9a95e19ebab0dc446fdfc1458c9b8e4ea5672a6b5ad51775a9e` (8,636 candles)
+- `ETHTMN_15m_90d.csv`: `106970901976cf4015a1de237486ea79f3daa93d8b321b697d6f74d8b41df0d9` (8,634 candles)
+- `SOLTMN_15m_90d.csv`: `27a82f586859eb92a608abf1db9c8cdceef2fe4f29e1570e8d77de5618702f0a` (8,635 candles)
+
+### 5.2. Order to reproduce 100% results by referees```bash
 cd /root/starcoach-hack/wallex
 .venv/bin/python scripts/run_phase13_validation.py
-```
-نتایج کامل در فایل ساختاریافته [`research/phase13_validation_results.json`](file:///root/starcoach-hack/wallex/research/phase13_validation_results.json) ذخیره می‌شود.
+```The complete results are stored in the structured file [`research/phase13_validation_results.json`](file:///root/starcoach-hack/wallex/research/phase13_validation_results.json).
 
-### ۵.۳. آزمون‌های خودکار و پوشش تست
-```bash
+### 5.3. Automated tests and test coverage```bash
 .venv/bin/pytest --cov=src tests/
-```
-تمامی ۳۹ تست واحد پاس شده با پوشش ۷۴٪ (`39 passed in 1.43s`).
+```All 39 unit tests passed with 74% coverage (39 passed in 1.43s).
 
-### ۵.۴. هش کامیت قطعی و تگ نسخه گیت
-- **کامیت فاز ۱۳ (ثبت‌شده در گیت):** `4bfb72ce2c262a5b2fc39600a9fa93902f23cfb8`
-- **تگ رسمی گیت:** `v0.5.0-phase13-validated`
-- **شاخه کاری:** `master`
-- **وضعیت درخت کاری گیت:** کاملاً پاک (Clean)
-- **قفل معاملات زنده:** `live_execution_authorized=False` (مسدودسازی کامل درگاه لایو تا زمان صدور مجوز صریح کاربر)
+### 5.4. Definitive commit hash and git version tag
+- **phase 13 commit (registered in Git):** `4bfb72ce2c262a5b2fc39600a9fa93902f23cfb8`
+- **Gate official tag:** `v0.5.0-phase13-validated`
+- **Forking:** `master`
+- **Gate tree status:** Completely clean
+- **Lock live transactions:** `live_execution_authorized=False' (complete blocking of the live port until the user's explicit permission is issued)

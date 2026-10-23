@@ -1,20 +1,20 @@
-# چک‌لیست قبل از پرواز و فعال‌سازی لایو (Live Launch Readiness Checklist)
+# Checklist before flight and live activation (Live Launch Readiness Checklist)
 
-قبل از فعال‌سازی هرگونه معامله حقیقی روی حساب صرافی والکس، تمامی ردیف‌های جدول زیر باید توسط مهندس معمار و مسئول تیم تایید شده باشند:
+Before activating any real transaction on the Wallex exchange account, all the rows in the following table must be approved by the architect and team leader:
 
-| ردیف | آیتم کنترلی | روش تایید و آزمون | وضعیت | تاییدکننده |
+| row | Control item Confirmation and test method Status | Approver
 |---|---|---|---|---|
-| **۱** | **درک کامل شرایط حساب اعتباری والکس** | دریافت پاسخ رسمی برگزارکنندگان به سوال Q-01 در خصوص کارمزد شبانه و اصل سرمایه | ⏳ در انتظار تایید | معمار سیستم |
-| **۲** | **تطبیق و فیلتر کامل نمادهای غیرفعال** | بارگذاری متن کامل بریف در `config/market_restrictions.json` | ⏳ در انتظار متن بریف | مهندس داده |
-| **۳** | **اعتبارسنجی محیط و متغیرهای محرمانه** | ایجاد فایل `.env` و قرار دادن کلید والکس بدون کامیت در گیت | ✅ پاس شد | مهندس امنیت |
-| **۴** | **موفقیت کامل آزمون‌های خودکار واحد** | اجرای `pytest tests/` (۱۲ تست موفق با Pytest) | ✅ پاس شد (۱۲/۱۲) | مهندس QA |
-| **۵** | **اتمام موفق بک‌تست تاریخی ۳۰ روزه** | اجرای `scripts/run_backtest.py` با داده‌های UDF واقعی والکس | ✅ پاس شد | مهندس کمّی |
-| **۶** | **تکمیل آزمون در سایه (Shadow Mode)** | اجرای `scripts/run_shadow.py` روی ۳ چرخه زنده بازار | ✅ پاس شد | استراتژیست |
-| **۷** | **فعال بودن محدودیت‌های قطعی موتور ریسک** | سقف ۵۰۰ هزار تومانی هر سفارش، سقف تعهد ۶۰٪، و سقف دراوداون ۵٪ | ✅ تایید شد | مهندس ریسک |
-| **۸** | **صحت عملکرد مکانیزم توقف اضطراری (Halt)** | تست `test_drawdown_limit_triggers_halt` در Pytest | ✅ پاس شد | مهندس ریسک |
-| **۹** | **آمادگی پروتکل نقد کردن به تومان** | اسکریپت `scripts/liquidate_to_toman.py` آماده اجرا | ✅ آماده شد | استراتژیست |
-| **۱۰** | **سلامت ثبات لاگ‌های تصمیمات (Audit Trail)** | فایل `logs/trading_decisions.jsonl` در فرمت ساختاریافته | ✅ تست شد | مهندس QA |
-| **۱۱** | **مجوز صریح انسانی جهت فعال‌سازی لایو** | صدور پرچم `live_execution_authorized=True` توسط کاربر | 🛑 در انتظار دستور کاربر | کاربر |
+| **1** **Complete understanding of Wallex credit account conditions** | Receive the official answer of the organizers to the question Q-01 regarding the nightly fee and capital Awaiting confirmation System architect
+| **2** **Adaptation and complete filter of inactive symbols** | Upload the full text of the brief in `config/market_restrictions.json` Waiting for the text of the brief Data engineer
+| **3** **Validation of the environment and confidential variables** | Create `.env' file and put the Wallex key without commit in Git Passed Security engineer
+| **4** **Complete success of automatic tests of the unit** | Running `pytest tests/` (12 successful tests with Pytest) | ✅ Passed (12/12) | QA engineer
+| **5** **Successful completion of historical backtest of 30 days** | Running `scripts/run_backtest.py` with actual Wallex UDF data Passed Quantitative engineer
+| **6** **Completing the test in the shadow (Shadow Mode)** | Running `scripts/run_shadow.py' on 3 live market cycles Passed Strategist
+| **7** | **Activation of the limits of the risk engine ** | 500 thousand tomans limit per order, commitment limit 60%, and drawdown limit 5% It has been confirmed Risk engineer
+| **8** | ** Correct operation of the emergency stop mechanism (Halt)** | Test `test_drawdown_limit_triggers_halt` in Pytest | Passed Risk engineer
+| **9** **Preparation of the cashing protocol in Tomans** | Script `scripts/liquidate_to_toman.py` is ready to run It is ready Strategist
+| **10** | ** Health and stability of decision logs (Audit Trail)** | `logs/trading_decisions.jsonl` file in structured format Tested QA engineer
+| **11** | **Explicit human permission to activate live** | Issuance of flag `live_execution_authorized=True' by user | 🛑 Waiting for user command User
 
 > [!CAUTION]
-> تا زمان تکمیل موارد ۱، ۲ و ۱۱، سیستم معاملات حقیقی را به صورت قفل سخت‌افزاری مسدود نگه می‌دارد و در حالت ایمن شبیه‌سازی / شدو باقی خواهد ماند.
+> Until items 1, 2 and 11 are completed, the system will keep the real transactions blocked as a hardware lock and will remain in a secure simulation/shutdown mode.

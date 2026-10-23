@@ -1,188 +1,185 @@
-# گزارش ممیزی شواهد نهایی، تحلیل قیف سیگنال به معامله و ارزیابی پنجره‌های زمانی ۷۲ ساعته (Phase 20.2)
+# Final evidence audit report, signal-to-trade funnel analysis and 72-hour window evaluation (Phase 20.2)
 
-> **وضعیت ممیزی:** نهایی و تطبیق‌یافته کمّی (Independently Reconciled & Audited)  
-> **مخزن:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **کامیت منجمد رهایش:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **تگ‌های معتبر:** `v1.0.0-phase20-frozen-release` و `v0.12.0-phase20-audited`  
-> **هش مانیفست استراتژی منجمد:** `249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66`  
-> **مجوز معاملات زنده:** `live_execution_authorized = False` (کاملاً مسدود و غیرفعال)
-
----
-
-## ۱. بازسازی کامل قیف سیگنال به معامله (Complete Signal-to-Trade Funnel Reconciliation)
-
-### ۱.۱. تعاریف دقیق واحدها و واژگان (Unit Definitions)
-برای رفع هرگونه ابهام مفهومی، واحدهای آماری در این ممیزی به صورت صریح تفکیک شده‌اند:
-1. **کندل معاملاتی (Candle / Bar):** یک بازه زمانی ۱۵ دقیقه‌ای OHLCV در دیتاست.
-2. **سیگنال کاندید (Candidate Signal):** کندلی که به صورت خام شروط تکنیکال پایه را برآورده می‌کند ($\text{EMA}_{20} > \text{EMA}_{50}$ و $50 \le \text{RSI}_{14} \le 69$ و $\text{VolRatio} \ge 1.10$).
-3. **وتوی فیلتر (Filter Veto):** ممانعت فعال توسط رژیم هوش مصنوعی یا سقف اسپرد ۰.۲۰٪ در لحظه صدور سیگنال کاندید.
-4. **رد به دلیل موقعیت باز (In-Position Skip):** رد سیگنال کاندید صرفاً به دلیل اینکه استراتژی در آن لحظه یک موقعیت باز فعال دارد و محدودیت تک‌موقعیت پورتفولیو را رعایت می‌کند.
-5. **سفارش ارسالی (Order Submitted):** دستور خرید لیمیت تیکر ارسال‌شده به موتور پورتفولیو.
-6. **معامله کامل‌شده (Completed Round-Trip Trade):** چرخه ورود و خروج کامل یک پوزیشن (خرید و فروش با حد سود، حد ضرر، یا تصفیه نهایی).
+> **Audit Status:** Final and Quantitatively Adapted (Independently Reconciled & Audited)  
+> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **release frozen commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **valid tags:** `v1.0.0-phase20-frozen-release` and `v0.12.0-phase20-audited`  
+> **Frozen Strategy Manifest Hash:** `249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66`  
+> **Live execution authorization:** `live_execution_authorized = False` (completely blocked and disabled)
 
 ---
 
-### ۱.۲. تراز حسابداری بدون باقیمانده قیف (Zero-Residual Funnel Balance)
+## 1. Complete Signal-to-Trade Funnel Reconciliation
 
-معادله بقای سیگنال‌ها در هر دو استراتژی:
+### 1.1. Detailed definitions of units and words (Unit Definitions)
+To resolve any conceptual ambiguity, the statistical units in this audit are clearly separated:
+1. **Trading candle (Candle / Bar):** A 15-minute OHLCV time frame in the data set.
+2. **Candidate Signal:** A candle that meets the basic technical conditions ($\text{EMA}_{20} > \text{EMA}_{50}$ and $50 \le \text{RSI}_{14} \le 69$ and $\text{VolRatio} \ge 1.10$).
+3. **Filter Veto:** Active obstruction by artificial intelligence regime or spread ceiling of 0.20% at the moment of candidate signal issuance.
+4. **Rejection due to open position (In-Position Skip):** Rejection of the candidate signal simply because the strategy has an active open position at that moment and respects the single-position limit of the portfolio.
+5. **Order Submitted:** Limit Taker purchase order sent to the portfolio engine.
+6. **Completed Round-Trip Trade:** Complete entry and exit cycle of a position (buying and selling with profit limit, loss limit, or final liquidation).
+
+---
+
+### 1.2. Zero-Residual Funnel Balance
+
+The equation of survival of signals in both strategies:
 $$\text{Candidate Signals} \equiv \text{AI Vetoes} + \text{Spread Vetoes} + \text{In-Position Skips} + \text{Risk Vetoes} + \text{Orders Submitted}$$
 
-| مرحله قیف تصمیم و اجرا (Funnel Stage) | استراتژی هوش مصنوعی (AI) | استراتژی دتر مینیستیک (Det) | تفاضل (Delta) | وضعیت تطبیق |
+| Funnel stage of decision and implementation (Funnel Stage). Artificial intelligence (AI) strategy Deter ministic strategy (Det) | Difference (Delta) | Matching status
 |---|:---:|:---:|:---:|:---:|
-| **۱. کل کندل‌های خالص (پس از ۶۰ کندل وارم‌آپ)** | ۸،۵۷۶ کندل | ۸،۵۷۶ کندل | ۰ | ✅ VERIFIED |
-| **۲. سیگنال‌های کاندید تکنیکال (Candidate Signals)** | **۶۷۱ سیگنال** | **۶۷۱ سیگنال** | **۰** | ✅ VERIFIED |
-| **۳. وتوی رژیم هوش مصنوعی (AI Regime Vetoes)** | **۵۵۳ وتو** (۸۲.۴٪) | **۰ وتو** (۰.۰٪) | ۵۵۳+ | ✅ VERIFIED |
-| **۴. وتوی گیت اسپرد (Spread > 0.20% on Free Bars)** | **۹ وتو** | **۳۵ وتو** | ۲۶- | ✅ VERIFIED |
-| **۵. رد به دلیل داشتن پوزیشن باز (In-Position Skips)** | **۸۷ سیگنال** | **۶۰۰ سیگنال** | ۵۱۳- | ✅ VERIFIED |
-| **۶. وتوی مدیریت ریسک و سرمایه (Risk Vetoes)** | **۰ وتو** | **۰ وتو** | ۰ | ✅ VERIFIED |
-| **۷. سفارش‌های ارسال‌شده (Orders Submitted)** | **۲۲ سفارش** | **۳۶ سفارش** | ۱۴- | ✅ VERIFIED |
-| **۸. سفارش‌های اجرا‌نشده (Unfilled Orders)** | **۰ سفارش** | **۰ سفارش** | ۰ | ✅ VERIFIED |
-| **۹. سفارش‌های پرشده (Filled Orders - 100%)** | **۲۲ سفارش** | **۳۶ سفارش** | ۱۴- | ✅ VERIFIED |
-| **۱۰. پوزیشن‌های بازشده (Positions Opened)** | **۲۲ پوزیشن** | **۳۶ پوزیشن** | ۱۴- | ✅ VERIFIED |
-| **۱۱. پوزیشن‌های بسته‌شده (Completed Trades)** | **۲۲ معامله** | **۳۶ معامله** | **۱۴-** | ✅ VERIFIED |
-| **تراز ریاضی قیف (Accounting Identity Sum)** | **$553 + 9 + 87 + 0 + 22 = 671$** | **$0 + 35 + 600 + 0 + 36 = 671$** | **باقیمانده: ۰** | ✅ **PERFECT BALANCE** |
+| **1. Total net candles (after 60 warm-up candles)** | 8,576 candles 8,576 candles 0 | ✅ VERIFIED |
+| **2. Technical candidate signals (Candidate Signals)** | **671 signals** | **671 signals** | **0** ✅ VERIFIED |
+| **3. AI Regime Vetoes** | **553 vetoes** (82.4%) | **0 veto** (0.0%) | 553+ ✅ VERIFIED |
+| **4. Veto gate spread (Spread > 0.20% on Free Bars)** | **9 veto** | **35 veto** | 26- ✅ VERIFIED |
+| **5. Rejection due to having an open position (In-Position Skips)** | **87 signals** | **600 signals** | 513- | ✅ VERIFIED |
+| **6. Risk Vetoes** | **0 veto** | **0 veto** | 0 | ✅ VERIFIED |
+| **7. Orders Submitted** | **22 orders** | **36 orders** | 14- ✅ VERIFIED |
+| **8. Unfilled Orders** | **0 order** | **0 order** | 0 | ✅ VERIFIED |
+| **9. Filled orders (Filled Orders - 100%)** | **22 orders** | **36 orders** | 14- ✅ VERIFIED |
+| **10. Opened positions (Positions Opened)** | **22 positions** | **36 position** | 14- ✅ VERIFIED |
+| **11. Closed positions (Completed Trades)** | **22 deals** | **36 transactions** | **14-** | ✅ VERIFIED |
+| **Mathematic balance of the funnel (Accounting Identity Sum)** | **$553 + 9 + 87 + 0 + 22 = $671** | **$0 + 35 + 600 + 0 + 36 = $671** | **Remaining: 0** | ✅ **PERFECT BALANCE** |
 
 ---
 
-## ۲. ریشه‌یابی و کالبدشکافی ادعای «فیلتر ۱۴ معامله» (Matched Trade-Level Audit)
+## 2. Rooting and dissection of the claim "14 transaction filter" (Matched Trade-Level Audit)
 
-### ۲.۱. آیا «۱۴ معامله فیلترشده» ناشی از وتوی ایستا است؟
-**خیر.** ممیزی تطبیقی سطح معامله (Trade-by-Trade Matched Analysis) اثبات می‌کند که اختلاف ۱۴ معامله یک **پدیده پویای وابسته به مسیر (Sequential Path-Dependent Emergence)** است، نه یک فیلتر ایستای یک‌به‌یک (Static 1-to-1 Mask).
+### 2.1. Is "14 filtered transactions" caused by static veto?
+**No.** Trade-by-Trade Matched Analysis proves that the difference of 14 trades is a **Sequential Path-Dependent Emergence**, not a Static 1-to-1 Mask.
 
-### ۲.۲. تفکیک نقطه ورود معاملات:
-- **معاملات با نقطه ورود کاملاً همسان (Common Entries):** دقیقاً **۱۰ معامله** در هر دو استراتژی در کندل و قیمت یکسان آغاز شدند.
-- **معاملات اختصاصی دتر مینیستیک (Deterministic-Only Entries):** تعداد **۲۶ معامله** توسط سیستم دتر مینیستیک انجام شد که هوش مصنوعی وارد آن‌ها نشد (به دلیل وتوی رژیم رنج/خرسی یا سقف اسپرد).
-- **معاملات اختصاصی هوش مصنوعی (AI-Only Entries):** تعداد **۱۲ معامله** توسط هوش مصنوعی انجام شد که سیستم دتر مینیستیک نتوانست وارد آن‌ها شود!  
-  *علت:* در زمان وقوع این ۱۲ سیگنال باکیفیت، سیستم دتر مینیستیک در یک پوزیشن زیان‌ده قبلی (ناشی از عدم وتوی سیگنال‌های نویز) گرفتار و قفل بود.
+### 2.2. Breakdown of transaction entry points:
+- **Trades with exactly the same entry point (Common Entries):** exactly **10 trades** were started in both strategies at the same candle and price.
+- ** Deterministic-Only Entries: ** 26 transactions** were made by the Deterministic system, which artificial intelligence did not enter (due to range/bear regime veto or spread ceiling).
+- ** AI-Only Entries: ** 12 transactions** were made by artificial intelligence, which Deterministic system could not enter!  
+  *Reason:* At the time of occurrence of these 12 high-quality signals, the deterministic system was stuck and locked in a previous loss position (caused by the lack of veto of noise signals).
 
-$$\text{Net Trade Difference} = \text{Deterministic-Only} - \text{AI-Only} = 26 - 12 = \mathbf{14\text{ معامله}}$$
+$$\text{Net Trade Difference} = \text{Deterministic-Only} - \text{AI-Only} = 26 - 12 = \mathbf{14\text{ trade}}$$
 
 > [!IMPORTANT]
-> هوش مصنوعی در واقع ۲۶ موقعیت دتر مینیستیک را وتو کرد و در عوض به دلیل آزادسازی ظرفیت سرمایه، موفق به شکار ۱۲ موقعیت جدید شد؛ در نتیجه تفاضل خالص بسته شدن پوزیشن‌ها برابر با ۱۴ معامله گردید ($36 - 22 = 14$).
+> Artificial intelligence actually vetoed 26 Deter Ministic positions and instead managed to hunt 12 new positions due to the release of capital capacity; As a result, the net difference of closing positions was equal to 14 transactions ($36 - 22 = $14).
 
 ---
 
-## ۳. ارزیابی پنجره‌های زمانی ۷۲ ساعته با مبنای زمان واقعی UTC (Task 2 & Task 4)
+## 3. Evaluation of 72-hour time windows based on UTC real time (Task 2 & Task 4)
 
-### ۳.۱. تعریف مرزهای زمانی دقیق (UTC Elapsed Time Boundaries)
-- **اولین کندل دیتاست:** `2026-07-24 11:15:00+00:00`
-- **دوره وارم‌آپ:** ۶۰ کندل اول (۱۵ ساعت) جهت پایدارسازی EMA و ATR
-- **مبدأ ارزیابی زمانی ($T_0$):** `2026-07-25 02:15:00+00:00` (کندل ایندکس ۶۰)
-- **پایان ارزیابی زمانی ($T_{\text{end}}$):** `2026-10-22 11:15:00+00:00`
-- **طول کل دوره زمانی سپری‌شده:** ۲،۱۴۵ ساعت تقویمی (۸۹ روز و ۹ ساعت)
-- **تعداد کل پنجره‌های ۷۲ ساعته تقویمی:** $2,145 \div 72 = 29.79$ پنجره:
-  - **۲۹ پنجره کامل ۷۲ ساعته** (۲،۰۸۸ ساعت)
-  - **۱ پنجره ناقص** (پنجره ۳۰ به مدت ۵۷ ساعت، ۲۲۹ کندل)
+### 3.1. Defining exact time boundaries (UTC Elapsed Time Boundaries)
+- **The first data candle:** `2026-07-24 11:15:00+00:00`
+- **Warm-up period:** The first 60 candles (15 hours) to stabilize EMA and ATR
+- **Start of time evaluation ($T_0$):** `2026-07-25 02:15:00+00:00` (candle index 60)
+- **End of time evaluation ($T_{\text{end}}$):** `2026-10-22 11:15:00+00:00`
+- **Length of the elapsed time period:** 2,145 calendar hours (89 days and 9 hours)
+- **Total number of 72-hour calendar windows:** $2,145 \div 72 = $29.79 Window:
+  - **29 full 72-hour windows** (2,088 hours)
+  - **1 incomplete window** (window 30 for 57 hours, 229 candles)
 
 ---
 
-### ۳.۲. جدول کامل عملکرد ۳۰ پنجره زمانی ۷۲ ساعته UTC
+### 3.2. Full performance table for 30 72-hour UTC time windows
 
-در مدل ارزیابی مسابقه، هر پنجره به عنوان یک رقابت مستقل ۳ روزه با سرمایه اولیه ۵،۰۰۰،۰۰۰ تومان نقد آغاز شده و در ثانیه پایانی پنجره (مرز ۷۲ ساعت) هرگونه پوزیشن باز با نرخ بازار به نقد تبدیل می‌شود:
+In the competition evaluation model, each window is started as an independent 3-day competition with an initial capital of 5,000,000 Tomans in cash, and in the last second of the window (72-hour limit), any open position is converted into cash at the market rate:
 
-| شناسه پنجره | زمان شروع (UTC) | زمان پایان (UTC) | وضعیت پنجره | کندل‌ها (مفقودی) | تعداد معامله | بازدهی خالص | سود/زیان خالص (TMN) | وضعیت سودآوری |
+| Window ID Start Time (UTC) | End Time (UTC) | Window status Candles (missing) | Number of transactions Net efficiency Net Profit/Loss (TMN) | Profitability status
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **W01** | 2026-07-25 02:15 | 2026-07-28 02:15 | کامل (72h) | 288 (0) | 1 | -0.28% | -13,894 | زیان‌ده (LOSS) |
-| **W02** | 2026-07-28 02:15 | 2026-07-31 02:15 | کامل (72h) | 288 (0) | 1 | +0.02% | +923 | **سودده (WIN)** |
-| **W03** | 2026-07-31 02:15 | 2026-08-03 02:15 | کامل (72h) | 288 (0) | 0 | 0.00% | 0 | خنثی (NEUTRAL) |
-| **W04** | 2026-08-03 02:15 | 2026-08-06 02:15 | کامل (72h) | 288 (0) | 1 | -0.27% | -13,718 | زیان‌ده (LOSS) |
-| **W05** | 2026-08-06 02:15 | 2026-08-09 02:15 | کامل (72h) | 288 (0) | 0 | 0.00% | 0 | خنثی (NEUTRAL) |
-| **W06** | 2026-08-09 02:15 | 2026-08-12 02:15 | کامل (72h) | 288 (0) | 0 | 0.00% | 0 | خنثی (NEUTRAL) |
-| **W07** | 2026-08-12 02:15 | 2026-08-15 02:15 | کامل (72h) | 288 (0) | 0 | 0.00% | 0 | خنثی (NEUTRAL) |
-| **W08** | 2026-08-15 02:15 | 2026-08-18 02:15 | کامل (72h) | 288 (0) | 1 | -0.08% | -4,095 | زیان‌ده (LOSS) |
-| **W09** | 2026-08-18 02:15 | 2026-08-21 02:15 | کامل (72h) | 288 (0) | 3 | +1.20% | +60,091 | **سودده (WIN)** |
-| **W10** | 2026-08-21 02:15 | 2026-08-24 02:15 | کامل (72h) | 288 (0) | 1 | -0.03% | -1,438 | زیان‌ده (LOSS) |
-| **W11** | 2026-08-24 02:15 | 2026-08-27 02:15 | کامل (72h) | 288 (0) | 2 | -0.00% | -23 | خنثی/ناچیز (NEUTRAL) |
-| **W12** | 2026-08-27 02:15 | 2026-08-30 02:15 | کامل (72h) | 288 (0) | 2 | -0.44% | -22,161 | زیان‌ده (LOSS) |
-| **W13** | 2026-08-30 02:15 | 2026-09-02 02:15 | کامل (72h) | 288 (0) | 1 | -0.11% | -5,312 | زیان‌ده (LOSS) |
-| **W14** | 2026-09-02 02:15 | 2026-09-05 02:15 | کامل (72h) | 288 (0) | 2 | +0.04% | +1,754 | **سودده (WIN)** |
-| **W15** | 2026-09-05 02:15 | 2026-09-08 02:15 | کامل (72h) | 288 (0) | 1 | -0.14% | -6,754 | زیان‌ده (LOSS) |
-| **W16** | 2026-09-08 02:15 | 2026-09-11 02:15 | کامل (72h) | 288 (0) | 1 | -0.12% | -6,077 | زیان‌ده (LOSS) |
-| **W17** | 2026-09-11 02:15 | 2026-09-14 02:15 | کامل (72h) | 288 (0) | 0 | 0.00% | 0 | خنثی (NEUTRAL) |
-| **W18** | 2026-09-14 02:15 | 2026-09-17 02:15 | کامل (72h) | 288 (0) | 1 | -0.29% | -14,430 | زیان‌ده (LOSS) |
-| **W19** | 2026-09-17 02:15 | 2026-09-20 02:15 | کامل (72h) | 288 (0) | 1 | +0.03% | +1,518 | **سودده (WIN)** |
-| **W20** | 2026-09-20 02:15 | 2026-09-23 02:15 | کامل (72h) | **283 (5)** | 1 | -0.04% | -1,771 | زیان‌ده (LOSS) |
-| **W21** | 2026-09-23 02:15 | 2026-09-26 02:15 | کامل (72h) | 288 (0) | 0 | 0.00% | 0 | خنثی (NEUTRAL) |
-| **W22** | 2026-09-26 02:15 | 2026-09-29 02:15 | کامل (72h) | 288 (0) | 1 | +0.12% | +5,894 | **سودده (WIN)** |
-| **W23** | 2026-09-29 02:15 | 2026-10-02 02:15 | کامل (72h) | 288 (0) | 3 | -0.16% | -8,169 | زیان‌ده (LOSS) |
-| **W24** | 2026-10-02 02:15 | 2026-10-05 02:15 | کامل (72h) | 288 (0) | 1 | +0.30% | +15,139 | **سودده (WIN)** |
-| **W25** | 2026-10-05 02:15 | 2026-10-08 02:15 | کامل (72h) | 288 (0) | 0 | 0.00% | 0 | خنثی (NEUTRAL) |
-| **W26** | 2026-10-08 02:15 | 2026-10-11 02:15 | کامل (72h) | 288 (0) | 0 | 0.00% | 0 | خنثی (NEUTRAL) |
-| **W27** | 2026-10-11 02:15 | 2026-10-14 02:15 | کامل (72h) | 288 (0) | 0 | 0.00% | 0 | خنثی (NEUTRAL) |
-| **W28** | 2026-10-14 02:15 | 2026-10-17 02:15 | کامل (72h) | 288 (0) | 1 | -0.33% | -16,348 | زیان‌ده (LOSS) |
-| **W29** | 2026-10-17 02:15 | 2026-10-20 02:15 | کامل (72h) | 288 (0) | 0 | 0.00% | 0 | خنثی (NEUTRAL) |
-| **W30** | 2026-10-20 02:15 | 2026-10-23 02:15 | ناقص (57h) | 229 (0) | 1 | -0.06% | -3,243 | زیان‌ده (LOSS) |
+| **W01** | 2026-07-25 02:15 | 2026-07-28 02:15 | Full (72h) | 288 (0) | 1 | -0.28% -13,894 | LOSS |
+| **W02** | 2026-07-28 02:15 | 2026-07-31 02:15 | Full (72h) | 288 (0) | 1 | +0.02% | +923 **Profit (WIN)** |
+| **W03** | 2026-07-31 02:15 | 2026-08-03 02:15 | Full (72h) | 288 (0) | 0 | 0.00% | 0 | Neutral (NEUTRAL) |
+| **W04** | 2026-08-03 02:15 | 2026-08-06 02:15 | Full (72h) | 288 (0) | 1 | -0.27% -13,718 | LOSS |
+| **W05** | 2026-08-06 02:15 | 2026-08-09 02:15 | Full (72h) | 288 (0) | 0 | 0.00% | 0 | Neutral (NEUTRAL) |
+| **W06** | 2026-08-09 02:15 | 2026-08-12 02:15 | Full (72h) | 288 (0) | 0 | 0.00% | 0 | Neutral (NEUTRAL) |
+| **W07** | 2026-08-12 02:15 | 2026-08-15 02:15 | Full (72h) | 288 (0) | 0 | 0.00% | 0 | Neutral (NEUTRAL) |
+| **W08** | 2026-08-15 02:15 | 2026-08-18 02:15 | Full (72h) | 288 (0) | 1 | -0.08% | -4,095 | LOSS |
+| **W09** | 2026-08-18 02:15 | 2026-08-21 02:15 | Full (72h) | 288 (0) | 3 +1.20% +60,091 | **Profit (WIN)** |
+| **W10** | 2026-08-21 02:15 | 2026-08-24 02:15 | Full (72h) | 288 (0) | 1 | -0.03% -1,438 | LOSS |
+| **W11** | 2026-08-24 02:15 | 2026-08-27 02:15 | Full (72h) | 288 (0) | 2 | -0.00% | -23 | NEUTRAL |
+| **W12** | 2026-08-27 02:15 | 2026-08-30 02:15 | Full (72h) | 288 (0) | 2 | -0.44% -22,161 | LOSS |
+| **W13** | 2026-08-30 02:15 | 2026-09-02 02:15 | Full (72h) | 288 (0) | 1 | -0.11% -5,312 | LOSS |
+| **W14** | 2026-09-02 02:15 | 2026-09-05 02:15 | Full (72h) | 288 (0) | 2 | +0.04% | +1,754 | **Profit (WIN)** |
+| **W15** | 2026-09-05 02:15 | 2026-09-08 02:15 | Full (72h) | 288 (0) | 1 | -0.14% -6,754 | LOSS |
+| **W16** | 2026-09-08 02:15 | 2026-09-11 02:15 | Full (72h) | 288 (0) | 1 | -0.12% -6,077 | LOSS |
+| **W17** | 2026-09-11 02:15 | 2026-09-14 02:15 | Full (72h) | 288 (0) | 0 | 0.00% | 0 | Neutral (NEUTRAL) |
+| **W18** | 2026-09-14 02:15 | 2026-09-17 02:15 | Full (72h) | 288 (0) | 1 | -0.29% -14,430 | LOSS |
+| **W19** | 2026-09-17 02:15 | 2026-09-20 02:15 | Full (72h) | 288 (0) | 1 | +0.03% | +1,518 | **Profit (WIN)** |
+| **W20** | 2026-09-20 02:15 | 2026-09-23 02:15 | Full (72h) | **283 (5)** | 1 | -0.04% -1,771 | LOSS |
+| **W21** | 2026-09-23 02:15 | 2026-09-26 02:15 | Full (72h) | 288 (0) | 0 | 0.00% | 0 | Neutral (NEUTRAL) |
+| **W22** | 2026-09-26 02:15 | 2026-09-29 02:15 | Full (72h) | 288 (0) | 1 | +0.12% +5,894 | **Profit (WIN)** |
+| **W23** | 2026-09-29 02:15 | 2026-10-02 02:15 | Full (72h) | 288 (0) | 3 -0.16% -8,169 | LOSS |
+| **W24** | 2026-10-02 02:15 | 2026-10-05 02:15 | Full (72h) | 288 (0) | 1 | +0.30% +15,139 | **Profit (WIN)** |
+| **W25** | 2026-10-05 02:15 | 2026-10-08 02:15 | Full (72h) | 288 (0) | 0 | 0.00% | 0 | Neutral (NEUTRAL) |
+| **W26** | 2026-10-08 02:15 | 2026-10-11 02:15 | Full (72h) | 288 (0) | 0 | 0.00% | 0 | Neutral (NEUTRAL) |
+| **W27** | 2026-10-11 02:15 | 2026-10-14 02:15 | Full (72h) | 288 (0) | 0 | 0.00% | 0 | Neutral (NEUTRAL) |
+| **W28** | 2026-10-14 02:15 | 2026-10-17 02:15 | Full (72h) | 288 (0) | 1 | -0.33% -16,348 | LOSS |
+| **W29** | 2026-10-17 02:15 | 2026-10-20 02:15 | Full (72h) | 288 (0) | 0 | 0.00% | 0 | Neutral (NEUTRAL) |
+| **W30** | 2026-10-20 02:15 | 2026-10-23 02:15 | Incomplete (57h) | 229 (0) | 1 | -0.06% | -3,243 | LOSS |
 
 ---
 
-### ۳.۳. کسر پنجره‌های سودده تاریخی (Corrected Historical Profitable-Window Fraction)
+### 3.3. Corrected Historical Profitable-Window Fraction
 
-| دسته‌بندی پنجره‌ها | تعداد در ۲۹ پنجره کامل | درصد از کل ۲۹ پنجره | تعداد در کل ۳۰ پنجره | درصد از کل ۳۰ پنجره |
+| Categories of windows Number in 29 complete windows Percentage of all 29 windows A total of 30 windows Percentage of all 30 windows
 |---|:---:|:---:|:---:|:---:|
-| **پنجره‌های برنده و سودده (Return > 0.0%)** | **۶ پنجره** | **۲۰.۶۹٪ (۲۰.۷٪)** | **۶ پنجره** | **۲۰.۰٪** |
-| **پنجره‌های خنثی و بدون معامله (Return = 0.0%)** | **۱۱ پنجره** | **۳۷.۹۳٪ (۳۷.۹٪)** | **۱۱ پنجره** | **۳۶.۷٪** |
-| **پنجره‌های بازنده و زیان‌ده (Return < 0.0%)** | **۱۲ پنجره** | **۴۱.۳۸٪ (۴۱.۴٪)** | **۱۳ پنجره** | **۴۳.۳٪** |
-| **مجموع کل** | **۲۹ پنجره** | **۱۰۰.۰٪** | **۳۰ پنجره** | **۱۰۰.۰٪** |
+| **Winning and profitable windows (Return > 0.0%)** | **6 windows** | **20.69% (20.7%)** | **6 windows** | **20.0%** |
+| **Neutral and no-trade windows (Return = 0.0%)** | **11 windows** | **37.93% (37.9%)** | **11 windows** | **36.7%** |
+| **Losing windows (Return < 0.0%)** | **12 windows** | **41.38% (41.4%)** | **13 windows** | **43.3%** |
+| **total total** | **29 windows** | **100.0%** | **30 windows** | **100.0%** |
 
 > [!CAUTION]
-> **اصلاح آماری گزارش فاز ۲۰.۱:**  
-> ادعای قبلی مبنی بر «۱۰ پنجره برنده معادل ۳۴.۵٪» بازتولید نشد و به صورت قطعی رد شد. مقدار واقعی و بازتولیدشده در شبیه‌سازی مستقل با تصفیه در مرز ۷۲ ساعت، برابر با **۶ پنجره سودده از ۲۹ پنجره کامل (۲۰.۷٪)** است که دقیقاً با نتایج خط مبنای اولیه فاز ۱۳ در سند [`research/phase13_validation_results.json#L281`](file:///root/starcoach-hack/wallex/research/phase13_validation_results.json#L281) مطابقت کامل دارد.
+> **Statistical correction of phase 20.1 report:**  
+> The previous claim of "10 winning windows equal to 34.5%" was not reproduced and is definitively rejected. The actual and reproduced value in the independent simulation with refinement at the 72-hour mark is **6 profitable windows out of 29 full windows (20.7%)**, which exactly matches the initial phase 13 baseline results in document [`research/phase13_validation_results.json#L281`](file:///root/starcoach-hack/wallex/research/phase13_validation_results.json#L281).
 >
-> **تمایز حیاتی آمار توصیفی از احتمال پیش‌بینی:**  
-> این شاخص صرفاً یک **«کسر توصیفی از تاریخچه گذشته» (Historical Profitable-Window Fraction)** در شرایط خاص بازار ۹۰ روز اخیر است. این عدد به هیچ عنوان نباید به عنوان «احتمال برد ریاضی در مسابقه آتی» یا «تضمین سودآوری در یک پنجره ۷۲ ساعته تصادفی» تفسیر گردد.
+> **Critical distinction of descriptive statistics from predictive probability:**  
+> This index is simply a "Historical Profitable-Window Fraction" in specific market conditions of the last 90 days. This number should in no way be interpreted as a "mathematical probability of winning an upcoming race" or "guaranteed profitability in a random 72-hour window".
 
 ---
 
-## ۴. بازسازی مستقل انتساب سود و زیان (Task 3 — P&L Attribution)
+## 4. Independent reconstruction of profit and loss attribution (Task 3 — P&L Attribution)
 
-### ۴.۱. مقایسه جامع و قطعی مؤلفه‌های حسابداری پورتفولیو:
+### 4.1. Comprehensive and definitive comparison of portfolio accounting components:
 
-| مؤلفه ارزیابی مالی و حسابداری | استراتژی هوش مصنوعی (AI) | استراتژی دتر مینیستیک (Det) | تفاضل / برتری (Delta) | تحلیل ممیزی |
+| Financial and accounting evaluation component Artificial intelligence (AI) strategy Deter ministic strategy (Det) | Difference / Superiority (Delta) | Audit analysis
 |---|:---:|:---:|:---:|---|
-| **تعداد کل معاملات بسته‌شده** | **۲۲ معامله** | **۳۶ معامله** | **۱۴- معامله** | کاهش نویز و اصطکاک معاملاتی |
-| **سود ناخالص ایده‌آل بدون اسلیپیج** | ۱۱۹،۵۴۵.۹۴ تومان | ۱۵۲،۹۹۴.۶۸ تومان | ۳۳،۴۴۸.۷۴- تومان | پیشتازی دتر مینیستیک در سود ناخالص |
-| **هزینه اسلیپیج مدلسازی‌شده (۰.۱۵٪)** | **۲۴،۵۶۲.۲۸ تومان** | **۴۰،۹۱۶.۴۳ تومان** | **۱۶،۳۵۴.۱۵+ تومان صرفه‌جویی** | صرفه‌جویی اسلیپیج هوش مصنوعی |
-| **سود ناخالص اجرایی (Modeled Gross P&L)** | **۹۴،۹۸۳.۶۵ تومان** | **۱۱۲،۰۷۸.۲۵ تومان** | **۱۷،۰۹۴.۶۰- تومان (۱۵.۲۵٪-)** | دتر مینیستیک سود ناخالص بیشتری ساخت |
-| **کارمزدهای پرداختی صرافی والکس** | **۶۳،۴۲۹.۰۸ تومان** | **۱۰۳،۹۲۵.۵۱ تومان** | **۴۰،۴۹۶.۴۳+ تومان صرفه‌جویی** | کاهش چشمگیر کارمزد توسط هوش مصنوعی |
-| **مجموع صرفه‌جویی هزینه و اصطکاک** | — | — | **۵۶،۸۵۰.۵۸+ تومان (۱.۱۴٪)** | کارمزد + اسلیپیج |
-| **سود خالص محقق‌شده (Net Realized P&L)** | **+۳۱،۵۵۴.۵۷ تومان** | **+۸،۱۵۲.۷۴ تومان** | **+۲۳،۴۰۱.۸۳ تومان برتری قطعی** | سود خالص پس از کسر کلیه اصطکاک‌ها |
-| **بازدهی نهایی روی کل سرمایه** | **+۰.۶۳٪** | **+۰.۱۶٪** | **+۰.۴۷٪ بازدهی مازاد** | بر مبنای ۵،۰۰۰،۰۰۰ تومان سرمایه اولیه |
-| **حداکثر افت سرمایه تومانی (Max DD)** | **۶۷،۷۶۰.۰۳ تومان** | **۹۱،۳۹۶.۹۱ تومان** | **۲۳،۶۳۶.۸۸ تومان کاهش ریسک** | حفاظت بهتر از سرمایه |
-| **حداکثر درصد افت سرمایه (Max DD %)** | **۱.۳۵٪** | **۱.۸۰٪** | **۰.۴۵٪ کاهش دراوداون** | در محدوده ایمن ۵.۰٪ مجاز مسابقه |
+| **Total number of closed transactions** | **22 deals** | **36 transactions** | **14- transaction** | Reducing noise and trading friction
+| **ideal gross profit without slippage** | 119,545.94 Tomans 152,994.68 Tomans 33,448.74 Tomans Deter Ministik's lead in gross profit
+| **Modeled slippage fee (0.15%)** | **24,562.28 Tomans** | **40,916.43 Tomans** | **Saving 16,354.15+ Tomans** | Artificial intelligence slippage savings
+| **Gross operating profit (Modeled Gross P&L)** | **94,983.65 Tomans** | **112,078.25 Tomans** | **-17,094.60 Tomans (-15.25%)** | Deterministik made more gross profit
+| **paid fees of Wallex exchange** | **63,429.08 Tomans** | **103,925.51 Tomans** | **Save 40,496.43+ Tomans** | Significant reduction of fees by artificial intelligence
+| **Total cost savings and friction** | — — **56,850.58+ Tomans (1.14%)** | Fee + slippage
+| **Net Realized P&L** | **+31,554.57 Tomans** | **+8,152.74 Tomans** | **+23,401.83 tomans definite superiority** | Net profit after deducting all frictions
+| **Final return on total capital** | **+0.63%** | **+0.16%** | **+0.47% excess yield** | Based on the initial capital of 5,000,000 tomans
+| **Maximum capital loss in Tomans (Max DD)** | **67,760.03 Tomans** | **91,396.91 Tomans** | **23,636.88 Tomans to reduce risk** | Better protection of capital
+| **Maximum capital loss percentage (Max DD %)** | **1.35%** | **1.80%** | **0.45% decrease in drawdown** | In the safe range of 5.0% of the competition
 
-### ۴.۲. اثبات ریاضی معادله انتساب سود (Reconciliation Proof):
+### 4.2. Mathematical proof of profit assignment equation (Reconciliation Proof):
 $$\Delta \text{Net Realized P\&L} = \Delta \text{Fee Savings} - \Delta \text{Gross Profit Sacrificed}$$
 $$40,496.43\text{ TMN} - 17,094.60\text{ TMN} = \mathbf{23,401.83\text{ TMN}} \equiv \Delta \text{Net P\&L}$$
 
 > [!NOTE]
-> این اثبات ریاضی نشان می‌دهد که برتری هوش مصنوعی به هیچ وجه ناشی از "پیش‌بینی جادویی جهت بازار" (Alpha) نبوده است؛ بلکه هوش مصنوعی با فدا کردن ۱۷،۰۹۵ تومان سود ناخالص حاشیه‌ای، موفق شده ۴۰،۴۹۶ تومان کارمزد کمتری به صرافی پرداخت کند و برتری خالص ۲۳،۴۰۲ تومانی خود را از مسیر کاهش هزینه‌های مبادله کسب نماید.
+> This mathematical proof shows that the superiority of artificial intelligence was not at all due to "magical prediction of the direction of the market" (Alpha); Rather, by sacrificing 17,095 Tomans of gross marginal profit, artificial intelligence has managed to pay 40,496 Tomans less fees to the exchange and gain its net advantage of 23,402 Tomans by reducing exchange costs.
 
 ---
 
-## ۵. ممیزی صحت داده‌ها در برابر پوشش زمانی (Task 5 — Data Coverage vs Record Integrity)
+## 5. Data accuracy audit against time coverage (Task 5 — Data Coverage vs Record Integrity)
 
-### ۵.۱. تفکیک دقیق تعاریف ممیزی داده:
-1. **صحت رکوردها (Record Integrity - PASS):**  
-   دیتاست فاقد هرگونه داده ناقص، نال، ردیف خراب، قیمت منفی، عدم توالی زمانی، یا رکوردهای تکراری است. تمام ۸،۶۳۶ رکورد BTC کاملاً معتبر و مستقیم از API صرافی استخراج شده‌اند.
-2. **پوشش زمانی پیوسته (Temporal Coverage - DOCUMENTED GAPS):**  
-   شبکه زمانی کامل ۹۰ روزه ($89\text{d } 9\text{h}$) شامل ۸،۶۴۱ نقطه زمانی ۱۵ دقیقه‌ای است؛ در حالی که دیتای موجود ۸،۶۳۶ کندل دارد (۵ کندل مفقود در BTC).
-   - **شکاف اصلی:** ۵ کندل متوالی در تاریخ `2026-09-22` بین ساعات `03:00` الی `04:00` UTC به دلیل نگهداری فنی و قطعی اعلام‌شده صرافی والکس مفقود است.
-   - **شکاف‌های آلت‌کوین‌ها:** ۷ کندل در ETH و ۶ کندل در SOL (شامل قطعی ۲۲ سپتامبر و قطعی‌های مقطعی ۱۹ اکتبر).
+### 5.1. Detailed breakdown of data audit definitions:
+1. Record integrity (Record Integrity - PASS):  
+   The dataset does not contain any incomplete data, nulls, broken rows, negative prices, out of chronological order, or duplicate records. All 8,636 BTC records are fully valid and mined directly from the exchange's API.
+2. **Temporal Coverage - DOCUMENTED GAPS:**  
+   The complete 90-day time grid ($89\text{d} 9\text{h}$) contains 8,641 15-minute time points; While the available data has 8,636 candles (5 candles missing in BTC).
+   - **main gap:** 5 consecutive candles on 09-22-2026 between 03:00 and 04:00 UTC are missing due to the technical maintenance announced by Wallex exchange.
+   - **Altcoins gaps:** 7 candles in ETH and 6 candles in SOL (including the outage of September 22nd and intermittent outages of October 19th).
 
-### ۵.۲. نحوه مدیریت شکاف‌ها در بک‌تست و استراتژی:
-- سیستم در زمان شکاف‌ها از تعمیم داده (Forward-fill) یا فرض اجرای سفارش در قیمت‌های خیالی خودداری کرده است.
-- در پنجره زمانی W20 (شامل ۲۲ سپتامبر)، تعداد کندل‌های پردازش‌شده به جای ۲۸۸ کندل، برابر با ۲۸۳ کندل ثبت گردید و هیچ نقدینگی یا معاملاتی در ساعات قطعی صرافی شبیه‌سازی نشد.
+### 5.2. How to manage gaps in backtesting and strategy:
+- The system has refused to generalize data (Forward-fill) or assume order execution at imaginary prices during gaps.
+- In the W20 time window (including September 22), the number of processed candles was recorded as 283 instead of 288, and no liquidity or transactions were simulated during the closed hours of the exchange.
 
 ---
 
-## ۶. نتایج آزمون‌های رگرسیون و بازتولیدپذیری (Reproducibility & Verification)
+## 6. The results of regression and reproducibility tests (Reproducibility & Verification)
 
-### ۶.۱. اجرای مجموعه آزمون‌های واحد و سیستمی:
-```bash
+### 6.1. Implementation of unit and system tests:```bash
 cd /root/starcoach-hack/wallex && .venv/bin/pytest tests/
-```
-**نتیجه اجرا:**
-```
+```**Execution result:**```
 tests/test_ai_agent.py ....                                              [  6%]
 tests/test_data_validation.py .....                                      [ 14%]
 tests/test_exchange_adapter.py ...........                               [ 32%]
@@ -197,30 +194,29 @@ tests/test_strategies.py ...                                             [100%]
 ============================== 62 passed in 2.68s ==============================
 ```
 
-### ۶.۲. اعتبارسنجی یکپارچگی گیت:
-```bash
+### 6.2. Gate Integrity Validation:```bash
 git rev-parse HEAD
-# b494d60e211497f47ef3b79d6ae79a0726471172 (کامیت منجمد رهایش بدون تغییر باقی ماند)
+# b494d60e211497f47ef3b79d6ae79a0726471172 (freeze commit left unchanged)
 ```
 
 ---
 
-## ۷. موانع باقیمانده و ریسک‌های عملیاتی زنده (Unresolved Blockers)
+## 7. Remaining barriers and live operational risks (Unresolved Blockers)
 
-علی‌رغم صحت محاسبات کمی، موانع عملیاتی زیر همچنان مانع از فعال‌سازی لایو هستند:
-1. **مانع B-01 (کلیدهای API و زیرساخت):** عدم دریافت کلیدهای اختصاصی حساب مسابقه از طرف تیم برگزارکننده.
-2. **مانع B-02 (حد ضرر سمت سرور):** پلتفرم والکس از سفارشات OCO و استاپ لاس سمت صرافی پشتیبانی نمی‌کند؛ حد ضرر به صورت نرم‌افزاری در ربات مدیریت می‌شود که در صورت قطعی اینترنت ریسک دارد.
-3. **مانع B-03 (سقف نرخ فراخوانی API):** محدودیت ۳۰ تا ۶۰ درخواست در دقیقه در صورت افزایش نوسانات نیازمند نظارت مستمر است.
-4. **مانع B-05 (وابستگی به اپراتور انسانی):** ضرورت نظارت دستی اپراتور انسانی در مرز ۷۲ ساعت برای تایید لیکوئیدیشن کامل پوزیشن‌ها به تومان.
+Despite the accuracy of quantitative calculations, the following operational hurdles still stand in the way of enabling Live:
+1. **Obstacle B-01 (API and Infrastructure Keys):** Failure to receive the unique keys of the competition account from the organizing team.
+2. **Obstacle B-02 (server-side loss limit):** Wallex platform does not support OCO and stop-loss orders on the exchange side; The loss limit is managed by software in the robot, which is a risk in case of an internet outage.
+3. **Barrier B-03 (API call rate ceiling):** The limit of 30 to 60 requests per minute requires continuous monitoring in case of increased fluctuations.
+4. **Obstacle B-05 (Dependence on human operator):** The necessity of manual monitoring by human operator within 72 hours to confirm the complete liquidation of positions in Tomans.
 
 ---
 
-## ۸. حکم نهایی ممیزی فاز ۲۰.۲ (Final Verdict)
+## 8. Final verdict of phase 20.2 audit (Final Verdict)
 
-### بعد فنی و تطبیق محاسباتی (Technical Integrity):
-> **وضعیت: ✅ PASS / DEFECTS RECONCILED**  
-> قیف سیگنال به معامله با باقیمانده صفر (Residual: 0) تطبیق یافت، پدیده پویای اختلاف ۱۴ معامله با متناظرسازی سطح معامله اثبات گردید، انتساب سود ناخالص و صرفه‌جویی کارمزد با دقت تومانی اثبات شد، و خطای درصد پنجره‌های سودده اصلاح و به کسر تاریخی واقعی ۲۰.۷٪ (۶ از ۲۹) بازگردانده شد.
+### Technical dimension and computational adaptation (Technical Integrity):
+> **Status: ✅ PASS / DEFECTS RECONCILED**  
+> The signal funnel was adapted to the trade with zero residual (Residual: 0), the dynamic phenomenon of the difference of 14 trades was proved by matching the trade level, the assignment of gross profit and saving of commission was proved with Toman accuracy, and the percentage error of the profitable windows was corrected and returned to the actual historical fraction of 20.7% (6 out of 29).
 
-### بعد مجوز معاملات زنده (Live Execution Authorization):
-> **وضعیت: 🛑 NOT AUTHORIZED**  
-> متغیر کلیدی [`live_execution_authorized = False`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json) بدون تغییر در کل مخزن حفظ گردیده است. تا زمان تحویل کلیدهای رسمی صرافی توسط برگزارکننده و رفع موانع عملیاتی، ارسال هرگونه سفارش واقعی به صرافی اکیداً ممنوع است.
+### After Live Execution Authorization:
+> **Status: 🛑 NOT AUTHORIZED**  
+> The key variable [`live_execution_authorized = False`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json) is preserved unchanged throughout the repository. It is strictly forbidden to send any real orders to the exchange until the official keys of the exchange are delivered by the organizer and the operational obstacles are removed.

@@ -1,80 +1,80 @@
-# ممیزی عمیق تصمیمات خلاف‌واقع و اثبات ارزش اقتصادی هوش مصنوعی (فاز ۱۳)
+# Deep audit of unrealistic decisions and proof of the economic value of artificial intelligence (phase 13)
 ### Deep Counterfactual Audit of AI Regime Decisions & Economic Value-Add
-**مخزن:** [`wallex`](file:///root/starcoach-hack/wallex) | **نماد ممیزی‌شده:** `BTCTMN` | **افق داده‌ها:** ۹۰ روز کامل (۸،۶۳۶ کندل) | **موتور ارزیابی:** [`run_counterfactual_audit`](file:///root/starcoach-hack/wallex/scripts/run_phase13_validation.py#L42-L168)
+**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Audit Symbol:** `BTCTMN` | **Data horizon:** 90 full days (8,636 candles) | **Validation Engine:** [`run_counterfactual_audit`](file:///root/starcoach-hack/wallex/scripts/run_phase13_validation.py#L42-L168)
 
 ---
 
-## ۱. انگیزه ممیزی و ابهام‌زدایی از سیگنال‌های وتوشده (Audit Motivation)
+## 1. Audit motivation and disambiguation of vetoed signals (Audit Motivation)
 
-در گزارش فاز ۱۲ بیان شده بود که ایجنت هوش مصنوعی ۶۴۳ سیگنال ورود را وتو کرده است. ارزیابی منتقدانه این ادعا نیازمند شفاف‌سازی دو پرسش کلیدی است:
-1. *آیا سیگنال‌ها صرفاً به این دلیل که توسط AI رد شده‌اند، «کاذب» نامیده شده‌اند؟*
-2. *آیا در فرآیند طبقه‌بندی رژیم بازار یا ارزیابی سیگنال‌ها، از اطلاعات آینده (Look-Ahead Bias) استفاده شده است؟*
+In the phase 12 report, it was stated that the artificial intelligence agent vetoed 643 entry signals. A critical evaluation of this claim requires the clarification of two key questions:
+1. *Are the signals called "false" simply because they were rejected by the AI?*
+2. *Has look-ahead bias been used in the process of classifying the market regime or evaluating signals?*
 
-برای پاسخ قاطع و ریاضی به این پرسش‌ها، یک **شبیه‌ساز خلاف‌واقع معاملاتی (Trade-Level Counterfactual Simulator)** در اسکریپت [`scripts/run_phase13_validation.py`](file:///root/starcoach-hack/wallex/scripts/run_phase13_validation.py) پیاده‌سازی شد که تک‌تک سیگنال‌های وتوشده را در زمان آینده دنبال کرده و نتیجه واقعی آن‌ها را در صورت ورود محاسبه می‌کند.
+For a decisive and mathematical answer to these questions, a **Trade-Level Counterfactual Simulator** was implemented in the script [`scripts/run_phase13_validation.py'](file:///root/starcoach-hack/wallex/scripts/run_phase13_validation.py) which follows each vetoed signal in the future and calculates their actual result when they arrive.
 
 ---
 
-## ۲. روش‌شناسی ارزیابی خلاف‌واقع (Counterfactual Methodology)
+## 2. Counterfactual Methodology
 
-برای هر کندل در طول ۹۰ روز که در آن شروط تکنیکال کلاسیک (تقاطع میانگین‌های متحرک $EMA_{20} > EMA_{50}$، $RSI \in [50, 69]$ و نسبت حجم $\ge 1.10$) برقرار بود:
-1. **تصمیم‌گیری ایجنت در لحظه (Strict Zero-Lookahead):** ایجنت هوش مصنوعی صرفاً بر اساس بردار ویژگی‌های تا همان کندل ($t \le t_{\text{now}}$) رژیم بازار را ارزیابی و سیگنال را تایید یا وتو کرد.
-2. **شبیه‌سازی مسیر حرکت قیمت در آینده:** صرفاً جهت ممیزی عملکرد، مسیر قیمت تا ۴۸ کندل بعد (۱۲ ساعت) دنبال شد:
-   - اگر قیمت به حد ضرر ۲.۰٪ می‌رسید $\rightarrow$ خروج با حد ضرر و کسر کارمزد تیکر (۰.۳۰٪).
-   - اگر قیمت به حد سود ۳.۵٪ می‌رسید $\rightarrow$ خروج با حد سود و کسر کارمزد میکر (۰.۲۵٪).
-   - در صورت عدم برخورد، خروج در انتهای افق زمانی.
-3. **محاسبه سود یا زیان خالص خلاف‌واقع:** سود ناخالص منهای مجموع کارمزدهای ورود و خروج و اسلیپیج ۰.۱۵٪.
+For each candle during 90 days where the classic technical conditions (intersection of moving averages $EMA_{20} > EMA_{50}$, $RSI \in [50, 69]$ and volume ratio $\ge 1.10$) were met:
+1. **Strict Zero-Lookahead Agent Decision Making:** The artificial intelligence agent evaluated the market regime and approved or vetoed the signal based solely on the feature vector up to the same candle ( $t \le t_{\text{now}}$ ).
+2. **Simulation of future price movement path:** Just to audit the performance, the price path was followed until the next 48 candles (12 hours):
+   - If the price reaches the loss limit of 2.0% $\rightarrow$ exit with the loss limit and ticker fee deduction (0.30%).
+   - If the price reaches the profit limit of 3.5% $\rightarrow$ exit with the profit limit and deduction of the maker fee (0.25%).
+   - If there is no collision, exit at the end of the time horizon.
+3. **Calculation of unrealized net profit or loss:** Gross profit minus the sum of entry and exit fees and slippage of 0.15%.
 
 ```mermaid
 flowchart TD
-    A["سیگنال تکنیکال سنتی صادر شد"] --> B{"ارزیابی ایجنت هوش مصنوعی (فقط با داده‌های گذشته)"}
+    A["The traditional technical signal was issued"] --> B{"AI agent evaluation (only with past data)"}
     
-    B -->|تایید (Approved)| C{"سرنوشت معامله در بازار"}
-    C -->|سود خالص > ۰| D["ورود موفق (True Entry)"]
-    C -->|زیان خالص <= ۰| E["ورود اشتباه (False Entry)"]
+    B -->|Approved| C{"The fate of trading in the market"}
+    C -->|Net profit > 0| D["True Entry"]
+    C -->|Net loss <= 0| E["False Entry"]
     
-    B -->|وتو (Vetoed)| F{"سرنوشت معامله خلاف‌واقع"}
-    F -->|زیان خالص <= ۰| G["نجات موفق و جلوگیری از زیان (True Save)"]
-    F -->|سود خالص > ۰| H["فرصت از دست‌رفته (Missed Profit)"]
+    B -->|Vetoed| F{"The fate of the false transaction"}
+    F -->|Net loss <= 0| G["Successful rescue and loss prevention (True Save)"]
+    F -->|Net profit > 0| H["Missed Profit"]
 ```
 
 ---
 
-## ۳. ماتریس درهم‌ریختگی و نتایج عددی ممیزی خلاف‌واقع (90-Day Audit Matrix)
+## 3. The confusion matrix and the numerical results of the false audit (90-Day Audit Matrix)
 
-از میان کل **۶۷۱ سیگنال کاندید ورود** که توسط استراتژی سنتی در طول ۹۰ روز بر روی نماد `BTCTMN` صادر گردید:
+Among the total **671 entry candidate signals** issued by the traditional strategy during 90 days on the symbol ``BTCTMN'':
 
-| وضعیت تصمیم هوش مصنوعی | تعداد سیگنال | درصد از کل | تحلیل مالی و سرنوشت معامله |
+| Artificial intelligence decision status Number of signals Percentage of the total Financial analysis and fate of the deal
 |---|---|---|---|
-| **سیگنال‌های تاییدشده توسط هوش مصنوعی (Approved)** | ۱۱۸ | ۱۷.۶٪ | اجازه ورود به معامله در رژیم‌های تاییدشده صعودی |
-| 🔹 ورودهای موفق و سودآور (True Entries) | ۵۹ | ۵۰.۰٪ از تاییدها | کسب سود خالص پس از کسر تمامی کارمزدها |
-| 🔹 ورودهای منتهی به فعال شدن حد ضرر (False Entries) | ۵۹ | ۵۰.۰٪ از تاییدها | کنترل‌شده با حد ضرر ۲٪ بدون آسیب جدی |
-| **سیگنال‌های وتوشده توسط هوش مصنوعی (Vetoed)** | **۵۵۳** | **۸۲.۴٪** | جلوگیری از ورود به دلیل قرار داشتن در رژیم نوسانی رِنج |
-| 🟢 **نجات موفق و پیشگیری از زیان (True Saves)** | **۳۷۸** | **۶۸.۴٪ از وتوها** | **معاملاتی که در صورت ورود، قطعاً زیان‌ده یا مستهلک کارمزد می‌شدند** |
-| 🔴 **سودهای از دست‌رفته (Missed Profits)** | ۱۷۵ | ۳۱.۶٪ از وتوها | معاملاتی که می‌توانستند به حد سود برسند اما فیلتر شدند |
+| **Signals approved by artificial intelligence (Approved)** | 118 | 17.6% Permission to enter the transaction in approved bullish regimes
+| 🔹 Successful and profitable entries (True Entries). 59 | 50.0% of approvals Net profit after deducting all fees
+| 🔹 Entries leading to the activation of the loss limit (False Entries). 59 | 50.0% of approvals Controlled with a damage limit of 2% without serious damage
+| **Signals vetoed by artificial intelligence (Vetoed)** | **553** | **82.4%** | Preventing entry due to being in the fluctuating range regime
+| 🟢 **Successful rescue and loss prevention (True Saves)** | **378** | **68.4% of the vetoes** | **Transactions that, if entered, would definitely be loss-making or amortize the fee** |
+| 🔴 **Missed Profits** | 175 | 31.6% of the vetoes Trades that could reach profit but were filtered
 
 ---
 
-## ۴. ترازنامه ارزش اقتصادی واقعی هوش مصنوعی (Net Economic Value-Add)
+## 4. The balance sheet of the real economic value of artificial intelligence (Net Economic Value-Add)
 
-برای اثبات قطعی اینکه آیا عملکرد ایجنت از لحاظ ریالی ارزش افزوده ایجاد کرده است:
+To prove definitively whether the agent's performance has created added value in terms of riyals:
 
 $$\text{Net Economic Value}_{\text{AI}} = \sum \text{Saved Losses (True Saves)} - \sum \text{Missed Profits (Missed Gains)}$$
 
-بر اساس محاسبات دقیق مبتنی بر ارزش اسمی هر سفارش (۵۰۰،۰۰۰ تومان):
-- **مجموع زیان‌های مهارشده توسط وتوهای صحیح هوش مصنوعی:** **+۲،۸۱۲،۲۲۴ تومان**
-- **مجموع سودهای از دست‌رفته در وتوهای محافظه‌کارانه:** **۱،۰۵۴،۰۲۲- تومان**
-- **ارزش اقتصادی خالص اضافه‌شده توسط هوش مصنوعی (Net Value-Add):** **+۱،۷۵۸،۲۰۲ تومان (+۳۵.۲٪ کل حساب ۵ میلیونی)**
+Based on accurate calculations based on the nominal value of each order (500,000 Tomans):
+- **Total losses restrained by correct AI vetoes:** **+2,812,224 Tomans**
+- **Total profits lost in conservative vetoes:** **-1,054,022 Tomans**
+- **Net Value-Add added by artificial intelligence:** **+1,758,202 Tomans (+35.2% of the total account of 5 million)**
 
 > [!IMPORTANT]
-> **نتیجه ریاضی ممیزی:**
-> هوش مصنوعی با جلوگیری از زیان‌های فرسایشی به مبلغ بیش از ۲.۸ میلیون تومان، حتی پس از کسر ۱.۰۵ میلیون تومان سود از دست‌رفته، **سودمندی خالص معادل ۱،۷۵۸،۲۰۲ تومان** برای پورتفولیو به ارمغان آورده است. دقت وتوی ایجنت در تشخیص معاملات زیان‌ده **۶۸.۴٪** بوده است.
+> **Mathematical audit result:**
+> By preventing erosion losses amounting to more than 2.8 million tomans, even after deducting 1.05 million tomans of lost profit, the artificial intelligence has brought a **net benefit equal to 1,758,202 tomans** to the portfolio. The accuracy of the agent's veto in detecting unprofitable transactions was **68.4%**.
 
 ---
 
-## ۵. تحلیل دلایل وتوی سیگنال‌ها و اثبات عدم سوگیری نگاه به آینده
+## 5. Analyzing the reasons for the veto of the signals and proving the lack of bias in looking to the future
 
-1. **تفکیک دلایل وتو:**
-   - ۱۰۰٪ وتوها (۵۵۳ مورد) تحت علت رژیم `CALM_RANGE` با اطمینان ۷۵٪ ثبت شده‌اند. در این دوره‌ها، اگرچه تقاطع میانگین‌های متحرک رخ داده بود، اما اندیکاتورهای نوسان‌پذیری (ATR% کمتر از ۱.۰٪) و فشرده بودن دامنه نوسان، نشان می‌داد که قیمت در یک کانال افقی گرفتار است و توان پوشش اصطکاک رفت‌وبرگشت ۰.۸۵٪ را ندارد.
-2. **اثبات قطعی عدم استفاده از اطلاعات آینده (Look-Ahead Bias Proof):**
-   - الگوریتم طبقه‌بندی رژیم در [`src/agents/regime_agent.py`](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py) صرفاً مقادیر اسلایس منتهی به کندل $i$ را دریافت کرده و هیچ اطلاعی از کندل‌های $i+1$ تا $i+48$ نداشته است.
-   - داده‌های آینده منحصراً در شبیه‌ساز خلاف‌واقع فاز ۱۳ جهت نمره‌دهی به تصمیمات گذشته به کار رفته‌اند.
+1. **Separation of veto reasons:**
+   - 100% of vetoes (553 cases) under the reason of ``CALM_RANGE'' regime have been recorded with 75% confidence. In these periods, although the crossing of the moving averages had occurred, the volatility indicators (ATR% less than 1.0%) and the tightness of the swing range indicated that the price was stuck in a horizontal channel and could not cover the 0.85% reciprocating friction.
+2. **Certain proof of non-use of future information (Look-Ahead Bias Proof):**
+   - The regime classification algorithm in [`src/agents/regime_agent.py`](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py) only received the slice values leading to candle $i$ and had no information about candles $i+1$ to $i+48$.
+   - The future data is exclusively used in the counterfactual simulator of phase 13 to score the past decisions.

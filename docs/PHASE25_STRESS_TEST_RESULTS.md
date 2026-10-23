@@ -1,56 +1,56 @@
-# نتایج آزمون‌های تنش ۱۴‌گانه مدل تلفیقی H1+H3 (Phase 25 Stress Tests)
+# The results of the 14 stress tests of the integrated model H1+H3 (Phase 25 Stress Tests)
 ## Fourteen-Scenario Stress Testing Matrix & Microstructure Resilience Audit
 
-> **مخزن:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **شاخه پژوهشی:** `research/phase25-validation`  
-> **کامیت مبنای منجمد:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **استراتژی ارزیابی:** مدل C (پرتفوی تلفیقی H1+H3 Structural Sniper)  
-> **تعداد پنجره‌های مستقل:** ۲۹ پنجره کامل ($N = 29$) | **سرمایه اولیه:** ۵،۰۰۰،۰۰۰ تومان
+> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Research branch:** `research/phase25-validation`  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Evaluation strategy:** Model C (integrated portfolio H1+H3 Structural Sniper)  
+> **Number of independent windows:** 29 full windows ($N = $29) | **Initial capital:** 5,000,000 Tomans
 
 ---
 
-## ۱. جدول جامع ۱۴ سناریوی آزمون تنش (14-Scenario Stress Matrix)
+## 1. Comprehensive table of 14 scenarios of stress test (14-Scenario Stress Matrix)
 
-| ردیف | شرح سناریوی آزمون تنش | کارمزد صرافی (میکر / تیکر) | فرضیه اسلیپیج اجرا | سود خالص کل (TMN) | میانگین بازدهی | نرخ برد | اصطکاک کل (TMN) | ارزیابی تاب‌آوری |
+| row | Description of the stress test scenario Exchange fee (Maker / Taker) | Implementation slippage hypothesis Total Net Profit (TMN) | average yield | Win rate Total Friction (TMN) | Resilience assessment
 |:---:|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **۰۱** | **مبنای واقع‌گرایانه صرافی والکس** | ۰.۲۵٪ / ۰.۳۰٪ | ۰.۱۵٪ | **۶۳،۹۵۴.۷+** | **۰.۰۴۴٪+** | ۲۷.۶٪ | ۱۳۴،۶۱۲ | ✅ **PASS** |
-| **۰۲** | **کارمزد معاملاتی بالا (Elevated Fees)** | ۰.۳۵٪ / ۰.۴۰٪ | ۰.۱۵٪ | **۲۸،۷۹۱.۱+** | **۰.۰۲۰٪+** | ۲۷.۶٪ | ۱۶۹،۷۷۵ | ✅ **PASS** |
-| **۰۳** | **اسلیپیج استاندارد (۰.۱۵٪)** | ۰.۲۵٪ / ۰.۳۰٪ | ۰.۱۵٪ | **۶۳،۹۵۴.۷+** | **۰.۰۴۴٪+** | ۲۷.۶٪ | ۱۳۴،۶۱۲ | ✅ **PASS** |
-| **۰۴** | **اسلیپیج بالا (۰.۳۰٪)** | ۰.۲۵٪ / ۰.۳۰٪ | ۰.۳۰٪ | **۴۰،۱۳۷.۸+** | **۰.۰۲۸٪+** | ۳۱.۰٪ | ۱۶۵،۲۴۷ | ✅ **PASS** |
-| **۰۵** | **اسلیپیج شدید (۰.۵۰٪)** | ۰.۲۵٪ / ۰.۳۰٪ | ۰.۵۰٪ | **۱۲،۰۷۹.۹+** | **۰.۰۰۸٪+** | ۲۷.۶٪ | ۲۲۴،۰۸۰ | ✅ **PASS (بقا)** |
-| **۰۶** | **افزایش اسپرد صرافی (+۵۰٪)** | ۰.۲۵٪ / ۰.۳۰٪ | ۰.۱۵٪ | **۶۳،۹۵۴.۷+** | **۰.۰۴۴٪+** | ۲۷.۶٪ | ۱۳۴،۶۱۲ | ✅ **PASS** |
-| **۰۷** | **شکست سفارشات میکر (All Taker Exits)** | ۰.۳۰٪ / ۰.۳۰٪ | ۰.۱۵٪ | **۵۸،۰۵۶.۸+** | **۰.۰۴۰٪+** | ۲۷.۶٪ | ۱۴۰،۵۱۰ | ✅ **PASS** |
-| **۰۸** | **تاخیر در خروج استاپ (Stop Slippage 0.35%)** | ۰.۲۵٪ / ۰.۳۰٪ | ۰.۳۵٪ | **۱۸،۷۸۲.۶+** | **۰.۰۱۳٪+** | ۳۱.۰٪ | ۱۸۳،۰۶۴ | ✅ **PASS** |
-| **۰۹** | **فقدان نقدینگی شدید (Slip 0.40% + Fee 0.40%)** | ۰.۳۰٪ / ۰.۴۰٪ | ۰.۴۰٪ | **۱۳،۴۳۵.۶-** | ۰.۰۰۹٪- | ۲۴.۱٪ | ۲۲۴،۳۹۳ | ❌ **FAIL (شکست)** |
-| **۱۰** | **مسیر نامطلوب کندل (Adverse Intrabar)** | ۰.۲۵٪ / ۰.۳۰٪ | ۰.۱۵٪ | **۶۳،۹۵۴.۷+** | **۰.۰۴۴٪+** | ۲۷.۶٪ | ۱۳۴،۶۱۲ | ✅ **PASS** |
-| **۱۱** | **پر شدن ناقص سفارش (Partial Fill 70%)** | ۰.۲۵٪ / ۰.۳۰٪ | ۰.۱۵٪ | **۶۳،۹۵۴.۷+** | **۰.۰۴۴٪+** | ۲۷.۶٪ | ۱۳۴،۶۱۲ | ✅ **PASS** |
-| **۱۲** | **تصفیه اجباری در ضرب‌الاجل مسابقه** | ۰.۲۵٪ / ۰.۳۰٪ | ۰.۱۵٪ | **۶۳،۹۵۴.۷+** | **۰.۰۴۴٪+** | ۲۷.۶٪ | ۱۳۴،۶۱۲ | ✅ **PASS** |
-| **۱۳** | **شوک نوسانات (Volatility Shock 0.25% Slip)** | ۰.۲۵٪ / ۰.۳۰٪ | ۰.۲۵٪ | **۴۵،۷۰۱.۷+** | **۰.۰۳۲٪+** | ۳۱.۰٪ | ۱۵۳،۸۷۹ | ✅ **PASS** |
-| **۱۴** | **از دست رفتن بزرگ‌ترین معامله برنده (No W09)** | ۰.۲۵٪ / ۰.۳۰٪ | ۰.۱۵٪ | **۳،۴۴۰.۸-** | ۰.۰۰۲٪- | ۲۵.۰٪ | ۱۲۰،۴۲۰ | ❌ **FAIL (شکست)** |
+| **01** | **Realistic base of Wallex exchange** | 0.25% / 0.30% | 0.15% **63,954.7+** | **0.044%+** | 27.6% 134,612 | ✅ **PASS** |
+| **02** | **High transaction fees (Elevated Fees)** | 0.35% / 0.40% | 0.15% **28,791.1+** | **0.020%+** | 27.6% 169,775 | ✅ **PASS** |
+| **03** **Standard slippage (0.15%)** | 0.25% / 0.30% | 0.15% **63,954.7+** | **0.044%+** | 27.6% 134,612 | ✅ **PASS** |
+| **04** | **High slippage (0.30%)** | 0.25% / 0.30% | 0.30% **40,137.8+** | **0.028%+** | 31.0% 165,247 | ✅ **PASS** |
+| **05** | **Severe slippage (0.50%)** | 0.25% / 0.30% | 0.50% **12,079.9+** | **0.008%+** | 27.6% 224,080 | ✅ **PASS (survival)** |
+| **06** | **Increase exchange spread (+50%)** | 0.25% / 0.30% | 0.15% **63,954.7+** | **0.044%+** | 27.6% 134,612 | ✅ **PASS** |
+| **07** | **Failure of maker orders (All Taker Exits)** | 0.30% / 0.30% | 0.15% **58,056.8+** | **0.040%+** | 27.6% 140,510 | ✅ **PASS** |
+| **08** | **Stop slippage delay (0.35%)** | 0.25% / 0.30% | 0.35% **18,782.6+** | **0.013%+** | 31.0% 183,064 | ✅ **PASS** |
+| **09** | **Severe lack of liquidity (Slip 0.40% + Fee 0.40%)** | 0.30% / 0.40% | 0.40% **13,435.6-** | 0.009% - | 24.1% 224,393 | ❌ **FAIL (Failure)** |
+| **10** | **Unfavorable candle path (Adverse Intrabar)** | 0.25% / 0.30% | 0.15% **63,954.7+** | **0.044%+** | 27.6% 134,612 | ✅ **PASS** |
+| **11** | **Incomplete order filling (Partial Fill 70%)** | 0.25% / 0.30% | 0.15% **63,954.7+** | **0.044%+** | 27.6% 134,612 | ✅ **PASS** |
+| **12** **Mandatory clearing at the competition deadline** | 0.25% / 0.30% | 0.15% **63,954.7+** | **0.044%+** | 27.6% 134,612 | ✅ **PASS** |
+| **13** **Volatility Shock 0.25% Slip** | 0.25% / 0.30% | 0.25% **45,701.7+** | **0.032%+** | 31.0% 153,879 | ✅ **PASS** |
+| **14** | **Lost Biggest Winning Trade (No W09)** | 0.25% / 0.30% | 0.15% **3,440.8-** | 0.002% - | 25.0% | 120,420 | ❌ **FAIL (Failure)** |
 
 ---
 
-## ۲. کالبدشکافی نقاط شکست سیستم (Failure Bottlenecks)
+## 2. Autopsy of system failure points (Failure Bottlenecks)
 
-### شکست ۱ (سناریوی شماره ۹: بحران نقدینگی شدید):
-- **شرایط:** اسلیپیج ۰.۴۰٪ همراه با کارمزد تیکر ۰.۴۰٪ (اصطکاک رفت و برگشت بیش از **۱.۴۰٪**).
-- **پیامد:** مجموع اصطکاک به ۲۲۴،۳۹۳ تومان می‌رسد و سود خالص به **۱۳،۴۳۶- تومان زیان** تبدیل می‌شود.
-- **راهکار کنترلی:** تعبیه سد توقف معامله (Spread & Slippage Circuit Breaker) در صورتی که اسپرد بازار از ۰.۱۸٪ فراتر رود.
+### Failure 1 (scenario number 9: severe liquidity crisis):
+- **Terms:** 0.40% slippage along with 0.40% ticker fee (return friction more than **1.40%**).
+- **Result:** The total friction reaches 224,393 Tomans and the net profit becomes **-13,436 Tomans loss**.
+- **Control solution:** Installation of the barrier to stop the transaction (Spread & Slippage Circuit Breaker) if the market spread exceeds 0.18%.
 
-### شکست ۲ (سناریوی شماره ۱۴: عدم اجرای بهترین معامله برنده):
-- **شرایط:** قطع ارتباط یا پر نشدن سفارشات در موج صعودی W09.
-- **پیامد:** سیستم بدون این پنجره به **۳،۴۴۱- تومان زیان** می‌رسد.
-- **نتیجه علمی:** سیستم برای سودآوری به شکار روزهای پرت نوسان صعودی تکیه دارد؛ بنابراین تضمین پایداری ارتباط و ارسال سفارش به محض صدور سیگنال حیاتی است.
+### Failure 2 (Scenario #14: Failure to execute the best winning trade):
+- **Conditions:** Disconnection or orders not being filled in W09 rising wave.
+- **Result:** The system without this window reaches **-3,441 Tomans loss**.
+- **Scientific result:** The system relies on hunting outlier days of upward swing for profitability; Therefore, it is vital to ensure the stability of the communication and send the order as soon as the signal is issued.
 
 ---
 
-## ۳. برتری قاطع مدل C بر کاندیدای E در آزمون‌های تنش
+## 3. Decisive superiority of model C over candidate E in stress tests
 
-| مقایسه در آزمون‌های تنش | کاندیدای E اولیه (فاز ۲۲) | مدل تلفیقی H1+H3 (فاز ۲۵) |
+| Comparison in stress tests Primary E candidate (Phase 22) | Integrated model H1+H3 (phase 25) |
 |---|:---:|:---:|
-| **پایداری در سایه کندل (Intra-bar High/Low)** | ❌ **شکست (-۱۲،۲۸۴ تومان)** | ✅ **پاس کامل (+۶۳،۹۵۵ تومان)** |
-| **پایداری در اسلیپیج شدید (۰.۵۰٪)** | ❌ **شکست (-۱۲۱،۳۸۸ تومان)** | ✅ **پاس (+۱۲،۰۸۰ تومان)** |
-| **پایداری در شکست سفارشات میکر (All Taker)** | ❌ **شکست سنگین** | ✅ **پاس عالی (+۵۸،۰۵۷ تومان)** |
-| **پایداری در کارمزدهای بالاتر صرافی (۰.۴۰٪)** | ❌ **شکست** | ✅ **پاس (+۲۸،۷۹۱ تومان)** |
+| **Consistency in candle shadow (Intra-bar High/Low)** | ❌ **failure (-12,284 tomans)** | **Complete Pass (+63,955 Tomans)** |
+| **Stability in severe slippage (0.50%)** | ❌ **failure (-121,388 Tomans)** | ✅ **Pass (+12,080 Tomans)** |
+| **Stability in the failure of maker orders (All Taker)** | ❌ **Heavy failure** | ✅ **Excellent Pass (+58,057 Tomans)** |
+| **Stability in higher exchange fees (0.40%)** | ❌ **Failure** | ✅ **Pass (+28,791 Tomans)** |
 
-مدل تلفیقی H1+H3 در **۱۲ سناریو از ۱۴ سناریو با سودآوری مثبت دوام آورد** و مقاومت ریزساختاری بسیار بالاتری نسبت به کاندیدای E نشان داد.
+The combined H1+H3 model survived in **12 out of 14 scenarios with positive profitability** and showed a much higher microstructural resistance than candidate E.

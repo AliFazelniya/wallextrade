@@ -1,37 +1,37 @@
-# ابهامات، سوالات باز و ممیزی موانع (Open Questions & Audit Log)
+# Ambiguities, open questions and audit of obstacles (Open Questions & Audit Log)
 
-این سند کلیه ابهامات اعتبارسنجی‌شده، پرسش‌های باز و موانع قانونی و اجرایی سامانه معاملاتی والکس را ثبت و پیگیری می‌کند.
+This document records and tracks all validated uncertainties, open questions and legal and executive obstacles of the Wallex trading system.
 
 ---
 
-## ۱. ابهامات تقویمی و زمان‌بندی مسابقه (Unresolved Schedule)
+## 1. Unresolved Schedule
 
 > [!IMPORTANT]
-> با توجه به این‌که تاریخ‌های دقیق تقویمی در بریف مسابقه تصریح نشده بودند، هیچ تاریخی فرضی تعیین نشده و این موارد به عنوان ابهامات باز ثبت می‌گردند.
+> Due to the fact that the exact calendar dates were not specified in the competition brief, no hypothetical date was determined and these cases are registered as uncertainties.
 
-- **Q-01 (تاریخ و ساعت دقیق شروع مسابقه):** زمان دقیق بازگشایی پنجره معاملاتی مسابقه (روز، ساعت و دقیقه رسمی اعلام سازمان).
-- **Q-02 (تاریخ و ساعت دقیق پایان معاملات):** موعد قطعی توقف استراتژی‌ها و نقد کردن سبد به تومان.
-- **Q-03 (ضرب‌الاجل دقیق ارسال مدارک و ویدیو):** ددلاین نهایی تحویل مخزن گیت‌هاب و فایل گزارش به داوران.
-
----
-
-## ۲. شفاف‌سازی ابهامات مالی و اعتباری (Financial Terms Audit)
-
-- **Q-04 (ارتباط شرایط اعتبار عادی با حساب اختصاصی هکاتون):**
-  - *شرح:* پلتفرم والکس برای اعتبار معاملاتی عادی ۵ میلیون تومانی، کارمزد شبانه تمدید اعتبار و سازوکار بازپرداخت بدهی/لیکوییدیشن دارد. در عین حال، در اطلاعیه‌های هکاتون ذکر شده که اصل سرمایه متعلق به والکس بوده و تیم‌ها تعهدی برای بازپرداخت زیان‌های احتمالی نخواهند داشت.
-  - *وضعیت:* نیازمند تایید رسمی و کتبی برگزارکننده پیش از لایو. موتور ریسک فعلاً با فرض محافظه‌کارانه (سقف افت ۵٪ یا ۲۵۰ هزار تومان) اجازه هیچ دراوداون فاجعه‌باری را نخواهد داد.
-- **Q-05 (نرخ کارمزد دقیق حساب مسابقه):**
-  - *شواهد رسمی استخراج‌شده:* طبق جدول کارمزدهای رسمی سطح یک والکس در بازارهای تومانی:
-    - کارمزد سفارش‌گذار (Maker): **۰.۲۵٪**
-    - کارمزد سفارش‌بردار (Taker): **۰.۳۰٪**
-  - *وضعیت:* موتور حسابداری و بک‌تست هر دو نرخ را به تفکیک پیاده‌سازی کرده است.
+- **Q-01 (exact date and time of the start of the competition):** the exact time of the opening of the trading window of the competition (day, hour and minute of the official announcement of the organization).
+- **Q-02 (exact date and time of the end of transactions):** The definite date of stopping the strategies and cashing the basket in Tomans.
+- **Q-03 (exact deadline for sending documents and video):** The final deadline for delivering the GitHub repository and the report file to the referees.
 
 ---
 
-## ۳. وضعیت بازارهای مجاز و ممنوعه (Market Eligibility Audit)
+## 2. Clarification of financial and credit uncertainties (Financial Terms Audit)
 
-- **Q-06 (فهرست بازارهای غیرفعال در حساب اعتباری):**
-  - *شواهد API رسمی والکس:* از میان ۳۷۳ جفت‌ارز والکس، تعداد ۲۱ جفت‌ارز تومانی به دلیل حجم صفر، عدم وجود مظنه زنده یا خروج از لیست، به صورت سیستمی مسدود و در `config/market_restrictions.json` به عنوان `credit_inactive_symbols` ثبت شدند.
-  - *تصمیم قطعی حاکمیتی:* هیچ نمادی که در فایل `config/allowed_markets.json` مورد تایید قرار نگرفته باشد، به هیچ عنوان اجازه ورود به موتور ارسال سفارش را نخواهد داشت.
-- **Q-07 (معامله در جفت‌ارزهای تتری):**
-  - *شرح:* ۱۸۶ جفت‌ارز با پایه تتر در والکس وجود دارد. به منظور حذف ریسک نرخ برابری ارز و اجتناب از پرداخت دو کارمزد مبادله (تومان به تتر و تتر به رمزارز)، این جفت‌ارزها فعلاً به طور کامل مسدود شده‌اند و صرفاً بازارهای مستقیم تومانی معامله می‌شوند.
+- **Q-04 (connection of normal credit conditions with Hekaton's dedicated account):**
+  - *Description:* Wallex platform has a nightly credit extension fee and a debt repayment/liquidation mechanism for normal trading credit of 5 million tomans. At the same time, it is mentioned in the hackathon announcements that the original capital belongs to Wallex and the teams will have no obligation to reimburse possible losses.
+  - *Status:* requires official and written approval of the organizer before live. At the moment, the risk engine will not allow any catastrophic drawdown with a conservative assumption (5% drop ceiling or 250 thousand Tomans).
+- **Q-05 (exact fee rate of the match account):**
+  - *Extracted official evidence:* According to the table of official fees of level one Wallex in Tomani markets:
+    - Maker fee: **0.25%**
+    - Taker fee: **0.30%**
+  - *Status:* The accounting and backtest engine has implemented both rates separately.
+
+---
+
+## 3. Status of permitted and prohibited markets (Market Eligibility Audit)
+
+- **Q-06 (list of inactive markets in the credit account):**
+  - *Official Wallex API evidence:* Among the 373 Wallex currency pairs, 21 Toman currency pairs were systemically blocked due to zero volume, lack of live quotes or withdrawal from the list and registered as `credit_inactive_symbols' in `config/market_restrictions.json'.
+  - *Definitive governance decision:* Any symbol that is not approved in `config/allowed_markets.json' file will not be allowed to enter the order sending engine.
+- **Q-07 (transaction in Tether currency pairs):**
+  - *Description:* There are 186 currency pairs based on Tether in Wallex. In order to eliminate the risk of currency parity and avoid paying two exchange fees (Toman to Tether and Tether to cryptocurrency), these currency pairs are currently completely blocked and only direct Toman markets are traded.

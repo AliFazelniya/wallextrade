@@ -1,80 +1,80 @@
-# راهنمای جامع بازتولید نتایج و اجرای سامانه (Reproducibility Guide)
+# Comprehensive guide for reproducing results and implementing the system (Reproducibility Guide)
 
-این راهنما دستورالعمل گام‌به‌گام و بدون ابهام را برای داوران مسابقه و مهندسان جهت اجرای سیستم، بازتولید نتایج بک‌تست، و راه‌اندازی تست در سایه (Shadow Mode) در یک محیط لینوکسی خام تشریح می‌کند.
-
----
-
-## ۱. پیش‌نیازها و محیط اجرا (Prerequisites)
-- **سیستم‌عامل:** لینوکس (تست‌شده روی Ubuntu 22.04 / 24.04 LTS)
-- **نسخه پایتون:** Python 3.11 یا 3.12 (نسخه مورد استفاده: `Python 3.12.3`)
-- **مدیر بسته:** `pip` و ابزار محیط مجازی `venv`
-- **اتصال اینترنت:** دسترسی مستقیم یا با پروکسی جهت اتصال به سرورهای `https://api.wallex.ir`
+This guide describes unambiguous step-by-step instructions for contest judges and engineers to run the system, reproduce backtest results, and run Shadow Mode testing in a raw Linux environment.
 
 ---
 
-## ۲. گام‌های راه‌اندازی سریع از محیط خام (Setup from Scratch)
+## 1. Prerequisites and environment
+- **Operating system:** Linux (tested on Ubuntu 22.04 / 24.04 LTS)
+- **Python version:** Python 3.11 or 3.12 (used version: `Python 3.12.3`)
+- **Package manager:** `pip` and virtual environment tool `venv`
+- **Internet connection:** Direct or proxy access to connect to ``https://api.wallex.ir'' servers
+
+---
+
+## 2. Quick setup steps from the raw environment (Setup from Scratch)
 
 ```bash
-# ۱. رفتن به دایرکتوری مخزن
+# 1. Go to the repository directory
 cd /root/starcoach-hack/wallex
 
-# ۲. ایجاد و فعال‌سازی محیط مجازی پایتون
+# 2. Creation and activation of Python virtual environment
 python3 -m venv .venv
 source .venv/bin/activate
 
-# ۳. نصب بسته‌های مورد نیاز و وابستگی‌های پروژه
+# 3. Install required packages and project dependencies
 pip install -e .
 pip install pytest pytest-asyncio
 
-# ۴. ساخت فایل تنظیمات محیطی از روی نمونه امن
+# 4. Creating an environment settings file from a safe sample
 cp .env.example .env
 ```
 
 ---
 
-## ۳. اجرای آزمون‌های خودکار و صحت‌سنجی حاکمیتی (Unit Testing)
+## 3. Implementation of automatic tests and governance validation (Unit Testing)
 
-برای اطمینان از سلامت لایه‌های محاسباتی، موتور ریسک و عدم ارسال تصادفی سفارش‌های زنده:
+To ensure the health of the computing layers, the risk engine and not accidentally sending live orders:
 
 ```bash
 pytest tests/ -v
 ```
 
-**خروجی مورد انتظار:** پاس شدن ۱۰۰٪ آزمون‌ها (۱۲ آزمون از ۱۲ آزمون در کمتر از ۱ ثانیه) بدون هیچ خطا یا ارسال سفارش حقیقی.
+**Expected output:** 100% passing tests (12 out of 12 tests in less than 1 second) without any errors or sending real orders.
 
 ---
 
-## ۴. بازتولید نتایج بک‌تست تاریخی روی داده‌های واقعی والکس
+## 4. Reproduce historical backtest results on real Wallex data
 
-برای دریافت زنده ۳۰ روز داده کندل ۱۵ دقیقه‌ای UDF از والکس و اجرای شبیه‌سازی:
+To get live 30 days of 15 minute UDF candle data from Wallex and run the simulation:
 
 ```bash
 python scripts/run_backtest.py BTCTMN ETHTMN
 ```
 
-**خروجی مورد انتظار:**
-- تولید و بروزرسانی خودکار گزارش در [`docs/BACKTEST_REPORT.md`](file:///root/starcoach-hack/wallex/docs/BACKTEST_REPORT.md).
-- گزارش دقیق P&L خالص، وین‌ریت، تعداد معاملات، کارمزدها و تایید تسویه ۱۰۰٪ موجودی به تومان در پایان شبیه‌سازی.
+**Expected output:**
+- Automatic report generation and update in [`docs/BACKTEST_REPORT.md`](file:///root/starcoach-hack/wallex/docs/BACKTEST_REPORT.md).
+- Detailed reporting of net P&L, win rate, number of transactions, fees and confirmation of 100% balance settlement in Tomans at the end of the simulation.
 
 ---
 
-## ۵. اجرای تست در سایه بر روی داده‌های زنده (Live Shadow Run)
+## 5. Running shadow tests on live data (Live Shadow Run)
 
-برای مشاهده فرآیند پایش دفتر سفارش زنده، استخراج ویژگی‌ها، طبقه‌بندی هوش مصنوعی، و ثبت ردپای حسابرسی:
+To view the process of live order book monitoring, feature extraction, AI classification, and audit trail logging:
 
 ```bash
 python scripts/run_shadow.py
 ```
 
-**خروجی مورد انتظار:**
-- ثبت تصمیمات، توجیه فنی ایجنت و ارزیابی ریسک در فایل [`logs/trading_decisions.jsonl`](file:///root/starcoach-hack/wallex/logs/trading_decisions.jsonl).
-- تولید خلاصه نتایج در [`docs/SHADOW_TEST_REPORT.md`](file:///root/starcoach-hack/wallex/docs/SHADOW_TEST_REPORT.md).
+**Expected output:**
+- Record decisions, agent's technical justification and risk assessment in the file [`logs/trading_decisions.jsonl`] (file:///root/starcoach-hack/wallex/logs/trading_decisions.jsonl).
+- Generate summary of results in [`docs/SHADOW_TEST_REPORT.md`](file:///root/starcoach-hack/wallex/docs/SHADOW_TEST_REPORT.md).
 
 ---
 
-## ۶. اجرای پروتکل تسویه نهایی به تومان (Liquidation Protocol)
+## 6. Implementation of the final settlement protocol in Tomans (Liquidation Protocol)
 
-جهت اجرای مستقل فرآیند تسویه حساب و تبدیل تمام پوزیشن‌ها به تومان:
+To independently implement the settlement process and convert all positions into Tomans:
 
 ```bash
 python scripts/liquidate_to_toman.py

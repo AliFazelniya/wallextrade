@@ -1,56 +1,56 @@
-# پژوهش علمی و اعتبارسنجی فرضیه ۳: نشت شتاب بیت‌کوین به آلت‌کوین‌ها (Phase 25 H3 Research)
+# Scientific research and validation of hypothesis 3: Leakage of Bitcoin acceleration to altcoins (Phase 25 H3 Research)
 ## Empirical Research on BTC-to-Altcoin Lead-Lag Relationships & Momentum Spillover
 
-> **مخزن:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **شاخه پژوهشی:** `research/phase25-validation`  
-> **کامیت مبنای منجمد:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **وضعیت آماری فرضیه ۳:** ⚠️ **اکتشافی (EXPLORATORY) — فاقد اثبات آماری قطعی به علت حجم نمونه اندک ($N=5$)**
+> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Research branch:** `research/phase25-validation`  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Statistical status of hypothesis 3:** ⚠️ **EXPLORATORY — lacks definitive statistical proof due to the small sample size ($N=5$)**
 
 ---
 
-## ۱. مبانی نظری و ادبیات آکادمیک مالی (Academic Literature & Theoretical Foundation)
+## 1. Academic Literature & Theoretical Foundation
 
-پدیده تقدم و تاخر اطلاعاتی (Information Lead-Lag) و انتقال تلاطم (Volatility Spillover) در بازارهای کریپتو در مقالات معتبر مالی اثبات شده است:
+The phenomenon of Information Lead-Lag and Volatility Spillover in crypto markets has been proven in reliable financial articles:
 
 1. **Makarov & Schoar (2020, Journal of Financial Economics):**  
-   جریان نقدینگی نهادی ابتدا وارد بازار بیت‌کوین (عمیق‌ترین و نقدشونده‌ترین دارایی) می‌شود و کشف قیمت (Price Discovery) اولیه در BTC صورت می‌گیرد؛ سپس جریان سرمایه به آلت‌کوین‌ها نشت (Spillover) می‌کند.
+   The flow of institutional liquidity first enters the Bitcoin market (the deepest and most liquid asset) and the initial price discovery takes place in BTC; Then capital flows to altcoins (Spillover).
 2. **Katsiampa et al. (2019, International Review of Financial Analysis):**  
-   اثبات تجربی هم‌حرکتی فرکانس‌بالا و انتقال تلاطم نامتقارن از بیت‌کوین به اتریوم و سایر دارایی‌ها؛ تغییرات جهت روند در بیت‌کوین پیش‌درآمد تغییرات پرشتاب در آلت‌کوین‌هاست.
+   Experimental proof of high-frequency co-movement and asymmetric turbulence transfer from Bitcoin to Ethereum and other assets; Changes in the direction of the trend in Bitcoin are the forerunners of rapid changes in altcoins.
 3. **Liu & Tsyvinski (2021, Review of Financial Studies):**  
-   عامل بتای بازار (Market Factor) در کریپتو توسط بیت‌کوین هدایت می‌شود، در حالی که دارایی‌های با بتای بالاتر (مانند SOL) به دلیل کشش نقدینگی بیشتر، حرکات جهشی تندتری را با تاخیر زمانی نسبت به موج اولیه BTC ثبت می‌کنند.
+   The Market Factor in crypto is driven by Bitcoin, while assets with higher betas (such as SOL) record sharper bounces with a time lag compared to the initial BTC wave due to greater liquidity elasticity.
 
 ---
 
-## ۲. تمایز همبستگی آماری در برابر تقدم و تاخر واقعی (Correlation vs Predictive Lead-Lag)
+## 2. Distinguishing between statistical correlation and real lead-lag (Correlation vs Predictive Lead-Lag)
 
-* **همبستگی هم‌زمان (Contemporaneous Correlation):** همبستگی قیمت BTC و SOL در مقیاس روزانه بالای ۰.۷۵ است؛ این همبستگی صرفاً بازتاب‌دهنده جهت کلی بازار است و هیچ برتری معاملاتی ایجاد نمی‌کند.
-* **تقدم و تاخر پیش‌بینانه (Predictive Lead-Lag):** فرضیه ۳ بر تاخیر زمانی پردازش شوک نقدینگی متمرکز است:  
-  وقتی در یک کندل ۱۵ دقیقه‌ای، حجم بیت‌کوین به بیش از ۱.۴ برابر میانگین می‌رسد و واگرایی EMA آن به بالای ۰.۶٪ جهش می‌کند، آلت‌کوین‌ها (به ویژه SOL) معمولاً در کندل بعدی با شدت بیشتری واکنش نشان می‌دهند.
+**Contemporaneous Correlation:** BTC and SOL price correlation is above 0.75 on a daily scale; This correlation merely reflects the general direction of the market and does not provide any trading advantage.
+**Predictive Lead-Lag:** Hypothesis 3 focuses on the time delay of liquidity shock processing:  
+  When in a 15-minute candle, Bitcoin's volume reaches more than 1.4 times the average and its EMA divergence jumps above 0.6%, altcoins (especially SOL) usually react more strongly in the next candle.
 
 ---
 
-## ۳. کالبدشکافی دقیق ۵ معامله فرضیه ۳ و آزمون تاخیر قطعی (Strict Lag Testing)
+## 3. Detailed autopsy of 5 transactions of hypothesis 3 and strict lag testing (Strict Lag Testing)
 
-| شماره | پنجره مسابقه | دارایی ورود | زمان ورود (UTC) | زمان خروج (UTC) | علت خروج | سود خالص (TMN) | نوع سفارش |
+| No Competition window Login property | Entry Time (UTC) | Departure Time (UTC) | The reason for leaving Net Profit (TMN) | Order type
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **۱** | **W09** | SOL | 2026-08-20 04:30 | 2026-08-20 08:15 | حد سود ساختاری (+۳.۵٪) | ۱۴،۷۰۶.۲+ | میکر |
-| **۲** | **W14** | SOL | 2026-09-03 10:30 | 2026-09-03 14:45 | حد سود ساختاری (+۳.۵٪) | ۱۴،۷۰۶.۲+ | میکر |
-| **۳** | **W14** | ETH | 2026-09-03 21:30 | 2026-09-04 12:30 | حد ضرر ساختاری (-۱.۸٪) | ۱۱،۹۷۳.۰- | تیکر |
-| **۴** | **W15** | ETH | 2026-09-05 11:00 | 2026-09-06 03:45 | حد سود ساختاری (+۳.۵٪) | ۱۴،۷۰۶.۲+ | میکر |
-| **۵** | **W24** | SOL | 2026-10-03 13:30 | 2026-10-04 20:15 | خروج پسیو بادبان پایانی | ۲،۵۸۸.۷+ | میکر |
+| **1** **W09** | Sol 2026-08-20 04:30 | 2026-08-20 08:15 | Structural profit limit (+3.5%) | 14,706.2+ | maker |
+| **2** **W14** | Sol 2026-09-03 10:30 | 2026-09-03 14:45 | Structural profit limit (+3.5%) | 14,706.2+ | maker |
+| **3** **W14** | ETH | 2026-09-03 21:30 | 2026-09-04 12:30 | Structural loss limit (-1.8%) | 11,973.0- | Ticker
+| **4** **W15** | ETH | 2026-09-05 11:00 | 2026-09-06 03:45 | Structural profit limit (+3.5%) | 14,706.2+ | maker |
+| **5** **W24** | Sol 2026-10-03 13:30 | 2026-10-04 20:15 | Exit passive final sail 2,588.7+ | maker |
 
-### آزمون تاخیر قطعی ۱ کندل کامل (Zero Same-Candle Lookahead):
-برای اطمینان از عدم وجود هرگونه نشت در همان کندل، الگوریتم به صورتی مقید شد که پس از بسته شدن کامل کندل جهش بیت‌کوین در زمان $t$، سفارش ورود به آلت‌کوین در کندل بعدی $t+1$ ارسال شود:
-- **سود خالص با تاخیر قطعی ۱ کندلی:** **۲۳،۹۶۶.۲+ تومان**
-- **تعداد معاملات:** ۴ معامله (۳ برنده، ۱ بازنده)
-- **اصطکاک مبادله:** ۱۵،۰۶۴ تومان
-- **نتیجه:** لید-لگ فرضیه‌ای اصیل است و ناشی از نشت داده در همان کندل نیست.
+### Zero Same-Candle Lookahead Definite Delay Test:
+In order to ensure that there is no leakage in the same candle, the algorithm was bound in such a way that after the complete closing of the Bitcoin bounce candle at time $t$, the order to enter the altcoin is sent in the next candle $t+1$:
+- **Net profit with definite delay of 1 candle:** **23,966.2+ Tomans**
+- **Number of transactions:** 4 transactions (3 winners, 1 loser)
+- **exchange friction:** 15,064 tomans
+- **Result:** Lead-lag is a genuine hypothesis and is not caused by data leakage in the same candle.
 
 ---
 
-## ۴. قضاوت آماری و محدودیت ساختاری فرضیه ۳ (Statistical Verdict)
+## 4. Statistical judgment and structural limitation of hypothesis 3 (Statistical Verdict)
 
 > [!WARNING]
-> ### رده‌بندی وضعیت علمی فرضیه ۳: **اکتشافی و اثبات‌نشده (EXPLORATORY / UNPROVEN)**
-> اگرچه منطق اقتصادی مدل مستند به مقالات دانشگاهی است و در بک‌تست سود مثبت ساخت (+۳۴.۷k یا +۲۴k با تاخیر)، اما **۴ یا ۵ معامله در طول ۹۰ روز، حجم نمونه بسیار کوچکی است و از نظر استنباط آماری کفایت نمی‌کند.**  
-> در یک مسابقه ۷۲ ساعته، با احتمال بالای ۸۵٪ ممکن است در طول ۳ روز رقابت **اصلاً چنین جهش حجمی در بیت‌کوین رخ ندهد**؛ بنابراین اتکای انحصاری به فرضیه ۳ منجر به انفعال ۱۰۰٪ حساب در مسابقه خواهد شد.
+> ### Classification of the scientific status of hypothesis 3: **EXPLORATORY / UNPROVEN**
+> Although the economic logic of the model is documented in academic articles and it made a positive profit in the backtest (+34.7k or +24k with delay), but **4 or 5 transactions during 90 days is a very small sample size and is not sufficient in terms of statistical inference.**  
+> In a 72-hour competition, with a high probability of 85%, during the 3 days of the competition, **no such volume jump in Bitcoin may occur**; Therefore, exclusive reliance on hypothesis 3 will lead to 100% account inactivity in the competition.

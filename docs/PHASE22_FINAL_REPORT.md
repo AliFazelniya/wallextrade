@@ -1,56 +1,56 @@
-# گزارش جامع اجرایی و نتایج پژوهش کمی پیشرفته (Phase 22)
+# Executive comprehensive report and advanced quantitative research results (Phase 22)
 ## Executive Final Report: Quantitative Research, Strategy Discovery & Competition Optimization
 
-> **پروژه:** مسابقه معامله‌گری هوش مصنوعی والکس (Wallex Agentic AI Hackathon)  
-> **شاخه پژوهشی:** `research/phase22-discovery`  
-> **کامیت مبنای منجمد:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **افق مسابقه:** ۷۲ ساعت پیوسته  
-> **سرمایه اولیه:** ۵،۰۰۰،۰۰۰ تومان نقد در شروع هر پنجره  
-> **وضعیت معاملات زنده:** `live_execution_authorized = False` (کاملاً مسدود و ایمن)
+> **Project:** Wallex Agentic AI Hackathon  
+> **Research branch:** `research/phase22-discovery`  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Competition horizon:** 72 continuous hours  
+> **Initial capital:** 5,000,000 Tomans in cash at the beginning of each window  
+> **Status of live transactions:** `live_execution_authorized = False' (fully blocked and secure)
 
 ---
 
-## ۱. خلاصه مدیریتی پژوهش (Executive Summary)
+## 1. Executive summary of the research
 
-فاز ۲۲ با هدف پاسخ‌گویی به نقیصه بنیادین گزارش فاز ۲۱ (بازدهی منفی ۲۸،۸۷۱- تومانی در ۲۹ پنجره مستقل مسابقه‌ای) راه‌اندازی شد. تیم پژوهش و مهندسی سیستم معاملاتی والکس بدون دستکاری خط مبنای منجمد، تحقیقات عمیق در متون مالی کمی، ریزساختار بازارهای کریپتو و مدل‌های یادگیری ماشین انجام داد، ۵ کاندیدای نوین استراتژی را فرمول‌بندی و پیاده‌سازی کرد و تحت شرایط مسابقه ۷۲ ساعته با سخت‌گیرانه‌ترین فرضیات کارمزد و اسلیپیج به بوته آزمون گذاشت.
+Phase 22 was launched with the aim of responding to the fundamental shortcoming of Phase 21 report (negative return of -28,871 Tomans in 29 independent racing windows). Without manipulating the frozen baseline, Wallex's trading system research and engineering team conducted in-depth research in quantitative financial texts, the microstructure of crypto markets and machine learning models, formulated and implemented 5 new strategy candidates, and put them to the test under 72-hour competition conditions with the most stringent fee and slippage assumptions.
 
-### دستاورد محوری فاز ۲۲:
-کشف و اعتبارسنجی **کاندیدای E (مومنتوم مقطعی سه‌گانه با بادبان پایانی ۷۲ ساعته)**:
-- **تحول در سودآوری ۷۲ ساعته:** تبدیل عملکرد منفی خط مبنای فاز ۲۱ (**۲۸،۸۷۱- تومان**) به سود خالص مثبت **۴۷،۲۴۱+ تومان** (میانگین بازدهی **۰.۰۳۳٪+** در هر ۳ روز).
-- **اعتبارسنجی درخشان برون-نمونه (Out-of-Sample):** ثبت سود خالص **۴۳،۷۸۷+ تومانی** (+۰.۰۶۳٪ میانگین بازدهی و آماره تی ۱.۱۹۹+) در نیمه دوم کاملاً دست‌نخورده ۹۰ روز (پنجره‌های W16 تا W29).
-- **حل معضل انفعال معاملاتی:** ارتقای پنجره‌های فعال مسابقه به **۷۵.۹٪** (۲۲ از ۲۹ پنجره) با تنوع‌بخشی مقطعی روی BTC، ETH و SOL.
-- **مهار اصطکاک تصفیه پایانی:** کاهش تصفیه‌های اجباری از ۱۱ مورد به ۳ مورد و صرفه‌جویی بیش از ۱۰،۰۰۰ تومانی از طریق مکانیزم خروج تدریجی و پسیو (Graceful Wind-down).
-
----
-
-## ۲. پژوهش‌های انجام‌شده و مفیدترین یافته‌های بیرونی (External Research & Key Findings)
-
-1. **فرا-برچسب‌گذاری و مانع سه‌گانه مارکوس لوپز دی پرادو (De Prado Meta-Labeling):**  
-   اثبات شد که در بازارهای کریپتو با کارمزد ۰.۶۰٪ الی ۰.۹۰٪ رفت و برگشت، مدل‌های کلاسیک پیش‌بینی جهت قیمت محکوم به شکست هستند. فیلتر کردن سیگنال‌ها بر اساس **سد سودآوری نسبت به اصطکاک (Cost-Aware Hurdle Rate)** برای بقای استراتژی ضروری است.
-2. **کنترل بهینه تصفیه در افق محدود (Almgren-Chriss Finite-Horizon Wind-Down):**  
-   در مسابقه‌ای با ضرب‌الاجل قطعی ۷۲ ساعته، ورود پوزیشن در ۱۲ ساعت پایانی منجر به تصفیه اضطراری با کارمزد تیکر و اسلیپیج بالا می‌شود. تعبیه «ناحیه ممنوعه ورود» در ساعات ۶۰ تا ۷۲ و «خروج پسیو میکر» در ساعات ۶۶ تا ۷۱.۵ زیان پایانی را خنثی کرد.
-3. **عدم تقارن نسبت پاداش به ریسک در تایم‌فریم ۱۵ دقیقه:**  
-   پژوهش نشان داد که در کارمزد ۰.۳۰٪ تیکر، تارگت‌های سود کوچک (کمتر از ۲.۰٪) به دلیل بلعیده شدن توسط کارمزد شکست می‌خورند؛ تنها تارگت‌های سود بالای ۲.۸٪ الی ۳.۲٪ همراه با حد ضرر ۱.۳٪ الی ۱.۵٪ حاشیه امن لازم برای تولید بازدهی خالص مثبت را فراهم می‌سازند.
+### The main achievement of phase 22:
+Discovery and validation of **candidate E (triple cross-sectional momentum with 72-hour final sail)**:
+- **Change in 72-hour profitability:** Converting the negative performance of the baseline of phase 21 (**-28,871 Tomans**) to a positive net profit of **+47,241 Tomans** (average return of **0.033%+** every 3 days).
+- **Out-of-Sample Brilliant Validation:** Recorded net profit of **43,787+ Tomans** (+0.063% average return and t-statistic +1.199) in the fully intact second half of 90 days (windows W16 to W29).
+- **Trading Inactivity Problem Solving:** Upgrade active match windows to **75.9%** (22 out of 29 windows) with cross-sectional diversification on BTC, ETH and SOL.
+- **Restriction of final cleaning friction:** Reducing mandatory cleanings from 11 cases to 3 cases and saving more than 10,000 Tomans through the gradual and passive exit mechanism (Graceful Wind-down).
 
 ---
 
-## ۳. الگوریتم‌های بررسی‌شده و کاندیداهای پیاده‌سازی‌شده (Investigated & Implemented Candidates)
+## 2. Conducted research and the most useful external findings (External Research & Key Findings)
 
-در ماژول ایزوله [`src/experimental/`](file:///root/starcoach-hack/wallex/src/experimental)، ۵ کاندیدای متمایز پیاده‌سازی شدند:
+1. **De Prado Meta-Labeling and triple barrier of Marcos Lopez de Prado:**  
+   It is proven that in crypto markets with 0.60% to 0.90% round trip fees, classical price direction prediction models are doomed to failure. Filtering signals based on the Cost-Aware Hurdle Rate is essential for the survival of the strategy.
+2. **Optimum control of purification in finite horizon (Almgren-Chriss Finite-Horizon Wind-Down):**  
+   In a race with a 72-hour deadline, entering a position in the final 12 hours will result in emergency liquidation with ticker fees and high slippage. The installation of "No Entry Zone" in hours 60 to 72 and "Passive Maker Exit" in hours 66 to 71.5 neutralized the final loss.
+3. **Asymmetry in reward-to-risk ratio in the 15-minute timeframe:**  
+   Research showed that at 0.30% ticker fee, small profit targets (less than 2.0%) fail due to being swallowed up by the fee; Only high profit targets of 2.8% to 3.2% along with a loss limit of 1.3% to 1.5% provide the necessary safe margin to generate positive net returns.
 
-| کاندیدا | منطق الگوریتمی و معماری | هدف و فرضیه طراحی |
+---
+
+## 3. Investigated & Implemented Candidates
+
+In the isolation module [`src/experimental/`](file:///root/starcoach-hack/wallex/src/experimental), 5 distinct candidates were implemented:
+
+| Candidate Algorithmic logic and architecture The purpose and design hypothesis
 |---|---|---|
-| **کاندیدای A** | روند تطبیقی با بادبان پایانی و تارگت‌های ATR | مهار زیان تصفیه پایانی استراتژی روندی فعلی |
-| **کاندیدای B** | شکست نوسان کانال دانچیان + حجم + ADX + حد زمانی | شکار حرکات جهشی سریع ۴ ساعته و چرخش سریع سرمایه |
-| **کاندیدای C** | بازگشت به میانگین در باندهای بولینگر + RSI | فعال‌سازی سودآوری در ۳۴.۵٪ پنجره‌های رنج بازار |
-| **کاندیدای D** | عامل هوشمند مسیریاب چندرژیمی (Agentic Meta-Router) | مسیریابی خودکار سرمایه به بریک‌اوت در روند، رنج در نوسان کم و نقد در اسپرد بالا |
-| **کاندیدای E** | مومنتوم مقطعی سه‌گانه (BTC/ETH/SOL) با بادبان پایانی | تخصیص سرمایه به قوی‌ترین دارایی سبد نقدشونده والکس |
+| **candidate A** | Adaptive process with final sail and ATR targets Containment of final liquidation losses of the current trend strategy
+| **candidate B** | Danchian channel swing break + volume + ADX + time limit | Hunting fast 4-hour jump movements and fast capital turnover
+| **Candidate C** | Return to mean in Bollinger Bands + RSI | Profitability activation in 34.5% of market range windows
+| **candidate D** | Agentic Meta-Router (Agentic Meta-Router). Automatic routing of capital to breakout in trend, suffering in low volatility and cash in high spread
+| **candidate E** | Momentum Trio (BTC/ETH/SOL) with closing sail | Allocation of capital to the strongest asset of Wallex liquid portfolio
 
 ---
 
-## ۴. یافته‌های تجربی و آزمون‌های شبیه‌سازی مسابقه (Backtest Results)
+## 4. Experimental findings and competition simulation tests (Backtest Results)
 
-کلیه سیستم‌ها در شبیه‌ساز مسابقه [`src/experimental/simulation_harness.py`](file:///root/starcoach-hack/wallex/src/experimental/simulation_harness.py) در ۲۹ پنجره مستقل مسابقه‌ای با شرایط یکسان آزموده شدند:
+All systems were tested in the racing simulator [`src/experimental/simulation_harness.py`](file:///root/starcoach-hack/wallex/src/experimental/simulation_harness.py) in 29 independent racing windows with identical conditions:
 
 ```mermaid
 xychart-beta
@@ -60,63 +60,63 @@ xychart-beta
     bar [-125577, -96471, -75693, -68975, -28871, 0, 5427, 47241]
 ```
 
-### بهبودهایی که موفق شدند (What Worked):
-1. **مومنتوم مقطعی چنددارایی (Multi-Asset Selection):** رصد همزمان BTC، ETH و SOL هم فرکانس معامله را از ۳۴٪ انفعال به ۲۴٪ رساند و هم نرخ برد را به **۴۴.۸٪** ارتقا داد.
-2. **بادبان پایانی مسابقه (Graceful Wind-down):** جلوگیری از ورود بعد از ساعت ۶۰ و خروج پسیو میکر، زیان تصفیه پایانی را از ۱۱،۰۷۵ تومان به ۸۲۰ تومان کاهش داد.
-3. **تارگت سود نامتقارن (TP 3.2% vs SL 1.5%):** سود هر معامله برنده به راحتی اصطکاک رفت و برگشت را پوشش داد.
+### Improvements that succeeded (What Worked):
+1. Multi-Asset Momentum (Multi-Asset Selection): Simultaneous monitoring of BTC, ETH and SOL increased the trading frequency from 34% passive to 24% and increased the win rate to 44.8%.
+2. **Final sail of the race (Graceful Wind-down):** Preventing the entry after 60 hours and the exit of the passive maker reduced the final liquidation loss from 11,075 tomans to 820 tomans.
+3. **Asymmetrical Profit Target (TP 3.2% vs SL 1.5%):** The profit of each winning trade easily covered the round trip friction.
 
-### بهبودهایی که ناموفق بودند (What Failed):
-1. **تارگت‌های فشرده در کاندیدای A (شکست سنگین با ۱۲۵ هزار تومان زیان):** کاهش تارگت‌ها فرکانس استاپ‌ها را بالا برد و کارمزد صرافی حساب را خالی کرد.
-2. **استراتژی بازگشت به میانگین C در افق ۱۵ دقیقه:** به دلیل کارمزد ۰.۶۰٪ صرافی، فیلتر سد سود تنها اجازه ثبت ۱ معامله در ۹۰ روز را داد و عملاً ناکارآمد بود.
-
----
-
-## ۵. ارزیابی برون-نمونه و استحکام در آزمون‌های تنش (OOS & Robustness)
-
-### ۵.۱. پایداری برون-نمونه کاندیدای E:
-- **درون-نمونه (W01 تا W15):** سود ۳،۴۵۳+ تومان | بازدهی ۰.۰۰۵٪+ | نرخ برد ۴۶.۷٪
-- **برون-نمونه کاملاً مستقل (W16 تا W29):** سود **۴۳،۷۸۷+ تومان** | بازدهی **۰.۰۶۳٪+** | نرخ برد ۴۲.۹٪ | آماره تی **۱.۱۹۹+**
-
-### ۵.۲. تاب‌آوری در برابر سناریوهای استرس:
-- **کارمزد تشویقی مسابقه (۰.۰۸٪):** سودآوری به **۱۱۵،۷۷۷+ تومان (+۰.۰۸۰٪)** جهش می‌کند.
-- **افزایش ۵۰٪ اسپرد صرافی:** سودآوری با **۸،۶۸۹+ تومان** حفظ شد.
-- **تاخیر اجرایی ۱ کندل:** سودآوری با **۹،۹۵۸+ تومان** پایدار ماند.
-- **کارمزد تیکر بالا (۰.۴۰٪):** سودآوری با **۱۸،۴۷۶+ تومان** حفظ شد.
-- **نقطه شکنندگی (Bottleneck):** در اسلیپیج بالای ۰.۳۰٪، بازدهی منفی می‌شود که نیازمند ارسال سفارشات لیمیت پسیو است.
+### Improvements that failed (What Failed):
+1. **Comprehensive targets in candidate A (heavy failure with 125 thousand tomans loss):** Reducing the targets increased the frequency of stops and cleared the account exchange fee.
+2. **C Mean Reversion Strategy at 15 minutes horizon:** Due to the exchange's 0.60% fee, the profit barrier filter only allowed 1 transaction per 90 days and was practically ineffective.
 
 ---
 
-## ۶. تفکیک وضعیت‌های پنج‌گانه ارزیابی (Final Assessment Matrix)
+## 5. Evaluation of out-of-sample and robustness in stress tests (OOS & Robustness)
 
-| بعد ارزیابی پروژه | وضعیت مصوب | مستندات و شواهد |
+### 5.1. Out-of-sample stability of candidate E:
+- **within-sample (W01 to W15):** Profit 3,453+ Tomans Yield 0.005%+ | win rate 46.7%
+- **Completely independent out-of-sample (W16 to W29):** Profit **43,787+ Tomans** | Yield **0.063%+** | The win rate is 42.9% T-statistic **1.199+**
+
+### 5.2. Resilience against stress scenarios:
+- **Competition Incentive Fee (0.08%):** Profitability jumps to **115,777+ Tomans (+0.080%)**.
+- **50% increase in exchange spread:** Profitability was maintained with **8,689+ Tomans**.
+- **executive delay of 1 candle:** profitability remained stable with **9,958+ Tomans**.
+- **High ticker fee (0.40%):** Profitability was maintained with **18,476+ Tomans**.
+- **Bottleneck point:** At a slippage above 0.30%, the yield becomes negative, which requires sending passive limit orders.
+
+---
+
+## 6. Separation of the five assessment situations (Final Assessment Matrix)
+
+| Project evaluation dimension Approved status Documents and evidence
 |---|:---:|---|
-| **۱. صحت فنی کد و یکپارچگی مهندسی** | ✅ **TECHNICALLY VERIFIED** | ۶۲ آزمون واحد پاس، بدون باگ، تراز لجر کامل |
-| **۲. سودآوری تاریخی ۹۰ روزه پیوسته** | ✅ **HISTORICALLY PROFITABLE** | خط مبنای منجمد فاز ۲۱ با ۳۱،۵۵۵+ تومان سود |
-| **۳. سودآوری در پنجره‌های مسابقه ۷۲ ساعته** | ✅ **PROFITABLE IN 72H WINDOWS** | **کاندیدای E با ۴۷،۲۴۱+ تومان سود در ۲۹ پنجره مسابقه** |
-| **۴. لبه آماری در افق کوتاه برون-نمونه** | ✅ **STATISTICALLY SUPPORTED EDGE** | آماره تی ۱.۱۹۹+ و سود ۴۳ هزار تومانی در دوره OOS |
-| **۵. مجوز فعال‌سازی معاملات زنده** | 🛑 **NOT AUTHORIZED** | [`live_execution_authorized = False`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json) بدون تغییر حفظ شد |
+| **1. Technical accuracy of the code and engineering integrity** ✅ **TECHNICALLY VERIFIED** | 62 passing unit tests, no bugs, complete ledger alignment
+| **2. Continuous 90-day historical profitability** ✅ **HISTORICALLY PROFITABLE** | The frozen baseline of phase 21 with 31,555+ tomans profit
+| **3. Profitability in 72-hour racing windows** | ✅ **PROFITABLE IN 72H WINDOWS** | **Candidate E with 47,241+ Tomans profit in 29 competition windows** |
+| **4. Statistical edge in the short horizon of out-sample** | ✅ **STATISTICALLY SUPPORTED EDGE** | T score +1.199 and a profit of 43 thousand tomans in the OOS period
+| **5. License to activate live transactions** | 🛑 **NOT AUTHORIZED** | [`live_execution_authorized = False`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json) preserved unchanged |
 
 ---
 
-## ۷. توصیه‌ها و نقشه راه برای فاز ۲۳ (Recommendations for Phase 23)
+## 7. Recommendations for Phase 23
 
-1. **انتقال کاندیدای E به خط تولید (Productionization):**  
-   کاندیدای E به عنوان برترین استراتژی مسابقه‌ای به عنوان موتور رسمی استراتژی در فاز ۲۳ ادغام شود.
-2. **پیاده‌سازی ناظر استاپ‌لاس کلاینت (WebSocket Stop-Loss Daemon):**  
-   به دلیل فقدان استاپ‌لاس سمت سرور والکس، پیاده‌سازی سرویس سوکت سریع برای خروج‌های اضطراری جهت تثبیت اسلیپیج زیر ۰.۱۵٪ الزامی است.
-3. **استعلام تخفیف کارمزد مسابقه:**  
-   در صورت تایید کارمزد تشویقی ۰.۰۸٪ توسط برگزارکننده، سودآوری پورتفولیو به بالای ۱۱۵،۰۰۰ تومان افزایش خواهد یافت.
-4. **شبیه‌سازی شدو لایو (Live Data Shadow Trading):**  
-   اجرای کاندیدای E بر روی داده‌های زنده وب‌سوکت والکس به مدت ۲۴ الی ۷۲ ساعت در حالت شبیه‌سازی بدون ارسال سفارش واقعی.
+1. **Transfer of candidate E to the production line:**  
+   Candidate E as the top racing strategy to be integrated as the official strategy engine in phase 23.
+2. **Implementation of the client stop-loss monitor (WebSocket Stop-Loss Daemon):**  
+   Due to the lack of stoploss on the Wallex server side, implementing a fast socket service for emergency exits is required to stabilize the slippage below 0.15%.
+3. **Inquiry about competition fee discount:**  
+   If the incentive fee of 0.08% is approved by the organizer, the profitability of the portfolio will increase to over 115,000 Tomans.
+4. **Live Data Shadow Trading:**  
+   Running Candidate E on live Wallex WebSocket data for 24-72 hours in simulation mode without sending real orders.
 
 ---
 
-## ۸. حکم نهایی فاز ۲۲ (Final Verdict)
+## 8. The final verdict of phase 22 (Final Verdict)
 
-> **حکم فنی و الگوریتمی برای مسابقه:**  
-> ✅ **GO FOR CANDIDATE E ARCHITECTURE**  
-> استراتژی مومنتوم مقطعی سه‌گانه با بادبان پایانی ۷۲ ساعته، معضل شکست تاریخی خط مبنا را به طور کامل حل کرده و به یک سامانه با امید ریاضی مثبت، توزیع سود پایدار در برون-نمونه، فعالیت الگوریتمی بهینه و کنترل ریسک فوق‌العاده تبدیل شده است.
+> **Technical and algorithmic judgment for the competition:**  
+> ✅ **GO FOR CANDIDATE AND ARCHITECTURE**  
+> The triple cross-sectional momentum strategy with 72-hour final sail has completely solved the problem of the historical break of the baseline and has become a system with positive mathematical hope, stable profit distribution in the out-sample, optimal algorithmic activity and extraordinary risk control.
 >
-> **حکم فعال‌سازی لایو و اتصال به صرافی:**  
+> **Order to activate live and connect to the exchange:**  
 > 🛑 **NO-GO FOR LIVE TRADING (NOT AUTHORIZED)**  
-> متغیر کلیدی [`live_execution_authorized = False`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json) کماکان به قوت خود باقی است. هرگونه ارسال سفارش واقعی تا زمان تحویل کلیدهای رسمی مسابقه و استقرار در فاز ۲۳ اکیداً ممنوع است.
+> The key variable [`live_execution_authorized = False`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json) is still in effect. Any actual order submission is strictly prohibited until the official competition keys are delivered and deployed in phase 23.

@@ -1,120 +1,120 @@
-# مشخصات فنی و فرمولاسیون کاندیداهای استراتژی مسابقه‌ای (Phase 22)
+# Technical specifications and formulation of competitive strategy candidates (Phase 22)
 ## Strategy Candidates Specification, Hypotheses, and Architecture
 
-> **شاخه پژوهشی:** `research/phase22-discovery`  
-> **مخزن:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **کامیت مبنا:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)
+> **Research branch:** `research/phase22-discovery`  
+> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)
 
 ---
 
-## ۱. مرور کاندیداهای استراتژی (Strategy Candidates Overview)
+## 1. Strategy Candidates Overview
 
-در این فاز، ۵ کاندیدای متمایز با پشتوانه پژوهش‌های کمی فاز ۲۲ طراحی شده‌اند تا به صورت مستقل پیاده‌سازی و در برابر خط مبنای منجمد فاز ۲۱ ارزیابی شوند:
+In this phase, 5 distinct candidates are designed based on the quantitative research of phase 22 to be independently implemented and evaluated against the frozen baseline of phase 21:
 
-1. **کاندیدای A (Adaptive Horizon & Graceful Wind-Down):** اصلاح استراتژی روندی فعلی با اضافه کردن ناحیه ممنوعه ورود (ساعت ۶۰ به بعد)، تارگت‌های فشرده‌تر و تصفیه پسیو.
-2. **کاندیدای B (Short-Horizon Volatility Breakout):** استراتژی بریک‌اوت کانال دانچیان و نوسان ATR با حد زمانی خروج (Time Stop).
-3. **کاندیدای C (Range-Bound Mean Reversion):** استراتژی بازگشت به میانگین بر مبنای باندهای بولینگر و RSI برای پنجره‌های بدون روند.
-4. **کاندیدای D (Agentic Meta-Strategy / Regime Router):** عامل هوشمند انتخاب‌گر استراتژی متناسب با رژیم نوسان و اسپرد بازار.
-5. **کاندیدای E (Multi-Asset Cross-Sectional Momentum):** تنوع‌بخشی پویا بین بیت‌کوین، اتریوم و سولانا بر مبنای شتاب قیمتی و نقدشوندگی.
-
----
-
-## ۲. مشخصات تفصیلی کاندیدای A: روند تطبیقی با بادبان پایانی (Candidate A)
-
-### ۲.۱. فرضیه پژوهشی (Hypothesis):
-«حذف ورود در ۱۲ ساعت پایانی مسابقه و تبدیل تصفیه اجباری از اردر تیکر به اردر پسیو میکر، زیان ۱۱،۰۷۵ تومانی تصفیه اضطراری را حذف کرده و عملکرد استراتژی روندی را در پنجره‌های ۷۲ ساعته مثبت می‌سازد.»
-
-### ۲.۲. شروط ورود و فیلترها:
-- **شرط زمانی مسابقه:** زمان سپری‌شده از پنجره کمتر از ۶۰ ساعت باشد ($t < 60\text{ hours}$).
-- **شرط روند تکنیکال:** $\text{EMA}_{20} > \text{EMA}_{50}$ و $50 \le \text{RSI}_{14} \le 68$ و $\text{VolRatio} \ge 1.10$.
-- **فیلتر رژیم هوش مصنوعی:** رژیم `BULLISH_TREND` با ضریب اطمینان $\ge 0.70$.
-- **سقف اسپرد:** $\text{Spread} \le 0.20\%$.
-
-### ۲.۳. مدیریت خروج و تارگت‌ها:
-- **حد سود پویا (Take Profit):** $P_{\text{entry}} \times (1 + 2.0 \times \frac{\text{ATR}_{14}}{P_{\text{entry}}})$, با سقف ۲.۵٪ و کف ۱.۵٪.
-- **حد ضرر پویا (Stop Loss):** $P_{\text{entry}} \times (1 - 1.2 \times \frac{\text{ATR}_{14}}{P_{\text{entry}}})$, با کف ۱.۰٪.
-- **حد ضرر بدون ریسک (Break-Even Trailing):** با رسیدن قیمت به $+1.0 \times \text{ATR}$، حد ضرر به نقطه ورود $+ 0.70\%$ منتقل می‌شود تا هزینه‌های کارمزد پوشش یابد.
-- **بادبان پایانی مسابقه (Graceful Wind-down):** در بازه زمانی ساعت ۶۴ الی ۷۱.۵، پوزیشن باز با اردر لیمیت (Maker) به نرخ Mid-Price ثبت می‌شود. در صورت پر نشدن، تنها در ۱۵ دقیقه پایانی اردر مارکت ارسال می‌شود.
+1. **Candidate A (Adaptive Horizon & Graceful Wind-Down):** Modification of the current trend strategy by adding a no-entry zone (60 hours onwards), tighter targets and passive refinement.
+2. **Candidate B (Short-Horizon Volatility Breakout):** Danchian channel breakout strategy and ATR volatility with exit time limit (Time Stop).
+3. **Candidate C (Range-Bound Mean Reversion):** Mean reversion strategy based on Bollinger Bands and RSI for trendless windows.
+4. **Candidate D (Agentic Meta-Strategy / Regime Router):** An intelligent agent that chooses a strategy suitable for the volatility and spread regime of the market.
+5. **Candidate E (Multi-Asset Cross-Sectional Momentum):** Dynamic diversification between Bitcoin, Ethereum and Solana based on price momentum and liquidity.
 
 ---
 
-## ۳. مشخصات تفصیلی کاندیدای B: شکست نوسان افق کوتاه (Candidate B)
+## 2. Detailed specifications of candidate A: matching process with final sail (Candidate A)
 
-### ۳.۱. فرضیه پژوهشی (Hypothesis):
-«ورود در شکست سقف ۲۰ کندلی دانچیان با حجم مضاعف و شاخص ADX بالا، حرکات جهشی سریع ۴ الی ۸ ساعته ایجاد می‌کند که به سرعت سود هدف را محقق می‌سازد و از معطل ماندن پوزیشن تا پایان مسابقه جلوگیری می‌کند.»
+### 2.1. Research hypothesis:
+"Eliminating the entry in the last 12 hours of the competition and converting forced liquidation from order taker to passive order maker, eliminates the loss of 11,075 tomans of emergency liquidation and makes the performance of the trend strategy positive in 72-hour windows."
 
-### ۳.۲. شروط ورود:
-- **شکست سقف دانچیان:** $P_{\text{close}} > \max(P_{\text{high}, t-20 \dots t-1})$.
-- **شاخص قدرت روند:** $\text{ADX}_{14} \ge 25.0$.
-- **جهش حجم معاملات:** $\text{Volume} \ge 1.50 \times \text{MA}(\text{Volume}, 20)$.
-- **فیلتر اسپرد:** $\text{Spread} \le 0.18\%$.
-- **ساعت مجاز ورود:** $t \le 56\text{ hours}$.
+### 2.2. Entry conditions and filters:
+- **Contest time condition:** The elapsed time of the window should be less than 60 hours ($t < 60\text{hours}$).
+- **Technical trend condition:** $\text{EMA}_{20} > \text{EMA}_{50}$ and $50 \le \text{RSI}_{14} \le 68$ and $\text{VolRatio} \ge 1.10$.
+- **Artificial intelligence regime filter:** `BULLISH_TREND' regime with confidence factor $\ge 0.70$.
+- **Spread ceiling:** $\text{Spread} \le 0.20\%$.
 
-### ۳.۳. مدیریت خروج:
-- **حد سود:** $+2.20\%$ (اردر لیمیت پسیو میکر با کارمزد ۰.۲۵٪).
-- **حد ضرر:** $-1.30\%$ (اردر استاپ تیکر).
-- **خروج زمانی اجباری (Time Stop):** اگر پس از ۱۶ کندل (۴ ساعت) معامله به سود حداقل ۱.۰٪ نرسید، پوزیشن بسته می‌شود تا سرمایه آزاد گردد.
-
----
-
-## ۴. مشخصات تفصیلی کاندیدای C: بازگشت به میانگین در رنج (Candidate C)
-
-### ۳.۱. فرضیه پژوهشی (Hypothesis):
-«در ۳۴.۵٪ پنجره‌هایی که بازار رنج و بدون روند است و استراتژی روندی غیرفعال می‌ماند، معامله بازگشت به میانگین در کف باندهای بولینگر می‌تواند بازدهی مثبت با ریسک کنترل‌شده تولید کند.»
-
-### ۴.۲. شروط ورود:
-- **فیلتر رژیم رنج:** $\text{ADX}_{14} < 20.0$ و فشرده شدن پهنای باند بولینگر ($\text{BandWidth} < 2.5\%$).
-- **شرط اشباع فروش:** $P_{\text{low}} < \text{LowerBand}(20, 2.0)$ و $\text{RSI}_{14} \le 30.0$.
-- **سد سودآوری نسبت به کارمزد (Hurdle Rate):** فاصله قیمت تا خط میانی بولینگر ($\text{SMA}_{20}$) باید حداقل **۱.۳۰٪** باشد تا پس از کسر ۰.۷۰٪ کارمزد و اسلیپیج، سود خالص باقی بماند.
-- **ساعت مجاز ورود:** $t \le 60\text{ hours}$.
-
-### ۴.۳. مدیریت خروج:
-- **حد سود اول:** خط میانی بولینگر ($\text{SMA}_{20}$) به عنوان اردر لیمیت میکر.
-- **حد ضرر:** شکست قیمت به زیر $\text{LowerBand} - 1.0 \times \text{ATR}$.
-- **خروج زمانی:** خروج اجباری در صورت سپری شدن ۱۲ کندل (۳ ساعت).
+### 2.3. Exit management and targets:
+- **Dynamic profit limit (Take Profit):** $P_{\text{entry}} \times (1 + 2.0 \times \frac{\text{ATR}_{14}}{P_{\text{entry}}})$, with a ceiling of 2.5% and a floor of 1.5%.
+- **Dynamic loss limit (Stop Loss):** $P_{\text{entry}} \times (1 - 1.2 \times \frac{\text{ATR}_{14}}{P_{\text{entry}}})$, with a floor of 1.0%.
+- **Risk-free loss limit (Break-Even Trailing):** When the price reaches $+1.0 \times \text{ATR}$, the loss limit is moved to the entry point $+ 0.70\%$ to cover commission costs.
+- **Final sail of the competition (Graceful Wind-down):** In the period of 64-71.5 hours, open position is registered with a limit order (Maker) at the Mid-Price rate. If it is not filled, it will be sent only in the last 15 minutes of the market order.
 
 ---
 
-## ۵. مشخصات تفصیلی کاندیدای D: عامل هوشمند انتخاب‌گر استراتژی (Candidate D - Agentic Meta-Router)
+## 3. Detailed characteristics of Candidate B: short-horizon swing failure (Candidate B)
 
-### ۵.۱. معماری عامل هوشمند (Agent Architecture):
-عامل هوشمند در هر کندل ۱۵ دقیقه‌ای ماتریس ویژگی‌های بازار را تحلیل کرده و وضعیت بازار را به سه حالت تخصیص می‌دهد:
+### 3.1. Research hypothesis:
+"Entering the break of the ceiling of 20 Danchian candlesticks with double volume and high ADX will create a quick 4-8 hour bounce movement, which will quickly realize the target profit and prevent the position from lingering until the end of the race."
+
+### 3.2. Entry conditions:
+- **Breaking Danchian ceiling:** $P_{\text{close}} > \max(P_{\text{high}, t-20 \dots t-1})$.
+- **trend strength indicator:** $\text{ADX}_{14} \ge 25.0$.
+- **Transaction volume jump:** $\text{Volume} \ge 1.50 \times \text{MA}(\text{Volume}, 20)$.
+- **Spread filter:** $\text{Spread} \le 0.18\%$.
+- **Allowed entry hour:** $t \le 56\text{ hours}$.
+
+### 3.3. Exit management:
+- **Profit limit:** $+2.20\%$ (passive maker limit order with 0.25% fee).
+- **Loss limit:** $-1.30\%$ (stop ticker order).
+- **Mandatory time stop (Time Stop):** If after 16 candles (4 hours) the transaction does not reach a profit of at least 1.0%, the position will be closed to release the capital.
+
+---
+
+## 4. Detailed characteristics of Candidate C: Reversion to the mean in the range (Candidate C)
+
+### 3.1. Research hypothesis:
+"In the 34.5% of windows where the market is bearish and trendless and the trend strategy remains inactive, a mean reversion trade at the bottom of the Bollinger Bands can generate positive returns with controlled risk."
+
+### 4.2. Entry conditions:
+- **Range Regime Filter:** $\text{ADX}_{14} < 20.0$ and Bollinger Bandwidth Compression ($\text{BandWidth} < 2.5\%$).
+- **Oversold condition:** $P_{\text{low}} < \text{LowerBand}(20, 2.0)$ and $\text{RSI}_{14} \le 30.0$.
+- **Hurdle Rate: The distance between the price and the middle line of Bollinger ($\text{SMA}_{20}$) must be at least **1.30%** so that after deducting 0.70% commission and slippage, net profit remains.
+- **Allowed entry hour:** $t \le 60\text{ hours}$.
+
+### 4.3. Exit management:
+- **First profit limit:** Bollinger middle line ($\text{SMA}_{20}$) as order limit maker.
+- **Loss Limit:** Price break below $\text{LowerBand} - 1.0 \times \text{ATR}$.
+- **Timed exit:** Mandatory exit if 12 candles (3 hours) have passed.
+
+---
+
+## 5. Candidate D - Agentic Meta-Router detailed specifications
+
+### 5.1. Agent Architecture:
+In every 15-minute candle, the intelligent agent analyzes the matrix of market characteristics and assigns the market situation to three modes:
 
 ```mermaid
 flowchart TD
-    A["دریافت ویژگی‌های بازار\n(ADX, Spread, ATR%, VolRatio, Bandwidth)"] --> B{"تحلیل رژیم توسط عامل AI"}
-    B -- "روند قوی (ADX >= 25 & Vol >= 1.2)" --> C["فعال‌سازی کاندیدای B (Breakout)"]
-    B -- "رنج باثبات (ADX < 20 & Spread <= 0.15%)" --> D["فعال‌سازی کاندیدای C (Mean Reversion)"]
-    B -- "نوسان مخرب / اسپرد بالا (Spread > 0.20%)" --> E["حالت نقدینگی ۱۰۰٪ (Cash Preservation)"]
-    C --> F["پایشگر بادبان پایانی ۷۲ ساعته (Graceful Wind-down)"]
+    A["Get market features\n(ADX, Spread, ATR%, VolRatio, Bandwidth)"] --> B{"Diet analysis by AI agent"}
+    B -- "Strong trend (ADX >= 25 & Vol >= 1.2)" --> C["Activation of candidate B (Breakout)"]
+    B -- "Stable range (ADX < 20 & Spread <= 0.15%)" --> D["Activation of candidate C (Mean Reversion)"]
+    B -- "Destructive volatility / high spread (Spread > 0.20%)" --> E["100% cash mode (Cash Preservation)"]
+    C --> F["72-hour final sail monitor (Graceful Wind-down)"]
     D --> F
     E --> F
 ```
 
-### ۵.۲. مزیت فنی برای ارزیابی مسابقه:
-این کاندیدا به طور واقعی از هوش مصنوعی برای مسیریابی استراتژی و تخصیص سرمایه استفاده می‌کند و همزمان معضل انفعال در رژیم رنج و معضل زیان تصفیه اجباری را حل می‌نماید.
+### 5.2. Technical advantage for competition evaluation:
+This candidate realistically uses artificial intelligence for strategy routing and capital allocation, and simultaneously solves the problem of passivity in the suffering regime and the problem of forced liquidation losses.
 
 ---
 
-## ۶. مشخصات تفصیلی کاندیدای E: مومنتوم مقطعی سه‌گانه (Candidate E - Multi-Asset Momentum)
+## 6. Candidate E - Multi-Asset Momentum details
 
-### ۶.۱. فرضیه پژوهشی (Hypothesis):
-«گسترش دامنه معاملاتی از تک‌نماد BTC به سبد نقدشونده والکس (BTC, ETH, SOL) و ورود انحصاری به دارایی با قوی‌ترین ممنتوم و کمترین اسپرد، همبستگی را کاهش داده و نرخ پنجره‌های بدون معامله را به حداقل می‌رساند.»
+### 6.1. Research hypothesis:
+"Expanding the trading range from single token BTC to the liquid portfolio of Wallex (BTC, ETH, SOL) and exclusive entry into the asset with the strongest momentum and lowest spread reduces correlation and minimizes the rate of no-trade windows."
 
-### ۶.۲. سازوکار رتبه‌بندی مقطعی (Cross-Sectional Scoring):
-در هر گام ۱۵ دقیقه‌ای، برای هر یک از نمادهای `BTCTMN`، `ETHTMN` و `SOLTMN`:
+### 6.2. Cross-Sectional Scoring mechanism:
+In each 15-minute step, for each of the symbols `BTCTMN`, `ETHTMN` and `SOLTMN`:
 $$\text{Score} = \frac{\text{Momentum}_{24h}}{\text{ATR}_{24h}} \times (1 - \frac{\text{Spread}}{0.35\%})$$
-- تنها نمادی که بالاترین امتیاز مثبت را داشته باشد و شرایط تکنیکال کاندیدای A یا B را احراز کند، مجوز ثبت سفارش دریافت می‌کند.
-- **محدودیت سرمایه:** همواره حداکثر ۱ موقعیت باز به ارزش ۵۰۰،۰۰۰ تومان در کل پورتفولیو مجاز است تا ریسک متمرکز نشود.
+- Only the symbol that has the highest positive score and meets the technical conditions of candidate A or B will receive permission to register an order.
+- **Capital limit:** A maximum of 1 open position with a value of 500,000 Tomans is always allowed in the entire portfolio so that the risk is not concentrated.
 
 ---
 
-## ۷. معیارهای ارزیابی و شرایط رد کاندیداها (Rejection Criteria)
+## 7. Evaluation criteria and rejection criteria for candidates
 
-یک کاندیدا در صورتی از دور خارج می‌شود که:
-1. میانگین بازدهی آن در ۲۹ پنجره مسابقه‌ای منفی باشد ($\bar{R}_{72h} < 0$).
-2. در آزمون استرس اسلیپیج ۰.۳۰٪ کل سرمایه را با دراوداون بالای ۵.۰٪ مواجه کند.
-3. تعداد پنجره‌های بدون معامله آن بیش از ۴۰٪ باشد.
-4. وابستگی به داده‌های غیرقابل دسترس تاریخی داشته باشد.
+A candidate is eliminated if:
+1. Its average efficiency in 29 racing windows should be negative ($\bar{R}_{72h} < 0$).
+2. In the slippage stress test, 0.30% of the total capital should face a drawdown above 5.0%.
+3. The number of windows without trading should be more than 40%.
+4. Dependence on historically unavailable data.
 
-نتایج پیاده‌سازی و شبیه‌سازی این کاندیداها در سند بعدی ثبت خواهد شد.
+The results of the implementation and simulation of these candidates will be recorded in the next document.

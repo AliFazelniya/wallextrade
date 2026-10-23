@@ -1,67 +1,67 @@
-# خط‌مشی مدیریت ریسک و پروتکل‌های ایمنی (Risk Management Policy)
+# Risk management policy and safety protocols (Risk Management Policy)
 
-این سند چارچوب قوانین حاکمیتی و قطعی موتور مدیریت ریسک (Independent Risk Engine) را تدوین می‌کند. قوانین این سند غیرقابل‌دورزدن بوده و بر تمام خروجی‌های هوش مصنوعی و سیگنال‌های الگوریتمی تقدم مطلق دارند.
+This document compiles the framework of governance and definitive rules for the Risk Management Engine (Independent Risk Engine). The rules of this document are inescapable and have absolute precedence over all artificial intelligence outputs and algorithmic signals.
 
 ---
 
-## ۱. جدول حدود قطعی ریسک (Deterministic Risk Limits)
+## 1. Deterministic Risk Limits table
 
-| پارامتر کنترلی | مقدار تنظیمی | مبنای محاسباتی | اقدام در صورت نقض |
+| Control parameter | Set value Computational basis Action in case of violation
 |---|---|---|---|
-| **حداکثر ارزش یک سفارش** | ۵۰۰،۰۰۰ تومان | ۱۰٪ از سرمایه اولیه ۵ میلیونی | وتوی سفارش قبل از ارسال |
-| **حداکثر پوزیشن‌های همزمان** | ۳ پوزیشن | تنوع‌بخشی به سبد دارایی | رد بازگشایی پوزیشن چهارم |
-| **حداکثر تعهد پورتفولیو** | ۶۰٪ (۳ میلیون تومان) | حفظ حداقل ۴۰٪ نقدینگی تومانی | توقف سفارش‌های خرید جدید |
-| **حداکثر افت کل حساب (Max Drawdown)** | ۵.۰٪ (۲۵۰،۰۰۰ تومان) | حفظ اصل سرمایه در مسابقه | توقف کامل سیستم معاملاتی |
-| **حداکثر زیان روزانه (Daily Loss)** | ۲۰۰،۰۰۰ تومان | جلوگیری از آسیب حرکتی بازار | تعلیق معاملات تا ساعت ۰۰:۰۰ بامداد |
-| **حد ضرر هر معامله (Stop Loss)** | ۲.۰٪ | خروج زودهنگام از معاملات ناموفق | ارسال فوری سفارش فروش محدود |
-| **حد سود هر معامله (Take Profit)** | ۳.۵٪ | تثبیت سود بالاتر از کارمزد | ارسال سفارش فروش هدف |
-| **حداکثر لغزش قیمت (Slippage)** | ۰.۳۰٪ | جلوگیری از اجرای بد در نوسانات | لغو سفارش در صورت تغییر مظنه |
-| **حداکثر کهنگی داده (Data Staleness)** | ۶۰ ثانیه | اطمینان از تصمیم‌گیری با داده زنده | رد سفارش تا بروزرسانی داده‌ها |
-| **خطاهای متوالی صرافی (Consecutive Errors)** | ۳ خطا | مقابله با قطعی شبکه یا API | ورود به وضعیت توقف اضطراری (Emergency Halt) |
+| **Maximum value of one order** | 500,000 Tomans 10% of the initial capital of 5 million Veto order before sending
+| **Maximum simultaneous positions** | 3 positions Diversifying the asset portfolio Refusal to reopen the fourth position
+| **Maximum portfolio commitment** | 60% (3 million Tomans) | Maintaining at least 40% liquidity in Tomans Stopping new purchase orders
+| **Maximum drawdown of the total account (Max Drawdown)** | 5.0% (250,000 Tomans) | Maintaining the principle of capital in the competition Complete stop of the trading system
+| **Maximum daily loss (Daily Loss)** | 200,000 Tomans Prevent market movement damage Suspension of transactions until 00:00 am
+| **Loss limit of each transaction (Stop Loss)** | 2.0% Early exit from unsuccessful trades Immediate dispatch of limited sales order
+| ** Profit limit of each transaction (Take Profit)** | 3.5% Fixing the profit above the fee Send target sales order
+| **Maximum price slippage** | 0.30% Avoiding bad performance in fluctuations Cancel the order if the quote changes
+| **Maximum data staleness** | 60 seconds Ensuring decision making with live data Order rejection until data update
+| **consecutive errors of the exchange (Consecutive Errors)** | 3 errors Dealing with network outage or API Entering the state of emergency stop (Emergency Halt).
 
 ---
 
-## ۲. اولویت و سلسله‌مراتب تصمیم‌گیری (Decision Hierarchy)
+## 2. Priority and Decision Hierarchy
 
 ```
-[ داده‌های بازار والکس ]
+[ Wallex market data ]
           │
           ▼
-[ استخراج ویژگی‌های کمّی ]
+[ Quantitative feature extraction ]
           │
           ▼
-[ ایجنت هوش مصنوعی (تشخیص رژیم بازار) ]
+[ Artificial intelligence agent (Identify the market regime) ]
           │
           ▼
-[ موتور استراتژی (تولید سیگنال پیشنهادی) ]
+[ Strategy engine (Suggested signal generation) ]
           │
           ▼
 ┌───────────────────────────────────────────┐
-│     موتور مدیریت ریسک مستقل (Risk Gate)     │
-│ 1. آیا سقف سفارش کمتر از 500k تومان است؟     │
-│ 2. آیا پورتفولیو کمتر از 60% متعهد است؟     │
-│ 3. آیا دراوداون حساب کمتر از 5% است؟       │
-│ 4. آیا بازار در لیست سفید مجاز است؟        │
-│ 5. آیا اسپرد بازار کمتر از 0.35% است؟       │
+│     Independent risk management engine (Risk Gate)     │
+│ 1. Do the order limit less than 500k Is it Toman?     │
+│ 2. Is the portfolio less than 60% committed?     │
+│ 3. Is the drawdown of the account less than 5%?       │
+│ 4. Is the market allowed in the white list?        │
+│ 5. Is the market spread less than 0.35%?       │
 └───────────────────────────────────────────┘
           │
      ┌────┴────┐
-   تایید      رد (VETO)
+   Confirm rejection (VETO)
      │         │
      ▼         ▼
-[ارسال به صرافی] [ثبت در لاگ دلایل رد معامله]
+[Send to the exchange] [Record in the log the reasons for rejecting the transaction]
 ```
 
 ---
 
-## ۳. پروتکل پایان مسابقه و نقد کردن سبد به تومان (End-of-Competition Protocol)
+## 3. End-of-Competition Protocol
 
-طبق بند ۱۰ اهداف مسابقه، کلیه دارایی‌های رمزنگاری باید در پایان رقابت به **تومان (TMN)** تبدیل شوند. مراحل اجرای قطعی این پروتکل به شرح زیر است:
+According to Clause 10 of the competition goals, all crypto assets must be converted into **Tomans (TMN)** at the end of the competition. The definitive implementation steps of this protocol are as follows:
 
-۱. **توقف خودکار خریدها (T - 3 Hours):** ۳ ساعت قبل از موعد پایان هکاتون، موتور ارسال هرگونه سفارش خرید جدید را مسدود می‌کند.
-۲. **لغو سفارش‌های باز:** کلیه سفارش‌های باز خرید و فروش معلق در صرافی لغو و موجودی‌ها آزاد می‌شوند.
-۳. **تطبیق موجودی کیف پول:** استعلام موجودی واقعی ارزها از `/v1/account/balances`.
-۴. **فروش پلکانی به تومان:** 
-   - برای هر دارایی موجود در سبد، مقدار در دسترس بررسی می‌شود.
-   - فروش با استفاده از سفارش‌های محدود روی بالاترین قیمت خرید (`Bid Price`) به صورت هوشمند و بدون دامپ ناگهانی انجام می‌شود تا اسلیپیج به حداقل برسد.
-۵. **حسابرسی نهایی سود و زیان (Final P&L Reconciliation):** گزارش نهایی موجودی نقد تومانی، میزان سود یا زیان قطعی محقق‌شده، و کارمزدهای کسرشده استخراج و ذخیره می‌گردد.
+1. **Automatic stop of purchases (T - 3 Hours):** 3 hours before the end of the hackathon, the engine will block the sending of any new purchase orders.
+2. **Cancellation of open orders:** All open buy and sell orders pending in the exchange are canceled and balances are released.
+3. **Wallet balance adjustment:** Query the actual balance of currencies from `/v1/account/balances`.
+4. **Staircase sales in Tomans:** 
+   - For each asset in the basket, the available amount is checked.
+   - Selling using limit orders on the highest purchase price (`Bid Price') is done intelligently and without sudden dumping to minimize slippage.
+5. Final audit of profit and loss (Final P&L Reconciliation): The final report of Tomani cash balance, the amount of definite realized profit or loss, and deducted fees is extracted and stored.

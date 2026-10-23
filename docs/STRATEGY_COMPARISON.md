@@ -1,73 +1,73 @@
-# مقایسه جامع و ارزیابی چندبعدی استراتژی‌های معاملاتی (فاز ۱۲)
+# Comprehensive comparison and multidimensional evaluation of trading strategies (phase 12)
 ### Comprehensive Strategy Comparison & Benchmark Evaluation
-**مخزن:** [`wallex`](file:///root/starcoach-hack/wallex) | **بازه داده‌های تجربی:** ۳۶ روز پیوسته والکس (۳،۴۵۲ کندل ۱۵ دقیقه‌ای) | **سرمایه:** ۵،۰۰۰،۰۰۰ تومان
+**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Experimental data range:** 36 continuous days of Wallex (3,452 15-minute candles) | **Capital:** 5,000,000 Tomans
 
 ---
 
-## ۱. جدول مقایسه جامع عملکرد در سطح دارایی‌های منفرد (Single-Asset Benchmark)
+## 1. Comprehensive performance comparison table at the level of single assets (Single-Asset Benchmark)
 
-جدول زیر نتایج شبیه‌سازی دقیق و واقعی استراتژی‌های مختلف را با کسر کارمزد رسمی والکس (میکر ۰.۲۵٪ / تیکر ۰.۳۰٪) و اسلیپیج (۰.۱۵٪) بر روی داده‌های ۳۶ روز اخیر نشان می‌دهد:
+The following table shows the exact and real simulation results of different strategies with the deduction of Wallex official fee (0.25% maker / 0.30% ticker) and slippage (0.15%) on the last 36 days data:
 
-| نماد / استراتژی | بازدهی خالص (Net Ret) | سود/زیان خالص (TMN) | حداکثر افت سرمایه (Max DD) | کارمزد پرداختی (Fees) | تعداد معامله بسته‌شده | نرخ برد (Win Rate) | گردش مالی (Turnover) |
+| Symbol / Strategy | Net return (Net Ret) | Net Profit/Loss (TMN) | Maximum capital loss (Max DD) | Paid fees (Fees) | Number of closed transactions Win Rate | Turnover |
 |---|---|---|---|---|---|---|---|
-| **۱. بیت‌کوین به تومان (BTCTMN)** | | | | | | | |
-| 🔹 خرید و نگهداری (Buy & Hold) | **+۲۷.۳۳٪** | +۱،۳۶۶،۵۰۰ ت | ۱۰.۳۸٪ | ۱۲،۵۰۰ ت | ۱ | ۱۰۰٪ | ۱.۰x |
-| 🔹 نقدینگی ۱۰۰٪ تومان (Cash Toman) | **۰.۰۰٪** | ۰ ت | **۰.۰۰٪** | **۰ ت** | **۰** | - | **۰.۰x** |
-| 🔹 روند مومنتوم با هوش مصنوعی (AI) | **+۱.۱۹٪** | **+۵۹،۶۰۹ ت** | **۰.۵۰٪** | ۱۹،۹۴۲ ت | **۷** | **۷۱.۴٪** | ۱.۴x |
-| 🔹 روند مومنتوم قطعی بدون هوش مصنوعی | +۰.۶۷٪ | +۳۳،۴۹۲ ت | ۱.۷۹٪ | ۳۷،۳۹۸ ت | ۱۳ | ۵۳.۸٪ | ۲.۶x |
-| 🔹 بازگشت به میانگین (Mean Reversion) | ۰.۰۲-٪ | ۹۵۴- ت | ۰.۸۸٪ | ۲۸،۵۴۴ ت | ۲۰ | ۶۵.۰٪ | ۲.۰x |
-| 🔹 شکست پرشتاب گزینشی (Selective) | ۰.۰۰٪ | ۰ ت | ۰.۰۰٪ | ۰ ت | ۰ | - | ۰.۰x |
-| 🔹 صیانت از سرمایه (Capital Preserv.) | ۰.۰۷-٪ | ۳،۶۲۷- ت | ۰.۳۲٪ | ۷،۲۵۴ ت | ۵ | ۶۰.۰٪ | ۰.۵x |
-| **۲. اتریوم به تومان (ETHTMN)** | | | | | | | |
-| 🔹 خرید و نگهداری (Buy & Hold) | +۱۷.۸۶٪ | +۸۹۳،۰۰۰ ت | **۱۷.۸۶٪** | ۱۲،۵۰۰ ت | ۱ | ۱۰۰٪ | ۱.۰x |
-| 🔹 نقدینگی ۱۰۰٪ تومان (Cash Toman) | **۰.۰۰٪** | ۰ ت | **۰.۰۰٪** | **۰ ت** | **۰** | - | **۰.۰x** |
-| 🔹 روند مومنتوم با هوش مصنوعی (AI) | ۰.۶۷-٪ | ۳۳،۵۰۰- ت | **۱.۷۲٪** | ۴۳،۴۷۷ ت | ۱۵ | ۵۳.۳٪ | ۳.۰x |
-| 🔹 روند مومنتوم قطعی بدون هوش مصنوعی | ۰.۴۶-٪ | ۲۳،۰۰۰- ت | ۲.۵۵٪ | ۵۷،۷۷۳ ت | ۲۰ | ۴۵.۰٪ | ۴.۱x |
-| 🔹 بازگشت به میانگین (Mean Reversion) | ۰.۷۶-٪ | ۳۸،۰۰۰- ت | ۱.۷۳٪ | ۴۰،۰۸۳ ت | ۲۸ | ۵۰.۰٪ | ۳.۸x |
-| 🔹 شکست پرشتاب گزینشی (Selective) | ۰.۰۰٪ | ۰ ت | ۰.۰۰٪ | ۰ ت | ۰ | - | ۰.۰x |
-| 🔹 صیانت از سرمایه (Capital Preserv.) | **۰.۲۶-٪** | **۱۳،۰۰۰- ت** | **۰.۵۵٪** | ۱۴،۴۹۰ ت | ۱۰ | ۵۰.۰٪ | ۱.۰x |
-| **۳. سولانا به تومان (SOLTMN)** | | | | | | | |
-| 🔹 خرید و نگهداری (Buy & Hold) | +۲۶.۷۵٪ | +۱،۳۳۷،۵۰۰ ت | **۲۱.۰۴٪** | ۱۲،۵۰۰ ت | ۱ | ۱۰۰٪ | ۱.۰x |
-| 🔹 نقدینگی ۱۰۰٪ تومان (Cash Toman) | **۰.۰۰٪** | ۰ ت | **۰.۰۰٪** | **۰ ت** | **۰** | - | **۰.۰x** |
-| 🔹 روند مومنتوم با هوش مصنوعی (AI) | ۱.۳۵-٪ | ۶۷،۵۰۰- ت | ۲.۲۴٪ | ۵۷،۹۰۰ ت | ۲۰ | ۴۵.۰٪ | ۴.۰x |
-| 🔹 روند مومنتوم قطعی بدون هوش مصنوعی | ۰.۳۶-٪ | ۱۸،۰۰۰- ت | ۲.۷۸٪ | ۶۳،۵۴۲ ت | ۲۲ | ۴۰.۹٪ | ۴.۴x |
-| 🔹 بازگشت به میانگین (Mean Reversion) | ۰.۵۱-٪ | ۲۵،۵۰۰- ت | ۱.۴۱٪ | ۵۱،۶۴۱ ت | ۳۶ | ۴۴.۴٪ | ۴.۹x |
-| 🔹 شکست پرشتاب گزینشی (Selective) | ۰.۰۰٪ | ۰ ت | ۰.۰۰٪ | ۰ ت | ۰ | - | ۰.۰x |
-| 🔹 صیانت از سرمایه (Capital Preserv.) | **۰.۴۳-٪** | **۲۱،۵۰۰- ت** | **۰.۹۳٪** | ۲۱،۷۲۹ ت | ۱۵ | ۴۶.۷٪ | ۱.۵x |
+| **1. Bitcoin to Toman (BTCTMN)** | | | | | | | |
+| 🔹 buy and hold (Buy & Hold). **+27.33%** | +1,366,500 tons 10.38% 12,500 tons 1 100% | 1.0x |
+| 🔹 Cash Toman 100% (Cash Toman). **0.00%** | 0 t | **0.00%** | **0 T** | **0** - | **0.0x** |
+| 🔹 Momentum trend with artificial intelligence (AI). **+1.19%** | **+59,609 t** | **0.50%** | 19,942 tons **7** | **71.4%** | 1.4x |
+| 🔹 Deterministic momentum trend without artificial intelligence +0.67% +33,492 t | 1.79% 37,398 t 13 | 53.8% 2.6x |
+| 🔹 return to the mean (Mean Reversion). -0.02% 954-t 0.88% | 28,544 tons 20 | 65.0% 2.0x |
+| 🔹 Selective accelerated failure 0.00% | 0 t | 0.00% | 0 t | 0 | - | 0.0x |
+| Capital preservation -0.07% 3,627-t 0.32% | 7,254 tons 5 | 60.0% 0.5x |
+| **2. Ethereum to Toman (ETHTMN)** | | | | | | | |
+| 🔹 buy and hold (Buy & Hold). +17.86% | +893,000 tons **17.86%** | 12,500 tons 1 100% | 1.0x |
+| 🔹 Cash Toman 100% (Cash Toman). **0.00%** | 0 t | **0.00%** | **0 T** | **0** - | **0.0x** |
+| 🔹 Momentum trend with artificial intelligence (AI). -0.67% 33,500 tons **1.72%** | 43,477 tons 15 | 53.3% 3.0x |
+| 🔹 Deterministic momentum trend without artificial intelligence -0.46% 23,000-t 2.55% 57,773 tons 20 | 45.0% 4.1x |
+| 🔹 return to the mean (Mean Reversion). -0.76% 38,000-t 1.73% 40,083 tons 28 | 50.0% 3.8x |
+| 🔹 Selective accelerated failure 0.00% | 0 t | 0.00% | 0 t | 0 | - | 0.0x |
+| Capital preservation **-0.26%** | **13,000-t** | **0.55%** | 14,490 tons 10 | 50.0% 1.0x |
+| **3. Solana to Toman (SOLTMN)** | | | | | | | |
+| 🔹 buy and hold (Buy & Hold). +26.75% +1,337,500 tons **21.04%** | 12,500 tons 1 100% | 1.0x |
+| 🔹 Cash Toman 100% (Cash Toman). **0.00%** | 0 t | **0.00%** | **0 T** | **0** - | **0.0x** |
+| 🔹 Momentum trend with artificial intelligence (AI). -1.35% 67,500 tons 2.24% 57,900 tons 20 | 45.0% 4.0x |
+| 🔹 Deterministic momentum trend without artificial intelligence -0.36% 18,000-t 2.78% 63,542 tons 22 | 40.9% 4.4x |
+| 🔹 return to the mean (Mean Reversion). -0.51% 25,500 tons 1.41% 51,641 tons 36 | 44.4% 4.9x |
+| 🔹 Selective accelerated failure 0.00% | 0 t | 0.00% | 0 t | 0 | - | 0.0x |
+| Capital preservation **-0.43%** | **21,500-t** | **0.93%** | 21,729 tons 15 | 46.7% 1.5x |
 
 ---
 
-## ۲. تحلیل تطبیقی و استنتاج مهندسی
+## 2. Comparative analysis and engineering inference
 
-### ۱. اثر اهرمی فیلتر رژیم بازار هوش مصنوعی (AI Value-Add):
-- در نماد **بیت‌کوین (BTCTMN)**، استراتژی روندی همراه با هوش مصنوعی بازدهی خالص مثبت **+۱.۱۹٪ (+۵۹،۶۰۹ تومان)** به دست آورد؛ در حالی که استراتژی قطعی بدون هوش مصنوعی بازدهی کمتر (+۰.۶۷٪) و دراوداون ۳.۵ برابر بیشتر (۱.۷۹٪ در برابر ۰.۵۰٪) را تجربه کرد.
-- هوش مصنوعی تعداد معاملات را از ۱۳ به ۷ کاهش داد و مانع از اتلاف **۱۷،۴۵۶ تومان کارمزد صرافی** در نوسانات رِنج گردید. نرخ برد معاملات از ۵۳.۸٪ به **۷۱.۴٪** ارتقا یافت.
+### 1. The leverage effect of artificial intelligence market regime filter (AI Value-Add):
+- In the symbol **Bitcoin (BTCTMN)**, the trend strategy combined with artificial intelligence achieved a net positive return of **+1.19% (+59,609 Tomans)**; While the deterministic strategy without AI experienced a lower return (+0.67%) and a 3.5 times higher drawdown (1.79% vs. 0.50%).
+- Artificial intelligence reduced the number of transactions from 13 to 7 and prevented the loss of **17,456 Tomans in exchange fees** in range fluctuations. The winning rate of transactions increased from 53.8% to **71.4%**.
 
-### ۲. پدیده اصطکاک و فرسایش در آلت‌کوین‌ها (ETHTMN & SOLTMN):
-- در اتریوم و سولانا، علی‌رغم اینکه روند کلی صعودی بود، ریزساختار نوسانات دارای امواج فرسایشی با دامنه‌های ۲٪ تا ۴٪ و اسپردهای گسترده‌تر بود. در نتیجه، استراتژی‌هایی که بیش از ۱۵ معامله انجام دادند، بیش از ۴۰ تا ۶۰ هزار تومان کارمزد پرداخت کردند که کل سود ناخالص را بلعید.
-- استراتژی صیانت از سرمایه ([`CapitalPreservationStrategy`](file:///root/starcoach-hack/wallex/src/strategy/capital_preservation.py)) با کاهش سقف سفارش به ۲۵۰ هزار تومان و معامله گزینشی‌تر، دراوداون را در اتریوم به **۰.۵۵٪** و در سولانا به **۰.۹۳٪** محدود کرد.
+### 2. The phenomenon of friction and erosion in altcoins (ETHTMN & SOLTMN):
+- In Ethereum and Solana, despite the overall trend being bullish, the microstructure of the volatility had erosive waves with amplitudes of 2% to 4% and wider spreads. As a result, strategies that made more than 15 trades paid more than 40-60 thousand tomans in fees, which swallowed the entire gross profit.
+- Capital Preservation Strategy ([`CapitalPreservationStrategy'](file:///root/starcoach-hack/wallex/src/strategy/capital_preservation.py)) by reducing the order limit to 250 thousand Tomans and more selective trading, limited the drawdown in Ethereum to **0.55%** and in Solana to **0.93%**.
 
-### ۳. استراتژی شکست پرشتاب گزینشی (Selective Breakout):
-- این استراتژی با پیش‌شرط‌های سخت‌گیرانه (حجم $\ge 1.6x$، نوسان ATR $\ge 1.0\%$، فاصله میانگین‌ها $\ge 0.20\%$ و اطمینان AI $\ge 75\%$) هیچ سیگنالی در این دوره صادر نکرد و در وضعیت ۱۰۰٪ نقد باقی ماند.
-- این رفتار کاملاً منطبق بر طراحی ایمن سیستم است: *در غیاب شرایط با امید ریاضی قطعی، سیستم هیچ ریسکی به سرمایه تحمیل نکرده و بازدهی ۰٪ با دراوداون ۰٪ را ثبت می‌کند.*
+### 3. Selective breakout strategy:
+- This strategy with strict preconditions (Volume $\ge 1.6x$, ATR Volatility $\ge 1.0\%$, Mean Distance $\ge 0.20\%$ and AI Confidence $\ge 75\%$) did not issue any signals during this period and remained in 100% cash status.
+- This behavior is completely consistent with the safe design of the system: *In the absence of conditions with mathematical certainty, the system does not impose any risk on the capital and registers a return of 0% with a drawdown of 0%.*
 
 ---
 
-## ۳. رتبه‌بندی نهایی استراتژی‌ها بر اساس شاخص‌های هکاتون
+## 3. Final ranking of strategies based on hackathon indicators
 
 ```mermaid
 graph TD
-    A["ارزیابی کلان استراتژی‌ها"] --> B["رتبه ۱: Regime Momentum + AI (پیشرو در روندهای ماکرو)"]
-    A --> C["رتبه ۲: Capital Preservation (امن‌ترین در نوسانات پرریسک)"]
-    A --> D["رتبه ۳: Cash Preservation / 100% TMN (بنچ‌مارک محافظت کامل)"]
-    A --> E["رتبه ۴: Mean Reversion (حساس به کارمزد در تایم‌فریم پایین)"]
-    A --> F["رتبه ۵: Buy & Hold (پرریسک - دراوداون بالای ۲۱٪)"]
+    A["Macro evaluation of strategies"] --> B["Rank 1: Regime Momentum + AI (leader in macro trends)"]
+    A --> C["Rank 2: Capital Preservation (safest in risky fluctuations)"]
+    A --> D["Rank 3: Cash Preservation / 100% TMN (Full Protection Benchmark)"]
+    A --> E["Rank 4: Mean Reversion (sensitive to fees in the lower timeframe)"]
+    A --> F["Rank 5: Buy & Hold (risky - drawdown above 21%)"]
 ```
 
-| رتبه | نام استراتژی | مزیت اصلی | نقص اصلی | تناسب با مسابقه ۳ روزه والکس |
+| Rank | The name of the strategy The main advantage The main defect Suitability with the 3-day Wallex race
 |---|---|---|---|---|
-| **۱** | **Regime Momentum + AI** | تولید بازدهی مثبت خالص در بیت‌کوین (+۱.۱۹٪)، دراوداون بسیار اندک (۰.۵٪) | حساس به نوسانات فرسایشی آلت‌کوین‌ها | **بسیار بالا (توصیه برای نمادهای با نقدینگی اول)** |
-| **۲** | **Capital Preservation** | حفظ حداکثری سرمایه، دراوداون زیر ۱٪ در تمام نمادها | بازدهی محدود | **بالا (به عنوان استراتژی کمکی دفاعی)** |
-| **۳** | **۱۰۰٪ Cash Toman** | ریسک و دراوداون صفر، عدم پرداخت کارمزد | عدم بهره‌مندی از فرصت‌های صعودی | **بنچ‌مارک قطعی ارزیابی عملکرد** |
-| **۴** | **Mean Reversion** | تعداد فرصت‌های معاملاتی زیاد | فرسایش شدید کارمزد در حرکات کوچک | **نامناسب برای مسابقه با کارمزد ۰.۳۰٪** |
-| **۵** | **خرید و نگهداری (B&H)** | بهره‌مندی کامل از رشد بازار | دراوداون ویرانگر تا ۲۱٪ (نقض سقف ۵٪ هکاتون) | **غیرقابل استفاده در حساب اعتباری والکس** |
+| **1** **Regime Momentum + AI** | Generating a net positive return on Bitcoin (+1.19%), very little drawdown (0.5%) | Sensitive to the erosive fluctuations of altcoins **Very high (recommendation for symbols with first liquidity)** |
+| **2** **Capital Preservation** | Maintaining maximum capital, drawdown under 1% in all symbols Limited efficiency **High (as an auxiliary defensive strategy)** |
+| **3** **100% Cash Toman** | Zero risk and drawdown, no fee payment Failure to benefit from upward opportunities **definitive benchmark for performance evaluation** |
+| **4** **Mean Reversion** | Lots of trading opportunities Severe fee erosion in small movements **Not suitable for competition with 0.30% fee** |
+| **5** **Purchase and Maintenance (B&H)** | Full benefit from market growth Devastating drawdown up to 21% (5% hackathon ceiling violation) | **Cannot be used in Wallex credit account** |

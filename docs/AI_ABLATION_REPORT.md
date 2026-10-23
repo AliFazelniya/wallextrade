@@ -1,81 +1,81 @@
-# گزارش ممیزی اثرگذاری و مطالعه ابلیشن هوش مصنوعی (فاز ۱۲)
+# Audit report on the impact and study of artificial intelligence ablation (phase 12)
 ### AI Contribution & Ablation Study with Counterfactual Logging
-**مخزن:** [`wallex`](file:///root/starcoach-hack/wallex) | **ایجنت هوش مصنوعی:** [`RegimeClassificationAgent`](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py) | **نمادهای مورد مطالعه:** `BTCTMN`, `ETHTMN`, `SOLTMN`
+**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Artificial Intelligence Agent:** [`RegimeClassificationAgent`](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py) | **Study symbols:** `BTCTMN`, `ETHTMN`, `SOLTMN`
 
 ---
 
-## ۱. هدف و روش‌شناسی مطالعه ابلیشن (Ablation Methodology)
+## 1. The purpose and methodology of the ablation study (Ablation Methodology)
 
-در سیستم‌های معاملاتی الگوریتمی، همواره این پرسش اساسی مطرح است:
-> *آیا افزودن لایه هوش مصنوعی عامل‌محور (Agentic AI) واقعاً ارزش افزوده تجربی و ریاضی ایجاد می‌کند، یا صرفاً یک لایه تزئینی است؟*
+In algorithmic trading systems, this basic question is always raised:
+> *Does adding an agentic AI layer really add mathematical and experimental value, or is it just a decorative layer?*
 
-برای پاسخ بی‌طرفانه و مبتنی بر شواهد به این پرسش، یک مطالعه ابلیشن دقیق با مقایسه رودررو میان دو حالت زیر انجام شد:
-1. **حالت آزمون (AI-Assisted System):** سیستم با ترکیب قواعد تکنیکال، رژیم بازار هوش مصنوعی و آستانه اطمینان حداقل ۷۰٪ (`use_ai=True`).
-2. **حالت پایه سنتی (Deterministic Baseline):** سیستم صرفاً با قواعد تکنیکال کلاسیک (تقاطع EMA و شرط RSI) بدون مشارکت هوش مصنوعی (`use_ai=False`).
-3. **ثبت تصمیمات خلاف‌واقع (Counterfactual Logging):** ثبت تک‌به‌تک نقاطی که سیستم سنتی خواهان ورود به معامله بود اما هوش مصنوعی آن را وتو کرد و تحلیل سرنوشت قیمت پس از وتو.
+For an unbiased and evidence-based answer to this question, a detailed ablation study was conducted with a head-to-head comparison between the following two conditions:
+1. **Test mode (AI-Assisted System):** System with combination of technical rules, artificial intelligence market regime and confidence threshold of at least 70% (`use_ai=True').
+2. **Traditional Baseline Mode (Deterministic Baseline):** System with only classic technical rules (EMA intersection and RSI condition) without the participation of artificial intelligence (`use_ai=False').
+3. Counterfactual Logging: Recording one by one the points where the traditional system wanted to enter the transaction, but the artificial intelligence vetoed it, and analyzing the fate of the price after the veto.
 
 ---
 
-## ۲. نمودار جریان تصمیم‌گیری ایجنت و گیت ایمنی
+## 2. Flow chart of agent decision making and safety gate
 
 ```mermaid
 flowchart TD
-    A["سیگنال تکنیکال ورودی (EMA20 > EMA50)"] --> B["محاسبه ویژگی‌های ریزساختاری (ATR, Spread, VolRatio, RSI)"]
-    B --> C["ایجنت طبقه‌بندی رژیم هوش مصنوعی (AI Regime Agent)"]
+    A["Technical input signal (EMA20 > EMA50)"] --> B["Calculation of microstructural features (ATR, Spread, VolRatio, RSI)"]
+    B --> C["AI Regime Agent"]
     
-    C --> D{"تشخیص رژیم و سطح اطمینان"}
-    D -->|"BULLISH_TREND & اطمینان >= ۷۰٪"| E["تایید سیگنال ورود (Approved)"]
-    D -->|"CALM_RANGE (بازار نوسانی رِنج)"| F["وتوی هوش مصنوعی: حفظ نقدینگی و عدم معامله"]
-    D -->|"BEARISH_TREND / PANIC"| G["دستور خروج سریع اضطراری"]
-    D -->|"اطمینان < ۷۰٪"| H["وتوی هوش مصنوعی: ابطال ریسک"]
+    C --> D{"Regime detection and confidence level"}
+    D -->|"BULLISH_TREND & Confidence >= 70%"| E["Confirmation of entry signal (Approved)"]
+    D -->|"CALM_RANGE (range fluctuating market)"| F["Artificial intelligence veto: maintaining liquidity and not trading"]
+    D -->|"BEARISH_TREND / PANIC"| G["Emergency exit order"]
+    D -->|"confidence < 70%"| H[""]
     
-    E --> I["موتور ریسک قطعی (Risk Engine)"]
-    F --> J["ثبت در لاگ خلاف‌واقع (Counterfactual Log)"]
+    E --> I["Risk Engine"]
+    F --> J["Registration in Counterfactual Log"]
     H --> J
 ```
 
 ---
 
-## ۳. نتایج آماری مقایسه رودررو (Head-to-Head Empirical Metrics)
+## 3. Statistical results of head-to-head comparison (Head-to-Head Empirical Metrics)
 
-### ۳.۱. در سطح نماد بیت‌کوین (BTCTMN)
-| شاخص عملکرد | حالت سنتی بدون هوش مصنوعی (Deterministic) | حالت هوش مصنوعی (AI-Assisted) | تفاوت و دستاورد هوش مصنوعی |
+### 3.1. At the level of the Bitcoin symbol (BTCTMN)
+| performance index Traditional mode without artificial intelligence (Deterministic). Artificial intelligence mode (AI-Assisted) | The difference and achievement of artificial intelligence
 |---|---|---|---|
-| **بازدهی خالص (Net Return)** | +۰.۶۷٪ (+۳۳،۴۹۲ ت) | **+۱.۱۹٪ (+۵۹،۶۰۹ ت)** | **+۷۸٪ افزایش سود خالص نهایی** |
-| **حداکثر افت سرمایه (Max Drawdown)** | ۱.۷۹٪ | **۰.۵۰٪** | **۷۲٪ کاهش دراوداون پورتفولیو** |
-| **تعداد معاملات بسته‌شده** | ۱۳ معامله | **۷ معامله** | **۴۶٪ کاهش معاملات فرسایشی** |
-| **کارمزد پرداختی به صرافی** | ۳۷،۳۹۸ تومان | **۱۹،۹۴۲ تومان** | **صرفه‌جویی ۱۷،۴۵۶ تومانی در کارمزد** |
-| **نرخ برد معاملات (Win Rate)** | ۵۳.۸۵٪ | **۷۱.۴۳٪** | **+۱۷.۶ درصد بهبود دقت سیگنال‌ها** |
-| **گردش مالی (Turnover)** | ۲.۶۱x | **۱.۴۲x** | مدیریت بهینه سرمایه |
+| **Net Return** | +0.67% (+33,492 t) | **+1.19% (+59,609 tons)** | **+78% increase in final net profit** |
+| **Maximum capital loss (Max Drawdown)** | 1.79% **0.50%** | **72% decrease in portfolio drawdown** |
+| **Number of closed transactions** | 13 transactions **7 deals** | **46% reduction in erosion transactions** |
+| **Fees paid to the exchange** | 37,398 Tomans **19,942 Tomans** | **Saving 17,456 Tomans in fees** |
+| **Win Rate** | 53.85% **71.43%** | **+17.6% improvement in signal accuracy** |
+| **Financial turnover (Turnover)** | 2.61x | **1.42x** | Optimal capital management
 
-### ۳.۲. در سطح پورتفولیوی چندنمادی مشترک (BTCTMN + ETHTMN + SOLTMN)
-| شاخص کل پورتفولیو | پورتفولیو بدون AI (Deterministic) | پورتفولیو با هوش مصنوعی (AI-Assisted) | ارزش افزوده هوش مصنوعی |
+### 3.2. At the joint polynomial portfolio level (BTCTMN + ETHTMN + SOLTMN)
+| Total portfolio index Portfolio without AI (Deterministic) | Portfolio with artificial intelligence (AI-Assisted) | Added value of artificial intelligence
 |---|---|---|---|
-| **حداکثر افت سرمایه (Max DD)** | **۵.۷۰٪ (🛑 نقض سقف ۵٪ هکاتون)** | **۳.۴۹٪ (✅ کاملاً منطبق بر قوانین)** | **نجات حساب از مسدودسازی و حذف** |
-| **مجموع کارمزدهای کسرشده** | ۱۴۱،۳۳۴ تومان | **۱۲۱،۳۲۰ تومان** | **کاهش ۲۰،۰۱۴ تومانی در هزینه کارمزد** |
-| **تعداد سیگنال‌های وتوشده** | ۰ مورد | **۶۴۳ سیگنال ورود کاذب وتو شد** | جلوگیری از معامله در امواج فرسایشی |
-| **توقف اضطراری سیستم** | **🛑 فعال شد (Breach of 5%)** | **✅ فعال نشد (ایمن و پایدار)** | حفظ پایداری عملیاتی |
+| **Maximum capital loss (Max DD)** | **5.70% (🛑 Violation of the 5% Hackathon ceiling)** | **3.49% (Fully compliant with the rules)** | **Save the account from blocking and deletion** |
+| **Total deducted fees** | 141,334 Tomans **121,320 Tomans** | **Reduction of 20,014 Tomans in fee** |
+| **Number of vetoed signals** | 0 items **643 false entry signals were vetoed** | Avoid trading in erosion waves
+| **system emergency stop** | **🛑 Activated (Breach of 5%)** | ** ✅ did not activate (safe and stable) ** | Maintaining operational stability
 
 ---
 
-## ۴. نمونه‌برداری از لاگ‌های خلاف‌واقع (Counterfactual Case Studies)
+## 4. Sampling Counterfactual Case Studies
 
-تحلیل نمونه‌های واقعی ثبت‌شده در [`research/phase12_simulation_results.json`](file:///root/starcoach-hack/wallex/research/phase12_simulation_results.json) نشان می‌دهد:
+Analysis of real samples recorded in [`research/phase12_simulation_results.json`](file:///root/starcoach-hack/wallex/research/phase12_simulation_results.json) shows:
 
-1. **مورد ۱: جلوگیری از خرید در سقف نوسانی رِنج در نماد BTCTMN:**
-   - *سیگنال سنتی:* تقاطع صعودی مقطعی میانگین ۲۰ و ۵۰ به دلیل جهش کوتاه‌مدت ۲ کندلی. سیستم سنتی سیگنال خرید با قیمت ۲۱،۱۵۰،۰۰۰،۰۰۰ ریال صادر کرد.
-   - *تشخیص ایجنت هوش مصنوعی:* رژیم بازار به عنوان `CALM_RANGE` با نوسان‌پذیری ضعیف (ATR کمتر از ۰.۸٪) طبقه‌بندی شد و سیگنال وتو گردید.
-   - *نتیجه خلاف‌واقع (Counterfactual Outcome):* در ۴ کندل بعدی، قیمت ۱.۲٪ ریزش کرد و سیستم سنتی با فعال شدن حد ضرر ۲٪ و کسر کارمزد ۰.۳۰٪ تیکر، زیانی معادل ۱۱،۵۰۰ تومان ثبت کرد. وتوی هوش مصنوعی مانع از این زیان شد.
+1. **Case 1: Avoid buying at the swing ceiling of the range in the symbol BTCTMN:**
+   - *Traditional signal:* Cross-sectional bullish intersection of 20 and 50 averages due to the short-term jump of 2 candles. The traditional system issued a buy signal at the price of 21,150,000,000 Rials.
+   - *AI Agent Detection:* The market regime was classified as ``CALM_RANGE'' with weak volatility (ATR less than 0.8%) and veto signal.
+   - *Counterfactual Outcome:* In the next 4 candles, the price fell by 1.2% and the traditional system registered a loss of 11,500 Tomans with the activation of the 2% loss limit and 0.30% ticker fee deduction. AI veto prevented this loss.
 
-2. **مورد ۲: وتوی امواج کاذب آلت‌کوین‌ها در ریزش ماکرو:**
-   - در نمادهای `ETHTMN` و `SOLTMN` در تاریخ‌های ۱۰ تا ۱۲ اکتبر، بازار در رژیم نزولی فرسایشی قرار داشت. هر موج بازگشتی کوچک سیستم‌های سنتی را فریب می‌داد و سیگنال ورود صادر می‌کرد.
-   - هوش مصنوعی در مجموع **۶۴۳ سیگنال ورود** را وتو کرد که تحلیل نشان می‌دهد بیش از ۷۴٪ آن‌ها در صورت ورود، منتهی به زیان کارمزد یا حد ضرر می‌شدند.
+2. **Case 2: Veto of false waves of altcoins in macro collapse:**
+   - In the symbols `ETHTMN' and `SOLTMN', on October 10 to 12, the market was in a bearish erosion regime. Every small reversal wave would fool the traditional systems and issue an entry signal.
+   - Artificial intelligence vetoed a total of **643 entry signals**, which analysis shows that more than 74% of them, if entered, would have led to commission losses or loss limits.
 
 ---
 
-## ۵. نتیجه‌گیری ممیزی ابلیشن
+## 5. Ablation audit conclusion
 
-شواهد تجربی این آزمون اثبات می‌کند که:
-1. هوش مصنوعی در این سیستم یک مفهوم بازاریابی نیست، بلکه یک **فیلتر ریاضی ضدفرسایش (Anti-Churn Filter)** است.
-2. ارزش اصلی هوش مصنوعی در بازارهای با کارمزد بالا، در **«معامله نکردن در شرایط بد»** نهفته است.
-3. تفکیک رژیم‌های فرسایشی رِنج (`CALM_RANGE`) از رژیم‌های رونددار پایدار (`BULLISH_TREND`) مستقیماً نرخ برد را تا ۱۷.۶٪ افزایش داده و از نقض سقف ۵٪ دراوداون مسابقه هکاتون جلوگیری کرده است.
+The empirical evidence of this test proves that:
+1. Artificial intelligence in this system is not a marketing concept, but an Anti-Churn Mathematical Filter.
+2. The main value of artificial intelligence in high-fee markets lies in "not trading in bad conditions".
+3. Separation of range-eroding regimes (`CALM_RANGE') from stable trending regimes (`BULLISH_TREND') has directly increased the win rate to 17.6% and prevented hackathon from violating the 5% drawdown limit.

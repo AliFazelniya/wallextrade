@@ -1,63 +1,63 @@
-# شواهد اجرای معاملات سایه و اعتبارسنجی زنده (Phase 26 Shadow Execution Evidence)
+# Evidence of the execution of shadow transactions and live validation (Phase 26 Shadow Execution Evidence)
 ## Live Shadow Testing, Order-Book Ingestion, Latency Tracking & Forward Limitations
 
-> **مخزن:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **شاخه پژوهشی:** `research/phase26-forensic-validation`  
-> **کامیت مبنای منجمد:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **محیط تست:** اتصال زنده به اندپوینت‌های بازار واقعی صرافی والکس (`https://api.wallex.ir`)  
-> **مجوز معاملات زنده:** `live_execution_authorized = False` (حالت سایه خالص / عدم ارسال سفارش پولی)  
-> **وضعیت آزمون ۷۲ ساعته رو به جلو:** ⚠️ **پیاده‌سازی کامل پایپ‌لاین / عدم تکمیل بازه ۷۲ ساعته به دلیل محدودیت زمانی نشست**
+> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Research branch:** `research/phase26-forensic-validation`  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Test environment:** Live connection to real market endpoints of Wallex exchange (`https://api.wallex.ir`)  
+> **Authorization of live transactions:** `live_execution_authorized = False` (pure shadow mode / no money order sending)  
+> **Status of the 72-hour forward test:** ⚠️ **Full implementation of the pipeline / failure to complete the 72-hour interval due to the time limit of the session**
 
 ---
 
-## ۱. مشخصات جلسه اجرای زنده سایه (Live Shadow Session Metrics)
+## 1. Live Shadow Session Metrics
 
-جلسه اجرای آزمایشی فاز ۲۶ با استفاده از کلاس [`ShadowExecutionRunner`](file:///root/starcoach-hack/wallex/src/execution/shadow_runner.py) در تاریخ ۲۲ اکتبر ۲۰۲۶ اجرا گردید:
+Phase 26 test execution session was executed using the [`ShadowExecutionRunner`] class (file:///root/starcoach-hack/wallex/src/execution/shadow_runner.py) on October 22, 2026:
 
-| شاخص پایش زنده | مقدار اندازه‌گیری‌شده | منبع داده و وضعیت |
+| Live monitoring index Measured value Data source and status
 |---|:---:|---|
-| **تعداد چرخه‌های کامل پایش (Cycles)** | **۱۰ چرخه متوالی** | اتصال زنده REST/JSON به والکس |
-| **کل رویدادهای ثبت‌شده در لاگ** | **۲۰ رویداد استاندارد** | فایل لاگ [`logs/shadow_session_phase26.json`](file:///root/starcoach-hack/wallex/logs/shadow_session_phase26.json) |
-| **مدت زمان واقعی پایش زنده** | ۲۲.۱ ثانیه | استمرار اتصال بدون قطعی |
-| **میانگین تاخیر شبکه (Network Latency)** | **۱.۶۲ ثانیه** | زمان ارسال و دریافت اسنپ‌شات کتاب سفارشات |
-| **تعداد خطاهای شبکه و قطعی** | **۰ مورد (Zero Failures)** | آپ‌تایم ۱۰۰٪ در طول جلسه |
-| **تعداد سفارش‌های ارسالی به صرافی** | **۰ مورد (ممنوعیت مطلق)** | رعایت اکید سد ایمنی `live_auth = False` |
+| **The number of complete monitoring cycles (Cycles)** | **10 consecutive cycles** | Live REST/JSON connection to Wallex
+| **Total events recorded in the log** | **20 standard events** | Log file [`logs/shadow_session_phase26.json`](file:///root/starcoach-hack/wallex/logs/shadow_session_phase26.json) |
+| **Real duration of live monitoring** | 22.1 seconds Continuity of connection without interruption
+| **Average Network Latency** | **1.62 seconds** | The time of sending and receiving snapshots of the order book
+| **Number of network errors and outages** | **0 cases (Zero Failures)** | 100% uptime during the session
+| **Number of orders sent to the exchange** | **0 cases (absolute prohibition)** | Strict observance of safety barrier `live_auth = False`
 
 ---
 
-## ۲. اسنپ‌شات قیمت‌ها و اسپرد زنده بازار در لحظه آزمون
+## 2. Snapshot of prices and live spreads of the market at the moment of the test
 
-داده‌های استخراج‌شده از اندپوینت رسمی بازار والکس در چرخه شماره ۱:
+Data extracted from the official endpoint of Wallex market in cycle number 1:
 
-| نماد | قیمت آخرین معامله (TMN) | بهترین قیمت خرید (Bid) | بهترین قیمت فروش (Ask) | اسپرد جاری (%) | وضعیت فیلتر اسپرد ورود ($\le 0.18\%$) |
+| Symbol | Last transaction price (TMN) | The best purchase price (Bid) | Best selling price (Ask) | Current spread (%) | Entry spread filter status ($\le 0.18\%$) |
 |---|:---:|:---:|:---:|:---:|:---:|
-| **BTCTMN** | ۲۲،۱۴۰،۳۴۸،۹۵۰ | ۲۲،۱۳۴،۴۷۷،۹۵۷ | ۲۲،۱۵۴،۴۴۸،۵۷۵ | **۰.۰۹۰٪** | ✅ تایید نقدینگی و اسپرد |
-| **ETHTMN** | ۶۴۹،۷۹۱،۴۹۴ | ۶۴۹،۷۹۱،۴۹۴ | ۶۵۰،۰۹۶،۱۵۰ | **۰.۰۴۷٪** | ✅ تایید نقدینگی و اسپرد |
-| **SOLTMN** | ۲۸،۲۴۷،۱۱۵ | ۲۸،۲۱۲،۰۷۳ | ۲۸،۲۹۶،۷۲۶ | **۰.۳۰۰٪** | ❌ **رد شده به دلیل اسپرد عریض (> ۰.۱۸٪)** |
+| **BTCTMN** | 22,140,348,950 | 22,134,477,957 | 22,154,448,575 | **0.090%** | Confirmation of liquidity and spread
+| **ETHTMN** | 649,791,494 | 649,791,494 | 650,096,150 | **0.047%** | Confirmation of liquidity and spread
+| **SOLTMN** | 28,247,115 | 28,212,073 | 28,296,726 | **0.300%** | ❌ **rejected due to wide spread (> 0.18%)** |
 
-### تحلیل رفتار هوشمند سیستم:
-در زمان آزمون زنده، اسپرد نماد سولانا برابر با ۰.۳۰٪ بود که از سقف مجاز استراتژی (۰.۱۸٪) فراتر رفته بود. موتور کنترل ریسک بلافاصله ورود به موقعیت جدید روی سولانا را مسدود ساخت تا از اتلاف سرمایه در اسپرد نامطلوب جلوگیری کند. همچنین بازار بیت‌کوین و اتریوم در رژیم رنج آرام به سر می‌بردند؛ بنابراین هیچ سیگنال کاذبی صادر نشد.
-
----
-
-## ۳. قابلیت‌های پیاده‌سازی‌شده در شبیه‌ساز اجرای آزمایشی (Paper Runner Architecture)
-
-کلاس اجرای سایه فاز ۲۶ به طور کامل موارد زیر را پشتیبانی می‌کند:
-1. **پایش جریان زنده بازار با تایم‌استمپ دقیق UTC:** نگه‌داری اسنپ‌شات‌های قیمت و تطبیق آن با کندل‌های تاریخی.
-2. **شبیه‌سازی سفارش‌های Limit و Market با لغزش:** کسر کارمزدهای رسمی سطح ۱ (سازنده ۰.۲۵٪ و سفارش‌بردار ۰.۳۰٪).
-3. **محرک‌های خروج اضطراری و حد ضرر کلاینت:** پایش قیمت در هر گام و اجرای سریع خروج در صورت نقض آستانه حد ضرر.
-4. **تسویه قطعی به تومان (Wind-down):** خروج تدریجی در ساعت ۶۶ و تسویه اجباری در ساعت ۷۰ برای اتمام مسابقه با ۱۰۰٪ نقدینگی.
-5. **دفترچه ثبت رویدادهای زنده (JSON Audit Log):** ذخیره‌سازی جزئیات تمام رویدادها، سیگنال‌ها، ارزیابی‌های ریسک و وضعیت کیف‌پول.
+### Intelligent system behavior analysis:
+At the time of the live test, the Solana symbol spread was equal to 0.30%, which exceeded the allowed limit of the strategy (0.18%). The risk control engine immediately blocked the new position entry on Solana to avoid capital loss on unfavorable spreads. Also, the Bitcoin and Ethereum markets were in the regime of calm suffering; Therefore, no false signals were issued.
 
 ---
 
-## ۴. افشای شفاف محدودیت‌ها: عدم تکمیل آزمون ۷۲ ساعته رو به جلو
+## 3. Features implemented in the test execution simulator (Paper Runner Architecture)
+
+The phase 26 shadow implementation class fully supports the following:
+1. **Monitor live market stream with accurate UTC timestamp:** Keeping price snapshots and matching it with historical candles.
+2. **Similation of Limit and Market orders with sliding:** Deduction of level 1 official fees (maker 0.25% and order taker 0.30%).
+3. **Emergency exit triggers and client's loss limit:** Price monitoring at every step and quick exit execution in case of violation of the loss limit threshold.
+4. **Definite settlement in Tomans (Wind-down):** Gradual exit at 66 hours and mandatory settlement at 70 hours to complete the match with 100% liquidity.
+5. **Live Event Log (JSON Audit Log):** Storing details of all events, signals, risk assessments and wallet status.
+
+---
+
+## 4. Clear disclosure of restrictions: Failure to complete the test 72 hours forward
 
 > [!WARNING]
-> ### افشای صادقانه به هیئت داوران:
-> انجام یک آزمون پیوسته ۷۲ ساعته واقعی نیازمند ۳ شبانه‌روز کار مداوم سرور بدون وقفه است. در چارچوب نشست مهندسی حاضر، امکان اجرای فیزیکی ۷۲ ساعت وجود نداشته است.  
-> **ما از هرگونه جعل یا شبیه‌سازی ساختگی نتایج ۷۲ ساعته رو به جلو خودداری می‌کنیم.**  
-> خط لوله و اسکریپت رانر آماده، آزموده و مستند شده است، اما آزمون فوروارد ۷۲ ساعته به طور شفاف **ناتمام (INCOMPLETE / UNFINISHED)** گزارش می‌شود.
+> ### Honest disclosure to the jury:
+> Conducting a real 72-hour continuous test requires 3 days of continuous server work without interruption. In the framework of the current engineering meeting, it was not possible to physically implement 72 hours.  
+> **We refrain from any falsification or fake simulation of 72 hour forward results.**  
+> The pipeline and script runner are ready, tested and documented, but the 72-hour forward test is clearly reported as **INCOMPLETE / UNFINISHED**.
 
-### حکم نهایی ممیزی معاملات سایه: `PASS (قابلیت‌های فنی) / INCOMPLETE (تاییدیه سودآوری ۷۲ ساعته)`
-زیرساخت فنی معاملات سایه بدون نقص کار می‌کند، اما اثبات قطعی سودآوری زنده نیازمند اجرای واقعی در طول مسابقه است.
+### The final judgment of the shadow trading audit: ``PASS (technical capabilities) / INCOMPLETE (72-hour profitability confirmation)''
+The technical infrastructure of shadow trading works flawlessly, but definitive proof of live profitability requires actual execution during the race.

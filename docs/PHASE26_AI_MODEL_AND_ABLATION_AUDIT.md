@@ -1,78 +1,78 @@
-# ممیزی مدل‌های هوش مصنوعی و مطالعه تفکیک اثر (Phase 26 AI Model & Ablation)
+# Audit of artificial intelligence models and effect separation study (Phase 26 AI Model & Ablation)
 ## Genuine Machine Learning, In-Sample Calibration & Dynamic Position Allocation
 
-> **مخزن:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **شاخه پژوهشی:** `research/phase26-forensic-validation`  
-> **کامیت مبنای منجمد:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **روش یادگیری ماشین:** رگرسیون لجستیک کالیبره‌شده با جریمه منظم‌سازی L2 (Ridge Logistic Regression)  
-> **وضعیت مشارکت هوش مصنوعی:** ✅ **قبولی قطعی با بهبود معنادار (GENUINE AI ADVANTAGE: +84,053 TMN)**
+> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Research branch:** `research/phase26-forensic-validation`  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Machine learning method:** Logistic regression calibrated with L2 regularization penalty (Ridge Logistic Regression)  
+> **Participation status of artificial intelligence:** ✅ **Definite acceptance with significant improvement (GENUINE AI ADVANTAGE: +84,053 TMN)**
 
 ---
 
-## ۱. ممیزی رویکردهای گذشته در برابر یادگیری ماشین اصیل (Audit of Previous AI Claims)
+## 1. Audit of previous approaches to genuine machine learning (Audit of Previous AI Claims)
 
-### الف) آسیب‌شناسی فازهای قبلی:
-- **فاز ۲۳ (`RegimeClassificationAgent`):** صرفاً مجموعه‌ای از قواعد ثابت و دست‌نویس بولین بود (`if RSI <= 68 and vol >= 1.15`). این ماژول هیچ وزنی را از داده‌ها یاد نگرفته بود و با وتوی ۳ معامله برنده بزرگ، سود سیستم را **۳۷،۳۲۳- تومان تخریب کرد**.
-- **فاز ۲۵ (`CostSensitiveAIEvaluator`):** فرمول سرانگشتی امیدریاضی با ضرایب ثابت دستی بود. هرچند از تخریب فاز ۲۳ جلوگیری کرد، اما یک مدل یادگیرنده داده‌محور تلقی نمی‌شد.
+### a) Pathology of previous phases:
+- **Phase 23 (`RegimeClassificationAgent`):** was just a set of static and handwritten Boolean rules (`if RSI <= 68 and vol >= 1.15`). This module had not learned any weight from the data and by vetoing 3 big winning trades, it destroyed the profit of the system **-37,323 Tomans**.
+- **Phase 25 (`CostSensitiveAIEvaluator'):** Omidariazi's thumb formula with constant coefficients was manual. Although it prevented the degradation of phase 23, it was not considered a data-driven learning model.
 
-### ب) معماری مدل اصیل یادگیری ماشین فاز ۲۶ (`LearnedProbabilisticAIEvaluator`):
-برای ایجاد یک مزیت رقابتی واقعی مبتنی بر هوش مصنوعی:
-1. **داده‌های آموزش درون‌نمونه (In-Sample):** نیمه اول داده‌ها (روزهای ۱ تا ۴۵، پنجره‌های W01 تا W15 شامل ۱۸ معامله تاریخی).
-2. **برچسب‌گذاری نظارت‌شده ($y$):** برچسب باینری موفقیت معامله ($y=1$ برای معاملات سودآور با بازدهی خالص مثبت، $y=0$ برای معاملات منتهی به حد ضرر).
-3. **ماتریس ویژگی‌ها در لحظه تصمیم ($X$):**
-   - نسبت جهش حجم به میانگین (`vol_ratio`)
-   - فاصله میانگین‌های متحرک شتاب (`ema_spread_pct`)
-   - شاخص قدرت روند (`adx_14`)
-   - نوسان‌پذیری نرمال‌شده کندل (`atr_pct`)
-   - اسپرد دینامیک صرافی (`dynamic_spread`)
-4. **بهینه‌سازی تابع هزینه با منظم‌سازی L2:** آموزش با روش گرادیان کاهشی منظم‌شده (L2 Regularized Logistic Regression) برای جلوگیری از بیش‌برازش روی نمونه کوچک.
-
----
-
-## ۲. ضرایب آموخته‌شده و دقت کالیبراسیون برون‌نمونه (Out-of-Sample Performance)
-
-مدل صرفاً بر روی داده‌های ۴۵ روز اول آموزش دید و سپس بر روی ۴۵ روز دوم (پنجره‌های W16 تا W29 شامل ۱۷ معامله کاملاً دیده نشده) آزموده شد:
-
-### ضرایب یادگرفته‌شده مدل (Learned Weights):
-- **نسبت جهش حجم (`vol_ratio`):** **`+۰.۳۴۴۵`** (مهم‌ترین و قوی‌ترین سیگنال پیش‌بینی‌کننده موفقیت بریک‌اوت)
-- **شتاب مومنتوم (`ema_spread`):** **`+۰.۱۳۴۵`** (سیگنال مثبت تکمیلی)
-- **نوسان‌پذیری شدید (`atr_pct`):** **`۰.۲۸۱۱-`** (نوسان‌های شدید و سایه‌های بلند، ریسک فعال‌سازی استاپ را به شدت افزایش می‌دهند)
-- **شاخص قدرت روند (`adx_14`):** **`۰.۱۸۶۳-`** (در کریپتو، ADX بسیار بالا معمولاً نشان‌دهنده انتهای روند و اشباع خرید است)
-- **اسپرد صرافی (`dynamic_spread`):** **`۰.۱۰۱۲-`** (جریمه خطی اصطکاک)
-
-### شاخص‌های ارزیابی پیش‌بینی در آزمون کور برون‌نمونه ($N = 17$ معامله تست):
-- **امتیاز برایر (Brier Score):** **`۰.۲۲۱۲`** (بسیار برتر از حدس تصادفی ۰.۲۵۰۰)
-- **آنتروپی تقاطعی (Log Loss):** **`۰.۶۳۹۰`** (پایین‌تر از خط مبنای ۰.۶۹۳۱)
-- **دقت پیش‌بینی برون‌نمونه (Accuracy):** **`۷۰.۵۹٪`** (۱۲ پیش‌بینی صحیح از ۱۷ معامله برون‌نمونه!)
+### b) The architecture of the original phase 26 machine learning model ("LearnedProbabilisticAIEvaluator"):
+To create a real AI-based competitive advantage:
+1. **In-Sample training data:** The first half of the data (days 1 to 45, windows W01 to W15 including 18 historical transactions).
+2. **Supervised tagging ($y$):** Binary tagging of trade success ($y=1$ for profitable trades with positive net return, $y=0$ for trades leading to losses).
+3. **Features matrix at the moment of decision ($X$):**
+   - Volume jump ratio to the average (`vol_ratio`)
+   - Distance of moving averages of acceleration (`ema_spread_pct`)
+   - Trend strength index (`adx_14`)
+   - Candle normalized volatility (`atr_pct`)
+   - Exchange dynamic spread (`dynamic_spread`)
+4. **Optimization of the cost function with L2 regularization:** Training with the regularized decreasing gradient method (L2 Regularized Logistic Regression) to avoid overfitting on a small sample.
 
 ---
 
-## ۳. جدول ماتریس ارزیابی ۴ پیکربندی در ۲۹ پنجره مسابقه (Ablation Matrix)
+## 2. Learned Coefficients and Out-of-Sample Performance
 
-| ردیف | پیکربندی هوش مصنوعی | نحوه مداخله در معاملات | سود خالص کل (TMN) | میانگین بازدهی | نرخ برد پنجره‌ها | تعداد معامله | اصطکاک صرافی (TMN) | دلتا نسبت به دترمینیستیک |
+The model was trained only on the first 45 days of data and then tested on the second 45 days (windows W16 to W29 including 17 completely unseen trades):
+
+### Learned coefficients of the model (Learned Weights):
+- **volume jump ratio (`vol_ratio`):** **`+0.3445`** (the most important and strongest signal predicting breakout success)
+- **Momentum acceleration (`ema_spread`):** **`+0.1345`** (additional positive signal)
+- **Extreme Volatility (`atr_pct`):** **`0.2811-`** (Extreme volatility and long shadows greatly increase the risk of stop activation)
+- **trend strength indicator (`adx_14`):** **`0.1863-`** (In crypto, a very high ADX usually indicates the end of a trend and overbought)
+- **exchange spread (`dynamic_spread`):** **`0.1012-`** (linear friction penalty)
+
+### Predictive evaluation indicators in the blind out-of-sample test ($N = $17 test transactions):
+- Brier Score: 0.2212 (much better than the random guess of 0.2500)
+- **Intersection entropy (Log Loss):** **`0.6390`** (lower than the base line 0.6931)
+- **Example prediction accuracy (Accuracy):** **`70.59%'** (12 correct predictions out of 17 out of sample transactions!)
+
+---
+
+## 3. Evaluation matrix table of 4 configurations in 29 competition windows (Ablation Matrix)
+
+| row | Artificial intelligence configuration How to intervene in transactions Total Net Profit (TMN) | average yield | Windows win rate Number of transactions Exchange Friction (TMN) | Delta compared to deterministic |
 |:---:|---|---|:---:|:---:|:---:|:---:|:---:|:---:|
-| **۱** | **دترمینیستیک خالص (No AI)** | صرفاً فیلترهای تکنیکال H1+H3 با حجم ثابت ۵۰۰ هزار | **۶۳،۹۵۴.۷+** | ۰.۰۴۴٪+ | ۲۷.۶٪ | ۳۵ | ۱۳۴،۶۱۲ | مبنا |
-| **۲** | **ارزیاب سرانگشتی حساس به هزینه** | وتوی معاملات با امیدریاضی سرانگشتی < ۰.۴۰٪ | **۶۵،۶۰۷.۶+** | ۰.۰۴۵٪+ | ۲۷.۶٪ | ۳۳ | ۱۲۶،۶۲۷ | ۱،۶۵۳+ TMN (حذف ۲ باخت) |
-| **۳** | **ارزیاب اصیل یادگیری ماشین** | وتوی معامله بر اساس احتمال کالیبره‌شده ($\hat{p} < 0.48$) | **۶۴،۵۹۷.۷+** | ۰.۰۴۵٪+ | ۲۷.۶٪ | ۳۴ | ۱۳۰،۱۳۰ | ۶۴۳+ TMN (حذف ۱ باخت) |
-| **۴** | **تخصیص شناور حجم با هوش مصنوعی** | **تنظیم پیوسته حجم پوزیشن بین ۰.۶x تا ۱.۲x بر اساس $\hat{p}$** | **۸۴،۰۵۳.۰+** | **۰.۰۵۸٪+** | **۳۱.۰٪** | **۳۵** | **۱۲۳،۴۸۸** | **۲۰،۰۹۸+ TMN (جهش سود!)** |
+| **1** **Pure Deterministic (No AI)** | Only technical filters H1+H3 with a fixed volume of 500 thousand **63,954.7+** | 0.044%+ | 27.6% 35 | 134,612 | Basis |
+| **2** **Cost-sensitive thumb estimator** | The veto of transactions with Omidriazi Sarngashti < 0.40% **65,607.6+** | 0.045%+ | 27.6% 33 | 126,627 | 1,653+ TMN (remove 2 losses) |
+| **3** **Genuine machine learning evaluator** | Trade veto based on calibrated probability ($\hat{p} < 0.48$) | **64,597.7+** | 0.045%+ | 27.6% 34 | 130,130 643+ TMN (remove 1 loss) |
+| **4** **Allocation of floating volume with artificial intelligence** | **Continuous adjustment of position volume between 0.6x and 1.2x based on $\hat{p}$** | **84,053.0+** | **0.058%+** | **31.0%** | **35** **123,488** | **20,098+ TMN (Profit Leap!)** |
 
 ```mermaid
 bar
-    title مقایسه سود خالص کل در ۴ پیکربندی تفکیک اثر هوش مصنوعی (TMN)
-    "۱. دترمینیستیک خالص" : 63955
-    "۲. ارزیاب سرانگشتی" : 65608
-    "۳. مدل یادگیری ماشین" : 64598
-    "۴. تخصیص شناور حجم با AI" : 84053
+    title Comparison of total net profit in 4 different configurations of artificial intelligence effect (TMN)
+    "1. Pure deterministic" : 63955
+    "2. Thumb evaluator" : 65608
+    "3. Machine learning model" : 64598
+    "4. Volume floating allocation with AI" : 84053
 ```
 
 ---
 
-## ۴. چرایی جهش سود در پیکربندی ۴ (AI Dynamic Position Sizing)
+## 4. Why the jump in profit in configuration 4 (AI Dynamic Position Sizing)
 
-استفاده از هوش مصنوعی صرفاً به عنوان یک «فیلتر حذفی» رویکردی محدودکننده است. جهش فوق‌العاده بازدهی در پیکربندی ۴ به این دلیل رخ داد:
-1. **افزایش حجم در امواج مطمئن (High-Confidence Breakouts):** زمانی که مدل احتمال برد بالایی برآورد می‌کند ($\hat{p} \ge 0.60$ با جهش حجم سنگین و نوسان کنترل‌شده)، حجم پوزیشن را تا **۱.۲ برابر** (۶۰۰،۰۰۰ تومان) افزایش می‌دهد؛ در نتیجه در امواج صعودی ۴.۵٪+ سولانا، سود ناخالص جهش می‌کند.
-2. **مهار خسارت در معاملات پرریسک (Low-Confidence Defense):** زمانی که سیگنال تکنیکال صادر شده اما احتمال برد مرزی است ($\hat{p} \approx 0.45 - 0.50$ به دلیل اسپرد یا نوسان بالا)، حجم پوزیشن به طور خودکار به **۰.۶ برابر** (۳۰۰،۰۰۰ تومان) کاهش می‌یابد؛ بنابراین هنگام اصابت حد ضرر، زیان و اصطکاک تحمیل‌شده به پرتفوی ۴۰٪ کمتر است.
-3. **پایبندی به سقف ریسک:** حتی در حداکثر حجم (۶۰۰ هزار تومان)، کل سرمایه در معرض ریسک پوزیشن حداکثر ۱۲٪ سرمایه کل حساب را تشکیل می‌دهد و از سقف‌های سخت‌گیرانه مدیریت ریسک تجاوز نمی‌کند.
+Using AI as a mere "cut-off filter" is a limiting approach. The dramatic jump in efficiency in configuration 4 occurred because:
+1. **Increasing the volume in high-confidence breakouts:** When the model estimates a high winning probability ($\hat{p} \ge 0.60$ with heavy volume jump and controlled volatility), it increases the position volume by **1.2 times** (600,000 Tomans); As a result, gross profit jumps in Solana's +4.5% bullish waves.
+2. **Loss control in high-risk transactions (Low-Confidence Defense):** When a technical signal is issued but the probability of winning is borderline ($\hat{p} \approx 0.45 - 0.50$ due to the spread or high volatility), the position size is automatically reduced to **0.6 times** (300,000 Tomans); Therefore, when hitting the loss limit, the loss and friction imposed on the portfolio is 40% less.
+3. **Adherence to the risk limit:** Even in the maximum volume (600 thousand Tomans), the total capital exposed to the risk of the position constitutes a maximum of 12% of the total capital of the account and does not exceed the strict limits of risk management.
 
-### حکم نهایی ممیزی هوش مصنوعی: `PASS`
-فرضیه مزیت رقابتی هوش مصنوعی اثبات شد. مدل یادگیری ماشین کالیبره‌شده با رویکرد تنظیم شناور حجم (Dynamic Sizing)، سود سیستم را بیش از **۲۰،۰۰۰ تومان (+۳۱٪)** بهبود بخشیده و نرخ برد پنجره‌ها را به ۳۱.۰٪ رساند.
+### Artificial intelligence audit final verdict: ``PASS''
+The hypothesis of the competitive advantage of artificial intelligence was proved. The calibrated machine learning model with Dynamic Sizing approach has improved the system profit by more than **20,000 Tomans (+31%)** and brought the window win rate to 31.0%.

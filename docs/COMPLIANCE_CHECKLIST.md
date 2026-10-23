@@ -1,15 +1,15 @@
-# چک‌لیست حاکمیتی و تطبیق قوانین مسابقه (Compliance Checklist)
+# Compliance Checklist
 
-پیش از ارسال پروژه یا هرگونه اقدام معاملاتی، وضعیت تمامی موارد زیر باید بررسی و تایید شود:
+Before submitting the project or any transaction, the status of all the following items must be checked and confirmed:
 
-- [x] **عدم ارسال سفارش واقعی در فاز توسعه و تست:** تمام آزمایش‌ها در محیط شبیه‌ساز یا با داده‌های تاریخی انجام می‌گیرد.
-- [x] **حفظ محرمانگی کلیدهای دسترسی:** هیچ کلید API یا رمزی در کدها یا تاریخچه گیت کامیت نشده است.
-- [x] **استقلال کامل موتور ریسک:** موتور مدیریت ریسک اختیار کامل وتوی هرگونه خروجی مدل هوش مصنوعی را دارد.
-- [x] **محدودیت سقف سرمایه ۵ میلیون تومانی:** محاسبات ریسک بر مبنای اصل سرمایه ۵،۰۰۰،۰۰۰ تومانی پیکربندی شده است.
-- [x] **فیلتر بازارهای ممنوعه و فاقد نقدینگی:** بازارهای غیرمجاز یا با اسپرد بالا در `config/market_restrictions.json` مسدود شده‌اند.
-- [x] **مکانیزم تبدیل نهایی به تومان:** اسکریپت و ماژول خودکار بستن پوزیشن‌ها به تومان پیاده‌سازی شده است.
-- [x] **ثبت کامل لاگ تصمیمات (Audit Trail):** دلایل هر تصمیم (حتی عدم ورود) در فرمت JSONL ذخیره می‌شود.
-- [x] **آزمون‌های خودکار و ایزوله:** تست‌های واحد با Pytest و Mocking کامل انجام می‌شوند و به صرافی واقعی سفارش نمی‌فرستند.
-- [ ] **دریافت متن کامل بریف فارسی مسابقه از کاربر:** جهت بارگذاری لیست دقیق نمادهای غیرفعال حساب اعتباری.
-- [ ] **تاییدیه کتبی شرایط اعتبار ۵ میلیون تومانی:** استعلام وجود یا عدم وجود کارمزد شبانه تمدید اعتبار.
-- [ ] **مجوز صریح کاربر برای فعال‌سازی لایو:** سیستم تا زمان صدور دستور مستقیم در حالت شبیه‌سازی باقی خواهد ماند.
+- [x] **Not sending the actual order in the development and testing phase:** All tests are done in the simulator environment or with historical data.
+- [x] **Preservation of Access Keys Confidentiality:** No API keys or ciphers are committed in code or git history.
+- [x] **Complete independence of the risk engine:** The risk management engine has complete veto authority over any output of the artificial intelligence model.
+- [x] **Capital limit of 5 million Tomans:** Risk calculations are configured based on the principal capital of 5,000,000 Tomans.
+- [x] **Forbidden and illiquid markets filter:** Illegal or high spread markets are blocked in `config/market_restrictions.json`.
+- [x] **Final conversion mechanism to Tomans:** The script and automatic module for closing positions in Tomans have been implemented.
+- [x] **Complete decision log recording (Audit Trail):** The reasons for each decision (even non-entry) are stored in JSONL format.
+- [x] **Automated and Isolated Tests:** Unit tests are done with full Pytest and Mocking and do not send orders to the real exchange.
+- [ ] **Receive the full text of the Farsi competition brief from the user:** To load the detailed list of inactive credit account symbols.
+- [ ] **Written confirmation of credit conditions of 5 million tomans:** Inquiring about the presence or absence of overnight credit extension fees.
+- [ ] **Explicit permission of the user to activate live:** The system will remain in simulation mode until the direct command is issued.

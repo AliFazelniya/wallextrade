@@ -1,57 +1,57 @@
-# تعریف و پالایش جهان معاملاتی معتبر (Market Universe & Eligibility)
+# Defining and refining the valid trading universe (Market Universe & Eligibility)
 
-این سند فرآیند مهندسی، معیارها و نتایج پالایش نمادهای فعال در صرافی والکس را تشریح می‌کند.
-
----
-
-## ۱. روش‌شناسی پالایش نمادها (Filtering Methodology)
-
-از مجموع **۳۷۳ بازار فعال** در صرافی والکس، جهت انطباق با قوانین هکاتون، کنترل اسلیپیج و کاهش ریسک نقدشوندگی، فیلترهای سلسله‌مراتبی زیر اعمال شده است:
-
-```
-[ کل نمادهای والکس: ۳۷۳ ]
-       │
-       ▼  فیلتر ۱: جفت‌ارزهای با پایه تومان (Quote Asset == 'TMN')
-[ نمادهای تومانی: ۱۸۷ ]   ── (۱۸۶ نماد تتری موقتاً کنار گذاشته شد)
-       │
-       ▼  فیلتر ۲: عمق اردر بوک فعال و قیمت مظنه معتبر (Bid > 0, Ask > 0)
-[ نمادهای دارای دفتر سفارش زنده: ۱۶۶ ]
-       │
-       ▼  فیلتر ۳: حجم معاملات ۲۴ ساعته بیش از ۵ میلیارد تومان
-[ نمادهای با حجم نقدینگی بالا: ۲۴ ]
-       │
-       ▼  فیلتر ۴: حداکثر اسپرد مجاز عرضه و تقاضا کمتر از ۰.۳۵٪
-[ جهان معاملاتی نهایی مجاز: ۱۳ نماد ]
-```
+This document describes the engineering process, criteria and results of refining active symbols on the Wallex exchange.
 
 ---
 
-## ۲. فهرست نمادهای منتخب در جهان مجاز (`allowed_markets.json`)
+## 1. Filtering Methodology
 
-نمادهای زیر به عنوان کاندیداهای اصلی برای رصد و اجرای معاملات انتخاب شده‌اند:
+From a total of **373 active markets** in the Wallex exchange, in order to comply with the hackathon rules, control slippage and reduce liquidity risk, the following hierarchical filters have been applied:
 
-| نماد | نام فارسی | حجم ۲۴ ساعته (تومان) | اسپرد (Spread) | پشتیبانی از سفارش Market | وضعیت اعتبارسنجی |
+```
+[ All Wallex symbols: 373 ]
+       │
+       ▼  Filter 1: Toman-based currency pairs (Quote Asset == 'TMN')
+[ Toman symbols: 187 ]   ── (186 Tetri symbols have been temporarily removed)
+       │
+       ▼  Filter 2: Active order book depth and valid quote price (Bid > 0, Ask > 0)
+[ Icons with live order book: 166 ]
+       │
+       ▼  Filter 3: The volume of 24-hour transactions is more than 5 billion tomans
+[ Symbols with high liquidity: 24 ]
+       │
+       ▼  Filter 4: The maximum allowed spread of supply and demand is less than 0.35%.
+[ The final authorized trading world: 13 symbols ]
+```
+
+---
+
+## 2. List of selected symbols in the allowed world (`allowed_markets.json`)
+
+The following symbols have been selected as prime candidates for monitoring and executing trades:
+
+| Symbol | Persian name 24-hour volume (tomans) | Spread | Market order support Validation status
 |---|---|---|---|---|---|
-| **USDTTMN** | تتر - تومان | ۲۳۵.۷۸ میلیارد | ۰.۰۲٪ | بله | تایید شده |
-| **BTCTMN** | بیت‌کوین - تومان | ۱۱۳.۸۱ میلیارد | ۰.۰۰٪ | بله | تایید شده |
-| **ETHTMN** | اتریوم - تومان | ۷۶.۹۳ میلیارد | ۰.۰۰٪ | بله | تایید شده |
-| **XAUTTMN** | طلای تتر - تومان | ۳۳.۵۱ میلیارد | ۰.۰۳٪ | بله | تایید شده |
-| **PEPETMN** | پپه - تومان | ۱۲۳.۴۹ میلیارد | ۰.۰۴٪ | خیر (فقط Limit) | تایید شده |
-| **PUMPTMN** | پامپ - تومان | ۹۰.۳۴ میلیارد | ۰.۰۸٪ | خیر (فقط Limit) | تایید شده |
-| **USOONTMN** | یوسون - تومان | ۷۱.۹۱ میلیارد | ۰.۲۱٪ | خیر (فقط Limit) | تایید شده |
-| **BNBTMN** | بایننس کوین - تومان | ۵۵.۱۷ میلیارد | ۰.۳۱٪ | خیر (فقط Limit) | تایید شده |
-| **DOGETMN** | دوج‌کوین - تومان | ۴۰.۵۱ میلیارد | ۰.۱۵٪ | خیر (فقط Limit) | تایید شده |
-| **XRPTMN** | ریپل - تومان | ۳۶.۹۰ میلیارد | ۰.۰۰٪ | خیر (فقط Limit) | تایید شده |
-| **SOLTMN** | سولانا - تومان | ۲۹.۰۶ میلیارد | ۰.۱۹٪ | خیر (فقط Limit) | تایید شده |
-| **TRXTMN** | ترون - تومان | ۱۲.۶۴ میلیارد | ۰.۱۶٪ | خیر (فقط Limit) | تایید شده |
-| **SUITMN** | سویی - تومان | ۸.۳۶ میلیارد | ۰.۲۴٪ | خیر (فقط Limit) | تایید شده |
+| **USDTTMN** | Tether - Toman | 235.78 billion 0.02% | Yes Confirmed
+| **BTCTMN** | Bitcoin - Toman | 113.81 billion 0.00% | Yes Confirmed
+| **ETHTMN** | Ethereum - Toman | 76.93 billion 0.00% | Yes Confirmed
+| **XAUTTMN** | Tether gold - Toman | 33.51 billion 0.03% | Yes Confirmed
+| **PEPETMN** | Pepe - Toman 123.49 billion 0.04% | No (Limit only) | Confirmed
+| **PUMPTMN** | Pump - toman | 90.34 billion 0.08% | No (Limit only) | Confirmed
+| **USOONTMN** | Yusun - Toman | 71.91 billion 0.21% | No (Limit only) | Confirmed
+| **BNBTMN** | Binance Coin - Toman | 55.17 billion 0.31% | No (Limit only) | Confirmed
+| **DOGETMN** | Dogecoin - Toman 40.51 billion 0.15% No (Limit only) | Confirmed
+| **XRPTMN** | Ripple - Toman | 36.90 billion 0.00% | No (Limit only) | Confirmed
+| **SOLTMN** | Solana - Toman 29.06 billion 0.19% No (Limit only) | Confirmed
+| **TRXTMN** | Tron - Toman 12.64 billion 0.16% | No (Limit only) | Confirmed
+| **SUITMN** | Sui - Toman 8.36 billion 0.24% | No (Limit only) | Confirmed
 
 ---
 
-## ۳. بازارهای کنار گذاشته شده و استثنائات (`market_restrictions.json`)
+## 3. Excluded Markets and Exceptions (`market_restrictions.json`)
 
-۱. **جفت‌ارزهای تتری (`*USDT`):** کلیه ۱۸۶ نماد به دلیل اضافه شدن ریسک نرخ ارز و کارمزد مضاعف خرید تتر فعلاً از جهان معاملاتی کنار گذاشته شدند.
-۲. **بازارهای دارای اسپرد عریض (`Spread > 0.35%`):** نمادهایی مانند `ZECTMN` (اسپرد ۰.۹۵٪)، `DASHTMN` (اسپرد ۰.۳۶٪)، `STMN` (اسپرد ۰.۶۴٪) و `XMRTMN` (اسپرد ۰.۶۳٪) به دلیل احتمال بالای لغزش قیمت فیلتر شدند.
-۳. **بازارهای غیرفعال در حساب اعتباری هکاتون:** این لیست به محض ارائه متن کامل بریف توسط کاربر در آرایه `credit_account_inactive_symbols` بارگذاری و مسدود خواهد شد.
+1. **Tether currency pairs (`*USDT'):** All 186 symbols have been excluded from the trading world for the time being due to the added exchange rate risk and the double fee of buying Tether.
+2. **Markets with wide spreads (`Spread > 0.35%'):** Symbols such as `ZECTMN' (spread 0.95%), `DASHTMN' (spread 0.36%), `STMN' (spread 0.64%) and `XMRTMN' (spread 0.63%) were filtered out due to high probability of price slippage.
+3. **Inactive markets in Hackathon credit account:** This list will be loaded and blocked as soon as the user provides the full text of the brief in the `credit_account_inactive_symbols' array.
 
-هیچ نمادی تا زمان تطبیق با آخرین لیست محدودیت‌ها قابل معامله نخواهد بود.
+No symbol will be tradable until it conforms to the latest list of restrictions.

@@ -1,128 +1,128 @@
-# بسته جامع نهایی تحویل مسابقه و بیانیه آمادگی فاز ۱۷
+# The final comprehensive package for the delivery of the competition and the preparation statement for phase 17
 # Phase 17 Final Competition Readiness Package & Go/No-Go Decision
 
-> **تاریخ گزارش:** ۲۲ اکتبر ۲۰۲۶ (۱ آبان ۱۴۰۵)  
-> **نسخه نرم‌افزار:** `v0.9.0-phase17-submission`  
-> **وضعیت نهایی تصمیم‌گیری:**  
-> ### **🟢 TECHNICAL GO, 🟡 ORGANIZER CONFIRMATION PENDING**  
-> *(آمادگی کامل و ۱۰۰٪ فنی | در انتظار دریافت تاییدیه‌های رسمی برگزارکنندگان)*
+> **Report date:** October 22, 2026 (November 1, 1405)  
+> **Software version:** `v0.9.0-phase17-submission`  
+> **Final state of decision making:**  
+> ### ** 🟢 TECHNICAL GO, 🟡 ORGANIZER CONFIRMATION PENDING**  
+> *(Full preparation and 100% technical | Waiting for the official approvals of the organizers)*
 
 ---
 
-## ۱. بیانیه رسمی وضعیت نهایی (Executive Final Decision)
+## 1. Official statement of the final situation (Executive Final Decision)
 
-تیم مهندسی و پژوهش کمی، پس از اجرای ۱۸ فاز فشرده توسعه (فاز ۰ تا فاز ۱۷)، بدین‌وسیله وضعیت نهایی سامانه معاملات الگوریتمی مسابقه استارکوچ × والکس را رسماً اعلام می‌دارد:
+The quantitative research and engineering team, after implementing 18 intensive phases of development (phase 0 to phase 17), hereby officially announces the final status of the algorithmic trading system of the Starcoch x Wallex competition:
 
 ```mermaid
 flowchart TD
-    A["ارزیابی فنی ۱۰۰٪ موفق\n(۶۰ تست پاس، پوشش ۸۱٪، مانور سایه موفق)\nوضعیت: TECHNICAL GO ✅"] --> C{"موانع بیرونی برگزارکننده\n(B-01 تا B-05)"}
-    B["امنیت سرمایه و گیت نرم‌افزاری سطح کد\nlive_execution_authorized=False 🔒"] --> C
-    C -- "در انتظار دریافت زمان، کلید و تاییدیه" --> D["وضعیت نهایی مصوب:\nTECHNICAL GO, ORGANIZER CONFIRMATION PENDING 🟡"]
-    D --> E["مرحله بعد:\nاقدام اپراتور انسانی برای استعلام\nو بازبینی نهایی پیش از لایو"]
+    A["100% successful technical evaluation\n(60 pass tests, 81% coverage, successful shadow maneuver)\nStatus: TECHNICAL GO ✅"] --> C{"External obstacles of the organizer\n(B-01 to B-05)"}
+    B["Capital security and code level software gate\nlive_execution_authorized=False 🔒"] --> C
+    C -- "Waiting for time, key and confirmation" --> D["Approved final status:\nTECHNICAL GO, ORGANIZER CONFIRMATION PENDING 🟡"]
+    D --> E["Next step:\nHuman operator action to query\nand final review before live"]
 ```
 
-### ۱.۱. چرا وضعیت «TECHNICAL GO» است؟
-- تمامی ماژول‌های فنی شامل دریافت بلادرنگ و افزایشی داده، محاسبه شاخص‌ها، طبقه‌بندی هوشمند رژیم بازار با هوش مصنوعی، استراتژی منجمد مومنتوم رژیمی، موتور ریسک چندلایه، آداپتور ارسال سفارش، حسابداری دقیق و مدیریت خطاها پیاده‌سازی و تست شده‌اند.
-- **۶۰ تست خودکار از ۶۰ تست** با موفقیت ۱۰۰٪ پاس شدند و پوشش کد به **۸۱٪** رسید.
-- مانیفست استراتژی منجمد با هش رمزنگاری SHA-256 فریز گردیده است.
-- مدل‌سازی کارمزد مِیکر (۰.۲۵٪) و تیکر (۰.۳۰٪)، اسلیپیج (۰.۱۵٪) و گیت اسپرد (۰.۲۰٪) با موفقیت ممیزی و راستی‌آزمایی شد.
+### 1.1. Why is the status "TECHNICAL GO"?
+- All technical modules, including real-time and incremental data acquisition, index calculation, intelligent market regime classification with artificial intelligence, frozen regime momentum strategy, multilayer risk engine, order sending adapter, accurate accounting and error management have been implemented and tested.
+- **60 automated tests out of 60** passed with 100% success and the code coverage reached **81%**.
+- The frozen strategy manifest is frozen with SHA-256 cryptographic hash.
+- Maker (0.25%) and taker (0.30%), slippage (0.15%) and gate spread (0.20%) modeling fees were successfully audited and verified.
 
-### ۱.۲. چرا وضعیت «ORGANIZER CONFIRMATION PENDING» است؟
-- تاریخ و ساعت تقویمی دقیق شروع و پایان مسابقه (B-01 و B-02) در دسترس عمومی نبوده و منوط به اعلام اختصاصی برگزارکننده است.
-- مشخصات و کلیدهای API حساب مسابقه والکس (B-03 و B-04) هنوز تحویل داده نشده است.
-- تاییدیه مکتوب شرایط تمدید اعتبار و معافیت از کارمزد شبانه (B-05) به صورت رسمی صادر نشده است.
-- مطابق منشور ایمنی، سیستم به صورت **قفل در وضعیت ایمن (Fail-Closed)** باقی می‌ماند و ارسال سفارشات زنده منوط به تایید انسانی خواهد بود.
-
----
-
-## ۲. چک‌لیست اقلام تحویلی نهایی (Competition Deliverables Package)
-
-تمامی مستندات، سورس‌کدها و ابزارهای لازم برای ارزیابی داوران در مخزن سازمان‌دهی شدند:
-
-### ۲.۱. سورس‌کد و معماری نرم‌افزار (`src/`):
-- [x] [`src/agents/regime_agent.py`](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py): ایجنت هوشمند تشخیص رژیم با اسکیماهای ساختاریافته Pydantic و فال‌بک دتر مینیستیک.
-- [x] [`src/strategy/regime_momentum.py`](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py): استراتژی مومنتوم فریز‌شده با حد سود ۳.۵٪، حد ضرر ۲.۰٪ و حداقل ضریب اطمینان ۷۰٪.
-- [x] [`src/risk/engine.py`](file:///root/starcoach-hack/wallex/src/risk/engine.py): موتور ریسک چندلایه با سقف سفارش ۵۰۰ هزار تومان، سقف پوزیشن ۶۰٪، دراوداون ۵٪ و گیت اسپرد ۰.۲۰٪.
-- [x] [`src/exchange/adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py): آداپتور مقاوم اجرای سفارشات با گیت پیش از سفارش، جلوگیری از سفارش تکراری و تفکیک خودکار Maker/Taker.
-- [x] [`src/portfolio/accounting.py`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py): حسابداری دقیق پرتفوی، ثبت سود خالص و ناخالص، تفکیک کارمزد و تسویه نهایی به تومان.
-- [x] [`src/data/fetcher.py`](file:///root/starcoach-hack/wallex/src/data/fetcher.py): کلاینت دریافت دیتای UDF و دانلود افزایشی بدون تاخیر شبکه.
-
-### ۲.۲. فایل‌های پیکربندی و انجماد (`config/`):
-- [x] [`config/frozen_strategy_manifest_v0.6.0.json`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json): مانیفست رسمی استراتژی منجمد.
-  - **هش SHA-256 مانیفست:** `249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66`
-- [x] [`config/market_restrictions.json`](file:///root/starcoach-hack/wallex/config/market_restrictions.json): رجیستر ۳۵۷ نماد مسدود، شامل ۲۱ نماد مسابقه، ارزهای کم‌نقدینگی و جفت‌ارزهای تتر.
-- [x] [`config/allowed_markets.json`](file:///root/starcoach-hack/wallex/config/allowed_markets.json): فهرست مجاز نمادهای تومانی پرنقدینگی تحت نظارت.
-- [x] [`config/settings.yaml`](file:///root/starcoach-hack/wallex/config/settings.yaml): تنظیمات پایه سرمایه (۵ میلیون تومان)، کارمزدها و پارامترهای موتور ریسک.
-
-### ۲.۳. مستندات راهبردی و فنی (`docs/`):
-- [x] [`docs/ORGANIZER_BLOCKER_REQUEST_FA.md`](file:///root/starcoach-hack/wallex/docs/ORGANIZER_BLOCKER_REQUEST_FA.md): نامه رسمی فارسی جهت استعلام و رفع موانع B-01 تا B-05.
-- [x] [`docs/PHASE17_EXECUTION_COST_AUDIT.md`](file:///root/starcoach-hack/wallex/docs/PHASE17_EXECUTION_COST_AUDIT.md): ممیزی جامع کارمزد مِیکر/تیکر، اسلیپیج و رفتار گیت اسپرد.
-- [x] [`docs/COMPETITION_RUNBOOK.md`](file:///root/starcoach-hack/wallex/docs/COMPETITION_RUNBOOK.md): راهنمای گام‌به‌گام عملیات رقابت، دستورالعمل استقرار، واکنش به حادثه و مانیتورینگ.
-- [x] [`docs/DEMO_SCRIPT.md`](file:///root/starcoach-hack/wallex/docs/DEMO_SCRIPT.md): سناریوی ویدیوی پرزنت دمو ۵ دقیقه‌ای برای داوران هکاتون.
-- [x] [`docs/COMPLIANCE_MATRIX.md`](file:///root/starcoach-hack/wallex/docs/COMPLIANCE_MATRIX.md): ماتریس ممیزی‌شده انطباق فنی با قوانین مسابقه (REQ-01 تا REQ-18).
-- [x] گزارش‌های ممیزی کمی و علمی P&L فازهای ۱۲، ۱۳، ۱۴ و ۱۵.
-
-### ۲.۴. آزمون‌های خودکار و نتایج پوشش کد (`tests/`):
-- [x] ۶۰ تست آزمون نرم‌افزار در قالب ۹ ماژول مجزا.
-- [x] پوشش کد کل پروژه: **۸۱٪**.
+### 1.2. Why is the status "ORGANIZER CONFIRMATION PENDING"?
+- The exact calendar date and time of the start and end of the competition (B-01 and B-02) are not publicly available and are subject to the exclusive announcement of the organizer.
+- The details and API keys of Wallex racing account (B-03 and B-04) have not yet been delivered.
+- Written confirmation of credit extension conditions and exemption from overnight fee (B-05) has not been officially issued.
+- According to the safety charter, the system remains **locked in a safe state (Fail-Closed)** and the sending of live orders will be subject to human approval.
 
 ---
 
-## ۳. آخرین وضعیت موانع پنج‌گانه مسابقه (Blockers Register B-01 to B-05)
+## 2. Checklist of final deliverables (Competition Deliverables Package)
 
-| شناسه | عنوان مانع | وضعیت فعلی | اقدام انجام‌شده در فاز ۱۷ | اقدام عملیاتی بعدی |
+All the documentation, source codes and tools necessary for the evaluation of the judges were organized in the repository:
+
+### 2.1. Source code and software architecture (`src/`):
+- [x] [`src/agents/regime_agent.py`](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py): Smart regime detection agent with structured Pydantic schemas and ministic deterrent fallback.
+- [x] [`src/strategy/regime_momentum.py`](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py): Frozen momentum strategy with 3.5% profit limit, 2.0% loss limit and 70% minimum confidence factor.
+- [x] [`src/risk/engine.py`](file:///root/starcoach-hack/wallex/src/risk/engine.py): Multi-layer risk engine with order limit of 500 thousand tomans, position limit of 60%, drawdown of 5% and gate spread of 0.20%.
+- [x] [`src/exchange/adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py): Robust order execution adapter with pre-order gate, duplicate order prevention and automatic Maker/Taker separation.
+- [x] [`src/portfolio/accounting.py`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py): Accurate portfolio accounting, net and gross profit registration, separation of fees and final settlement in Tomans.
+- [x] [`src/data/fetcher.py`](file:///root/starcoach-hack/wallex/src/data/fetcher.py): UDF data receiving client and incremental download without network delay.
+
+### 2.2. Configuration and freezing files (`config/`):
+- [x] [`config/frozen_strategy_manifest_v0.6.0.json`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json): The official Frozen Strategy manifest.
+  - **SHA-256 hash of manifest:** `249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66`
+- [x] [`config/market_restrictions.json`](file:///root/starcoach-hack/wallex/config/market_restrictions.json): Registry of 357 blocked symbols, including 21 race symbols, cryptocurrencies and Tether currency pairs.
+- [x] [`config/allowed_markets.json`](file:///root/starcoach-hack/wallex/config/allowed_markets.json): Allowed list of supervised high liquidity tokens.
+- [x] [`config/settings.yaml`](file:///root/starcoach-hack/wallex/config/settings.yaml): basic capital settings (5 million Tomans), fees and risk engine parameters.
+
+### 2.3. Strategic and technical documentation (`docs/`):
+- [x] [`docs/ORGANIZER_BLOCKER_REQUEST_FA.md`](file:///root/starcoach-hack/wallex/docs/ORGANIZER_BLOCKER_REQUEST_FA.md): Official Persian letter to inquire and remove obstacles B-01 to B-05.
+- [x] [`docs/PHASE17_EXECUTION_COST_AUDIT.md`](file:///root/starcoach-hack/wallex/docs/PHASE17_EXECUTION_COST_AUDIT.md): Comprehensive audit of maker/taker fees, slippage and gate spread behavior.
+- [x] [`docs/COMPETITION_RUNBOOK.md`](file:///root/starcoach-hack/wallex/docs/COMPETITION_RUNBOOK.md): Step-by-step guide to competition operations, deployment instructions, incident response and monitoring.
+- [x] [`docs/DEMO_SCRIPT.md`](file:///root/starcoach-hack/wallex/docs/DEMO_SCRIPT.md): 5 minute demo presentation video scenario for hackathon judges.
+- [x] [`docs/COMPLIANCE_MATRIX.md`](file:///root/starcoach-hack/wallex/docs/COMPLIANCE_MATRIX.md): Audited matrix of technical compliance with competition rules (REQ-01 to REQ-18).
+- [x] Quantitative and scientific audit reports of P&L phases 12, 13, 14 and 15.
+
+### 2.4. Automated tests and code coverage results (`tests/`):
+- [x] 60 software tests in the form of 9 separate modules.
+- [x] Code coverage of the entire project: **81%**.
+
+---
+
+## 3. The last status of the five obstacles of the competition (Blockers Register B-01 to B-05)
+
+| ID Obstacle title Current status The action taken in phase 17 Next operational action
 |---|---|---|---|---|
-| **B-01** | تاریخ و ساعت دقیق تقویمی شروع مسابقه | 🟡 در انتظار پاسخ دبیرخانه | تنظیم نامه استعلام رسمی در `docs/ORGANIZER_BLOCKER_REQUEST_FA.md` | ارسال نامه توسط اپراتور انسانی به دبیرخانه استارکوچ |
-| **B-02** | ددلاین قطعی ارسال و پایان معاملات | 🟡 در انتظار پاسخ دبیرخانه | گنجاندن در نامه رسمی استعلام | استعلام رسمی و تنظیم تایمر تسویه به تومان بر مبنای ساعت اعلامی |
-| **B-03** | شناسه حساب مسابقه و شارژ ۵ میلیون تومان | 🟡 در انتظار اقدام والکس | گنجاندن در استعلام رسمی؛ تست تطبیق موجودی در کلاینت آماده است | دریافت مشخصات حساب از والکس و اجرای متد تطبیق |
-| **B-04** | صدور کلیدهای API و تست فقط-خواندنی | 🟡 در انتظار صدور کلید | سناریوی اعتبارسنجی فقط-خواندنی کدنویسی شده است | قراردادن کلیدها در `.env` و اجرای تست خواندن تراز موجودی |
-| **B-05** | تاییدیه کتبی معافیت از کارمزد شبانه اعتبار | 🟡 در انتظار تایید مکتوب | درخواست تاییدیه رسمی در استعلام نامه | دریافت تاییدیه مکتوب از واحد مالی مسابقه |
+| **B-01** | The exact date and time of the start of the competition Waiting for the response from the secretariat Setting up the official inquiry letter in `docs/ORGANIZER_BLOCKER_REQUEST_FA.md` Send a letter by a human operator to the secretariat of Starkoch
+| **B-02** | Definite deadline for sending and ending transactions Waiting for the response from the secretariat Inclusion in the official letter of inquiry Official inquiry and setting the settlement timer in Tomans based on the announced time
+| **B-03** | Match account ID and charge 5 million tomans 🟡 Waiting for Valax's action inclusion in the official inquiry; The balance matching test is ready in the client Receive the account details from Wallex and execute the matching method
+| **B-04** | Issuance of API keys and read-only testing 🟡 Waiting for key issuance The read-only validation scenario is coded Putting the keys in `.env` and running the balance reading test
+| **B-05** | Written confirmation of exemption from credit night fee Awaiting written confirmation Request for official confirmation in the inquiry letter Receive written confirmation from the financial unit of the competition
 
 ---
 
-## ۴. پروتکل انتقال از حالت انتظار به معامله زنده (Go-Live Transition Protocol)
+## 4. Go-Live Transition Protocol
 
-پس از رفع موانع فوق توسط برگزارکنندگان، راهبر انسانی باید پروتکل ۴ مرحله‌ای زیر را به دقت اجرا نماید:
+After removing the above obstacles by the organizers, the human guide must carefully implement the following 4-step protocol:
 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor Operator as راهبر انسانی تیم
-    participant Organizer as دبیرخانه استارکوچ / والکس
-    participant Env as محیط و فایل .env
+    actor Operator as The human leader of the team
+    participant Organizer as Starcoch / Wallex Secretariat
+participant Env as environment and .env file
     participant Adapter as ExchangeAdapter
-    participant Market as صرافی والکس
+    participant Market as Wallex exchange
 
-    Operator->>Organizer: ارسال نامه docs/ORGANIZER_BLOCKER_REQUEST_FA.md
-    Organizer-->>Operator: اعلام تقویم مسابقه، کلیدهای API و تاییدیه معافیت
-    Operator->>Env: ثبت کلیدها در .env (WALLEX_API_KEY)
-    Operator->>Adapter: اجرای اسکریپت تست فقط-خواندنی (Read-Only Balance Check)
-    Adapter->>Market: استعلام موجودی (GET /v1/account/balances)
-    Market-->>Adapter: تایید تراز ۵,۰۰۰,۰۰۰ تومان
-    Operator->>Adapter: تنظیم دستی live_execution_authorized=True
-    Adapter->>Market: آغاز اجرای حلقه معاملات زنده
+    Operator->>Organizer: send letter docs/ORGANIZER_BLOCKER_REQUEST_FA.md
+    Organizer-->>Operator: Announcing the competition calendar, keys API and exemption confirmation
+    Operator->>Env: Register keys in .env (WALLEX_API_KEY)
+    Operator->>Adapter: Run a read-only test script (Read-Only Balance Check)
+    Adapter->>Market: Inventory inquiry (GET /v1/account/balances)
+    Market-->>Adapter: Balance confirmation of 5,000,000 tomans
+    Operator->>Adapter: Manual adjustment live_execution_authorized=True
+    Adapter->>Market: The start of the live trading ring
 ```
 
-1. **گام اول — ارسال استعلام:** راهبر انسانی متن نامه [`docs/ORGANIZER_BLOCKER_REQUEST_FA.md`](file:///root/starcoach-hack/wallex/docs/ORGANIZER_BLOCKER_REQUEST_FA.md) را از طریق پنل کاربری یا پشتیبانی مسابقه ارسال می‌نماید.
-2. **گام دوم — دریافت اطلاعات و تزریق به محیط:** به محض دریافت کلیدها، متغیرهای `WALLEX_API_KEY` در فایل محلی `.env` مقداردهی می‌شوند (هرگز در گیت کامیت نمی‌شوند).
-3. **گام سوم — اعتبارسنجی فقط-خواندنی (Read-Only Test):** اسکریپت استعلام موجودی اجرا شده و تطبیق تراز ۵ میلیون تومان تایید می‌گردد.
-4. **گام چهارم — تایید نهایی انسانی (Human Authorization Review):** راهبر ارشد با اطمینان از سلامت شاخص‌های زنده بازار و اسپردهای زیر ۰.۲۰٪، پرچم `live_execution_authorized=True` را فعال کرده و ربات را در حالت لایو استارت می‌زند.
+1. **Step 1 — Send a request:** The human coach sends the text of the letter [`docs/ORGANIZER_BLOCKER_REQUEST_FA.md`](file:///root/starcoach-hack/wallex/docs/ORGANIZER_BLOCKER_REQUEST_FA.md) through the user panel or support of the match.
+2. **Step 2 — Get information and inject into the environment:** As soon as the keys are received, the `WALLEX_API_KEY` variables are initialized in the local `.env` file (never committed in git).
+3. **The third step - read-only validation (Read-Only Test):** The balance query script is executed and the adjustment of the balance of 5 million Tomans is confirmed.
+4. **Step 4 - Human Authorization Review:** After making sure the health of the live market indicators and spreads below 0.20%, the senior manager activates the `live_execution_authorized=True' flag and starts the robot in live mode.
 
 ---
 
-## ۵. دستورات بازتولید و راستی‌آزمایی (Reproducibility & Verification)
+## 5. Reproducibility & Verification instructions
 
-تمامی نتایج فوق با دستورات استاندارد زیر در محیط پروژه قابل بازتولید ۱۰۰٪ هستند:
+All the above results are 100% reproducible with the following standard commands in the project environment:
 
 ```bash
-# ۱. اجرای کامل سوئیت تست‌های خودکار و مشاهده پوشش کد
+# 1. Full execution of automated tests suite and code coverage viewing
 .venv/bin/pytest --cov=src tests/
 
-# ۲. راستی‌آزمایی هش مانیفست استراتژی منجمد
+# 2. Freeze strategy manifest hash verification
 sha256sum config/frozen_strategy_manifest_v0.6.0.json
-# خروجی مورد انتظار:
+# Expected output:
 # 249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66
 
-# ۳. اجرای مانور تست در سایه بر روی داده‌های زنده والکس (حالت ایمن بدون معامله واقعی)
+# 3. Running test maneuver in the shadow on Wallex live data (safe mode without real transaction)
 .venv/bin/python scripts/run_shadow.py --symbol BTCTMN --cycles 5
 ```

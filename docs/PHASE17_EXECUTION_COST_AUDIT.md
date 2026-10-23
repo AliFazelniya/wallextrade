@@ -1,135 +1,133 @@
-# ممیزی ساختاری هزینه‌های اجرا، کارمزد مِیکر/تیکر و رفتار گیت اسپرد
+# Structural audit of execution costs, maker/taker fees and gate spread behavior
 # Phase 17 Execution Cost, Maker/Taker Modeling & Spread-Gate Audit
 
-> **تاریخ تنظیم:** ۲۲ اکتبر ۲۰۲۶ (۱ آبان ۱۴۰۵)  
-> **نسخه نرم‌افزار:** `v0.8.0-phase16-audited`  
-> **ماژول‌های مورد ممیزی:**  
-> - [`src/portfolio/accounting.py`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py) (موتور حسابداری و کارمزد)  
-> - [`src/exchange/adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py) (آداپتور ارسال سفارش و طبقه‌بندی مِیکر/تیکر)  
-> - [`src/backtest/engine.py`](file:///root/starcoach-hack/wallex/src/backtest/engine.py) (موتور شبیه‌سازی تک‌نماد)  
-> - [`src/backtest/portfolio_engine.py`](file:///root/starcoach-hack/wallex/src/backtest/portfolio_engine.py) (موتور شبیه‌سازی پورتفولیو مشترک)  
-> - [`src/risk/engine.py`](file:///root/starcoach-hack/wallex/src/risk/engine.py) (گیت‌های ریسک و فیلتر اسپرد)
+> **Setting date:** October 22, 2026 (November 1, 1405)  
+> **Software version:** `v0.8.0-phase16-audited`  
+> **Modules to be audited:**  
+> - [`src/portfolio/accounting.py`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py) (Accounting and Fee Engine)  
+> - [`src/exchange/adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py) (Adapter for submitting orders and classifying maker/taker)  
+> - [`src/backtest/engine.py`](file:///root/starcoach-hack/wallex/src/backtest/engine.py) (single icon simulation engine)  
+> - [`src/backtest/portfolio_engine.py`](file:///root/starcoach-hack/wallex/src/backtest/portfolio_engine.py) (Common Portfolio Simulation Engine)  
+> - [`src/risk/engine.py`](file:///root/starcoach-hack/wallex/src/risk/engine.py) (risk gates and spread filter)
 
 ---
 
-## ۱. جدول مرجع کارمزد و هزینه‌های معاملاتی صرافی والکس
+## 1. Reference table of fees and transaction costs of Wallex exchange
 
-بر اساس جدول رسمی سطح ۱ معاملات تومانی صرافی والکس و الزامات ممیزی فاز ۱۷، ضرایب مالی زیر در کل سیستم تثبیت شده‌اند:
+Based on the official level 1 table of Toman transactions of Wallex exchange and the requirements of phase 17 audit, the following financial coefficients have been established in the entire system:
 
-| مولفه هزینه | درصد اعمالی | نرخ اعشاری | نحوه مدل‌سازی در سیستم |
+| Cost component Applied percentage Decimal rate How to model in the system
 |---|---|---|---|
-| **کارمزد سفارش‌گذار (Maker Fee)** | ۰.۲۵٪ | `0.0025` | بر روی سفارش‌های غیرفعال (Passive Limit) که در دفتر سفارش قرار می‌گیرند و نقدینگی اضافه می‌کنند. |
-| **کارمزد سفارش‌بردار (Taker Fee)** | ۰.۳۰٪ | `0.0030` | بر روی سفارش‌های تهاجمی (Marketable Orders) که اسپرد را شکسته و نقدینگی برمی‌دارند. |
-| **اسلیپیج نامساعد (Adverse Slippage)** | ۰.۱۵٪ | `0.0015` | جابه‌جایی قیمت اجرای سفارش نسبت به قیمت هدف در ورود و خروج تهاجمی. |
-| **سقف اسپرد مجاز (Max Spread Gate)** | ۰.۲۰٪ | `0.0020` | حداکثر فاصله مجاز قیمت خرید و فروش در دفتر سفارش؛ بالاتر از این مقدار معامله وتو می‌شود. |
+| **Maker Fee** | 0.25% `0.0025` | On passive orders (Passive Limit) that are placed in the order book and add liquidity. |
+| **Taker Fee** | 0.30% `0.0030` On aggressive orders (Marketable Orders) that break the spread and take away liquidity. |
+| **Adverse Slippage** | 0.15% `0.0015` | Movement of the execution price of the order relative to the target price in aggressive entry and exit. |
+| **Max Spread Gate** | 0.20% `0.0020` | the maximum allowed distance between the buying and selling prices in the order book; Above this value, the transaction will be vetoed. |
 
 ---
 
-## ۲. ممیزی تفکیک سفارش‌گذار (Maker) و سفارش‌بردار (Taker) در آداپتور اجرا
+## 2. Auditing the separation of the maker and the taker in the execution adapter
 
-یکی از ممیزی‌های الزامی فاز ۱۷ اطمینان از این بود که سفارش‌های لیمیت به صورت خودکار به عنوان Maker قلمداد نشوند، زیرا سفارش لیمیتی که با قیمتی بالاتر از بهترین مظنه فروش (برای خرید) یا پایین‌تر از بهترین مظنه خرید (برای فروش) ثبت شود، بلافاصله اجرا شده و Taker محسوب می‌شود.
+One of the required audits of Phase 17 was to ensure that limit orders are not automatically considered Makers, as a limit order placed at a price above the best bid (to buy) or below the best bid (to sell) is immediately executed and considered a Taker.
 
-### ۲.۱. منطق تفکیک در آداپتور اجرا ([`src/exchange/adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py)):
-در تابع `execute_order`، پارامتر `is_maker` به صورت خودکار با قاعده ریاضی زیر تعیین می‌گردد:
+### 2.1. Split logic in the implementation adapter ([`src/exchange/adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py)):
+In the ``execute_order'' function, the ``is_maker'' parameter is automatically determined by the following mathematical rule:
 
 ```python
 if is_maker is None:
   if order_type.upper() == "MARKET":
     resolved_is_maker = False
   elif action == ActionType.BUY and self.slippage_pct > 0:
-    # سفارش خرید تهاجمی که اسپرد را رد کرده و به مظنه فروش نفوذ می‌کند
+    # An aggressive buy order that negates the spread and penetrates the sell price
     resolved_is_maker = False
   elif action == ActionType.SELL and self.slippage_pct > 0:
-    # سفارش فروش تهاجمی که اسپرد را رد کرده و به مظنه خرید نفوذ می‌کند
+    # Aggressive sell order that negates the spread and penetrates the buy quote
     resolved_is_maker = False
   else:
-    # سفارش لیمیت پسیو بدون اسلیپیج که در اوردر بوک منتظر می‌نشیند
+    # Passive limit order without slippage waiting in the order book
     resolved_is_maker = True
 else:
   resolved_is_maker = is_maker
 ```
 
-این متغیر مستقیماً به `portfolio.record_fill(..., is_maker=resolved_is_maker)` تحویل داده می‌شود. این قاعده با تست خودکار [`test_adapter_maker_taker_fee_classification`](file:///root/starcoach-hack/wallex/tests/test_exchange_adapter.py#L240) اعتبارسنجی شده و تایید گردید.
+This variable is passed directly to `portfolio.record_fill(..., is_maker=resolved_is_maker)`. This rule was validated and confirmed with the automatic test [`test_adapter_maker_taker_fee_classification`](file:///root/starcoach-hack/wallex/tests/test_exchange_adapter.py#L240).
 
 ---
 
-## ۳. تحلیل ریاضی اصطکاک رفت‌وبرگشت (Round-Trip Drag Breakdown)
+## 3. Mathematical Analysis of Round-Trip Drag Breakdown
 
-برای ارزیابی دقیق سودآوری استراتژی، هزینه‌های رفت و برگشت به تفکیک سناریوهای مختلف خروج محاسبه گردید:
+To accurately assess the profitability of the strategy, round trip costs were calculated separately for different exit scenarios:
 
 ```mermaid
 flowchart TD
-    A["ورود به موقعیت (BUY)\nاسلیپیج ۰.۱۵٪ + کارمزد تیکر ۰.۳۰٪\nهزینه ورود: ۰.۴۵٪"] --> B{"سناریوی خروج\n(Exit Scenario)"}
-    B -- "حد سود (Take Profit)\nسفارش لیمیت استراحت‌کننده" --> C["خروج به عنوان Maker\nکارمزد: ۰.۲۵٪ | اسلیپیج: ۰.۰۰٪\nهزینه رفت‌وبرگشت کل: ۰.۷۰٪"]
-    B -- "حد ضرر (Stop Loss)\nسفارش بازار اضطراری" --> D["خروج به عنوان Taker\nکارمزد: ۰.۳۰٪ | اسلیپیج: ۰.۱۵٪\nهزینه رفت‌وبرگشت کل: ۰.۹۰٪"]
-    B -- "تسویه اجباری پایان مسابقه\n(End-of-Competition Liquidation)" --> E["خروج به عنوان Taker\nکارمزد: ۰.۳۰٪ | اسلیپیج: ۰.۱۵٪\nهزینه رفت‌وبرگشت کل: ۰.۹۰٪"]
+    A["enter position (BUY)\nSlippage 0.15% + ticker fee 0.30%\nEntry Fee: 0.45%"] --> B{"Exit scenario\n(Exit Scenario)"}
+    B -- "Take Profit\nRelaxing limit order" --> C["Sign out as Maker\nFee: 0.25% Slippage: 0.00%\nTotal round trip fee: 0.70%"]
+    B -- "Stop Loss\nEmergency market order" --> D["Exit as Taker\nFee: 0.30% Slippage: 0.15%\nTotal round trip fee: 0.90%"]
+    B -- "Mandatory settlement at the end of the match\n(End-of-Competition Liquidation)" --> E["Exit as Taker\nFee: 0.30% Slippage: 0.15%\nTotal round trip fee: 0.90%"]
 ```
 
-### ۳.۱. سناریوی اول — ورود تهاجمی + خروج با حد سود (Take Profit Exit):
-- **هزینه ورود:** اسلیپیج ۰.۱۵٪ + کارمزد تیکر ۰.۳۰٪ = **۰.۴۵٪**
-- **هزینه خروج:** سفارش لیمیت در تارگت قرار دارد و منتظر فیل شدن می‌ماند $\implies$ کارمزد مِیکر **۰.۲۵٪** (بدون اسلیپیج).
-- **مجموع هزینه رفت‌وبرگشت (Total Round-Trip Drag):**
+### 3.1. First scenario - Aggressive Entry + Take Profit Exit:
+- **entry fee:** slippage 0.15% + ticker fee 0.30% = **0.45%**
+- **Exit fee:** The limit order is in the target and is waiting to be filled $\implies$ Maker's fee **0.25%** (no slippage).
+- **Total Round-Trip Drag:**
   $$\text{Drag}_{\text{TP}} = 0.45\% + 0.25\% = 0.70\%$$
-- **بازدهی خالص با حد سود ناخالص ۳.۵۰٪:**
+- **Net return with gross profit limit of 3.50%:**
   $$\text{Net Return} = +3.50\% - 0.70\% = +2.80\%$$
 
-### ۳.۲. سناریوی دوم — ورود تهاجمی + خروج با حد ضرر (Stop Loss Exit):
-- **هزینه ورود:** اسلیپیج ۰.۱۵٪ + کارمزد تیکر ۰.۳۰٪ = **۰.۴۵٪**
-- **هزینه خروج:** حد ضرر به محض لمس ماشه ۲.۰٪ با سفارش تهاجمی و اسلیپیج ۰.۱۵٪ نقد می‌شود $\implies$ ۰.۳۰٪ تیکر + ۰.۱۵٪ اسلیپیج = **۰.۴۵٪**.
-- **مجموع هزینه رفت‌وبرگشت (Total Round-Trip Drag):**
+### 3.2. Second scenario - Aggressive Entry + Stop Loss Exit:
+- **entry fee:** slippage 0.15% + ticker fee 0.30% = **0.45%**
+- **Exit fee:** Loss limit as soon as trigger is touched 2.0% with aggressive order and slippage 0.15% $\implies$ 0.30% ticker + 0.15% slippage = **0.45%**.
+- **Total Round-Trip Drag:**
   $$\text{Drag}_{\text{SL}} = 0.45\% + 0.45\% = 0.90\%$$
-- **زیان خالص با حد ضرر ناخالص ۲.۰۰٪:**
+- **net loss with a gross loss limit of 2.00%:**
   $$\text{Net Return} = -2.00\% - 0.90\% = -2.90\%$$
 
-### ۳.۳. سناریوی سوم — تسویه اضطراری پایان مسابقه به تومان:
-- موقعیت باز در دقیقه پایانی با متد [`liquidate_all_to_toman`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py#L205) به صورت سفارش بازار با اعمال ۰.۱۵٪ اسلیپیج و کارمزد تیکر ۰.۳۰٪ بسته می‌شود (هزینه خروج ۰.۴۵٪).
+### 3.3. The third scenario - emergency settlement at the end of the race in Tomans:
+- The open position is closed in the last minute with the method [`liquidate_all_to_toman`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py#L205) as a market order by applying 0.15% slippage and 0.30% ticker fee (exit fee 0.45%).
 
 ---
 
-## ۴. اثبات عدم دوباره‌شماری هزینه‌ها (Proof of No Double-Counting)
+## 4. Proof of No Double-Counting
 
-در بازرسی خط‌به‌خط ماژول‌های حسابداری، نحوه کسر هزینه‌ها بررسی شد:
-1. **اسلیپیج (Slippage):** اسلیپیج صرفاً در قیمت اجرای معامله (`exec_price = target_price * (1 ± slippage)`) اثر داده می‌شود. حجم فیل‌شده بر اساس این قیمت جدید محاسبه می‌گردد. هیچ کارمزد ریالی یا تومانی جداگانه‌ای تحت نام اسلیپیج از موجودی نقد کسر نمی‌شود.
-2. **کارمزد (Commission Fee):** کارمزد منحصراً بر ارزش اسمی معامله فیل‌شده (`notional = quantity * exec_price`) ضرب شده و از مانده نقد حساب کسر می‌گردد:
-   ```python
+In the line-by-line inspection of accounting modules, the method of deducting expenses was checked:
+1. **Slippage:** Slippage is only affected in the execution price of the transaction (`exec_price = target_price * (slippage ± 1)`). Filled volume is calculated based on this new price. No separate Riyal or Toman fee is deducted from the cash balance under the name of slippage.
+2. **Commission Fee:** The fee is multiplied exclusively by the nominal value of the completed transaction (`notional = quantity * exec_price') and is deducted from the cash balance of the account:```python
    fee = notional * fee_rate
    self.cash_toman = max(0.0, self.cash_toman - (notional + fee))
-   ```
-3. **نتیجه ممیزی:** هیچ‌گونه هم‌پوشانی یا دوباره‌شماری (Double-Counting) در محاسبه اسلیپیج و کارمزد صرافی وجود ندارد.
+   ```3. **Audit result:** There is no overlapping or double-counting in the calculation of slippage and exchange fees.
 
 ---
 
-## ۵. رفتار گیت اسپرد در داده‌های زنده و تحلیل حساسیت (Spread Gate Analysis)
+## 5. Gate spread behavior in live data and sensitivity analysis (Spread Gate Analysis)
 
-### ۵.۱. داده‌های مشاهده‌شده در مانور زنده:
-در مانور عملیاتی چرخه‌های سایه روی جفت‌ارز `BTCTMN` والکس، اسپرد واقعی بازار به صورت زیر ثبت شد:
-- حداقل اسپرد مشاهده‌شده: **۰.۱۷۷۴٪** (۱۷.۷۴ پیپ/بیسیس‌پوینت)
-- حداکثر اسپرد مشاهده‌شده: **۰.۱۹۶۵٪** (۱۹.۶۵ پیپ/بیسیس‌پوینت)
-- سقف سخت‌گیرانه گیت ریسک: **۰.۲۰٪** (۲۰.۰۰ پیپ/بیسیس‌پوینت)
-- **حاشیه اطمینان باقی‌مانده (Buffer):** تنها **۰.۰۰۳۵٪ تا ۰.۰۲۲۶٪** (۳.۵ تا ۲۲.۶ صدم درصد).
+### 5.1. Data observed in live maneuver:
+In the operational maneuver of shadow cycles on Wallex ``BTCTMN'' currency pair, the actual market spread was recorded as follows:
+- Minimum observed spread: **0.1774%** (17.74 pips/basis point)
+- Maximum observed spread: **0.1965%** (19.65 pips/basis point)
+- Strict gate risk limit: **0.20%** (20.00 pips/basis point)
+- **Remaining margin of confidence (Buffer):** only **0.0035% to 0.0226%** (3.5 to 22.6 percent).
 
-### ۵.۲. چرا سقف ۰.۲۰٪ نباید شل یا بزرگتر شود؟
-اگر سقف اسپرد مجاز به عنوان مثال به ۰.۳۵٪ یا ۰.۵۰٪ افزایش یابد:
-1. در اسپردهای عریض (۰.۴۰٪)، هزینه عبور از نیم‌اسپرد به ۰.۲۰٪ افزایش می‌یابد.
-2. مجموع هزینه اصطکاک رفت‌وبرگشت به $0.90\% + 0.40\% = 1.30\%$ می‌رسد.
-3. در یک مسابقه ۳ روزه که نوسانات محتاطانه بیت‌کوین در بازه ۱.۵٪ تا ۳.۵٪ نوسان می‌کند، پرداخت ۱.۳۰٪ هزینه اصطکاک بیش از ۴۰٪ سود ناخالص را می‌بلعد و امید ریاضی استراتژی را منفی می‌کند.
-4. بنابراین سقف ۰.۲۰٪ به عنوان یک **سپر حفاظتی حیاتی (Safety Citadel)** مانع از ورود در بازارهای کم‌عمق و دستکاری‌شده می‌شود.
+### 5.2. Why shouldn't the 0.20% ceiling be relaxed or bigger?
+If the allowed spread ceiling is increased to, for example, 0.35% or 0.50%:
+1. In wide spreads (0.40%), the cost of crossing the half spread increases to 0.20%.
+2. The total cost of round trip friction reaches $0.90\% + 0.40\% = $1.30\%.
+3. In a 3-day race where Bitcoin's conservative volatility fluctuates between 1.5% and 3.5%, paying a 1.30% friction fee eats up more than 40% of the gross profit, negating the mathematical hope of the strategy.
+4. Therefore, the ceiling of 0.20% as a **Safety Citadel** prevents entry into shallow and manipulated markets.
 
-### ۵.۳. رفتار در برابر تاخیر داده‌ها و جهش نوسان (Stale Data & Volatility Spikes):
-- چنانچه به دلیل نوسانات شدید بازار، عمق اردر بوک والکس موقتاً خالی شود و اسپرد به بالای ۰.۲۰٪ بپرد، گیت ریسک با کد `SPREAD_EXCEEDS_MAX_THRESHOLD` بلافاصله سیگنال را وتو می‌کند.
-- اگر فید داده‌ها متوقف شود، تایم‌استمپ دیتای ورودی کهنه شده و سیستم در حالت پیش‌فرض No-Trade متوقف می‌ماند و هیچ معامله کوری باز نمی‌شود.
-
----
-
-## ۶. ممیزی سفارش‌های نیمه‌پرشده (Partial Fills)
-
-در بازارهای واقعی کریپتو، سفارش‌های لیمیت همواره ۱۰۰٪ پر نمی‌شوند. آداپتور اجرا و ماژول حسابداری با موفقیت این سناریو را پشتیبانی می‌کنند:
-- تست [`test_partial_fill_execution`](file:///root/starcoach-hack/wallex/tests/test_exchange_adapter.py#L110) با پر شدن ۵۰٪ حجم سفارش اجرا گردید.
-- تنها ۵۰٪ ارزش اسمی به عنوان پوزیشن وارد سبد شده و کارمزد منحصراً بر بخش پرشده محاسبه شد.
-- باقیمانده سرمایه بدون تعهد در حساب تومانی باقی ماند و تراز نقدی حساب با دقت ریاضی ۱۰۰٪ تطبیق پیدا کرد.
+### 5.3. Behavior against data delay and volatility spikes (Stale Data & Volatility Spikes):
+- If, due to extreme market fluctuations, the order depth of Book Wallex is temporarily emptied and the spread jumps above 0.20%, the risk gate with the code ``SPREAD_EXCEEDS_MAX_THRESHOLD'' will immediately veto the signal.
+- If the data feed is stopped, the timestamp of the input data will expire and the system will stop in the default No-Trade mode and no blind trades will be opened.
 
 ---
 
-## ۷. نتیجه‌گیری ممیزی هزینه‌های اجرا
+## 6. Audit of partially filled orders (Partial Fills)
 
-مدل‌سازی مالی سیستم با در نظر گرفتن سناریوهای واقع‌گرایانه و محتاطانه (Taker در ورود، Taker در خروج ضرر، اسلیپیج نامساعد ۰.۱۵٪ و گیت اسپرد ۰.۲۰٪) از استحکام آماری کامل برخوردار است و هزینه اصطکاک پنهانی در معاملات زنده رخ نخواهد داد.
+In real crypto markets, limit orders are not always 100% filled. The execution adapter and accounting module successfully support this scenario:
+- Test [`test_partial_fill_execution`] (file:///root/starcoach-hack/wallex/tests/test_exchange_adapter.py#L110) was executed with 50% filling of the order volume.
+- Only 50% of the nominal value was entered into the basket as a position and the fee was calculated exclusively on the filled part.
+- The remaining uncommitted capital remained in the Tomani account and the cash balance of the account was reconciled with 100% mathematical accuracy.
+
+---
+
+## 7. Conclusion of the audit of implementation costs
+
+The financial modeling of the system by considering realistic and prudent scenarios (Taker in entry, Taker in exit loss, unfavorable slippage of 0.15% and gate spread of 0.20%) has full statistical strength and hidden friction cost will not occur in live transactions.

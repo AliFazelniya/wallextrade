@@ -1,46 +1,44 @@
-# مطالعه کنترل‌شده تفکیک اثر هوش مصنوعی در پرتفوی H1+H3 (Phase 25 AI Ablation)
+# Controlled study of artificial intelligence effect separation in H1+H3 portfolio (Phase 25 AI Ablation)
 ## Three-Way AI Ablation Study: Deterministic Baseline vs Phase 23 Agent vs Cost-Sensitive AI
 
-> **مخزن:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **شاخه پژوهشی:** `research/phase25-validation`  
-> **کامیت مبنای منجمد:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **محیط آزمون:** شرایط یکسان در ۲۹ پنجره مسابقه ($N = 29$) با اجرای سایه کندل و کارمزدهای رسمی صرافی
+> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Research branch:** `research/phase25-validation`  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Test environment:** Same conditions in 29 competition windows ($N = $29) with execution of candle shadow and official exchange fees
 
 ---
 
-## ۱. جدول مقایسه مستقیم سه پیکربندی تفکیک هوش مصنوعی (Ablation Matrix)
+## 1. Table of direct comparison of three artificial intelligence separation configurations (Ablation Matrix)
 
-| پیکربندی ارزیابی | نحوه مشارکت هوش مصنوعی | سود خالص کل (TMN) | میانگین بازدهی ۷۲ساعته | نرخ برد | تعداد معامله | آماره تی ($t$) | دلتا نسبت به دترمینیستیک | اصطکاک مبادله (TMN) |
+| Evaluation configuration How to participate in artificial intelligence Total Net Profit (TMN) | Average efficiency of 72 hours Win rate Number of transactions T statistic ($t$) | Delta compared to deterministic | Exchange Friction (TMN) |
 |---|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **۱. دترمینیستیک خالص (No AI)** | صفر (صرفاً قوانین ساختاری H1+H3) | **۶۳،۹۵۴.۷+** | **۰.۰۴۴٪+** | **۲۷.۶٪** | ۳۵ | **۰.۶۵+** | مبنا | ۱۳۴،۶۱۲ |
-| **۲. عامل فاز ۲۳ (Regime Agent)** | رده‌بندی رژیم با شروط صلب بولین | **۲۶،۶۳۱.۶+** | ۰.۰۱۸٪+ | ۲۴.۱٪ | ۳۲ | ۰.۲۷+ | **۳۷،۳۲۳- TMN (تخریب)** | ۱۲۳،۰۲۹ |
-| **۳. ارزیاب احتمالاتی حساس به هزینه** | مدل برآورد احتمال برد و حاشیه سود | **۶۰،۸۲۹.۲+** | ۰.۰۴۲٪+ | ۲۷.۶٪ | ۳۴ | ۰.۶۲+ | **۳،۱۲۵- TMN** | ۱۳۰،۱۲۶ |
+| **1. Pure Deterministic (No AI)** | Zero (H1+H3 structural rules only) | **63,954.7+** | **0.044%+** | **27.6%** | 35 | **0.65+** | Basis | 134,612 |
+| **2. Phase 23 agent (Regime Agent)** | Regime classification with strict Boolean conditions **26,631.6+** | 0.018%+ | 24.1% 32 | 0.27+ | **37,323- TMN (destruction)** | 123,029 |
+| **3. Cost-sensitive probabilistic estimator The model for estimating the probability of profit and profit margin **60,829.2+** | 0.042%+ | 27.6% 34 | 0.62+ | **TMN-3,125** | 130,126 |
 
 ---
 
-## ۲. ریشه‌یابی علمی تخریب سود توسط عامل فاز ۲۳ (Regime Agent Failure Analysis)
+## 2. Scientific rooting of profit destruction by Phase 23 agent (Regime Agent Failure Analysis)
 
-چرا عامل هوش مصنوعی فاز ۲۳ سود را بیش از **۳۷،۰۰۰ تومان** کاهش داد؟
-1. **مرزهای صلب بولین (Rigid Boolean Thresholds):**  
-   کد عامل قبلی در [`src/agents/regime_agent.py`](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py#L79) شرط رژیم صعودی را منحصراً به این صورت تعریف کرده بود:
-   ```python
+Why did the artificial intelligence agent reduce the profit of phase 23 by more than **37,000 tomans**?
+1. Rigid Boolean Thresholds:  
+   The previous agent code in [`src/agents/regime_agent.py`](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py#L79) defined the ascending regime condition exclusively as:```python
    if f.ema_spread_pct > 0.4 and 52 <= f.rsi_14 <= 68 and f.vol_ratio >= 1.15:
-   ```
-2. **وتوی معاملات طلایی در قله‌های ترند:**  
-   در پرقدرت‌ترین روزهای صعودی بازار (مانند پنجره‌های W09 و W22)، در کندل‌های شکست انفجاری، اندیکاتور RSI به دلیل قدرت شتاب قیمت برای چند کندل به ۶۹.۵ می‌رسید یا نسبت حجم به ۱.۱۲ می‌رسید.  
-   عامل قبلی این شرایط را به اشتباه به عنوان «رنج آرام» یا «اشباع خرید پرریسک» طبقه‌بندی کرده و ورود به پربازده‌ترین موج‌های ۴.۵٪+ بازار را مسدود نمود!
-3. **عدم تقارن هزینه و پاداش:**  
-   عامل قبلی با حذف ۳ معامله برنده بزرگ به بهانه ریسک، سود را ۳۷ هزار تومان کاهش داد، در حالی که اصطکاک کارمزد تنها ۱۱ هزار تومان کاهش یافت.
+   ```2. **Veto of gold transactions at trend peaks:**  
+   On the strongest bullish days of the market (such as the W09 and W22 windows), on the breakout breakout candles, the RSI indicator reached 69.5 or the volume ratio reached 1.12 for several candles due to the strength of the price acceleration.  
+   The previous agent misclassified these conditions as "quiet suffering" or "risky buying saturation" and blocked entry into the market's most profitable 4.5%+ waves!
+3. **Asymmetry of cost and reward:**  
+   The previous agent reduced the profit by 37 thousand tomans by removing 3 big winning trades under the pretext of risk, while the friction fee was reduced by only 11 thousand tomans.
 
 ---
 
-## ۳. نتیجه‌گیری ممیزی هوش مصنوعی و راهکار نهایی برای مسابقه
+## 3. AI audit conclusion and final solution for the competition
 
 > [!IMPORTANT]
-> ### حقیقت علمی شفاف (Unvarnished Truth):
-> **مدل دترمینیستیک خالص در این ساختار از عامل رژیم فاز ۲۳ عملکرد بهتری دارد.**  
-> برای اجابت شرط اجباری مسابقه (مشارکت معنادار هوش مصنوعی بدون تخریب بازدهی سیستم)، نباید از هوش مصنوعی به عنوان یک فیلتر حذفی صلب بولین استفاده کرد.  
-> **نقش صحیح عامل هوش مصنوعی:**
-> - استفاده به عنوان **ارزیاب احتمالاتی و محاسبه‌گر حاشیه سود نسبت به کارمزد (Cost-Sensitive Hurdle Rate)**
-> - داوری در زمان تعارض هم‌زمان سیگنال‌ها (انتخاب بین SOL و ETH)
-> - تنظیم شناور حجم سفارش (Position Sizing) به جای وتوی کامل پوزیشن‌های باکیفیت.
+> ### Unvarnished Truth:
+> **The pure deterministic model performs better than the phase 23 regime factor in this structure.**  
+> To satisfy the mandatory race condition (meaningful contribution of AI without degrading system efficiency), AI should not be used as a rigid Boolean elimination filter.  
+> **Correct role of artificial intelligence agent:**
+> - Use as **probability evaluator and calculator of profit margin compared to fee (Cost-Sensitive Hurdle Rate)**
+> - Arbitrage in case of simultaneous conflict of signals (choice between SOL and ETH)
+> - Floating adjustment of order volume (Position Sizing) instead of complete veto of high quality positions.
