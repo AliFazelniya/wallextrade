@@ -1,16 +1,16 @@
 # Audit of the realism of the order execution model in Wallex exchange (Phase 25 Execution Realism)
 ## Realistic Order Execution, Queue Uncertainty, Wallex Microstructure & Fill Dynamics
 
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
 > **Research branch:** `research/phase25-validation`  
-> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Subject:** Validation of order execution assumptions, fees, uncertainty of filling and technical limitations of Wallex
 
 ---
 
 ## 1. Audit of official documents and features of Wallex Exchange Realities
 
-Examination of the exchange client in [`src/data/client.py`](file:///root/starcoach-hack/wallex/src/data/client.py) and the execution adapter in [`src/exchange/adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py) revealed the following facts:
+Examination of the exchange client in [`src/data/client.py`](../src/data/client.py) and the execution adapter in [`src/exchange/adapter.py`](../src/exchange/adapter.py) revealed the following facts:
 
 1. **Wallex does not support Native Post-Only orders:**  
    Wallex's ordering endpoint (`POST /v1/account/orders') only has parameters `type' (including `LIMIT' or `MARKET'), `side', `price' and `quantity'. There is no native flag for Post-Only.  

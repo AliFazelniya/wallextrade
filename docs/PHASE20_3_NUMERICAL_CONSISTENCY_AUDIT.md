@@ -1,8 +1,8 @@
 # Audit report of computational compliance, accounting accuracy and comparative validation of windows (Phase 20.3)
 
 > **Audit Status:** Final, Reproduced and Fully Adapted (Independently Reconciled & Audited)  
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **release frozen commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
+> **release frozen commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **valid tags:** `v1.0.0-phase20-frozen-release` and `v0.12.0-phase20-audited`  
 > **Frozen Strategy Manifest Hash:** `249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66`  
 > **Live execution authorization:** `live_execution_authorized = False` (completely blocked and disabled)
@@ -12,7 +12,7 @@
 ## 1. Accurate matching of maximum drawdown reconciliation (Task 1 — Maximum Drawdown Reconciliation)
 
 ### 1.1. Reconstruction of the daily value curve of the portfolio (Mark-to-Market Equity Curve)
-Check the implementation in [`src/portfolio/accounting.py#L235-L242`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py#L235-L242) and [`src/backtest/engine.py#L261-L270`](file:///root/starcoach-hack/wallex/src/backtest/engine.py#L261-L270) shows that the total value of the portfolio in each 15-minute candle is calculated as **Mark-to-Market Total Equity**:
+Check the implementation in [`src/portfolio/accounting.py#L235-L242`](../src/portfolio/accounting.py#L235-L242) and [`src/backtest/engine.py#L261-L270`](../src/backtest/engine.py#L261-L270) shows that the total value of the portfolio in each 15-minute candle is calculated as **Mark-to-Market Total Equity**:
 $$\text{Total Equity} = \text{Cash (TMN)} + \sum (\text{Position Quantity} \times \text{Current Price})$$
 
 The capital value peak ($\text{Peak}$) is dynamically updated over time and the capital loss is obtained from the following relationship:
@@ -204,7 +204,7 @@ In order to avoid any conceptual contradiction in the evaluation reports, the fo
 ## 6. Regression and reproducibility tests (Reproducibility & Commands)
 
 ### 6.1. Implementation of unit and system tests:```bash
-cd /root/starcoach-hack/wallex && .venv/bin/pytest tests/
+cd wallex && .venv/bin/pytest tests/
 ```**Test output:**```
 tests/test_ai_agent.py ....                                              [  6%]
 tests/test_data_validation.py .....                                      [ 14%]
@@ -244,4 +244,4 @@ git rev-parse HEAD
 
 ### After Live Execution Authorization:
 > **Status: 🛑 NOT AUTHORIZED**  
-> Flag [`live_execution_authorized = False`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json) is kept unchanged in all configurations. Until the delivery of the access to the competition and the removal of the technical obstacles on the side of the exchange, no actual order is allowed to be sent to Wallex.
+> Flag [`live_execution_authorized = False`](../config/frozen_strategy_manifest_v0.6.0.json) is kept unchanged in all configurations. Until the delivery of the access to the competition and the removal of the technical obstacles on the side of the exchange, no actual order is allowed to be sent to Wallex.

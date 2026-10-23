@@ -1,9 +1,9 @@
 # Final verdict, comprehensive comparative assessment and decision-making framework of phase 25
 ## Phase 25 Final Comparative Verdict & Eight-Pillar Decision Framework
 
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
 > **Research branch:** `research/phase25-validation`  
-> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Final status:** Successful completion of research, experimental audit and hypothesis validation (Research GO / Live NO-GO)  
 > **Live execution authorization:** `live_execution_authorized = False` (completely blocked and disabled)
 
@@ -140,7 +140,7 @@ To guarantee 100% reproducibility of all results by independent judges and engin
 
 1. **Commit ID and Git branch:**
    - Isolated branch: `research/phase25-validation`
-   - Base commit: [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)
+   - Base commit: [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)
    - Frozen phase 20 tagged commit: `v1.0.0-phase20-frozen-release` (intact)
 2. **Source of data and timestamps:**
    - Data source: official 90-day Wallex market dataset in the form of 15-minute candles for three currency pairs `BTCTMN', `ETHTMN', and `SOLTMN'.
@@ -158,7 +158,7 @@ To guarantee 100% reproducibility of all results by independent judges and engin
    # 4. Reproducing the matrix of 14 stress scenarios
    .venv/bin/python src/experimental/stress_test_14_scenarios.py
    ```4. **Financial balance and settlement:**
-   - Arithmetic difference of 36.8k and 35.8k of phase 24 was completely rooted and solved up to the level of rial in [`docs/PHASE25_BASELINE_RECONCILIATION.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_BASELINE_RECONCILIATION.md). Arithmetic balancing error is zero ($0.00 TMN).
+   - Arithmetic difference of 36.8k and 35.8k of phase 24 was completely rooted and solved up to the level of rial in [`docs/PHASE25_BASELINE_RECONCILIATION.md`](PHASE25_BASELINE_RECONCILIATION.md). Arithmetic balancing error is zero ($0.00 TMN).
 
 ---
 
@@ -195,13 +195,13 @@ stateDiagram-v2
 
 All ten documents produced in this phase are detailed and cross-referenced:
 
-1. [`docs/PHASE25_BASELINE_RECONCILIATION.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_BASELINE_RECONCILIATION.md): Finding the root and mathematical matching of the arithmetic discrepancy of phase 24 up to the level of Rial.
-2. [`docs/PHASE25_H1_INDEPENDENT_VALIDATION.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_H1_INDEPENDENT_VALIDATION.md): Independent validation of hypothesis H1, examining 10 key questions and discovering Solana dependence.
-3. [`docs/PHASE25_H3_LEAD_LAG_RESEARCH.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_H3_LEAD_LAG_RESEARCH.md): Academic Fundamentals of Bitcoin Acceleration Leaks and Lagging Execution Evaluation 1 Candleley.
-4. [`docs/PHASE25_ENSEMBLE_ARCHITECTURE.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_ENSEMBLE_ARCHITECTURE.md): H1+H3 portfolio integration architecture and proof of high collinearity between models.
-5. [`docs/PHASE25_AI_ABLATION_RESULTS.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_AI_ABLATION_RESULTS.md): Tripartite test of separation of artificial intelligence effect and solving phase 23 boolean filter problem.
-6. [`docs/PHASE25_EXECUTION_REALISM_AUDIT.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_EXECUTION_REALISM_AUDIT.md): Wallex market microstructure audit, lack of native Stop order and simulation of Taker exits.
-7. [`docs/PHASE25_OUT_OF_SAMPLE_VALIDATION.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_OUT_OF_SAMPLE_VALIDATION.md): Bootstrap analysis of 10,000 replicates, sensitivity to outliers, and third-month losses.
-8. [`docs/PHASE25_STRESS_TEST_RESULTS.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_STRESS_TEST_RESULTS.md): Comprehensive stress test matrix in 14 adverse market scenarios.
-9. [`docs/PHASE25_SHADOW_EXECUTION_REPORT.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_SHADOW_EXECUTION_REPORT.md): Shadow execution test with websocket and depth assessment of Wallex order books.
-10. [`docs/PHASE25_FINAL_VERDICT.md`](file:///root/starcoach-hack/wallex/docs/PHASE25_FINAL_VERDICT.md): same report; The decision-making framework and the final verdict of phase 25.
+1. [`docs/PHASE25_BASELINE_RECONCILIATION.md`](PHASE25_BASELINE_RECONCILIATION.md): Finding the root and mathematical matching of the arithmetic discrepancy of phase 24 up to the level of Rial.
+2. [`docs/PHASE25_H1_INDEPENDENT_VALIDATION.md`](PHASE25_H1_INDEPENDENT_VALIDATION.md): Independent validation of hypothesis H1, examining 10 key questions and discovering Solana dependence.
+3. [`docs/PHASE25_H3_LEAD_LAG_RESEARCH.md`](PHASE25_H3_LEAD_LAG_RESEARCH.md): Academic Fundamentals of Bitcoin Acceleration Leaks and Lagging Execution Evaluation 1 Candleley.
+4. [`docs/PHASE25_ENSEMBLE_ARCHITECTURE.md`](PHASE25_ENSEMBLE_ARCHITECTURE.md): H1+H3 portfolio integration architecture and proof of high collinearity between models.
+5. [`docs/PHASE25_AI_ABLATION_RESULTS.md`](PHASE25_AI_ABLATION_RESULTS.md): Tripartite test of separation of artificial intelligence effect and solving phase 23 boolean filter problem.
+6. [`docs/PHASE25_EXECUTION_REALISM_AUDIT.md`](PHASE25_EXECUTION_REALISM_AUDIT.md): Wallex market microstructure audit, lack of native Stop order and simulation of Taker exits.
+7. [`docs/PHASE25_OUT_OF_SAMPLE_VALIDATION.md`](PHASE25_OUT_OF_SAMPLE_VALIDATION.md): Bootstrap analysis of 10,000 replicates, sensitivity to outliers, and third-month losses.
+8. [`docs/PHASE25_STRESS_TEST_RESULTS.md`](PHASE25_STRESS_TEST_RESULTS.md): Comprehensive stress test matrix in 14 adverse market scenarios.
+9. [`docs/PHASE25_SHADOW_EXECUTION_REPORT.md`](PHASE25_SHADOW_EXECUTION_REPORT.md): Shadow execution test with websocket and depth assessment of Wallex order books.
+10. [`docs/PHASE25_FINAL_VERDICT.md`](PHASE25_FINAL_VERDICT.md): same report; The decision-making framework and the final verdict of phase 25.

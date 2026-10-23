@@ -1,9 +1,9 @@
 # Legal audit of authenticity and origin of market data (Phase 26 Data Provenance Audit)
 ## Forensic Data Provenance, Timestamp Integrity & Future-Date Resolution
 
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
 > **Research branch:** `research/phase26-forensic-validation`  
-> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Audit time:** October 22, 2026 - 20:45 local time (17:15 UTC time)  
 > **The result of checking the authenticity of the data:** ✅ **Definitive confirmation of the authenticity of the data (PASS) / Complete removal of the ambiguity of validity of the dates**
 
@@ -44,12 +44,12 @@ The following table is the result of independent execution of the hash audit scr
 
 | The name of the data file Absolute path on disk Volume (Bytes) | Dedicated checksum (SHA-256) | Number of records First timestamp (UTC) | Last timestamp (UTC) |
 |---|---|:---:|---|:---:|:---:|:---:|
-| **BTCTMN_15m_90d.csv** | [`data/cache/BTCTMN_15m_90d.csv`](file:///root/starcoach-hack/wallex/data/cache/BTCTMN_15m_90d.csv) | 812,790 | `54292673b433a9a95e19ebab0dc446fdfc1458c9b8e4ea5672a6b5ad51775a9e` | 8,636 | 2026-07-24 11:15 | 2026-10-22 11:15 |
-| **ETHTMN_15m_90d.csv** | [`data/cache/ETHTMN_15m_90d.csv`](file:///root/starcoach-hack/wallex/data/cache/ETHTMN_15m_90d.csv) | 727,692 | `106970901976cf4015a1de237486ea79f3daa93d8b321b697d6f74d8b41df0d9` | 8,634 | 2026-07-24 11:15 | 2026-10-22 11:15 |
-| **SOLTMN_15m_90d.csv** | [`data/cache/SOLTMN_15m_90d.csv`](file:///root/starcoach-hack/wallex/data/cache/SOLTMN_15m_90d.csv) | 689,492 | `27a82f586859eb92a608abf1db9c8cdceef2fe4f29e1570e8d77de5618702f0a` | 8,635 | 2026-07-24 11:15 | 2026-10-22 11:15 |
-| **BTCTMN_15m_36d.csv** | [`data/cache/BTCTMN_15m_36d.csv`](file:///root/starcoach-hack/wallex/data/cache/BTCTMN_15m_36d.csv) | 326,797 | `766f71ab61f575b4b7e99d678434eee9b61c47574f6f10dcbdaaef09782170d2` | 3,452 | 2026-09-16 11:00 | 2026-10-22 11:00 |
-| **ETHTMN_15m_36d.csv** | [`data/cache/ETHTMN_15m_36d.csv`](file:///root/starcoach-hack/wallex/data/cache/ETHTMN_15m_36d.csv) | 291,785 | `37935a80cb85fed9b17809fa0987e5481c7771dd7e886dcaac758ab1083a310a` | 3,450 | 2026-09-16 11:00 | 2026-10-22 11:00 |
-| **SOLTMN_15m_36d.csv** | [`data/cache/SOLTMN_15m_36d.csv`](file:///root/starcoach-hack/wallex/data/cache/SOLTMN_15m_36d.csv) | 276,312 | `4e189f3c6814025701b316a01920bda66e79138d579f5963be790440729ef863` | 3,451 | 2026-09-16 11:00 | 2026-10-22 11:00 |
+| **BTCTMN_15m_90d.csv** | [`data/cache/BTCTMN_15m_90d.csv`](../data/cache/BTCTMN_15m_90d.csv) | 812,790 | `54292673b433a9a95e19ebab0dc446fdfc1458c9b8e4ea5672a6b5ad51775a9e` | 8,636 | 2026-07-24 11:15 | 2026-10-22 11:15 |
+| **ETHTMN_15m_90d.csv** | [`data/cache/ETHTMN_15m_90d.csv`](../data/cache/ETHTMN_15m_90d.csv) | 727,692 | `106970901976cf4015a1de237486ea79f3daa93d8b321b697d6f74d8b41df0d9` | 8,634 | 2026-07-24 11:15 | 2026-10-22 11:15 |
+| **SOLTMN_15m_90d.csv** | [`data/cache/SOLTMN_15m_90d.csv`](../data/cache/SOLTMN_15m_90d.csv) | 689,492 | `27a82f586859eb92a608abf1db9c8cdceef2fe4f29e1570e8d77de5618702f0a` | 8,635 | 2026-07-24 11:15 | 2026-10-22 11:15 |
+| **BTCTMN_15m_36d.csv** | [`data/cache/BTCTMN_15m_36d.csv`](../data/cache/BTCTMN_15m_36d.csv) | 326,797 | `766f71ab61f575b4b7e99d678434eee9b61c47574f6f10dcbdaaef09782170d2` | 3,452 | 2026-09-16 11:00 | 2026-10-22 11:00 |
+| **ETHTMN_15m_36d.csv** | [`data/cache/ETHTMN_15m_36d.csv`](../data/cache/ETHTMN_15m_36d.csv) | 291,785 | `37935a80cb85fed9b17809fa0987e5481c7771dd7e886dcaac758ab1083a310a` | 3,450 | 2026-09-16 11:00 | 2026-10-22 11:00 |
+| **SOLTMN_15m_36d.csv** | [`data/cache/SOLTMN_15m_36d.csv`](../data/cache/SOLTMN_15m_36d.csv) | 276,312 | `4e189f3c6814025701b316a01920bda66e79138d579f5963be790440729ef863` | 3,451 | 2026-09-16 11:00 | 2026-10-22 11:00 |
 
 ---
 

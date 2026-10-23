@@ -1,6 +1,6 @@
 # Independent audit of profit and loss and adaptation of Bitcoin's yield structure (Phase 14)
 ### Independent P&L Reconciliation & BTC/TMN Return Architecture Audit
-**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Audit date:** October 22, 2026 **Data time horizon:** 90 full days (8,636 15-minute candles) | **Initial capital:** 5,000,000 Tomans
+**Repository:** [`wallex`](..) | **Audit date:** October 22, 2026 **Data time horizon:** 90 full days (8,636 15-minute candles) | **Initial capital:** 5,000,000 Tomans
 
 ---
 

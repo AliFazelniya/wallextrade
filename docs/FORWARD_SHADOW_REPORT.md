@@ -1,6 +1,6 @@
 # Comprehensive report of the live test in the shadow and market depth monitoring (phase 13)
 ### Prospective Forward Shadow Testing & Live Orderbook Microstructure Report
-**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Performance date:** October 22, 2026 **Live log file:** [`logs/shadow_forward_phase13.jsonl`](file:///root/starcoach-hack/wallex/logs/shadow_forward_phase13.jsonl)
+**Repository:** [`wallex`](..) | **Performance date:** October 22, 2026 **Live log file:** [`logs/shadow_forward_phase13.jsonl`](../logs/shadow_forward_phase13.jsonl)
 
 ---
 
@@ -16,7 +16,7 @@ The purpose of forward shadow testing is to fully connect the trading system to 
 
 ## 2. Specifications and statistical results of live monitoring of Wallex market
 
-During the execution of the script [`scripts/run_forward_shadow_eval.py`](file:///root/starcoach-hack/wallex/scripts/run_forward_shadow_eval.py), real-time market depth data (`/v1/depth`) and current candles (`/v1/udf/history`) were received and processed for the major symbols of the permitted world:
+During the execution of the script [`scripts/run_forward_shadow_eval.py`](../scripts/run_forward_shadow_eval.py), real-time market depth data (`/v1/depth`) and current candles (`/v1/udf/history`) were received and processed for the major symbols of the permitted world:
 
 | Live monitoring index Measured value System acceptance standard Compliance status
 |---|---|---|---|
@@ -57,7 +57,7 @@ bar
 
 ## 4. Recording the audit trail and events (Decision Audit Trail)
 
-All AI regime evaluations, input prices and portfolio liquidity status are stored in the file [`logs/shadow_forward_phase13.jsonl`](file:///root/starcoach-hack/wallex/logs/shadow_forward_phase13.jsonl) with standard JSONL structure. Each record contains the following information:
+All AI regime evaluations, input prices and portfolio liquidity status are stored in the file [`logs/shadow_forward_phase13.jsonl`](../logs/shadow_forward_phase13.jsonl) with standard JSONL structure. Each record contains the following information:
 - Precise UTC timestamp based on ISO-8601 standard.
 - Best Bid and Best Ask prices and calculated spread.
 - Values ​​of extracted features ($RSI$, $ATR\%$, volume ratio).

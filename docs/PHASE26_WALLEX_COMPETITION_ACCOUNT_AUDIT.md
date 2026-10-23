@@ -1,9 +1,9 @@
 # Auditing the account structure and microstructure of Wallex Exchange (Phase 26 Wallex Exchange Mechanics)
 ## Wallex Competition Account Architecture, Order Types & Microstructure Audit
 
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
 > **Research branch:** `research/phase26-forensic-validation`  
-> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Official documentation reference:** Public endpoints and documentation of Wallex developers (`api.wallex.ir`)  
 > **Status:** ✅ **Complete transparency of server capabilities against client implementation**
 
@@ -29,7 +29,7 @@ In the Margin section and Wallex credit contracts, special fields **`"stop_loss"
 ## 2. Reasons for maintaining client-side stop loss triggers in the trading robot (Client-Side Stop Logic)
 
 If Wallex supports `STOP_LIMIT`, why does our trading system still use **client triggers**?
-1. **Not implementing ``stopPrice'' field in the existing client:** In the class [`WallexClient.place_order'](file:///root/starcoach-hack/wallex/src/data/client.py#L160), the request body only contains `symbol, type, side, price, quantity' and the `stopPrice' field is not sent to the server.
+1. **Not implementing ``stopPrice'' field in the existing client:** In the class [`WallexClient.place_order'](../src/data/client.py#L160), the request body only contains `symbol, type, side, price, quantity' and the `stopPrice' field is not sent to the server.
 2. **Liquidity risk in extreme fluctuations of the Iranian market:** In ``STOP_LIMIT'' orders on the server side, in case of a sudden price drop, the price may cross the limit level and the order will remain in the queue without being filled (Slippage Slip-through).
 3. **Limitation of allowed race symbols:** In key symbol **`SOLTMN`**, Market order is disabled (`supports_market_order = false`), so server `STOP_MARKET` orders on this symbol will be rejected.
 4. **Technical Conclusion:** Using real-time monitoring and client-side fast exit order registration with slip buffer is the most reliable and robust approach in the race.
@@ -38,7 +38,7 @@ If Wallex supports `STOP_LIMIT`, why does our trading system still use **client 
 
 ## 3. Table of restrictions and specifications of the microstructure of allowed competition symbols
 
-Based on a direct extraction from [`config/allowed_markets.json`](file:///root/starcoach-hack/wallex/config/allowed_markets.json):
+Based on a direct extraction from [`config/allowed_markets.json`](../config/allowed_markets.json):
 
 | Trading symbol | The Persian name of the market Minimum order value (TMN) | Price step (Tick Size) | Decimal accuracy of volume Market order support Maker's fee | Taker fee |
 |---|---|:---:|:---:|:---:|:---:|:---:|:---:|

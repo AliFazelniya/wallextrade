@@ -1,6 +1,6 @@
 # Comprehensive comparison and multidimensional evaluation of trading strategies (phase 12)
 ### Comprehensive Strategy Comparison & Benchmark Evaluation
-**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Experimental data range:** 36 continuous days of Wallex (3,452 15-minute candles) | **Capital:** 5,000,000 Tomans
+**Repository:** [`wallex`](..) | **Experimental data range:** 36 continuous days of Wallex (3,452 15-minute candles) | **Capital:** 5,000,000 Tomans
 
 ---
 
@@ -45,7 +45,7 @@ The following table shows the exact and real simulation results of different str
 
 ### 2. The phenomenon of friction and erosion in altcoins (ETHTMN & SOLTMN):
 - In Ethereum and Solana, despite the overall trend being bullish, the microstructure of the volatility had erosive waves with amplitudes of 2% to 4% and wider spreads. As a result, strategies that made more than 15 trades paid more than 40-60 thousand tomans in fees, which swallowed the entire gross profit.
-- Capital Preservation Strategy ([`CapitalPreservationStrategy'](file:///root/starcoach-hack/wallex/src/strategy/capital_preservation.py)) by reducing the order limit to 250 thousand Tomans and more selective trading, limited the drawdown in Ethereum to **0.55%** and in Solana to **0.93%**.
+- Capital Preservation Strategy ([`CapitalPreservationStrategy'](../src/strategy/capital_preservation.py)) by reducing the order limit to 250 thousand Tomans and more selective trading, limited the drawdown in Ethereum to **0.55%** and in Solana to **0.93%**.
 
 ### 3. Selective breakout strategy:
 - This strategy with strict preconditions (Volume $\ge 1.6x$, ATR Volatility $\ge 1.0\%$, Mean Distance $\ge 0.20\%$ and AI Confidence $\ge 75\%$) did not issue any signals during this period and remained in 100% cash status.

@@ -4,7 +4,7 @@
 > **Audit date:** October 22, 2026 (November 1, 1405) — 17:05 local time  
 > **Senior Auditor:** Senior Algorithmic Trading Engineer, Python Independent Auditor and Release Validation Engineer  
 > **gate branch:** `master`  
-> **Audited commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Audited commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Verified release tags:** `v1.0.0-phase20-frozen-release` and `v0.12.0-phase20-audited`  
 > **working tree status:** completely clean (`working tree clean')  
 > **Frozen Strategy Manifest cryptographic hash:** `249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66`  
@@ -75,7 +75,7 @@ A detailed analysis of the time network proved that the difference between the f
 ## 4. Independent P&L Reconstruction
 
 ### 4.1. The model for converting the target price into the execution price:
-In module [`PortfolioEngine`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py#L78) and [`ExchangeAdapter`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py#L118):
+In module [`PortfolioEngine`](../src/portfolio/accounting.py#L78) and [`ExchangeAdapter`](../src/exchange/adapter.py#L118):
 - **Taker Buy:** $P_{exec} = P_{target} \times (1 + \frac{s}{100}) = P_{target} \times 1.0015$
 - **Sell with loss limit or emergency settlement:** $P_{exec} = P_{target} \times (1 - \frac{s}{100}) = P_{target} \times 0.9985$
 - **Sales of profit limit (Passive Limit):** $P_{exec} = P_{target}$
@@ -131,10 +131,10 @@ In a test of consecutive 3-day windows, there were no trades at all in 7 out of 
 
 ## 7. Live-Execution Safety Review
 
-1. **Path to call live orders:** Method [`ExchangeAdapter.execute_order`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py#L158) is the only connection point to Wallex order registration endpoint.
+1. **Path to call live orders:** Method [`ExchangeAdapter.execute_order`](../src/exchange/adapter.py#L158) is the only connection point to Wallex order registration endpoint.
 2. Code level double gate: Live order is blocked unless both `TRADING_MODE="LIVE"` and the boolean variable `live_execution_authorized=True` are explicitly injected into the class constructor.
 3. **Lack of Bypass Environment Variable:** There is no code in the system that automatically activates this flag when reading `.env`. The system default is `SIMULATION` with `live_execution_authorized=False` (Fail-Closed).
-4. **Mandatory risk ceilings:** The [`RiskEngine'] module (file:///root/starcoach-hack/wallex/src/risk/engine.py#L40) vetoes the order limit of 500 thousand tomans, the drawdown of 5% and the daily loss limit of 200 thousand tomans independently of artificial intelligence.
+4. **Mandatory risk ceilings:** The [`RiskEngine'] module (../src/risk/engine.py#L40) vetoes the order limit of 500 thousand tomans, the drawdown of 5% and the daily loss limit of 200 thousand tomans independently of artificial intelligence.
 5. **Risk assessment of client stoploss:** Due to the lack of native stoploss support by Wallex, there is no order on the exchange server side to protect capital in case of internet connection failure or bot process stop.
 
 ---

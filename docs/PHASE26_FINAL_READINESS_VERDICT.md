@@ -1,9 +1,9 @@
 # The final verdict and evaluation of the twelve gates of Phase 26 (Phase 26 Final Verdict)
 ## The Twelve Decision Gates, Final Competition Readiness & Safety Verdict
 
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
 > **Research branch:** `research/phase26-forensic-validation`  
-> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Overall status of phase 26:** Successful completion of legal audit, discovery of the superiority of original artificial intelligence and independent validation  
 > **Authorization of live transactions:** `live_execution_authorized = False` (**Completely blocked and disabled**)
 
@@ -76,5 +76,5 @@ flowchart TD
 
 - `live_execution_authorized = False' was kept as an immutable guardrail in all configuration files.
 - No order has been sent to the real account of the exchange and all tests have been done in the simulation and shadow environment.
-- Base freeze commit [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex) and previous tags left completely intact.
+- Base freeze commit [`b494d60e211497f47ef3b79d6ae79a0726471172`](..) and previous tags left completely intact.
 - **Number of suite unit tests:** 78 tests passed with 100% success.

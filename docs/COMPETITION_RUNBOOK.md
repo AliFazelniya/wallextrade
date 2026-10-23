@@ -1,6 +1,6 @@
 #Competition Runbook
 ### Wallex × Starcoach Algorithmic Trading Operations Manual
-**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Frozen version:** `v0.6.0-phase14-audited` (`d49bd69`) | **Compilation date:** October 22, 2026
+**Repository:** [`wallex`](..) | **Frozen version:** `v0.6.0-phase14-audited` (`d49bd69`) | **Compilation date:** October 22, 2026
 
 ---
 
@@ -18,7 +18,7 @@ This document is a step-by-step standard operating procedure (SOP) for the prepa
 
 ### 2.1. Repository clone and frozen contest code deployment:```bash
 # Go to the project directory
-cd /root/starcoach-hack/wallex
+cd wallex
 
 # Ensuring you are on the inspected and frozen copy
 git checkout master
@@ -85,14 +85,14 @@ cat research/phase15_rehearsal_results.json | jq .
 ## 5. Guide for data health monitoring and error handling (Health & Error Handling)
 
 ### 5.1. Data Freshness Check:
-The system automatically checks the age of candles with the [`validate_data_freshness`](file:///root/starcoach-hack/wallex/src/data/fetcher.py) method. If the time interval between the last candle and the server time is more than 30 minutes, the STALE_DATA warning will be recorded and the transaction will be prevented.
+The system automatically checks the age of candles with the [`validate_data_freshness`](../src/data/fetcher.py) method. If the time interval between the last candle and the server time is more than 30 minutes, the STALE_DATA warning will be recorded and the transaction will be prevented.
 
 ### 5.2. Wallex Rate Limit Management (HTTP 429):
 - Wallex client has a built-in timing lock (`min_request_interval = 1.0s`).
 - If the 429 error is received, the client automatically stops for 2 seconds (`backoff') and then tries again.
 
 ### 5.3. Connection disconnection or artificial intelligence model error (AI Timeout / Invalid JSON):
-- In case of any network outage, 500 error or 5 second timeout when contacting Gemini, the [`RegimeClassificationAgent'](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py) module will immediately activate **Deterministic Fallback**.
+- In case of any network outage, 500 error or 5 second timeout when contacting Gemini, the [`RegimeClassificationAgent'](../src/agents/regime_agent.py) module will immediately activate **Deterministic Fallback**.
 - In range or volatile phases, the system selects ``HOLD'' status and prevents the loss of capital.
 
 ---

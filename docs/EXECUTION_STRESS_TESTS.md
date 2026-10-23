@@ -1,6 +1,6 @@
 # Comprehensive report of microtransactional stress tests and risk resilience (phase 13)
 ### Execution Stress Testing, Adverse Market Conditions & Deterministic Risk Invariants
-**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Risk Engine:** [`RiskEngine`](file:///root/starcoach-hack/wallex/src/risk/engine.py) | **Test base symbol:** `BTCTMN' (45-day out-of-sample period)
+**Repository:** [`wallex`](..) | **Risk Engine:** [`RiskEngine`](../src/risk/engine.py) | **Test base symbol:** `BTCTMN' (45-day out-of-sample period)
 
 ---
 
@@ -51,13 +51,13 @@ flowchart TD
 ```
 
 ### 1. Stale Market Data Stress test:
-If the market data is more than 60 seconds old due to internet outage or exchange delay, the validation function in [`test_data_staleness_detection`](file:///root/starcoach-hack/wallex/tests/test_data_validation.py#L46-L54) will immediately issue an error and prevent entry based on invalid prices.
+If the market data is more than 60 seconds old due to internet outage or exchange delay, the validation function in [`test_data_staleness_detection`](../tests/test_data_validation.py#L46-L54) will immediately issue an error and prevent entry based on invalid prices.
 
 ### 2. Partial fill stress test:
-In the class [`ExchangeAdapter`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py#L110-L134), if 50% of the order volume is filled, the system calculates the filled cost and adjusts the portfolio cash balance based on the actual value (`assert 4_890_000 <= portfolio.cash_toman <= 4_901_000`).
+In the class [`ExchangeAdapter`](../src/exchange/adapter.py#L110-L134), if 50% of the order volume is filled, the system calculates the filled cost and adjusts the portfolio cash balance based on the actual value (`assert 4_890_000 <= portfolio.cash_toman <= 4_901_000`).
 
 ### 3. Emergency Drawdown Halt test in 5% (Emergency Drawdown Halt):
-In the portfolio tests without AI, when the drawdown reached **5.03%**, the `trigger_emergency_halt` method in [`RiskEngine`](file:///root/starcoach-hack/wallex/src/risk/engine.py#L114-L120) was activated immediately:```
+In the portfolio tests without AI, when the drawdown reached **5.03%**, the `trigger_emergency_halt` method in [`RiskEngine`](../src/risk/engine.py#L114-L120) was activated immediately:```
 [CRITICAL] EMERGENCY TRADING HALT TRIGGERED: Drawdown breach: 5.03% >= 5.00%
 ```After activating this state, any subsequent signal was immediately rejected with the reason ``System is in EMERGENCY HALT state'' and no order was sent to the market.
 

@@ -2,8 +2,8 @@
 ## Strategy Candidates Specification, Hypotheses, and Architecture
 
 > **Research branch:** `research/phase22-discovery`  
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **Base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)
+> **Repository:** [`wallex`](..)  
+> **Base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)
 
 ---
 

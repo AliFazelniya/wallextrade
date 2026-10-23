@@ -41,9 +41,9 @@ The engineering research and audit team reproduced all of the following results 
 1. **Complete health and exam suite coverage:**
    - 61 unit tests and automatic integration tests were passed without errors (100% pass rate).
    - Code coverage in all `src/` modules is equivalent to **81%**.
-   - Order execution module coverage ([`src/exchange/adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py)) reached **92%**.
+   - Order execution module coverage ([`src/exchange/adapter.py`](../src/exchange/adapter.py)) reached **92%**.
 2. ** Cryptographic Hash of the Frozen Strategy Manifesto:**
-   - The file [`config/frozen_strategy_manifest_v0.6.0.json`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json) has a valid hash without any changes:
+   - The file [`config/frozen_strategy_manifest_v0.6.0.json`](../config/frozen_strategy_manifest_v0.6.0.json) has a valid hash without any changes:
      `249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66`
 3. **Historical data file integrity (`data/cache/`):**
    - `BTCTMN_15m_90d.csv` (8,636 candles): `54292673b433a9a95e19ebab0dc446fdfc1458c9b8e4ea5672a6b5ad51775a9e`
@@ -65,7 +65,7 @@ To understand the historical development path, the following results were extrac
 - **Phase 14:** Auditing the difference of 7,032 Tomans between IS and OOS period; Proving that early liquidation of the open position at the border of the period (Candle 4,318) caused a loss of 5,185 Tomans, while the continuation of the position in the continuous run led to a loss of 2% (12,217 Tomans loss).
 - **Phase 15:** Comprehensive tests of operational failures (14 crisis scenarios) and successful test maneuver in the shadow on Wallex live data.
 - **Phase 16:** The official registry of race obstacles (B-01 to B-05) and the implementation of an incremental data pipeline without network delay.
-- **Phase 17 and 18:** Setting up the official draft of the competition barriers query ([`docs/ORGANIZER_BLOCKER_REQUEST_FA.md`](file:///root/starcoach-hack/wallex/docs/ORGANIZER_BLOCKER_REQUEST_FA.md)) and modeling the implementation costs.
+- **Phase 17 and 18:** Setting up the official draft of the competition barriers query ([`docs/ORGANIZER_BLOCKER_REQUEST_FA.md`](ORGANIZER_BLOCKER_REQUEST_FA.md)) and modeling the implementation costs.
 
 ---
 
@@ -152,19 +152,19 @@ The research team announces the following for maximum transparency:
 
 | System component Approved parameter | Reference file Audit status
 |---|---|---|---|
-| **Target trading symbol** | ``BTCTMN'' | [`frozen_strategy_manifest_v0.6.0.json`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json) | ✅ Frozen |
-| **Data Timeframe** | 15 minutes (`15`) | [`fetcher.py`](file:///root/starcoach-hack/wallex/src/data/fetcher.py) | ✅ Frozen |
-| **Take Profit** | 3.5% (`take_profit_pct=3.5`) | [`regime_momentum.py`](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py#L28) | ✅ Frozen |
-| **Loss Limit (Stop Loss)** | 2.0% (`stop_loss_pct=2.0`) | [`regime_momentum.py`](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py#L27) | ✅ Frozen |
-| **allowed spread ceiling** | 0.20% (`max_spread_pct=0.20`) | [`frozen_strategy_manifest_v0.6.0.json`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json#L14) | ✅ Frozen |
-| **Tomani order ceiling** | 500,000 Tomans [`engine.py`](file:///root/starcoach-hack/wallex/src/risk/engine.py#L43) | ✅ Frozen |
-| **Emergency drawdown ceiling** | 5.0% [`engine.py`](file:///root/starcoach-hack/wallex/src/risk/engine.py#L45) | ✅ Frozen |
-| **Compulsory settlement in Tomans** | 100% balance 30 minutes before the end [`accounting.py`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py#L205) | ✅ Frozen |
-| **Live transaction software gate** | `live_execution_authorized = False` | [`adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py#L142) | 🔒 active software lock
+| **Target trading symbol** | ``BTCTMN'' | [`frozen_strategy_manifest_v0.6.0.json`](../config/frozen_strategy_manifest_v0.6.0.json) | ✅ Frozen |
+| **Data Timeframe** | 15 minutes (`15`) | [`fetcher.py`](../src/data/fetcher.py) | ✅ Frozen |
+| **Take Profit** | 3.5% (`take_profit_pct=3.5`) | [`regime_momentum.py`](../src/strategy/regime_momentum.py#L28) | ✅ Frozen |
+| **Loss Limit (Stop Loss)** | 2.0% (`stop_loss_pct=2.0`) | [`regime_momentum.py`](../src/strategy/regime_momentum.py#L27) | ✅ Frozen |
+| **allowed spread ceiling** | 0.20% (`max_spread_pct=0.20`) | [`frozen_strategy_manifest_v0.6.0.json`](../config/frozen_strategy_manifest_v0.6.0.json#L14) | ✅ Frozen |
+| **Tomani order ceiling** | 500,000 Tomans [`engine.py`](../src/risk/engine.py#L43) | ✅ Frozen |
+| **Emergency drawdown ceiling** | 5.0% [`engine.py`](../src/risk/engine.py#L45) | ✅ Frozen |
+| **Compulsory settlement in Tomans** | 100% balance 30 minutes before the end [`accounting.py`](../src/portfolio/accounting.py#L205) | ✅ Frozen |
+| **Live transaction software gate** | `live_execution_authorized = False` | [`adapter.py`](../src/exchange/adapter.py#L142) | 🔒 active software lock
 
 ---
 
 ## 9. The final steps before the start of the competition
 
-1. The human operator sends the official request text [`docs/ORGANIZER_BLOCKER_REQUEST_FA.md`](file:///root/starcoach-hack/wallex/docs/ORGANIZER_BLOCKER_REQUEST_FA.md) to Wallex and Starcoach support.
-2. As soon as the time and special keys of the race account are delivered, the final human authorization checklist in [`docs/PHASE18_FINAL_AUTHORIZATION_GATE.md`](file:///root/starcoach-hack/wallex/docs/PHASE18_FINAL_AUTHORIZATION_GATE.md) is passed, and after performing the read-only test of the account balance, the live connection license is issued by the user.
+1. The human operator sends the official request text [`docs/ORGANIZER_BLOCKER_REQUEST_FA.md`](ORGANIZER_BLOCKER_REQUEST_FA.md) to Wallex and Starcoach support.
+2. As soon as the time and special keys of the race account are delivered, the final human authorization checklist in [`docs/PHASE18_FINAL_AUTHORIZATION_GATE.md`](PHASE18_FINAL_AUTHORIZATION_GATE.md) is passed, and after performing the read-only test of the account balance, the live connection license is issued by the user.

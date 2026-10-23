@@ -1,9 +1,9 @@
 # Phase 25 Shadow Execution Report
 ## Real-Time Order Book Liquidity, Spread Dynamics & Live Shadow Observation
 
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
 > **Research branch:** `research/phase25-validation`  
-> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Online endpoints:** `https://api.wallex.ir/v1/depth` and `https://api.wallex.ir/v1/markets`  
 > **Trading mode:** `SHADOW' (complete simulation without sending orders to the exchange)  
 > **Live execution authorized:** `live_execution_authorized = False` (completely blocked)
@@ -32,7 +32,7 @@ The robot was connected to the real data in ``SHADOW'' mode and performed 5 live
 * **Price and depth queries:** 100% successful with no network errors or timeouts.
 * **Evaluation of Signals:** During the monitored hours, Bitcoin was in a tight swing range and trading volume was below the breakout threshold.
 * **System behavior:** Based on its intelligent design, the robot did not issue any raw signal and remained **100% in safe cash mode (Cash Buffer)**.
-* **Event logging:** All web service responses and decisions were saved in [`logs/shadow_session_phase23.json`](file:///root/starcoach-hack/wallex/logs/shadow_session_phase23.json).
+* **Event logging:** All web service responses and decisions were saved in [`logs/shadow_session_phase23.json`](../logs/shadow_session_phase23.json).
 
 ---
 

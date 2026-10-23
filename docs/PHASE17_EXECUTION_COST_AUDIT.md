@@ -4,11 +4,11 @@
 > **Setting date:** October 22, 2026 (November 1, 1405)  
 > **Software version:** `v0.8.0-phase16-audited`  
 > **Modules to be audited:**  
-> - [`src/portfolio/accounting.py`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py) (Accounting and Fee Engine)  
-> - [`src/exchange/adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py) (Adapter for submitting orders and classifying maker/taker)  
-> - [`src/backtest/engine.py`](file:///root/starcoach-hack/wallex/src/backtest/engine.py) (single icon simulation engine)  
-> - [`src/backtest/portfolio_engine.py`](file:///root/starcoach-hack/wallex/src/backtest/portfolio_engine.py) (Common Portfolio Simulation Engine)  
-> - [`src/risk/engine.py`](file:///root/starcoach-hack/wallex/src/risk/engine.py) (risk gates and spread filter)
+> - [`src/portfolio/accounting.py`](../src/portfolio/accounting.py) (Accounting and Fee Engine)  
+> - [`src/exchange/adapter.py`](../src/exchange/adapter.py) (Adapter for submitting orders and classifying maker/taker)  
+> - [`src/backtest/engine.py`](../src/backtest/engine.py) (single icon simulation engine)  
+> - [`src/backtest/portfolio_engine.py`](../src/backtest/portfolio_engine.py) (Common Portfolio Simulation Engine)  
+> - [`src/risk/engine.py`](../src/risk/engine.py) (risk gates and spread filter)
 
 ---
 
@@ -29,7 +29,7 @@ Based on the official level 1 table of Toman transactions of Wallex exchange and
 
 One of the required audits of Phase 17 was to ensure that limit orders are not automatically considered Makers, as a limit order placed at a price above the best bid (to buy) or below the best bid (to sell) is immediately executed and considered a Taker.
 
-### 2.1. Split logic in the implementation adapter ([`src/exchange/adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py)):
+### 2.1. Split logic in the implementation adapter ([`src/exchange/adapter.py`](../src/exchange/adapter.py)):
 In the ``execute_order'' function, the ``is_maker'' parameter is automatically determined by the following mathematical rule:
 
 ```python
@@ -49,7 +49,7 @@ else:
   resolved_is_maker = is_maker
 ```
 
-This variable is passed directly to `portfolio.record_fill(..., is_maker=resolved_is_maker)`. This rule was validated and confirmed with the automatic test [`test_adapter_maker_taker_fee_classification`](file:///root/starcoach-hack/wallex/tests/test_exchange_adapter.py#L240).
+This variable is passed directly to `portfolio.record_fill(..., is_maker=resolved_is_maker)`. This rule was validated and confirmed with the automatic test [`test_adapter_maker_taker_fee_classification`](../tests/test_exchange_adapter.py#L240).
 
 ---
 
@@ -82,7 +82,7 @@ flowchart TD
   $$\text{Net Return} = -2.00\% - 0.90\% = -2.90\%$$
 
 ### 3.3. The third scenario - emergency settlement at the end of the race in Tomans:
-- The open position is closed in the last minute with the method [`liquidate_all_to_toman`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py#L205) as a market order by applying 0.15% slippage and 0.30% ticker fee (exit fee 0.45%).
+- The open position is closed in the last minute with the method [`liquidate_all_to_toman`](../src/portfolio/accounting.py#L205) as a market order by applying 0.15% slippage and 0.30% ticker fee (exit fee 0.45%).
 
 ---
 
@@ -122,7 +122,7 @@ If the allowed spread ceiling is increased to, for example, 0.35% or 0.50%:
 ## 6. Audit of partially filled orders (Partial Fills)
 
 In real crypto markets, limit orders are not always 100% filled. The execution adapter and accounting module successfully support this scenario:
-- Test [`test_partial_fill_execution`] (file:///root/starcoach-hack/wallex/tests/test_exchange_adapter.py#L110) was executed with 50% filling of the order volume.
+- Test [`test_partial_fill_execution`] (../tests/test_exchange_adapter.py#L110) was executed with 50% filling of the order volume.
 - Only 50% of the nominal value was entered into the basket as a position and the fee was calculated exclusively on the filled part.
 - The remaining uncommitted capital remained in the Tomani account and the cash balance of the account was reconciled with 100% mathematical accuracy.
 

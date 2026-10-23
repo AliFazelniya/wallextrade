@@ -1,6 +1,6 @@
 # The final statement of the decision-making gate and the audit of removing competition obstacles (phase 16)
 ### Phase 16 Final Go/No-Go Decision Gate & Competition Blocker Resolution Audit
-**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Audit date:** October 22, 2026 **Input base tag:** `v0.7.0-phase15-rehearsed` (`1a90cdf`) | **Final tag of phase 16:** `v0.8.0-phase16-audited` (`7485677`) | **Status of tests:** 59 out of 59 successful tests (80% code coverage)
+**Repository:** [`wallex`](..) | **Audit date:** October 22, 2026 **Input base tag:** `v0.7.0-phase15-rehearsed` (`1a90cdf`) | **Final tag of phase 16:** `v0.8.0-phase16-audited` (`7485677`) | **Status of tests:** 59 out of 59 successful tests (80% code coverage)
 
 ---
 
@@ -37,24 +37,24 @@ According to the safety requirements of Phase 16, no obstacle is considered "res
 
 Each approved parameter in the source code and official manifest was inspected line by line:
 
-- **Strategy manifest file:** [`config/frozen_strategy_manifest_v0.6.0.json`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json)
+- **Strategy manifest file:** [`config/frozen_strategy_manifest_v0.6.0.json`](../config/frozen_strategy_manifest_v0.6.0.json)
 - **SHA-256 validation hash:**
   `249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66`
 - **Parameter matching table in executable source code:**
 
 | Approved parameter | The approved amount of the manifest The value implemented in the code | Matching status File and reference line
 |---|---|---|---|---|
-| **Trading symbol (Symbol)** | ``BTCTMN'' | ``BTCTMN'' | 100% compliance [`manifest`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json#L9) |
-| **Timeframe of candles (Timeframe)** | 15 minutes (`15`) | 15 minutes (`15`) | 100% compliance [`manifest`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json#L10) |
-| **Warm-up candles** | 60 candles 60 candles 100% compliance [`manifest`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json#L11) |
-| **Take Profit** | 3.5% 3.5% (`take_profit_pct=3.5`) | 100% compliance [`regime_momentum.py`](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py#L28) |
-| **Loss Limit (Stop Loss)** | 2.0% 2.0% (`stop_loss_pct=2.0`) | 100% compliance [`regime_momentum.py`](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py#L27) |
-| **Minimum confidence factor** | 0.70 | 0.70 (`min_confidence=0.70`) | 100% compliance [`regime_momentum.py`](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py#L25) |
-| **Default Action** | ``NO_TRADE'' | Return ``None'' in the absence of the condition | 100% compliance [`regime_momentum.py`](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py#L117) |
-| **Ceiling of each order (Max Order Size)** | 500,000 Tomans 500,000 Tomans 100% compliance [`engine.py`](file:///root/starcoach-hack/wallex/src/risk/engine.py#L46) |
-| **Portfolio Commitment Ceiling (Max Exposure)** | 60.0% 60.0% 100% compliance [`engine.py`](file:///root/starcoach-hack/wallex/src/risk/engine.py#L47) |
-| ** Capital loss ceiling (Max Drawdown)** | 5.0% 5.0% 100% compliance [`engine.py`](file:///root/starcoach-hack/wallex/src/risk/engine.py#L48) |
-| **Simultaneous position ceiling (Max Positions)** | 1 position 1 position 100% compliance [`manifest`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json#L26) |
+| **Trading symbol (Symbol)** | ``BTCTMN'' | ``BTCTMN'' | 100% compliance [`manifest`](../config/frozen_strategy_manifest_v0.6.0.json#L9) |
+| **Timeframe of candles (Timeframe)** | 15 minutes (`15`) | 15 minutes (`15`) | 100% compliance [`manifest`](../config/frozen_strategy_manifest_v0.6.0.json#L10) |
+| **Warm-up candles** | 60 candles 60 candles 100% compliance [`manifest`](../config/frozen_strategy_manifest_v0.6.0.json#L11) |
+| **Take Profit** | 3.5% 3.5% (`take_profit_pct=3.5`) | 100% compliance [`regime_momentum.py`](../src/strategy/regime_momentum.py#L28) |
+| **Loss Limit (Stop Loss)** | 2.0% 2.0% (`stop_loss_pct=2.0`) | 100% compliance [`regime_momentum.py`](../src/strategy/regime_momentum.py#L27) |
+| **Minimum confidence factor** | 0.70 | 0.70 (`min_confidence=0.70`) | 100% compliance [`regime_momentum.py`](../src/strategy/regime_momentum.py#L25) |
+| **Default Action** | ``NO_TRADE'' | Return ``None'' in the absence of the condition | 100% compliance [`regime_momentum.py`](../src/strategy/regime_momentum.py#L117) |
+| **Ceiling of each order (Max Order Size)** | 500,000 Tomans 500,000 Tomans 100% compliance [`engine.py`](../src/risk/engine.py#L46) |
+| **Portfolio Commitment Ceiling (Max Exposure)** | 60.0% 60.0% 100% compliance [`engine.py`](../src/risk/engine.py#L47) |
+| ** Capital loss ceiling (Max Drawdown)** | 5.0% 5.0% 100% compliance [`engine.py`](../src/risk/engine.py#L48) |
+| **Simultaneous position ceiling (Max Positions)** | 1 position 1 position 100% compliance [`manifest`](../config/frozen_strategy_manifest_v0.6.0.json#L26) |
 
 ---
 
@@ -63,7 +63,7 @@ Each approved parameter in the source code and official manifest was inspected l
 ### 4.1. Analysis of the problem of repeatedly downloading the 5-day history:
 In the Phase 15 test, a total of 5 days of history (~480 candles) was re-downloaded from Wallex per cycle, causing a 1.5 second network delay and unnecessary outage risk.
 
-### 4.2. Implementation and proof of incremental pipeline ([`fetch_incremental_ohlcv`](file:///root/starcoach-hack/wallex/src/data/fetcher.py)):
+### 4.2. Implementation and proof of incremental pipeline ([`fetch_incremental_ohlcv`](../src/data/fetcher.py)):
 The incremental receive method was implemented:
 1. In the first cycle, the required history is loaded and cached.
 2. In subsequent cycles, only new candles with a 30-minute overlap are received and merged with the `clean_and_deduplicate_dataframe` method.
@@ -88,7 +88,7 @@ The experimental test comparing the index values on the complete data against th
 
 ## 5. Execution-Cost Verification
 
-The portfolio accounting source code ([`src/portfolio/accounting.py`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py)) and the implementation adapter ([`src/exchange/adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py)) have been fully audited:
+The portfolio accounting source code ([`src/portfolio/accounting.py`](../src/portfolio/accounting.py)) and the implementation adapter ([`src/exchange/adapter.py`](../src/exchange/adapter.py)) have been fully audited:
 
 1. Entry orders:
    - They are calculated with an unfavorable slippage of 0.15% (`target_price * 1.0015`).
@@ -111,7 +111,7 @@ The portfolio accounting source code ([`src/portfolio/accounting.py`](file:///ro
 All the items required for the evaluation of the judges and the final competition were confirmed and frozen in the tank:
 
 - [x] Python 3.12 codes according to clean engineering principles in `src/` folder.
-- [x] Persian guide [`README.md`](file:///root/starcoach-hack/wallex/README.md) and operational runbook of the competition [`docs/COMPETITION_RUNBOOK.md`](file:///root/starcoach-hack/wallex/docs/COMPETITION_RUNBOOK.md).
+- [x] Persian guide [`README.md`](../README.md) and operational runbook of the competition [`docs/COMPETITION_RUNBOOK.md`](COMPETITION_RUNBOOK.md).
 - [x] Frozen strategy manifest with validation hash in `config/frozen_strategy_manifest_v0.6.0.json`.
 - [x] Permanent blocking of 21 inactive markets in `config/market_restrictions.json`.
 - [x] P&L scientific audit reports of phase 14 and phase 15 in `docs/` folder.

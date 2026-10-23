@@ -3,7 +3,7 @@
 
 > **Report date:** October 22, 2026 (November 1, 1405)  
 > **Software version:** `v0.11.0-phase19-audited`  
-> **repository location:** [`data/cache/`](file:///root/starcoach-hack/wallex/data/cache/)  
+> **repository location:** [`data/cache/`](../data/cache/)  
 > **Execution gate status:** code-level software gate disabled (`live_execution_authorized = False')
 
 ---
@@ -67,7 +67,7 @@ In a full 90 calendar day period (2,160 hours), there are exactly 8,640 15-minut
 
 ## 4. Audit of removal of pre-warming candles (Warm-up Period)
 
-- In backtest engine ([`src/backtest/engine.py`](file:///root/starcoach-hack/wallex/src/backtest/engine.py#L74)) and portfolio ([`src/backtest/portfolio_engine.py`](file:///root/starcoach-hack/wallex/src/backtest/portfolio_engine.py#L105)), simulation exactly from **Candle 50 or 60** Then it begins.
+- In backtest engine ([`src/backtest/engine.py`](../src/backtest/engine.py#L74)) and portfolio ([`src/backtest/portfolio_engine.py`](../src/backtest/portfolio_engine.py#L105)), simulation exactly from **Candle 50 or 60** Then it begins.
 - **Engineering reason:** Exponential indicators such as ``EMA_50'' and average real range ``ATR_14'' require at least 50 historical candles to achieve mathematical stability and avoid initialization bias.
 - As a result, in the 90-day evaluation of the Bitcoin symbol, among the total 8,636 candles, **8,586 candles** are directly in the decision cycle and signal test.
 

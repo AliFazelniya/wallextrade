@@ -1,9 +1,9 @@
 # Independent validation of the sample with completely pristine data (Phase 26 Independent Data Validation)
 ## Strict Blind Out-of-Sample Validation on Unseen Historical Market Data (July 05 - July 24, 2026)
 
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
 > **Research branch:** `research/phase26-forensic-validation`  
-> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Pristine OOS data period:** From July 5, 2026 to July 24, 2026 (19 consecutive days before the start of the baseline data)  
 > **Number of independent 15-minute candles:** **1,825 candles** per symbol (`BTCTMN`, `ETHTMN`, `SOLTMN`)  
 > **Number of independent match windows ($N$):** **6 full 72-hour windows** ($W_{-06}$ to $W_{-01}$)  

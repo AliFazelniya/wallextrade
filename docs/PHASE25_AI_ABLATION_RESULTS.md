@@ -1,9 +1,9 @@
 # Controlled study of artificial intelligence effect separation in H1+H3 portfolio (Phase 25 AI Ablation)
 ## Three-Way AI Ablation Study: Deterministic Baseline vs Phase 23 Agent vs Cost-Sensitive AI
 
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
 > **Research branch:** `research/phase25-validation`  
-> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Test environment:** Same conditions in 29 competition windows ($N = $29) with execution of candle shadow and official exchange fees
 
 ---
@@ -22,7 +22,7 @@
 
 Why did the artificial intelligence agent reduce the profit of phase 23 by more than **37,000 tomans**?
 1. Rigid Boolean Thresholds:  
-   The previous agent code in [`src/agents/regime_agent.py`](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py#L79) defined the ascending regime condition exclusively as:```python
+   The previous agent code in [`src/agents/regime_agent.py`](../src/agents/regime_agent.py#L79) defined the ascending regime condition exclusively as:```python
    if f.ema_spread_pct > 0.4 and 52 <= f.rsi_14 <= 68 and f.vol_ratio >= 1.15:
    ```2. **Veto of gold transactions at trend peaks:**  
    On the strongest bullish days of the market (such as the W09 and W22 windows), on the breakout breakout candles, the RSI indicator reached 69.5 or the volume ratio reached 1.12 for several candles due to the strength of the price acceleration.  

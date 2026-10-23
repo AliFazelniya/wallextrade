@@ -1,12 +1,12 @@
 # Validation of joint investment portfolio and rooting of asset performance (Phase 13)
 ### Multi-Symbol Shared Portfolio Validation & Root-Cause Friction Diagnosis
-**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Initial joint capital:** 5,000,000 Tomans **Data horizon:** 90 full days (8,635 15-minute candles)
+**Repository:** [`wallex`](..) | **Initial joint capital:** 5,000,000 Tomans **Data horizon:** 90 full days (8,635 15-minute candles)
 
 ---
 
 ## 1. The simulation structure of the real joint portfolio of 5 million tomans
 
-According to the official rules of Wallex x Starkoch competition, each trading team has **a single account of 5,000,000 Tomans**. In the [`PortfolioBacktestEngine`](file:///root/starcoach-hack/wallex/src/backtest/portfolio_engine.py) engine, all symbols use a common liquidity pool synchronously in time, and the following caps are enforced by the [`RiskEngine`](file:///root/starcoach-hack/wallex/src/risk/engine.py):
+According to the official rules of Wallex x Starkoch competition, each trading team has **a single account of 5,000,000 Tomans**. In the [`PortfolioBacktestEngine`](../src/backtest/portfolio_engine.py) engine, all symbols use a common liquidity pool synchronously in time, and the following caps are enforced by the [`RiskEngine`](../src/risk/engine.py):
 - **Individual order ceiling:** Maximum 500,000 Tomans (10% of the total capital).
 - **Total cryptocurrency exposure ceiling of the portfolio:** Maximum 60% (3,000,000 Tomans in total assets).
 - **Simultaneous position limit:** Maximum 3 symbols.
@@ -40,7 +40,7 @@ graph TD
 **Fundamental question of phase 13:**
 > *Why has the AI mutual fund posted a negative return of -0.62% to -2.06%, while the Bitcoin symbol in isolation has been quite profitable (+0.43% to +0.62%)?*
 
-A piece-by-piece analysis of the extracted transactions in [`research/phase13_validation_results.json`](file:///root/starcoach-hack/wallex/research/phase13_validation_results.json) reveals the exact cause of this phenomenon:
+A piece-by-piece analysis of the extracted transactions in [`research/phase13_validation_results.json`](../research/phase13_validation_results.json) reveals the exact cause of this phenomenon:
 
 | Assets in the common portfolio Net profit/loss after fees (Net P&L) | Fee paid to the exchange Number of transactions Ratio of fee to gross profit role in the portfolio
 |---|---|---|---|---|---|

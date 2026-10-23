@@ -1,9 +1,9 @@
 # Out-of-sample validation, bootstrap and overfitting (Phase 25 OOS Validation)
 ## Strict Statistical Validation, Bootstrap Uncertainty & Walk-Forward Audit
 
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
 > **Research branch:** `research/phase25-validation`  
-> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Classification of statistical status:** ⚠️ **INCONCLUSIVE**
 
 ---

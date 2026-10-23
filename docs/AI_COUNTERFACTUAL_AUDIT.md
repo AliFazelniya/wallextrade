@@ -1,6 +1,6 @@
 # Deep audit of unrealistic decisions and proof of the economic value of artificial intelligence (phase 13)
 ### Deep Counterfactual Audit of AI Regime Decisions & Economic Value-Add
-**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Audit Symbol:** `BTCTMN` | **Data horizon:** 90 full days (8,636 candles) | **Validation Engine:** [`run_counterfactual_audit`](file:///root/starcoach-hack/wallex/scripts/run_phase13_validation.py#L42-L168)
+**Repository:** [`wallex`](..) | **Audit Symbol:** `BTCTMN` | **Data horizon:** 90 full days (8,636 candles) | **Validation Engine:** [`run_counterfactual_audit`](../scripts/run_phase13_validation.py#L42-L168)
 
 ---
 
@@ -10,7 +10,7 @@ In the phase 12 report, it was stated that the artificial intelligence agent vet
 1. *Are the signals called "false" simply because they were rejected by the AI?*
 2. *Has look-ahead bias been used in the process of classifying the market regime or evaluating signals?*
 
-For a decisive and mathematical answer to these questions, a **Trade-Level Counterfactual Simulator** was implemented in the script [`scripts/run_phase13_validation.py'](file:///root/starcoach-hack/wallex/scripts/run_phase13_validation.py) which follows each vetoed signal in the future and calculates their actual result when they arrive.
+For a decisive and mathematical answer to these questions, a **Trade-Level Counterfactual Simulator** was implemented in the script [`scripts/run_phase13_validation.py'](../scripts/run_phase13_validation.py) which follows each vetoed signal in the future and calculates their actual result when they arrive.
 
 ---
 
@@ -76,5 +76,5 @@ Based on accurate calculations based on the nominal value of each order (500,000
 1. **Separation of veto reasons:**
    - 100% of vetoes (553 cases) under the reason of ``CALM_RANGE'' regime have been recorded with 75% confidence. In these periods, although the crossing of the moving averages had occurred, the volatility indicators (ATR% less than 1.0%) and the tightness of the swing range indicated that the price was stuck in a horizontal channel and could not cover the 0.85% reciprocating friction.
 2. **Certain proof of non-use of future information (Look-Ahead Bias Proof):**
-   - The regime classification algorithm in [`src/agents/regime_agent.py`](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py) only received the slice values leading to candle $i$ and had no information about candles $i+1$ to $i+48$.
+   - The regime classification algorithm in [`src/agents/regime_agent.py`](../src/agents/regime_agent.py) only received the slice values leading to candle $i$ and had no information about candles $i+1$ to $i+48$.
    - The future data is exclusively used in the counterfactual simulator of phase 13 to score the past decisions.

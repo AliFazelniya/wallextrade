@@ -1,9 +1,9 @@
 # Evidence of the execution of shadow transactions and live validation (Phase 26 Shadow Execution Evidence)
 ## Live Shadow Testing, Order-Book Ingestion, Latency Tracking & Forward Limitations
 
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
 > **Research branch:** `research/phase26-forensic-validation`  
-> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Test environment:** Live connection to real market endpoints of Wallex exchange (`https://api.wallex.ir`)  
 > **Authorization of live transactions:** `live_execution_authorized = False` (pure shadow mode / no money order sending)  
 > **Status of the 72-hour forward test:** ⚠️ **Full implementation of the pipeline / failure to complete the 72-hour interval due to the time limit of the session**
@@ -12,12 +12,12 @@
 
 ## 1. Live Shadow Session Metrics
 
-Phase 26 test execution session was executed using the [`ShadowExecutionRunner`] class (file:///root/starcoach-hack/wallex/src/execution/shadow_runner.py) on October 22, 2026:
+Phase 26 test execution session was executed using the [`ShadowExecutionRunner`] class (../src/execution/shadow_runner.py) on October 22, 2026:
 
 | Live monitoring index Measured value Data source and status
 |---|:---:|---|
 | **The number of complete monitoring cycles (Cycles)** | **10 consecutive cycles** | Live REST/JSON connection to Wallex
-| **Total events recorded in the log** | **20 standard events** | Log file [`logs/shadow_session_phase26.json`](file:///root/starcoach-hack/wallex/logs/shadow_session_phase26.json) |
+| **Total events recorded in the log** | **20 standard events** | Log file [`logs/shadow_session_phase26.json`](../logs/shadow_session_phase26.json) |
 | **Real duration of live monitoring** | 22.1 seconds Continuity of connection without interruption
 | **Average Network Latency** | **1.62 seconds** | The time of sending and receiving snapshots of the order book
 | **Number of network errors and outages** | **0 cases (Zero Failures)** | 100% uptime during the session

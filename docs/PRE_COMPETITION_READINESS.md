@@ -1,13 +1,13 @@
 # Final report of Pre-Competition Readiness Assessment
 ### Phase 11: Definitive Audit, Strategy Verification and System Governance Assessment for Wallex x Starcoach Hackathon
 
-This document provides a comprehensive, independent and evidence-based evaluation of all parts of the algorithmic trading system in the [`wallex'](file:///root/starcoach-hack/wallex) repository before the event begins.
+This document provides a comprehensive, independent and evidence-based evaluation of all parts of the algorithmic trading system in the [`wallex'](..) repository before the event begins.
 
 ---
 
 ## 1. Audit results and separation of sets of symbols (Market List Set-Difference Audit)
 
-From a total of **373 active markets** queried from the official programming interface of the Wallex exchange (`https://api.wallex.ir/v1/markets`), the mathematical separation process with an automatic script [`scripts/audit_market_restrictions.py`] (file:///root/starcoach-hack/wallex/scripts/audit_market_restrictions.py) was proved as complete and dual-separate (Disjoint & Complete) as follows:
+From a total of **373 active markets** queried from the official programming interface of the Wallex exchange (`https://api.wallex.ir/v1/markets`), the mathematical separation process with an automatic script [`scripts/audit_market_restrictions.py`] (../scripts/audit_market_restrictions.py) was proved as complete and dual-separate (Disjoint & Complete) as follows:
 
 ```
 [ All Wallex symbols: 373 ]
@@ -29,7 +29,7 @@ From a total of **373 active markets** queried from the official programming int
 
 ## 2. Independent verification of candle aggregation (Candle Aggregation Reproducibility)
 
-By running the verification script [`scripts/verify_candle_aggregation.py`](file:///root/starcoach-hack/wallex/scripts/verify_candle_aggregation.py) the following microstructural results were independently reproduced on the main currency pairs:
+By running the verification script [`scripts/verify_candle_aggregation.py`](../scripts/verify_candle_aggregation.py) the following microstructural results were independently reproduced on the main currency pairs:
 
 | Audit index Bitcoin to Toman (**BTCTMN**) | Ethereum to Toman (**ETHTMN**) |
 |---|---|---|
@@ -64,7 +64,7 @@ By running the verification script [`scripts/verify_candle_aggregation.py`](file
 
 ## 4. Strategy audit results and 4-Way Baseline Comparison with benchmarks
 
-Based on an independent execution of the script [`scripts/validate_strategy_and_baselines.py`](file:///root/starcoach-hack/wallex/scripts/validate_strategy_and_baselines.py) on 1,825 real 15-minute Wallex candles, the following comparative results were obtained:
+Based on an independent execution of the script [`scripts/validate_strategy_and_baselines.py`](../scripts/validate_strategy_and_baselines.py) on 1,825 real 15-minute Wallex candles, the following comparative results were obtained:
 
 ### 4.1. Bitcoin to Toman symbol (BTCTMN)
 | approach/strategy Net Return | Maximum Drawdown (Max DD) | Net Profit/Loss (TMN) | Number of closed transactions Turnover |
@@ -116,11 +116,11 @@ TOTAL                           547    177    68%
 
 - **Total number of tests:** 31 tests (100% passed, 0 errors, 0 ignored).
 - **Measured code coverage:**
-  - Independent risk management engine ([`src/risk/engine.py`](file:///root/starcoach-hack/wallex/src/risk/engine.py)): **86%**
-  - Quantitative indicators extraction ([`src/features/indicators.py`](file:///root/starcoach-hack/wallex/src/features/indicators.py)): **86%**
-  - Portfolio accounting and fees ([`src/portfolio/accounting.py`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py)): **76%**
-  - Order execution adapter and authorized filter ([`src/exchange/adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py)): **75%**
-  - Pydantic structured models ([`src/agents/schemas.py`](file:///root/starcoach-hack/wallex/src/agents/schemas.py)): **100%**
+  - Independent risk management engine ([`src/risk/engine.py`](../src/risk/engine.py)): **86%**
+  - Quantitative indicators extraction ([`src/features/indicators.py`](../src/features/indicators.py)): **86%**
+  - Portfolio accounting and fees ([`src/portfolio/accounting.py`](../src/portfolio/accounting.py)): **76%**
+  - Order execution adapter and authorized filter ([`src/exchange/adapter.py`](../src/exchange/adapter.py)): **75%**
+  - Pydantic structured models ([`src/agents/schemas.py`](../src/agents/schemas.py)): **100%**
 
 ---
 
@@ -128,7 +128,7 @@ TOTAL                           547    177    68%
 
 > [!CAUTION]
 > - Environment variable `TRADING_MODE` is set to `SIMULATION`.
-> - The `live_execution_authorized' variable is set to `False', which acts as a **Software Authorization Gate** and issues an exception [`ExecutionError'](file:///root/starcoach-hack/wallex/src/exchange/adapter.py#L26-L27) in case of any live order attempt.
+> - The `live_execution_authorized' variable is set to `False', which acts as a **Software Authorization Gate** and issues an exception [`ExecutionError'](../src/exchange/adapter.py#L26-L27) in case of any live order attempt.
 > - No private keys or authentication tokens are registered in git or documentation.
 
 ---

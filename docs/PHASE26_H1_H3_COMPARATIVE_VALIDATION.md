@@ -1,9 +1,9 @@
 # Independent comparative evaluation of H1 vs H1+H3 (Phase 26 H1 vs H1+H3)
 ## Comparative Evaluation, Incremental Value of H3, Collinearity & Parsimony (Occam's Razor)
 
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
 > **Research branch:** `research/phase26-forensic-validation`  
-> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Final judgment of the portfolio structure:** ⚖️ **Occam's razor rule: the superiority of the independent H1 model over the raw combination; Accepting H1+H3 only with floating assignment AI module**
 
 ---

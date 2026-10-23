@@ -2,8 +2,8 @@
 ## Multi-Dimensional Strategy Comparison Matrix
 
 > **Research branch:** `research/phase22-discovery`  
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **Base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
+> **Base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Number of independent windows compared:** 29 full 72-hour match windows ($N = $29)
 
 ---

@@ -16,7 +16,7 @@ This guide describes unambiguous step-by-step instructions for contest judges an
 
 ```bash
 # 1. Go to the repository directory
-cd /root/starcoach-hack/wallex
+cd wallex
 
 # 2. Creation and activation of Python virtual environment
 python3 -m venv .venv
@@ -53,7 +53,7 @@ python scripts/run_backtest.py BTCTMN ETHTMN
 ```
 
 **Expected output:**
-- Automatic report generation and update in [`docs/BACKTEST_REPORT.md`](file:///root/starcoach-hack/wallex/docs/BACKTEST_REPORT.md).
+- Automatic report generation and update in [`docs/BACKTEST_REPORT.md`](BACKTEST_REPORT.md).
 - Detailed reporting of net P&L, win rate, number of transactions, fees and confirmation of 100% balance settlement in Tomans at the end of the simulation.
 
 ---
@@ -67,8 +67,8 @@ python scripts/run_shadow.py
 ```
 
 **Expected output:**
-- Record decisions, agent's technical justification and risk assessment in the file [`logs/trading_decisions.jsonl`] (file:///root/starcoach-hack/wallex/logs/trading_decisions.jsonl).
-- Generate summary of results in [`docs/SHADOW_TEST_REPORT.md`](file:///root/starcoach-hack/wallex/docs/SHADOW_TEST_REPORT.md).
+- Record decisions, agent's technical justification and risk assessment in the file [`logs/trading_decisions.jsonl`] (../logs/trading_decisions.jsonl).
+- Generate summary of results in [`docs/SHADOW_TEST_REPORT.md`](SHADOW_TEST_REPORT.md).
 
 ---
 

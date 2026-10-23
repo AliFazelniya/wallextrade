@@ -1,6 +1,6 @@
 # Audit report on the impact and study of artificial intelligence ablation (phase 12)
 ### AI Contribution & Ablation Study with Counterfactual Logging
-**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Artificial Intelligence Agent:** [`RegimeClassificationAgent`](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py) | **Study symbols:** `BTCTMN`, `ETHTMN`, `SOLTMN`
+**Repository:** [`wallex`](..) | **Artificial Intelligence Agent:** [`RegimeClassificationAgent`](../src/agents/regime_agent.py) | **Study symbols:** `BTCTMN`, `ETHTMN`, `SOLTMN`
 
 ---
 
@@ -60,7 +60,7 @@ flowchart TD
 
 ## 4. Sampling Counterfactual Case Studies
 
-Analysis of real samples recorded in [`research/phase12_simulation_results.json`](file:///root/starcoach-hack/wallex/research/phase12_simulation_results.json) shows:
+Analysis of real samples recorded in [`research/phase12_simulation_results.json`](../research/phase12_simulation_results.json) shows:
 
 1. **Case 1: Avoid buying at the swing ceiling of the range in the symbol BTCTMN:**
    - *Traditional signal:* Cross-sectional bullish intersection of 20 and 50 averages due to the short-term jump of 2 candles. The traditional system issued a buy signal at the price of 21,150,000,000 Rials.

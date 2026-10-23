@@ -1,9 +1,9 @@
 # Comprehensive audit of the validity and sensitivity of stress tests (Phase 26 Stress Test Integrity)
 ## Adversarial Stress-Test Verification, State Mutation & Execution Realism Audit
 
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
 > **Research branch:** `research/phase26-forensic-validation`  
-> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Audit evaluation status:** ✅ **Completely resolving the ambiguities and confirming the correctness of the state mutation (State Mutation Verified)**
 
 ---
@@ -17,7 +17,7 @@ In the phase 25 report, four stress scenarios reported exactly the same profit a
 4. Adverse Intrabar Path
 
 ### Scrutiny audit of phase 25 script code:
-A line-by-line examination of the script [`src/experimental/stress_test_14_scenarios.py`](file:///root/starcoach-hack/wallex/src/experimental/stress_test_14_scenarios.py) and the function [`simulate_portfolio_ensemble`](file:///root/starcoach-hack/wallex/src/experimental/ensemble_engine.py#L33) revealed the secret of this similarity:
+A line-by-line examination of the script [`src/experimental/stress_test_14_scenarios.py`](../src/experimental/stress_test_14_scenarios.py) and the function [`simulate_portfolio_ensemble`](../src/experimental/ensemble_engine.py#L33) revealed the secret of this similarity:
 - **Defective parameters sent in phase 25:** In the initial script of phase 25, scenarios 06, 11 and 12 instead of sending mutated values (such as `spread_multiplier=1.5` or `fill_ratio=0.70`), due to the absence of these arguments in the signature of the simulator function, unwanted base default values (`slippage_pct=0.15, maker_fee=0.0025, taker_fee=0.0030`) were sent to the engine! In fact, the simulation engine had never noticed the application of these stresses!
 - **Adverse Intrabar scenario:** The base simulator engine was pre-coded as **conservative and pessimistic** (`is_sl' was always checked before `is_tp'). Therefore, running the pessimistic mode did not change the baseline output.
 

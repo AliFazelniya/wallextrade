@@ -5,10 +5,10 @@
 > **Software version:** `v0.9.0-phase17-submission`  
 > **Execution gate status:** code-level software gate disabled (`live_execution_authorized = False')  
 > **Validated modules:**  
-> - [`src/exchange/adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py) (Adapter execution and separation of order paths)  
-> - [`src/portfolio/accounting.py`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py) (fee accounting and settlement)  
-> - [`src/risk/engine.py`](file:///root/starcoach-hack/wallex/src/risk/engine.py) (risk gates and spread cap)  
-> - [`src/strategy/regime_momentum.py`](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py) (Momentum Frozen Strategy)
+> - [`src/exchange/adapter.py`](../src/exchange/adapter.py) (Adapter execution and separation of order paths)  
+> - [`src/portfolio/accounting.py`](../src/portfolio/accounting.py) (fee accounting and settlement)  
+> - [`src/risk/engine.py`](../src/risk/engine.py) (risk gates and spread cap)  
+> - [`src/strategy/regime_momentum.py`](../src/strategy/regime_momentum.py) (Momentum Frozen Strategy)
 
 ---
 
@@ -31,7 +31,7 @@ In the Valax Order Book:
 - **Mid Price:** $P_{mid} = \frac{P_{bid} + P_{ask}}{2}$.
 
 ### 2.3. Spread Convention:
-According to the method [`fetch_current_spread`](file:///root/starcoach-hack/wallex/src/data/fetcher.py#L179), the spread formula in Wallex system is defined based on the best purchase quote:
+According to the method [`fetch_current_spread`](../src/data/fetcher.py#L179), the spread formula in Wallex system is defined based on the best purchase quote:
 $$\text{Spread (\%)} = \frac{P_{ask} - P_{bid}}{P_{bid}} \times 100$$
 This definition is slightly more conservative (larger) than the formula based on the median price ($\frac{Ask - Bid}{Mid}$).
 
@@ -53,7 +53,7 @@ flowchart LR
 ```
 
 ### 3.1. The model implemented in the simulator and adapter:
-In the executable code [`ExchangeAdapter.execute_order`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py#L118):
+In the executable code [`ExchangeAdapter.execute_order`](../src/exchange/adapter.py#L118):
 $$P_{exec} = P_{target} \times (1 + \frac{\text{slippage\_pct}}{100}) = P_{target} \times 1.0015$$
 If $P_{target}$ is assumed equal to the final price or the middle price:
 1. An increase of 0.15% (15 pips) is calculated directly from the $P_{mid}$ level upwards.
@@ -70,7 +70,7 @@ If $P_{target}$ is assumed equal to the final price or the middle price:
 
 ## 4. Five Execution Paths Audit
 
-All 5 order paths were tested independently and separately with automatic test [`test_comprehensive_five_execution_paths_separately'](file:///root/starcoach-hack/wallex/tests/test_exchange_adapter.py#L285):
+All 5 order paths were tested independently and separately with automatic test [`test_comprehensive_five_execution_paths_separately'](../tests/test_exchange_adapter.py#L285):
 
 | Execution path Order type Does it break the spread? | Slippage rate Fee classification Fee rate Execution price formula
 |---|---|---|---|---|---|---|
@@ -129,7 +129,7 @@ The data in the above table provide objective and definitive proof:
 ## 6. Partial-Fill Accounting
 
 The execution adapter and portfolio engine audit the incomplete order filling scenario with the following features:
-1. Orders less than 50,000 Tomans are rejected immediately before sending with the error [`ExecutionError'](file:///root/starcoach-hack/wallex/src/exchange/adapter.py#L112).
+1. Orders less than 50,000 Tomans are rejected immediately before sending with the error [`ExecutionError'](../src/exchange/adapter.py#L112).
 2. In case of partial fill, the fee will be deducted exclusively on the value of the filled part.
 3. Unfilled capital balance remains in the Tomani cash account without any obligation and is included in the calculation of shareholders' rights.
 4. The average entry price of the portfolio is updated based on volume-weighted.

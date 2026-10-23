@@ -1,9 +1,9 @@
 # The results of the 14 stress tests of the integrated model H1+H3 (Phase 25 Stress Tests)
 ## Fourteen-Scenario Stress Testing Matrix & Microstructure Resilience Audit
 
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
 > **Research branch:** `research/phase25-validation`  
-> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Evaluation strategy:** Model C (integrated portfolio H1+H3 Structural Sniper)  
 > **Number of independent windows:** 29 full windows ($N = $29) | **Initial capital:** 5,000,000 Tomans
 

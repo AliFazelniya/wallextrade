@@ -1,9 +1,9 @@
 # Audit of artificial intelligence models and effect separation study (Phase 26 AI Model & Ablation)
 ## Genuine Machine Learning, In-Sample Calibration & Dynamic Position Allocation
 
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
 > **Research branch:** `research/phase26-forensic-validation`  
-> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Machine learning method:** Logistic regression calibrated with L2 regularization penalty (Ridge Logistic Regression)  
 > **Participation status of artificial intelligence:** ✅ **Definite acceptance with significant improvement (GENUINE AI ADVANTAGE: +84,053 TMN)**
 

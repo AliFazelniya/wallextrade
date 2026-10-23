@@ -2,8 +2,8 @@
 ## Competition-Focused 72-Hour Strategy Readiness Assessment
 
 > **Evaluation status:** Final, reproduced and documented by statistical evidence (Independently Reconciled & Audited)  
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **release frozen commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
+> **release frozen commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **valid tags:** `v1.0.0-phase20-frozen-release` and `v0.12.0-phase20-audited`  
 > **Frozen Strategy Manifest Hash:** `249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66`  
 > **Live execution authorization:** `live_execution_authorized = False` (completely blocked and disabled)
@@ -189,4 +189,4 @@ Keeping the current strategy completely frozen, the following technical paths ar
 > ⚠️ **NOT READY FOR 72-HOUR HORIZON** — The strategy is designed for medium-term continuous execution and has no mathematical hope of profitability in a 3-day independent competition format with mandatory clearing.
 >
 > **after permission to activate live transactions:**  
-> 🛑 **NOT AUTHORIZED** — The variable [`live_execution_authorized = False`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json) is kept unchanged and sending any real orders to the exchange is strictly prohibited.
+> 🛑 **NOT AUTHORIZED** — The variable [`live_execution_authorized = False`](../config/frozen_strategy_manifest_v0.6.0.json) is kept unchanged and sending any real orders to the exchange is strictly prohibited.

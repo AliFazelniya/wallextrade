@@ -40,26 +40,26 @@ flowchart TD
 All the documentation, source codes and tools necessary for the evaluation of the judges were organized in the repository:
 
 ### 2.1. Source code and software architecture (`src/`):
-- [x] [`src/agents/regime_agent.py`](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py): Smart regime detection agent with structured Pydantic schemas and ministic deterrent fallback.
-- [x] [`src/strategy/regime_momentum.py`](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py): Frozen momentum strategy with 3.5% profit limit, 2.0% loss limit and 70% minimum confidence factor.
-- [x] [`src/risk/engine.py`](file:///root/starcoach-hack/wallex/src/risk/engine.py): Multi-layer risk engine with order limit of 500 thousand tomans, position limit of 60%, drawdown of 5% and gate spread of 0.20%.
-- [x] [`src/exchange/adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py): Robust order execution adapter with pre-order gate, duplicate order prevention and automatic Maker/Taker separation.
-- [x] [`src/portfolio/accounting.py`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py): Accurate portfolio accounting, net and gross profit registration, separation of fees and final settlement in Tomans.
-- [x] [`src/data/fetcher.py`](file:///root/starcoach-hack/wallex/src/data/fetcher.py): UDF data receiving client and incremental download without network delay.
+- [x] [`src/agents/regime_agent.py`](../src/agents/regime_agent.py): Smart regime detection agent with structured Pydantic schemas and ministic deterrent fallback.
+- [x] [`src/strategy/regime_momentum.py`](../src/strategy/regime_momentum.py): Frozen momentum strategy with 3.5% profit limit, 2.0% loss limit and 70% minimum confidence factor.
+- [x] [`src/risk/engine.py`](../src/risk/engine.py): Multi-layer risk engine with order limit of 500 thousand tomans, position limit of 60%, drawdown of 5% and gate spread of 0.20%.
+- [x] [`src/exchange/adapter.py`](../src/exchange/adapter.py): Robust order execution adapter with pre-order gate, duplicate order prevention and automatic Maker/Taker separation.
+- [x] [`src/portfolio/accounting.py`](../src/portfolio/accounting.py): Accurate portfolio accounting, net and gross profit registration, separation of fees and final settlement in Tomans.
+- [x] [`src/data/fetcher.py`](../src/data/fetcher.py): UDF data receiving client and incremental download without network delay.
 
 ### 2.2. Configuration and freezing files (`config/`):
-- [x] [`config/frozen_strategy_manifest_v0.6.0.json`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json): The official Frozen Strategy manifest.
+- [x] [`config/frozen_strategy_manifest_v0.6.0.json`](../config/frozen_strategy_manifest_v0.6.0.json): The official Frozen Strategy manifest.
   - **SHA-256 hash of manifest:** `249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66`
-- [x] [`config/market_restrictions.json`](file:///root/starcoach-hack/wallex/config/market_restrictions.json): Registry of 357 blocked symbols, including 21 race symbols, cryptocurrencies and Tether currency pairs.
-- [x] [`config/allowed_markets.json`](file:///root/starcoach-hack/wallex/config/allowed_markets.json): Allowed list of supervised high liquidity tokens.
-- [x] [`config/settings.yaml`](file:///root/starcoach-hack/wallex/config/settings.yaml): basic capital settings (5 million Tomans), fees and risk engine parameters.
+- [x] [`config/market_restrictions.json`](../config/market_restrictions.json): Registry of 357 blocked symbols, including 21 race symbols, cryptocurrencies and Tether currency pairs.
+- [x] [`config/allowed_markets.json`](../config/allowed_markets.json): Allowed list of supervised high liquidity tokens.
+- [x] [`config/settings.yaml`](../config/settings.yaml): basic capital settings (5 million Tomans), fees and risk engine parameters.
 
 ### 2.3. Strategic and technical documentation (`docs/`):
-- [x] [`docs/ORGANIZER_BLOCKER_REQUEST_FA.md`](file:///root/starcoach-hack/wallex/docs/ORGANIZER_BLOCKER_REQUEST_FA.md): Official Persian letter to inquire and remove obstacles B-01 to B-05.
-- [x] [`docs/PHASE17_EXECUTION_COST_AUDIT.md`](file:///root/starcoach-hack/wallex/docs/PHASE17_EXECUTION_COST_AUDIT.md): Comprehensive audit of maker/taker fees, slippage and gate spread behavior.
-- [x] [`docs/COMPETITION_RUNBOOK.md`](file:///root/starcoach-hack/wallex/docs/COMPETITION_RUNBOOK.md): Step-by-step guide to competition operations, deployment instructions, incident response and monitoring.
-- [x] [`docs/DEMO_SCRIPT.md`](file:///root/starcoach-hack/wallex/docs/DEMO_SCRIPT.md): 5 minute demo presentation video scenario for hackathon judges.
-- [x] [`docs/COMPLIANCE_MATRIX.md`](file:///root/starcoach-hack/wallex/docs/COMPLIANCE_MATRIX.md): Audited matrix of technical compliance with competition rules (REQ-01 to REQ-18).
+- [x] [`docs/ORGANIZER_BLOCKER_REQUEST_FA.md`](ORGANIZER_BLOCKER_REQUEST_FA.md): Official Persian letter to inquire and remove obstacles B-01 to B-05.
+- [x] [`docs/PHASE17_EXECUTION_COST_AUDIT.md`](PHASE17_EXECUTION_COST_AUDIT.md): Comprehensive audit of maker/taker fees, slippage and gate spread behavior.
+- [x] [`docs/COMPETITION_RUNBOOK.md`](COMPETITION_RUNBOOK.md): Step-by-step guide to competition operations, deployment instructions, incident response and monitoring.
+- [x] [`docs/DEMO_SCRIPT.md`](DEMO_SCRIPT.md): 5 minute demo presentation video scenario for hackathon judges.
+- [x] [`docs/COMPLIANCE_MATRIX.md`](COMPLIANCE_MATRIX.md): Audited matrix of technical compliance with competition rules (REQ-01 to REQ-18).
 - [x] Quantitative and scientific audit reports of P&L phases 12, 13, 14 and 15.
 
 ### 2.4. Automated tests and code coverage results (`tests/`):
@@ -103,7 +103,7 @@ participant Env as environment and .env file
     Adapter->>Market: The start of the live trading ring
 ```
 
-1. **Step 1 — Send a request:** The human coach sends the text of the letter [`docs/ORGANIZER_BLOCKER_REQUEST_FA.md`](file:///root/starcoach-hack/wallex/docs/ORGANIZER_BLOCKER_REQUEST_FA.md) through the user panel or support of the match.
+1. **Step 1 — Send a request:** The human coach sends the text of the letter [`docs/ORGANIZER_BLOCKER_REQUEST_FA.md`](ORGANIZER_BLOCKER_REQUEST_FA.md) through the user panel or support of the match.
 2. **Step 2 — Get information and inject into the environment:** As soon as the keys are received, the `WALLEX_API_KEY` variables are initialized in the local `.env` file (never committed in git).
 3. **The third step - read-only validation (Read-Only Test):** The balance query script is executed and the adjustment of the balance of 5 million Tomans is confirmed.
 4. **Step 4 - Human Authorization Review:** After making sure the health of the live market indicators and spreads below 0.20%, the senior manager activates the `live_execution_authorized=True' flag and starts the robot in live mode.

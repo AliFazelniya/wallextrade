@@ -1,9 +1,9 @@
 # Architecture and evaluation of integrated portfolio H1+H3 (Phase 25 Ensemble Architecture)
 ## Comparative Evaluation of Model A (H1), Model B (H3), and Model C (Ensemble)
 
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
 > **Research branch:** `research/phase25-validation`  
-> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Common portfolio framework:** Initial capital 5,000,000 Tomans A maximum of 2 positions at the same time (the ceiling is 1,000,000 Tomans at risk). High/Low candle shadow
 
 ---

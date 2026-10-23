@@ -1,9 +1,9 @@
 # Independent validation of hypothesis 1: multi-temporal structural process (H1 Independent Validation)
 ## Multi-Timeframe Structural Trend Hypothesis Audit
 
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
 > **Research branch:** `research/phase25-validation`  
-> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Hypothesis 1:** 1-hour structural trend + 15-minute entry + structural loss limit -2.2% + profit limit +4.5%
 
 ---

@@ -1,6 +1,6 @@
 # Structural audit and computational matching of artificial intelligence hypothetical benefit (phase 14)
 ### AI Counterfactual Evaluation & Realizable Portfolio Value Reconciliation
-**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Audit date:** October 22, 2026 **Data time horizon:** 90 full days (8,636 15-minute candles of ``BTCTMN'' currency pair) | **Initial capital:** 5,000,000 Tomans
+**Repository:** [`wallex`](..) | **Audit date:** October 22, 2026 **Data time horizon:** 90 full days (8,636 15-minute candles of ``BTCTMN'' currency pair) | **Initial capital:** 5,000,000 Tomans
 
 ---
 
@@ -22,7 +22,7 @@ In this independent audit, the cause of this large gap is precisely broken down 
 
 ## 2. First level: Unconstrained Signal-Level Evaluation
 
-In the function [`run_counterfactual_audit`](file:///root/starcoach-hack/wallex/scripts/run_phase13_validation.py#L58-L218), an evaluation has been made on each 90-day candle that had the initial technical conditions:
+In the function [`run_counterfactual_audit`](../scripts/run_phase13_validation.py#L58-L218), an evaluation has been made on each 90-day candle that had the initial technical conditions:
 
 | Signal evaluation index Number | percentage | Hypothetical gross / net value (tomans) |
 |---|---|---|---|

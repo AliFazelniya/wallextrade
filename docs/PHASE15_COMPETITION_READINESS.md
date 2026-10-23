@@ -1,6 +1,6 @@
 # Final report on operational readiness, strategy freezing and competition prerequisites audit (phase 15)
 ### Phase 15 Final Competition Rehearsal, Operational Reliability, and Strategy Freeze
-**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Audit date:** October 22, 2026 **Input base tag:** `v0.6.0-phase14-audited` (`d49bd69`) | **Final tag of phase 15:** `v0.7.0-phase15-rehearsed` (`3dd26d3`) | **Status of tests:** 58 out of 58 successful tests (80% code coverage)
+**Repository:** [`wallex`](..) | **Audit date:** October 22, 2026 **Input base tag:** `v0.6.0-phase14-audited` (`d49bd69`) | **Final tag of phase 15:** `v0.7.0-phase15-rehearsed` (`3dd26d3`) | **Status of tests:** 58 out of 58 successful tests (80% code coverage)
 
 ---
 
@@ -21,21 +21,21 @@ The engineering and risk team, after conducting a test maneuver in the shadow on
 
 In order to guarantee scientific reproducibility and prevent overfitting, the parameters were frozen on the eve of the competition, the strategy and risk settings:
 
-- **Frozen manifest file:** [`config/frozen_strategy_manifest_v0.6.0.json`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json)
+- **Frozen manifest file:** [`config/frozen_strategy_manifest_v0.6.0.json`](../config/frozen_strategy_manifest_v0.6.0.json)
 - **Manifest integrity hash (SHA-256):**
   `249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66`
 - **Frozen Base Commit ID:** `d49bd69b636e0af403f35a7ddca7b34685f52090`
-- **Trading Strategy:** [`RegimeMomentumStrategy`](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py) on single token `BTCTMN`
+- **Trading Strategy:** [`RegimeMomentumStrategy`](../src/strategy/regime_momentum.py) on single token `BTCTMN`
   - Data timeframe: 15 minutes (reproduced cumulative candles)
   Preheating period of indicators: 60 candles (15 hours)
   - Take Profit: 3.5%
   - Stop Loss: 2.0%
   - Minimum confidence coefficient of artificial intelligence: 0.70
   - Default alternative behavior: ``NO_TRADE'' (no trade in case of uncertainty or volatility regime)
-- **Artificial intelligence engine settings:** [`RegimeClassificationAgent`](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py)
+- **Artificial intelligence engine settings:** [`RegimeClassificationAgent`](../src/agents/regime_agent.py)
   - Model ID: ``gemini-2.5-flash'' with prompt version ``v1.0.0''
 - Statistical failure fallback: active, with automatic shutdown mechanism (Fails Closed) in case of timeout or internet unavailability
-- **Risk Engine Settings:** [`RiskEngine'](file:///root/starcoach-hack/wallex/src/risk/engine.py)
+- **Risk Engine Settings:** [`RiskEngine'](../src/risk/engine.py)
   - Limit of each order: 500,000 Tomans (10% of the total capital of 5 million)
   - Total portfolio commitment limit: 60.0%
   - Drawdown ceiling for the entire period: 5.0%
@@ -75,7 +75,7 @@ According to the audit of the official brief and the responses of the organizers
 
 ## 4. The results of the test maneuver in the shadow on the live data of Wallex (Production Shadow Rehearsal)
 
-The script [`scripts/run_production_rehearsal.py`](file:///root/starcoach-hack/wallex/scripts/run_production_rehearsal.py) was connected to the public Wallex web service for accurate simulation without real ordering:
+The script [`scripts/run_production_rehearsal.py`](../scripts/run_production_rehearsal.py) was connected to the public Wallex web service for accurate simulation without real ordering:
 
 - **Monitored symbol:** `BTCTMN`
 - **Number of executed cycles:** 5 live consecutive cycles
@@ -87,7 +87,7 @@ The script [`scripts/run_production_rehearsal.py`](file:///root/starcoach-hack/w
 - **Diet recognition by artificial intelligence:** `CALM_RANGE' with a confidence factor of 75% and ``HOLD'' recommendation
 - **Strategy signal:** `HOLD`
 - **Simulated orders:** 0 transactions (the strategy completely preserved the liquidity of 5,000,000 Tomans by avoiding trading in the range market)
-- **Log output:** [`logs/production_rehearsal_phase15.jsonl`](file:///root/starcoach-hack/wallex/logs/production_rehearsal_phase15.jsonl) and [`research/phase15_rehearsal_results.json`](file:///root/starcoach-hack/wallex/research/phase15_rehearsal_results.json).
+- **Log output:** [`logs/production_rehearsal_phase15.jsonl`](../logs/production_rehearsal_phase15.jsonl) and [`research/phase15_rehearsal_results.json`](../research/phase15_rehearsal_results.json).
 
 > [!NOTE]
 > **The scientific transparency of the test horizon in the shadow:**
@@ -97,7 +97,7 @@ The script [`scripts/run_production_rehearsal.py`](file:///root/starcoach-hack/w
 
 ## 5. Audit of 14 scenarios of operational failures (Operational Failure Audit)
 
-In the file [`tests/test_operational_failures.py`](file:///root/starcoach-hack/wallex/tests/test_operational_failures.py), 14 advanced integration tests were implemented and passed for system resilience against the worst market conditions:
+In the file [`tests/test_operational_failures.py`](../tests/test_operational_failures.py), 14 advanced integration tests were implemented and passed for system resilience against the worst market conditions:
 
 1. **Exchange API Timeout (`test_exchange_api_timeout_fails_closed`):** In case of network disconnection, no orders are registered and assets remain intact.
 2. **Exchange 429 error management (`test_http_429_rate_limit_recovery`):** If the rate exceeds the limit, the system will back-off and warn without crashing.
@@ -129,7 +129,7 @@ In the file [`tests/test_operational_failures.py`](file:///root/starcoach-hack/w
 ## 7. Final Repository Deliverables approval
 
 - **Source Codes:** Corresponding to the tested version with a modular structure in the `src/` folder.
-- **Persian guide:** file [`README.md`](file:///root/starcoach-hack/wallex/README.md) and operational runbook [`docs/COMPETITION_RUNBOOK.md`](file:///root/starcoach-hack/wallex/docs/COMPETITION_RUNBOOK.md).
+- **Persian guide:** file [`README.md`](../README.md) and operational runbook [`docs/COMPETITION_RUNBOOK.md`](COMPETITION_RUNBOOK.md).
 - **Risk and strategy documents:** Complete documents in `docs/` and `research/`.
 - **Market restrictions:** `config/market_restrictions.json` and `config/allowed_markets.json` files.
 - **Phase 14 P&L audit reports:** files `docs/PHASE14_*.md` and `docs/AI_COUNTERFACTUAL_RECONCILIATION.md`.

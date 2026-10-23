@@ -1,9 +1,9 @@
 # Phase 25 Baseline Reconciliation
 ## Forensic Resolution of Arithmetic Inconsistencies and Trade-Ledger Audit
 
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
 > **Research branch:** `research/phase25-validation`  
-> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Initial capital of each window:** 5,000,000 Tomans in cash ($N = 29$ independent window of 72 hours)  
 > **Status of live transactions:** `live_execution_authorized = False' (fully blocked and secure)
 
@@ -44,7 +44,7 @@ The audit of the trade ledger showed that in the writing of the phase 24 report,
 
 ## 3. Independent reproduction of phase 24 hypothesis outputs (Independent Reproduction)
 
-Phase 24 executable codes in module [`src/experimental/phase24_research_engine.py`](file:///root/starcoach-hack/wallex/src/experimental/phase24_research_engine.py) were reproduced independently on raw Wallex data cache:
+Phase 24 executable codes in module [`src/experimental/phase24_research_engine.py`](../src/experimental/phase24_research_engine.py) were reproduced independently on raw Wallex data cache:
 
 | The name of the hypothesis / strategy Reported Total Net Profit (TMN) | Reproduced Net Profit (TMN) | Number of transactions T statistic ($t$) | Windows win rate Computational matching
 |---|:---:|:---:|:---:|:---:|:---:|:---:|

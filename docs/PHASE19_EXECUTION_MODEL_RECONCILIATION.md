@@ -5,10 +5,10 @@
 > **Software version:** `v0.10.0-phase18-audited`  
 > **Frozen Strategy Manifest Hash:** `249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66`  
 > **Modules to be audited:**  
-> - [`src/exchange/adapter.py`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py) (order execution adapter)  
-> - [`src/portfolio/accounting.py`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py) (portfolio accounting and settlement)  
-> - [`src/data/fetcher.py`](file:///root/starcoach-hack/wallex/src/data/fetcher.py) (get UDF data and orderbook depth)  
-> - [`src/backtest/engine.py`](file:///root/starcoach-hack/wallex/src/backtest/engine.py) (historical simulation engine)
+> - [`src/exchange/adapter.py`](../src/exchange/adapter.py) (order execution adapter)  
+> - [`src/portfolio/accounting.py`](../src/portfolio/accounting.py) (portfolio accounting and settlement)  
+> - [`src/data/fetcher.py`](../src/data/fetcher.py) (get UDF data and orderbook depth)  
+> - [`src/backtest/engine.py`](../src/backtest/engine.py) (historical simulation engine)
 
 ---
 
@@ -42,7 +42,7 @@ In the live Wallex environment, real-time data is received directly from the `/v
 ## 3. Contract to calculate the spread and the cost of crossing the half spread
 
 ### 3.1. Spread calculation formula in Wallex exchange:
-According to the implementation of the [`MarketDataFetcher.fetch_current_spread`] method (file:///root/starcoach-hack/wallex/src/data/fetcher.py#L179):
+According to the implementation of the [`MarketDataFetcher.fetch_current_spread`] method (../src/data/fetcher.py#L179):
 $$\text{Spread (\%)} = \frac{P_{ask} - P_{bid}}{P_{bid}} \times 100$$
 This contract is slightly more conservative (larger) than the median-based formula ( $\frac{Ask - Bid}{Mid}$ ).
 
@@ -84,7 +84,7 @@ flowchart LR
 
 ## 5. Audit matrix of 5 order execution paths in the execution adapter
 
-All five order execution paths were validated independently in the [`test_comprehensive_five_execution_paths_separately'] test (file:///root/starcoach-hack/wallex/tests/test_exchange_adapter.py#L285) with the following results:
+All five order execution paths were validated independently in the [`test_comprehensive_five_execution_paths_separately'] test (../tests/test_exchange_adapter.py#L285) with the following results:
 
 | #| Order route Order type Dealing with the spread Fee classification Fee rate Applied slippage Execution price formula
 |---|---|---|---|---|---|---|---|
@@ -101,13 +101,13 @@ All five order execution paths were validated independently in the [`test_compre
 
 ## 6. Accounting of half-filled orders and final settlement in Tomans
 
-1. **Minimum order value in Wallex:** All purchase orders under 50,000 Tomans are immediately vetoed by the software gate [`ExchangeAdapter'](file:///root/starcoach-hack/wallex/src/exchange/adapter.py#L111).
+1. **Minimum order value in Wallex:** All purchase orders under 50,000 Tomans are immediately vetoed by the software gate [`ExchangeAdapter'](../src/exchange/adapter.py#L111).
 2. **Partial Fills:**
    - The fee is multiplied exclusively by the nominal value of the filled part ($Q_{fill} \times P_{exec}$) and deducted from the cash account.
    - The unfilled part of the order is canceled and its Toman capital remains free in the account without obligation.
    - The average cost price is calculated and updated based on the volume weighted average ($VWAP$).
 3. **Compulsory settlement at the end of the match (Toman Liquidation Protocol):**
-   - 30 minutes before the end of the competition, the method [`liquidate_all_to_toman'](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py#L205) converts all cryptocurrency balances into Tomans with an unfavorable slippage of 0.15% and a ticker fee of 0.30%.
+   - 30 minutes before the end of the competition, the method [`liquidate_all_to_toman'](../src/portfolio/accounting.py#L205) converts all cryptocurrency balances into Tomans with an unfavorable slippage of 0.15% and a ticker fee of 0.30%.
    - At the end, the crypto balance is exactly zero and the total value of the portfolio is equal to the Toman cash balance.
 
 ---

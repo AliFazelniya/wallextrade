@@ -1,7 +1,7 @@
 # Comprehensive and final audit report of Wallex algorithmic trading system (Final Audit Report)
 ### Technical evaluation and verification of Starkoch x Wallex hackathon documentation
 
-This document provides an official audit report, evidence verification, conflict resolution, and readiness assessment of the trading system implemented in the [`wallex'](file:///root/starcoach-hack/wallex) repository.
+This document provides an official audit report, evidence verification, conflict resolution, and readiness assessment of the trading system implemented in the [`wallex'](..) repository.
 
 ---
 
@@ -24,7 +24,7 @@ This document provides an official audit report, evidence verification, conflict
 ## 2. Unverified Claims & Open Questions
 
 1. **Exact calendar dates of the competition:**
-   - The start date, end date and exact deadline for sending the documents are not mentioned in the competition brief as a specific day and time. These are filed as open questions in [`docs/OPEN_QUESTIONS.md`](file:///root/starcoach-hack/wallex/docs/OPEN_QUESTIONS.md) and the falsification of fictitious dates is avoided.
+   - The start date, end date and exact deadline for sending the documents are not mentioned in the competition brief as a specific day and time. These are filed as open questions in [`docs/OPEN_QUESTIONS.md`](OPEN_QUESTIONS.md) and the falsification of fictitious dates is avoided.
 2. **Exact financial conditions of 5 million Tomans credit account:**
    - On the Wallex public site, the credit plans have a daily credit extension fee and a repayment obligation, while the hackathon description states that teams will not be held responsible for potential principal losses. The separation of these two requires the written approval of the organizer before activating the live.
 
@@ -35,11 +35,11 @@ This document provides an official audit report, evidence verification, conflict
 ### 3.1. Discrepancy in the number of backtest candles (27,344 vs. 5,760)
 - **Discrepancy explanation:** In the initial report, the number of 27,344 candles was declared for a 30-day 15-minute period, while 30 days with a 15-minute timeframe is equivalent to a maximum of 2,880 candles (and for two symbols a total of 5,760 candles).
 - **Technical Rooting:** By auditing the network requests, it was found that for the parameter `resolution=15`, Wallex server sends 1 minute raw data (60 second step) which is 27,345 candles, which is exactly equivalent to 19 days of 1 minute data.
-- **IMPLEMENTED SOLUTION:** In class [`MarketDataFetcher`](file:///root/starcoach-hack/wallex/src/data/fetcher.py#L21-L150), added an automatic temporal resampling pipeline (`resample('15min')`) that accurately aggregates 1-minute raw candles on standard 15-minute intervals and Produces **1,825 valid 15-minute candles**.
+- **IMPLEMENTED SOLUTION:** In class [`MarketDataFetcher`](../src/data/fetcher.py#L21-L150), added an automatic temporal resampling pipeline (`resample('15min')`) that accurately aggregates 1-minute raw candles on standard 15-minute intervals and Produces **1,825 valid 15-minute candles**.
 
 ### 3.2. Modification of the fee formula (Separation of Maker and Taker)
 - **Description of discrepancy:** In the previous version, the fee for all transactions was assumed to be 0.25%.
-- **Implemented solution:** In the [`PortfolioEngine'] module (file:///root/starcoach-hack/wallex/src/portfolio/accounting.py#L42-L210), limit entry orders at the rate of **0.25% (Maker)** and emergency exits of the loss limit and settlement at the end of the period at the rate of **0.30% (Taker)** were calculated and applied.
+- **Implemented solution:** In the [`PortfolioEngine'] module (../src/portfolio/accounting.py#L42-L210), limit entry orders at the rate of **0.25% (Maker)** and emergency exits of the loss limit and settlement at the end of the period at the rate of **0.30% (Taker)** were calculated and applied.
 
 ---
 
@@ -103,16 +103,16 @@ The simulation was performed on **real 15-minute aggregate Wallex candles** (per
 
 - 3 shadow test cycles were run on live data and real depth of the Wallex market in the symbols `USDTTMN`, `PEPETMN`, `BTCTMN`, `PUMPTMN`, `ETHTMN`.
 - **Confirmation of real order not being sent:** All operations were focused only on public data query endpoints and no orders were sent to Wallex transaction server (`live_execution_authorized=False`).
-- Full recording of 15 decision and risk assessment records in the file [`logs/trading_decisions.jsonl'] (file:///root/starcoach-hack/wallex/logs/trading_decisions.jsonl).
+- Full recording of 15 decision and risk assessment records in the file [`logs/trading_decisions.jsonl'] (../logs/trading_decisions.jsonl).
 
 ---
 
 ## 7. The status of the trading world and classification of symbols (Market Universe Status)
 
-Based on the automatic script execution [`scripts/build_market_universe.py`](file:///root/starcoach-hack/wallex/scripts/build_market_universe.py):
+Based on the automatic script execution [`scripts/build_market_universe.py`](../scripts/build_market_universe.py):
 - **Total Wallex symbols:** 373 symbols
-- **Verified authorized trading world ([`config/allowed_markets.json`](file:///root/starcoach-hack/wallex/config/allowed_markets.json)):** 16 Toman symbols with trading volume above 5 billion Tomans and spread below 0.35%.
-- **Inactive symbols / no liquidity in credit account:** 21 symbols blocked in [`config/market_restrictions.json`](file:///root/starcoach-hack/wallex/config/market_restrictions.json).
+- **Verified authorized trading world ([`config/allowed_markets.json`](../config/allowed_markets.json)):** 16 Toman symbols with trading volume above 5 billion Tomans and spread below 0.35%.
+- **Inactive symbols / no liquidity in credit account:** 21 symbols blocked in [`config/market_restrictions.json`](../config/market_restrictions.json).
 - **Abandoned Tetri symbols:** 186 symbols.
 - **Symbols with low liquidity or high spread:** 150 symbols.
 

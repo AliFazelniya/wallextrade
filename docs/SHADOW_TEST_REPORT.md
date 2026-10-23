@@ -17,7 +17,7 @@ This document documents observations, agent decisions, risk engine checks, and l
 - **Execution date and time:** October 22, 2026 (10:41:45 to 10:42:31 UTC time)
 - **Environment:** Server with Python 3.12 and direct connection to Wallex API
 - **Number of registered cycles:** 3 complete cycles on 5 main cashable symbols
-- **Number of log records recorded in this run:** 15 new audit logs in [`logs/trading_decisions.jsonl`](file:///root/starcoach-hack/wallex/logs/trading_decisions.jsonl)
+- **Number of log records recorded in this run:** 15 new audit logs in [`logs/trading_decisions.jsonl`](../logs/trading_decisions.jsonl)
 - **Nominal portfolio capital:** 5,000,000 Tomans
 
 ---

@@ -4,7 +4,7 @@
 > **Report date:** October 22, 2026 (November 1, 1405) — 17:15 local time  
 > **Senior Auditor:** Algorithmic Trading Senior Engineer, Python Independent Auditor and Release Quality Control Inspector  
 > **gate branch:** `master`  
-> **Frozen release base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Frozen release base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Verified release tags:** `v1.0.0-phase20-frozen-release` and `v0.12.0-phase20-audited`  
 > **Repository Status:** Completely frozen with no changes in strategy and execution codes  
 > **Status of Gate Live Transactions:** disabled at code level (`live_execution_authorized = False`)
@@ -30,8 +30,8 @@
 
 | Index | Previously reported value | Correct and reproduced value Audit status Reference file and line
 |---|:---:|:---:|:---:|---|
-| **Saving fees** | 40,497 Tomans **40,497 Tomans** | ✅ VERIFIED | [`tests/test_phase14_reconciliation.py#L46`](file:///root/starcoach-hack/wallex/tests/test_phase14_reconciliation.py#L46) |
-| **Slippage savings** | 16,354 Tomans **16,354 Tomans** | ✅ VERIFIED | [`docs/PHASE19_FINAL_QUANTITATIVE_AUDIT.md#L118`](file:///root/starcoach-hack/wallex/docs/PHASE19_FINAL_QUANTITATIVE_AUDIT.md#L118) |
+| **Saving fees** | 40,497 Tomans **40,497 Tomans** | ✅ VERIFIED | [`tests/test_phase14_reconciliation.py#L46`](../tests/test_phase14_reconciliation.py#L46) |
+| **Slippage savings** | 16,354 Tomans **16,354 Tomans** | ✅ VERIFIED | [`docs/PHASE19_FINAL_QUANTITATIVE_AUDIT.md#L118`](PHASE19_FINAL_QUANTITATIVE_AUDIT.md#L118) |
 | **Total cost savings** | 59,800 Tomans **56,851 Tomans** (1.14% of capital) | ⚠️ **CORRECTED** | Fixed biphasic addition error ($59,800 \to $56,851) |
 
 - **Effect on competition preparation:** The correction of 2,949 Tomans has no effect on the strategy's net profit (+31,555 Tomans / +0.63%), because the slippage is included in the gross profit and the net profit is deducted directly based on exchange fees.
@@ -122,7 +122,7 @@ $$23,403\text{ TMN} = 40,497\text{ TMN} - 17,094\text{ TMN} \equiv \mathbf{23,40
   2. Deduction of 60 pre-heating candles of indicators: 8,576 tradable candles.
   3. Each full 3-day match window (72 hours): 288 candles ($3 \times 24 \times 4$).
   4. The number of complete non-overlapping windows: $\lfloor \frac{8,576}{288} \rfloor = \mathbf{29\text{ windows}}$. (The remaining 224 candles / 56 hours were removed as an incomplete window).
-  5. In the simulation with a gate spread of 0.20% (document [`PHASE19_FINAL_QUANTITATIVE_AUDIT.md#L118`](file:///root/starcoach-hack/wallex/docs/PHASE19_FINAL_QUANTITATIVE_AUDIT.md#L118)):
+  5. In the simulation with a gate spread of 0.20% (document [`PHASE19_FINAL_QUANTITATIVE_AUDIT.md#L118`](PHASE19_FINAL_QUANTITATIVE_AUDIT.md#L118)):
      - Profitable windows (Net > 0%): **10 windows**
      - No-trade windows / maintaining 100% liquidity (Net = 0%): **7 windows**
      - Unprofitable windows (Net < 0%): **12 windows**
@@ -167,7 +167,7 @@ flowchart TD
 ```
 
 ### 5.1. Dimension A: verification of the code software gate (Software Authorization Gate: **PASSED**)
-- **Unit test:** It was proved by automatic test [`test_live_trading_is_strictly_blocked_without_authorization`](file:///root/starcoach-hack/wallex/tests/test_exchange_adapter.py#L35) In `TRADING_MODE="LIVE"` mode, if `live_execution_authorized=False`, an ``ExecutionError'' error is immediately thrown and no request is sent to the Wallex endpoint. does not turn
+- **Unit test:** It was proved by automatic test [`test_live_trading_is_strictly_blocked_without_authorization`](../tests/test_exchange_adapter.py#L35) In `TRADING_MODE="LIVE"` mode, if `live_execution_authorized=False`, an ``ExecutionError'' error is immediately thrown and no request is sent to the Wallex endpoint. does not turn
 - **Fail-Closed Design:** No environment variable or configuration file entry can override this flag; Initialization requires passing a direct Boolean parameter when creating an object in Python.
 
 ### 5.2. Dimension B: Live Operational Readiness: **NOT AUTHORIZED**
@@ -184,7 +184,7 @@ flowchart TD
 ## 6. Semantic validation of the beginning and end points of the dataset (Finding 6)
 
 ### 6.1. Proof of intentionality and validity of border points:
-- In the data fetching script ([`scripts/fetch_extended_history.py#L59-L60`](file:///root/starcoach-hack/wallex/scripts/fetch_extended_history.py#L59-L60)), the request is sent to the Wallex UDF endpoint in the format `[from_ts, to_ts]`.
+- In the data fetching script ([`scripts/fetch_extended_history.py#L59-L60`](../scripts/fetch_extended_history.py#L59-L60)), the request is sent to the Wallex UDF endpoint in the format `[from_ts, to_ts]`.
 - The official output of Wallex UDF includes the first candle on `2026-07-24 11:15:00+00:00` and the last candle on `2026-10-22 11:15:00+00:00`.
 - Both opening and closing candles are real and complete market candles and none of them are artificial or duplicate lines.
 

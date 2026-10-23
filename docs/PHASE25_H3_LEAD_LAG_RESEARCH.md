@@ -1,9 +1,9 @@
 # Scientific research and validation of hypothesis 3: Leakage of Bitcoin acceleration to altcoins (Phase 25 H3 Research)
 ## Empirical Research on BTC-to-Altcoin Lead-Lag Relationships & Momentum Spillover
 
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
 > **Research branch:** `research/phase25-validation`  
-> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Statistical status of hypothesis 3:** ⚠️ **EXPLORATORY — lacks definitive statistical proof due to the small sample size ($N=5$)**
 
 ---

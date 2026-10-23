@@ -1,9 +1,9 @@
 # Compilation and independent audit of trading record and portfolio balance (Phase 26 Trade Ledger Reconciliation)
 ## Independent Trade-Level Reconciliation, Capacity Evolution & Portfolio Accounting
 
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
 > **Research branch:** `research/phase26-forensic-validation`  
-> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Ledger Discrepancy Level:** **0.000000 Tomans (perfect balance)**
 
 ---
@@ -40,7 +40,7 @@ To answer this question, the execution engine of phase 25 was re-executed with t
 | **Maximum 2 open positions (`max_pos = 2`)** | **33** | **63,034.80** | **125,647.78** | **exactly matches phase 25** (33 transactions and 125.6k friction) |
 
 ### The result of the audit, the reason for the change:
-1. In phase 24, the trading simulator [`simulation_harness.py`](file:///root/starcoach-hack/wallex/src/experimental/simulation_harness.py#L132) used the single-position structure (`open_pos: Optional[Dict]`). This means that if a position was open on Solana, any structural signal on Ethereum or Bitcoin would be blocked to close the Solana position.
+1. In phase 24, the trading simulator [`simulation_harness.py`](../src/experimental/simulation_harness.py#L132) used the single-position structure (`open_pos: Optional[Dict]`). This means that if a position was open on Solana, any structural signal on Ethereum or Bitcoin would be blocked to close the Solana position.
 2. In phase 25, the joint portfolio architecture allowed to open up to **2 open positions at the same time** (allocation ceiling of 1 million Tomans, equivalent to 20% of the total capital).
 3. As a result, in strong bullish market waves (such as W09 and W20), the system was able to manage Solana and Ethereum winning positions simultaneously; Therefore, the number of transactions jumped from 19 to 33 and profit from 32.1 thousand tomans to 63.0 thousand tomans.
 4. For the H3 model, the capacity of 2 positions allowed the system to catch the momentum leakage on both sluggish altcoins (SOL and ETH) at the same time when Bitcoin jumps and increase the transactions from 4-5 to 6 transactions with a profit of 48.7 thousand tomans.

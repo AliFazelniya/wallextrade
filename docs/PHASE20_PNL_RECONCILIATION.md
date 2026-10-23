@@ -4,9 +4,9 @@
 > **Report date:** October 22, 2026 (November 1, 1405)  
 > **Software version:** `v0.11.0-phase19-audited`  
 > **Modules to be audited:**  
-> - [`src/portfolio/accounting.py`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py) (Accounting and Portfolio Engine)  
-> - [`src/backtest/engine.py`](file:///root/starcoach-hack/wallex/src/backtest/engine.py) (historical simulation engine)  
-> - [`tests/test_portfolio.py`](file:///root/starcoach-hack/wallex/tests/test_portfolio.py) (Accounting regression test suite)
+> - [`src/portfolio/accounting.py`](../src/portfolio/accounting.py) (Accounting and Portfolio Engine)  
+> - [`src/backtest/engine.py`](../src/backtest/engine.py) (historical simulation engine)  
+> - [`tests/test_portfolio.py`](../tests/test_portfolio.py) (Accounting regression test suite)
 
 ---
 
@@ -39,7 +39,7 @@ This audit examines the mathematical relationships between **Gross Trading P&L**
   $$\text{Net Proceeds} = \text{Notional}_{sell} - \text{Fee}_{sell}$$
 
 ### 2.3. The definitive relationship between gross profit and slippage:
-In the method [`record_fill`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py#L151):
+In the method [`record_fill`](../src/portfolio/accounting.py#L151):
 $$\text{Gross Realized P\&L} = \text{Notional}_{sell} - \text{Cost Basis} = Q \times (P_{exec, sell} - P_{exec, buy})$$
 
 > [!IMPORTANT]
@@ -104,7 +104,7 @@ flowchart TD
 
 ## 5. Automatic accounting regression tests (Regression Tests)
 
-The unit test [`test_accounting_slippage_and_fee_reconciliation_identity`](file:///root/starcoach-hack/wallex/tests/test_portfolio.py#L62) was fixed as a validation guard in the repository to ensure:
+The unit test [`test_accounting_slippage_and_fee_reconciliation_identity`](../tests/test_portfolio.py#L62) was fixed as a validation guard in the repository to ensure:
 - Slippage sits exclusively on cost price and gross profit.
 - Net profit is always equal to the difference between gross profit and total fees.
 - The balance at the end of the portfolio period matches the equity without even 1 rial of error.

@@ -3,7 +3,7 @@
 
 > **Project:** Wallex Agentic AI Hackathon  
 > **Research branch:** `research/phase22-discovery`  
-> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Competition horizon:** 72 continuous hours  
 > **Initial capital:** 5,000,000 Tomans in cash at the beginning of each window  
 > **Status of live transactions:** `live_execution_authorized = False' (fully blocked and secure)
@@ -36,7 +36,7 @@ Discovery and validation of **candidate E (triple cross-sectional momentum with 
 
 ## 3. Investigated & Implemented Candidates
 
-In the isolation module [`src/experimental/`](file:///root/starcoach-hack/wallex/src/experimental), 5 distinct candidates were implemented:
+In the isolation module [`src/experimental/`](../src/experimental), 5 distinct candidates were implemented:
 
 | Candidate Algorithmic logic and architecture The purpose and design hypothesis
 |---|---|---|
@@ -50,7 +50,7 @@ In the isolation module [`src/experimental/`](file:///root/starcoach-hack/wallex
 
 ## 4. Experimental findings and competition simulation tests (Backtest Results)
 
-All systems were tested in the racing simulator [`src/experimental/simulation_harness.py`](file:///root/starcoach-hack/wallex/src/experimental/simulation_harness.py) in 29 independent racing windows with identical conditions:
+All systems were tested in the racing simulator [`src/experimental/simulation_harness.py`](../src/experimental/simulation_harness.py) in 29 independent racing windows with identical conditions:
 
 ```mermaid
 xychart-beta
@@ -94,7 +94,7 @@ xychart-beta
 | **2. Continuous 90-day historical profitability** ✅ **HISTORICALLY PROFITABLE** | The frozen baseline of phase 21 with 31,555+ tomans profit
 | **3. Profitability in 72-hour racing windows** | ✅ **PROFITABLE IN 72H WINDOWS** | **Candidate E with 47,241+ Tomans profit in 29 competition windows** |
 | **4. Statistical edge in the short horizon of out-sample** | ✅ **STATISTICALLY SUPPORTED EDGE** | T score +1.199 and a profit of 43 thousand tomans in the OOS period
-| **5. License to activate live transactions** | 🛑 **NOT AUTHORIZED** | [`live_execution_authorized = False`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json) preserved unchanged |
+| **5. License to activate live transactions** | 🛑 **NOT AUTHORIZED** | [`live_execution_authorized = False`](../config/frozen_strategy_manifest_v0.6.0.json) preserved unchanged |
 
 ---
 
@@ -119,4 +119,4 @@ xychart-beta
 >
 > **Order to activate live and connect to the exchange:**  
 > 🛑 **NO-GO FOR LIVE TRADING (NOT AUTHORIZED)**  
-> The key variable [`live_execution_authorized = False`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json) is still in effect. Any actual order submission is strictly prohibited until the official competition keys are delivered and deployed in phase 23.
+> The key variable [`live_execution_authorized = False`](../config/frozen_strategy_manifest_v0.6.0.json) is still in effect. Any actual order submission is strictly prohibited until the official competition keys are delivered and deployed in phase 23.

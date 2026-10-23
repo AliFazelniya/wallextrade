@@ -1,6 +1,6 @@
 # In-depth analysis of implementation costs, fee structure and stress matrix (phase 12)
 ### In-Depth Execution Cost Analysis, Microstructure Dynamics & Fee Stress Matrix
-**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Destination exchange:** Wallex | **Official fee table:** 1 Toman level (0.25% multiplier / 0.30% ticker)
+**Repository:** [`wallex`](..) | **Destination exchange:** Wallex | **Official fee table:** 1 Toman level (0.25% multiplier / 0.30% ticker)
 
 ---
 
@@ -41,9 +41,9 @@ For each standard order of 500,000 Tomans:
 
 ## 2. Behavior against partial fills and uncompleted orders
 
-In class [`ExchangeAdapter`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py) and [`PortfolioEngine`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py):
+In class [`ExchangeAdapter`](../src/exchange/adapter.py) and [`PortfolioEngine`](../src/portfolio/accounting.py):
 1. Modeling Unfilled Orders: The buy order is filled only when the lowest traded price (`Low') has reached the order price or lower (`Low <= TargetPrice') in the next candle. Otherwise, the order will be considered unfilled and no fee will be deducted.
-2. **Partial Fills Modeling:** The system supports the partial filling of orders (for example, 50% or 70% of the requested volume based on the depth in the order book) and the fee is calculated exactly in proportion to the executed volume and recorded in the portfolio database. The unit test [`test_partial_fill_execution`](file:///root/starcoach-hack/wallex/tests/test_exchange_adapter.py#L110-L134) has proven the correctness of this functionality.
+2. **Partial Fills Modeling:** The system supports the partial filling of orders (for example, 50% or 70% of the requested volume based on the depth in the order book) and the fee is calculated exactly in proportion to the executed volume and recorded in the portfolio database. The unit test [`test_partial_fill_execution`](../tests/test_exchange_adapter.py#L110-L134) has proven the correctness of this functionality.
 
 ---
 
@@ -61,7 +61,7 @@ To measure the resilience of the system against a possible increase in fees or e
 ### Sensitivity chart analysis:
 - With the increase of the commission rate from 0.25% to 0.40% and the increase of slippage from 0.15% to 0.35% (more than 100% increase in exchange friction), the total return of the account increased by only **0.49%** (from -0.83% to -1.32%).
 - Even in the critical stress scenario, the maximum drawdown of the portfolio was restrained at **4.15%** level and never reached the 5.0% emergency stop of the race.
-- This test proves the high resilience of the risk management engine [`RiskEngine'] (file:///root/starcoach-hack/wallex/src/risk/engine.py) in the most difficult microstructural conditions of the exchange.
+- This test proves the high resilience of the risk management engine [`RiskEngine'] (../src/risk/engine.py) in the most difficult microstructural conditions of the exchange.
 
 ---
 

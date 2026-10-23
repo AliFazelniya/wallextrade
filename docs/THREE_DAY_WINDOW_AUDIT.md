@@ -1,6 +1,6 @@
 # Structural audit and analysis of 29 3-day windows of the competition (Phase 14)
 ### Three-Day Competition Window Audit & Walk-Forward Analysis
-**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Audit date:** October 22, 2026 **Data horizon:** 90 days (8,636 15-minute candles ``BTCTMN'')
+**Repository:** [`wallex`](..) | **Audit date:** October 22, 2026 **Data horizon:** 90 days (8,636 15-minute candles ``BTCTMN'')
 
 ---
 
@@ -12,7 +12,7 @@ In the title of the initial report of phase 13, it was literally and conceptuall
 ### Mathematical proof and separation of candles:
 1. **Total number of candles received from Wallex:** **8,636 candles** 15 minutes.
 2. **Warm-up period of indicators:**
-   To accurately calculate the exponential moving averages (`EMA_20`, `EMA_50`), real volatility index (`ATR_14`) and relative strength (`RSI_14`), the system according to the implementation of [`BacktestEngine`](file:///root/starcoach-hack/wallex/src/backtest/engine.py), **first 60 candles (equivalent to 15 hours)** is dedicated only to the preparation of indicators and in them It does not produce a signal.
+   To accurately calculate the exponential moving averages (`EMA_20`, `EMA_50`), real volatility index (`ATR_14`) and relative strength (`RSI_14`), the system according to the implementation of [`BacktestEngine`](../src/backtest/engine.py), **first 60 candles (equivalent to 15 hours)** is dedicated only to the preparation of indicators and in them It does not produce a signal.
 3. **Number of net trading candles:**
    $$N_{\text{usable}} = 8,636 - 60 = \mathbf{8,576\text{Kendel}}$$
 4. **The number of candles required for a full 3-day window (72 hours):**

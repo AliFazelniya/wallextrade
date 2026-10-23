@@ -2,11 +2,11 @@
 ## Multi-Asset AI Productionization, Execution Stress Testing & Live Shadow Verification
 
 > **Research and engineering branch:** `research/phase22-discovery`  
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
-> **Operating Strategy:** [`MultiAssetMomentumStrategy`](file:///root/starcoach-hack/wallex/src/strategy/multi_asset_momentum.py)  
-> **Shadow Execution Engine:** [`ShadowExecutionRunner`](file:///root/starcoach-hack/wallex/src/execution/shadow_runner.py)  
-> **Automatic tests:** 74 tests passed in 3.07 seconds ([`pytest`](file:///root/starcoach-hack/wallex/tests))  
+> **Repository:** [`wallex`](..)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
+> **Operating Strategy:** [`MultiAssetMomentumStrategy`](../src/strategy/multi_asset_momentum.py)  
+> **Shadow Execution Engine:** [`ShadowExecutionRunner`](../src/execution/shadow_runner.py)  
+> **Automatic tests:** 74 tests passed in 3.07 seconds ([`pytest`](../tests))  
 > **Live execution authorization:** `live_execution_authorized = False` (full hardware/software protection)
 
 ---
@@ -16,22 +16,22 @@
 Following the independent and detailed audit of phase 22 and the resolution of statistical and structural uncertainties, phase 23 was implemented with the aim of standard operationalization, multi-scenario stress testing, and live shadow testing:
 
 1. **Industrialization of the multi-asset strategy of artificial intelligence:**
-   - The [`MultiAssetMomentumStrategy`](file:///root/starcoach-hack/wallex/src/strategy/multi_asset_momentum.py) class was implemented according to the [`BaseStrategy`](file:///root/starcoach-hack/wallex/src/strategy/base.py) architecture.
-   - Direct integration of the artificial intelligence agent ([`RegimeClassificationAgent`](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py)) before entering the position, with confirmation of the bullish regime and confidence $\ge 0.70$.
+   - The [`MultiAssetMomentumStrategy`](../src/strategy/multi_asset_momentum.py) class was implemented according to the [`BaseStrategy`](../src/strategy/base.py) architecture.
+   - Direct integration of the artificial intelligence agent ([`RegimeClassificationAgent`](../src/agents/regime_agent.py)) before entering the position, with confirmation of the bullish regime and confidence $\ge 0.70$.
    - Calculation of the sectional acceleration score:
      $$\text{Score} = \left(\frac{\text{EMA Spread \%}}{\text{ATR \%} + 10^{-6}}\right) \times \left(1 - \frac{\text{Spread \%}}{0.35}\right)$$
    - Acceptance barrier $\ge 1.0$ score, profit limit 3.2% (passive maker) and loss limit 1.5% (aggressive taker).
    - Final sail at hour 60 (stop entry) and hour 66 (passive maker exit at $\ge 0.50%$ profit).
 
 2. Live Shadow Runner Engine:
-   - Implementation of [`ShadowExecutionRunner`](file:///root/starcoach-hack/wallex/src/execution/shadow_runner.py) connected to Wallex exchange in `SHADOW` mode.
+   - Implementation of [`ShadowExecutionRunner`](../src/execution/shadow_runner.py) connected to Wallex exchange in `SHADOW` mode.
    - Live and non-stop inquiry of the order book and symbols ``BTCTMN'', ``ETHTMN'' and ``SOLTMN'' from ``https://api.wallex.ir/v1/markets''.
 
 ---
 
 ## 2. The results of the live market monitoring session (Live Market Shadow Session)
 
-The live market monitoring session was successfully executed by the script [`run_live_shadow_session.py`](file:///root/starcoach-hack/wallex/src/execution/run_live_shadow_session.py):
+The live market monitoring session was successfully executed by the script [`run_live_shadow_session.py`](../src/execution/run_live_shadow_session.py):
 
 | Property | Last Requested Price (TMN) | Current exchange spread (Spread%) | The state of the spread filter ($\le 0.18%$) | Diet status and artificial intelligence signal
 |:---:|:---:|:---:|:---:|:---:|
@@ -40,7 +40,7 @@ The live market monitoring session was successfully executed by the script [`run
 | **SOLTMN** | 28,406,308 | 0.509% | ❌ Red (open spread) | Exchange spread veto (automatic rejection).
 
 > [!NOTE]
-> During the 3 live cycle monitoring, no asset qualified for a bullish breakout. According to its intelligent design, the system remained **100% in safe liquidity mode (Cash)** and the total value of the portfolio was maintained exactly **5,000,000 Tomans**. All events were logged in [`logs/shadow_session_phase23.json`](file:///root/starcoach-hack/wallex/logs/shadow_session_phase23.json).
+> During the 3 live cycle monitoring, no asset qualified for a bullish breakout. According to its intelligent design, the system remained **100% in safe liquidity mode (Cash)** and the total value of the portfolio was maintained exactly **5,000,000 Tomans**. All events were logged in [`logs/shadow_session_phase23.json`](../logs/shadow_session_phase23.json).
 
 ---
 
@@ -65,7 +65,7 @@ The operational strategy was measured in 29 independent racing windows under 6 r
 
 ## 4. Code integrity verification and unit tests
 
-Automated strategy tests in [`tests/test_multi_asset_momentum.py`](file:///root/starcoach-hack/wallex/tests/test_multi_asset_momentum.py) and phase 22 components in [`tests/test_phase22_components.py`](file:///root/starcoach-hack/wallex/tests/test_phase22_components.py) include 12 comprehensive new tests integrated with the entire repository:
+Automated strategy tests in [`tests/test_multi_asset_momentum.py`](../tests/test_multi_asset_momentum.py) and phase 22 components in [`tests/test_phase22_components.py`](../tests/test_phase22_components.py) include 12 comprehensive new tests integrated with the entire repository:
 
 ```text
 ============================== 74 passed in 3.07s ==============================

@@ -1,6 +1,6 @@
 # Statement of the final decision and assessment of the validity of the strategy (phase 14)
 ### Phase 14 Final Decision Gate & Strategy Integrity Verdict
-**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Date of decision:** October 22, 2026 **Input base tag:** `v0.5.0-phase13-validated` | **final audit tag:** `v0.6.0-phase14-audited` (`5356e90`)
+**Repository:** [`wallex`](..) | **Date of decision:** October 22, 2026 **Input base tag:** `v0.5.0-phase13-validated` | **final audit tag:** `v0.6.0-phase14-audited` (`5356e90`)
 
 ---
 
@@ -57,7 +57,7 @@ Phase 14 research showed that despite the positive out-of-sample yield (+0.62% i
 1. **maintain live transaction suspension (`live_execution_authorized = False'):**
    No permission is issued to automatically connect the Wallex private key to the live transaction websocket without direct supervision and final decision of the human team.
 2. **Priority strategy in case of deciding to deploy live:**
-   If approved by the human team, the only strategy allowed for deployment is **Bitcoin Selective Strategy with AI Regime Filter ([`RegimeMomentumStrategy'](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py)) with strict loss limit of 2.0% and profit limit of 3.5%**.
+   If approved by the human team, the only strategy allowed for deployment is **Bitcoin Selective Strategy with AI Regime Filter ([`RegimeMomentumStrategy'](../src/strategy/regime_momentum.py)) with strict loss limit of 2.0% and profit limit of 3.5%**.
 3. **Competitive advantage of the strategy:**
    The main advantage of the system is in preventing over-trading and preventing the burning of capital with Wallex fees. In 37.9% of the historical windows, the robot has maintained 100% liquidity by detecting erosive volatility and in 58.6% of the time the portfolio has remained loss-free.
 
@@ -69,7 +69,7 @@ For independent verification of all tables and figures in this report:
 
 ```bash
 # 1. Activating the virtual environment and verifying dependencies
-cd /root/starcoach-hack/wallex
+cd wallex
 source .venv/bin/activate
 
 # 2. Implementation of accounting and audit tests of phase 14

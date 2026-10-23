@@ -3,11 +3,11 @@
 
 > **Event:** Wallex Agentic AI Hackathon  
 > **Research branch:** `research/phase22-discovery`  
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Match horizon:** 72 continuous hours ($N = 29$ independent window) | **Initial capital:** 5,000,000 Tomans  
 > **Live execution authorization:** `live_execution_authorized = False` (fully blocked and protected)  
-> **Reproduction scripts:** [`src/experimental/trade_reconciliation_phase24.py`](file:///root/starcoach-hack/wallex/src/experimental/trade_reconciliation_phase24.py) and [`src/experimental/phase24_research_engine.py`](file:///root/starcoach-hack/wallex/src/experimental/phase24_research_engine.py)
+> **Reproduction scripts:** [`src/experimental/trade_reconciliation_phase24.py`](../src/experimental/trade_reconciliation_phase24.py) and [`src/experimental/phase24_research_engine.py`](../src/experimental/phase24_research_engine.py)
 
 ---
 
@@ -106,6 +106,6 @@ Performance of the top hypotheses in the first half (in-sample W01 to W15) versu
 
 ## 7. Technical roadmap for the final establishment of the competition (Actionable Next Steps)
 
-1. **Moving H1+H3 logic as the final version of the match strategy:** Integration of 1-hour trend filter and multi-asset lead-lag in [`src/strategy/multi_asset_momentum.py`](file:///root/starcoach-hack/wallex/src/strategy/multi_asset_momentum.py).
+1. **Moving H1+H3 logic as the final version of the match strategy:** Integration of 1-hour trend filter and multi-asset lead-lag in [`src/strategy/multi_asset_momentum.py`](../src/strategy/multi_asset_momentum.py).
 2. **Setting passive limit orders (Maker Only Limit Orders):** To guarantee the payment of 0.25% instead of 0.30% commission and to completely control the slippage of 0.15%.
 3. **Maintain strict security commitments:** The phase 20 manifest remains frozen on the master branch, all code is committed with 74 passing tests, and `live_execution_authorized = False' will be blocked until written authorization and final human signature.

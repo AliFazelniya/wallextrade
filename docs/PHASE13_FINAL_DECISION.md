@@ -1,6 +1,6 @@
 # Final decision document, governance audit and competition strategy selection (Phase 13)
 ### Phase 13 Final Decision Gate, Strategy Selection & Competition Readiness
-**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Report date:** October 22, 2026 **Competition capital:** 5,000,000 Tomans
+**Repository:** [`wallex`](..) | **Report date:** October 22, 2026 **Competition capital:** 5,000,000 Tomans
 
 ---
 
@@ -39,7 +39,7 @@ graph TD
 Simultaneous execution of trend strategy on altcoins (`SOLTMN' and `ETHTMN') is strictly prohibited; Because in the 90-day horizon, Solana alone has spent **132,748 Tomans in exchange fees** without making a net profit for the portfolio and has reduced the portfolio yield to -2.06%.
 
 ### 2. Selection of Bitcoin exclusive strategy with artificial intelligence (Selected Competition Strategy):
-The [`RegimeMomentumStrategy'](file:///root/starcoach-hack/wallex/src/strategy/regime_momentum.py) strategy along with the artificial intelligence market regime filter on the **Bitcoin to Toman (`BTCTMN')** currency pair is selected as **the team's only allowed trading strategy**:
+The [`RegimeMomentumStrategy'](../src/strategy/regime_momentum.py) strategy along with the artificial intelligence market regime filter on the **Bitcoin to Toman (`BTCTMN')** currency pair is selected as **the team's only allowed trading strategy**:
 - Positive out-of-sample yield (+0.62%).
 - Proven net added value of artificial intelligence (+1.75 million Tomans).
 - Exceptional drawdown below 1% (0.86% under normal conditions and 0.91% under extreme stress).
@@ -86,9 +86,9 @@ Among the 4 announced standard classifications:
 - `SOLTMN_15m_90d.csv`: `27a82f586859eb92a608abf1db9c8cdceef2fe4f29e1570e8d77de5618702f0a` (8,635 candles)
 
 ### 5.2. Order to reproduce 100% results by referees```bash
-cd /root/starcoach-hack/wallex
+cd wallex
 .venv/bin/python scripts/run_phase13_validation.py
-```The complete results are stored in the structured file [`research/phase13_validation_results.json`](file:///root/starcoach-hack/wallex/research/phase13_validation_results.json).
+```The complete results are stored in the structured file [`research/phase13_validation_results.json`](../research/phase13_validation_results.json).
 
 ### 5.3. Automated tests and test coverage```bash
 .venv/bin/pytest --cov=src tests/

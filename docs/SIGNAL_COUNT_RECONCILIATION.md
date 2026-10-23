@@ -1,6 +1,6 @@
 # Auditing and matching the number of vetoed signals in phases 12 and 13
 ### Signal Count Discrepancy Reconciliation (643 vs 553 Vetoes)
-**Repository:** [`wallex`](file:///root/starcoach-hack/wallex) | **Audit date:** October 22, 2026 **Currency pairs:** `BTCTMN`, `ETHTMN`, `SOLTMN`
+**Repository:** [`wallex`](..) | **Audit date:** October 22, 2026 **Currency pairs:** `BTCTMN`, `ETHTMN`, `SOLTMN`
 
 ---
 
@@ -17,7 +17,7 @@ How is it possible that there are more vetoed signals in a shorter time frame (3
 
 ## 2. Autopsy proof and separation of symbols (Symbol Universe Breakdown)
 
-By re-reading technical documents and [`run_phase12_research.py`](file:///root/starcoach-hack/wallex/scripts/run_phase12_research.py) and [`run_phase13_validation.py`](file:///root/starcoach-hack/wallex/scripts/run_phase13_validation.py) codes, the reason for this structural difference was proved mathematically:
+By re-reading technical documents and [`run_phase12_research.py`](../scripts/run_phase12_research.py) and [`run_phase13_validation.py`](../scripts/run_phase13_validation.py) codes, the reason for this structural difference was proved mathematically:
 
 1. **Phase 12:** Examination of the **Multi-Symbol Shared Portfolio** consisting of 3 permitted cashable symbols:
    - Bitcoin (`BTCTMN`)
@@ -55,7 +55,7 @@ $$\text{Daily Veto Rate (Phase 13 BTC - 90d)} = \frac{553}{90} = \mathbf{6.14\te
 $$\text{Relative Deviation} = \frac{|6.64 - 6.14|}{6.39} = \mathbf{7.8\%}$$
 
 > [!NOTE]
-> Bitcoin's daily veto rate deviates only 7.8% between the 36-day and 90-day intervals. This shows the extraordinary behavioral stability of the artificial intelligence market regime classification module ([`RegimeClassificationAgent'](file:///root/starcoach-hack/wallex/src/agents/regime_agent.py))**, which has had uniform and predictable behavior in different phases of the market.
+> Bitcoin's daily veto rate deviates only 7.8% between the 36-day and 90-day intervals. This shows the extraordinary behavioral stability of the artificial intelligence market regime classification module ([`RegimeClassificationAgent'](../src/agents/regime_agent.py))**, which has had uniform and predictable behavior in different phases of the market.
 
 ---
 

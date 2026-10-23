@@ -66,7 +66,7 @@ This report is the most comprehensive upstream document of the project, which de
 ---
 
 ## 9. How to launch and reproduce from a raw environment```bash
-cd /root/starcoach-hack/wallex
+cd wallex
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -e .

@@ -55,7 +55,7 @@ In order to send orders and check the private account balance:
 ### Paragraph 5 - Official confirmation of credit extension conditions and exemption from overnight fees (barrier B-05)
 In the normal use of Wallex, credit facilities are subject to rollover/overnight fee and debt settlement.
 - **Request:** Is the credit of 5 million tomans granted during the 3 days of the competition subject to any overnight fee, daily interest or credit extension fee? Is there a complete waiver of facility fees for participants?
-- **Technical importance:** If there is any renewal fee or daily profit, these figures must be exactly modeled in the portfolio accounting module ([`src/portfolio/accounting.py`](file:///root/starcoach-hack/wallex/src/portfolio/accounting.py)) so that the net profit and the actual value of the account balance do not deviate.
+- **Technical importance:** If there is any renewal fee or daily profit, these figures must be exactly modeled in the portfolio accounting module ([`src/portfolio/accounting.py`](../src/portfolio/accounting.py)) so that the net profit and the actual value of the account balance do not deviate.
 
 ---
 

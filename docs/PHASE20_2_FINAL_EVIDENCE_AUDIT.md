@@ -1,8 +1,8 @@
 # Final evidence audit report, signal-to-trade funnel analysis and 72-hour window evaluation (Phase 20.2)
 
 > **Audit Status:** Final and Quantitatively Adapted (Independently Reconciled & Audited)  
-> **Repository:** [`wallex`](file:///root/starcoach-hack/wallex)  
-> **release frozen commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Repository:** [`wallex`](..)  
+> **release frozen commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **valid tags:** `v1.0.0-phase20-frozen-release` and `v0.12.0-phase20-audited`  
 > **Frozen Strategy Manifest Hash:** `249c1e4af942156d2f1a602b58bd729969c660857e2d98f0158ac71c9fa75f66`  
 > **Live execution authorization:** `live_execution_authorized = False` (completely blocked and disabled)
@@ -126,7 +126,7 @@ In the competition evaluation model, each window is started as an independent 3-
 
 > [!CAUTION]
 > **Statistical correction of phase 20.1 report:**  
-> The previous claim of "10 winning windows equal to 34.5%" was not reproduced and is definitively rejected. The actual and reproduced value in the independent simulation with refinement at the 72-hour mark is **6 profitable windows out of 29 full windows (20.7%)**, which exactly matches the initial phase 13 baseline results in document [`research/phase13_validation_results.json#L281`](file:///root/starcoach-hack/wallex/research/phase13_validation_results.json#L281).
+> The previous claim of "10 winning windows equal to 34.5%" was not reproduced and is definitively rejected. The actual and reproduced value in the independent simulation with refinement at the 72-hour mark is **6 profitable windows out of 29 full windows (20.7%)**, which exactly matches the initial phase 13 baseline results in document [`research/phase13_validation_results.json#L281`](../research/phase13_validation_results.json#L281).
 >
 > **Critical distinction of descriptive statistics from predictive probability:**  
 > This index is simply a "Historical Profitable-Window Fraction" in specific market conditions of the last 90 days. This number should in no way be interpreted as a "mathematical probability of winning an upcoming race" or "guaranteed profitability in a random 72-hour window".
@@ -178,7 +178,7 @@ $$40,496.43\text{ TMN} - 17,094.60\text{ TMN} = \mathbf{23,401.83\text{ TMN}} \e
 ## 6. The results of regression and reproducibility tests (Reproducibility & Verification)
 
 ### 6.1. Implementation of unit and system tests:```bash
-cd /root/starcoach-hack/wallex && .venv/bin/pytest tests/
+cd wallex && .venv/bin/pytest tests/
 ```**Execution result:**```
 tests/test_ai_agent.py ....                                              [  6%]
 tests/test_data_validation.py .....                                      [ 14%]
@@ -219,4 +219,4 @@ Despite the accuracy of quantitative calculations, the following operational hur
 
 ### After Live Execution Authorization:
 > **Status: 🛑 NOT AUTHORIZED**  
-> The key variable [`live_execution_authorized = False`](file:///root/starcoach-hack/wallex/config/frozen_strategy_manifest_v0.6.0.json) is preserved unchanged throughout the repository. It is strictly forbidden to send any real orders to the exchange until the official keys of the exchange are delivered by the organizer and the operational obstacles are removed.
+> The key variable [`live_execution_authorized = False`](../config/frozen_strategy_manifest_v0.6.0.json) is preserved unchanged throughout the repository. It is strictly forbidden to send any real orders to the exchange until the official keys of the exchange are delivered by the organizer and the operational obstacles are removed.

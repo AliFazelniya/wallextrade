@@ -3,7 +3,7 @@
 
 > **Project:** Wallex Agentic AI Hackathon  
 > **Research branch:** `research/phase22-discovery`  
-> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](file:///root/starcoach-hack/wallex)  
+> **Frozen base commit:** [`b494d60e211497f47ef3b79d6ae79a0726471172`](..)  
 > **Target trading horizon:** 72 hours of continuous competition  
 > **Initial capital:** 5,000,000 Tomans  
 > **Status of live transactions:** `live_execution_authorized = False' (exact research and simulation only)

@@ -31,7 +31,7 @@ flowchart TD
 ```
 
 ### 1.1. Clarifying the nature of the security gate:
-The `live_execution_authorized = False' flag is a **Deterministic Code-Level Software Guard / Programmatic Gate** that is embedded at the beginning of the [`ExchangeAdapter.execute_order'] method (file:///root/starcoach-hack/wallex/src/exchange/adapter.py#L160) and in the absence of explicit permission, throwing an exception [`ExecutionError`](file:///root/starcoach-hack/wallex/src/exchange/adapter.py#L161) prevents any actual orders from being sent. Because no separate physical hardware or circuitry is installed in the server, this mechanism is defined exclusively as a "code-level software gate" and avoids the imprecise title of hardware interlock.
+The `live_execution_authorized = False' flag is a **Deterministic Code-Level Software Guard / Programmatic Gate** that is embedded at the beginning of the [`ExchangeAdapter.execute_order'] method (../src/exchange/adapter.py#L160) and in the absence of explicit permission, throwing an exception [`ExecutionError`](../src/exchange/adapter.py#L161) prevents any actual orders from being sent. Because no separate physical hardware or circuitry is installed in the server, this mechanism is defined exclusively as a "code-level software gate" and avoids the imprecise title of hardware interlock.
 
 ---
 
@@ -58,7 +58,7 @@ To maintain scientific trustworthiness and impartial audit, the report is divide
 4. **Traffic load risk and Wallex server rate limit:** During the simultaneous competition of dozens of robots, Wallex public endpoints may encounter error 429, which requires the Exponential Backoff mechanism to be active.
 
 ### 2.4. Strategic and operational recommendations (Recommendations):
-1. **Manual submission of the request draft:** The human coach should officially send the text [`docs/ORGANIZER_BLOCKER_REQUEST_FA.md'](file:///root/starcoach-hack/wallex/docs/ORGANIZER_BLOCKER_REQUEST_FA.md) to the secretariat.
+1. **Manual submission of the request draft:** The human coach should officially send the text [`docs/ORGANIZER_BLOCKER_REQUEST_FA.md'](ORGANIZER_BLOCKER_REQUEST_FA.md) to the secretariat.
 2. **Disabling Accelerated Live:** The value of `live_execution_authorized' remains strictly ``False'' before a written response to all 5 obstacles.
 3. **Continuous monitoring of the spread on the day of the match:** In case of a partial increase in the Valax spread above 0.20%, the operator should not manipulate the risk limit; Because the protection of liquidity takes priority over any emotional transaction.
 
