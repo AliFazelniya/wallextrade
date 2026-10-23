@@ -97,6 +97,7 @@ class AgenticTrader:
             })
 
             # Step 3: Action Execution if BUY or SELL recommended
+            action_str = reasoning.get("action", "HOLD")
             exec_result = None
             target_amount = 0.0
             if action_str in ("BUY", "SELL"):
