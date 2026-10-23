@@ -6,6 +6,8 @@
 
 **An institutional-grade, multi-agent quantitative trading engine featuring native Wallex connectivity, a 5-agent consensus swarm, adaptive cross-regime strategies, real-time triangular arbitrage, a local FinTech web dashboard, and an impenetrable deterministic risk management shield.**
 
+</div>
+
 ---
 
 ## Executive Summary
