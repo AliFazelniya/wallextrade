@@ -1,14 +1,8 @@
-# 🚀 Wallex Agentic AI Quantitative Trading System
+# Wallex Agentic AI Quantitative Trading System
+
 ### Starcoach × Wallex Algorithmic AI Hackathon — Official Competition Repository
 
 <div align="center">
-
-[![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.12-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
-[![Pytest](https://img.shields.io/badge/Tests-93%20Passed%20(100%25)-2ea44f?style=for-the-badge&logo=pytest&logoColor=white)](tests/)
-[![Exchange](https://img.shields.io/badge/Exchange-Wallex%20API%20v1-0052FF?style=for-the-badge)](https://wallex.ir)
-[![Protocol](https://img.shields.io/badge/Protocol-Model%20Context%20Protocol%20(MCP)-FF6B6B?style=for-the-badge)](src/mcp/)
-[![Architecture](https://img.shields.io/badge/Architecture-5--Agent%20Consensus%20Swarm-8A2BE2?style=for-the-badge)](src/agents/council.py)
-[![Risk Shield](https://img.shields.io/badge/Risk%20Shield-100%25%20Deterministic-D32F2F?style=for-the-badge)](src/risk/engine.py)
 
 **An institutional-grade, multi-agent quantitative trading engine featuring native Wallex connectivity, a 5-agent consensus swarm, adaptive cross-regime strategies, real-time triangular arbitrage, a local FinTech web dashboard, and an impenetrable deterministic risk management shield.**
 
@@ -24,7 +18,7 @@
 
 ---
 
-## 📌 Executive Summary & Key Value Propositions
+## Executive Summary & Key Value Propositions
 
 Developed specifically for the **Starcoach × Wallex Agentic AI Hackathon**, this repository delivers an institutional-grade algorithmic trading platform designed for high-precision, automated execution within Wallex crypto-asset markets. Rather than relying on rigid rule-based bots or unconstrained LLMs, our architecture establishes a mathematically disciplined, multi-agent consensus system:
 
@@ -37,7 +31,7 @@ Developed specifically for the **Starcoach × Wallex Agentic AI Hackathon**, thi
 
 ---
 
-## ⚡ 10-Second Quickstart
+## Quickstart
 
 ```bash
 # 1. Clone repository and install dependencies
@@ -65,7 +59,7 @@ python main.py --mode report
 
 ---
 
-## 🧠 System Architecture
+## System Architecture
 
 ```mermaid
 flowchart TD
@@ -92,12 +86,12 @@ flowchart TD
         A_MACRO["Macro Risk Agent\n(USDT Volatility & Drawdown Guard)"]
         A_ARB["Arbitrage Scout Agent\n(Synthetic Cross-Rate Radar)"]
         CIO["Chief Investment Officer (CIO)\n(Bayesian Consensus & Thesis Formulation)"]
-        
+
         KER & EMA --> A_TECH
         OFI --> A_MICRO
         VOL --> A_MACRO
         DEPTH --> A_ARB
-        
+
         A_TECH & A_MICRO & A_MACRO & A_ARB -->|Probabilistic Votes| CIO
     end
 
@@ -123,7 +117,7 @@ flowchart TD
 
 ---
 
-## 🤖 The 5-Agent Consensus Swarm
+## The 5-Agent Consensus Swarm
 
 The decision-making core (`src/agents/council.py`) consists of 5 specialized agents that synthesize complementary dimensions of market reality:
 
@@ -166,18 +160,18 @@ The decision-making core (`src/agents/council.py`) consists of 5 specialized age
 
 ---
 
-## 🎯 Adaptive Multi-Strategy Arsenal
+## Adaptive Multi-Strategy Arsenal
 
-| Strategy | Source File | Core Execution Logic | Fee Structure | Optimal Market Regime |
-| :--- | :--- | :--- | :--- | :--- |
-| **1. Multi-Asset Momentum** | [`multi_asset_momentum.py`](src/strategy/multi_asset_momentum.py) | EMA 20/50 crossover + Volume burst + Kaufman ER > 0.60 | Taker (0.35%) with dynamic TP (+2.5%) & SL (-1.2%) | Strong Bullish Breakout |
-| **2. Mean Reversion Scalper** | [`mean_reversion_scalper.py`](src/strategy/mean_reversion_scalper.py) | Lower Bollinger Band bounce + RSI < 35, target SMA 20 | Taker with target +1.0% quick profit | Calm Rangebound (`CALM_RANGE`) |
-| **3. Triangular Arbitrage** | [`triangular_arbitrage.py`](src/strategy/triangular_arbitrage.py) | Arbitrage: $P(\text{Coin/TMN}) \lessgtr P(\text{Coin/USDT}) \times P(\text{USDT/TMN})$ | Net edge > 0.25% after 0.55% roundtrip friction | All Regimes (Cross-Market Mispricing) |
-| **4. Micro-Grid Maker** | [`micro_grid_maker.py`](src/strategy/micro_grid_maker.py) | Passive 2-sided limit grid quoting inside spread with toxic flow guard | Maker (0.25%) capturing spread rebate | Low-Volatility High-Liquidity pairs |
+| Strategy                      | Source File                                                           | Core Execution Logic                                                                   | Fee Structure                                      | Optimal Market Regime                 |
+| :---------------------------- | :-------------------------------------------------------------------- | :------------------------------------------------------------------------------------- | :------------------------------------------------- | :------------------------------------ |
+| **1. Multi-Asset Momentum**   | [`multi_asset_momentum.py`](src/strategy/multi_asset_momentum.py)     | EMA 20/50 crossover + Volume burst + Kaufman ER > 0.60                                 | Taker (0.35%) with dynamic TP (+2.5%) & SL (-1.2%) | Strong Bullish Breakout               |
+| **2. Mean Reversion Scalper** | [`mean_reversion_scalper.py`](src/strategy/mean_reversion_scalper.py) | Lower Bollinger Band bounce + RSI < 35, target SMA 20                                  | Taker with target +1.0% quick profit               | Calm Rangebound (`CALM_RANGE`)        |
+| **3. Triangular Arbitrage**   | [`triangular_arbitrage.py`](src/strategy/triangular_arbitrage.py)     | Arbitrage: $P(\text{Coin/TMN}) \lessgtr P(\text{Coin/USDT}) \times P(\text{USDT/TMN})$ | Net edge > 0.25% after 0.55% roundtrip friction    | All Regimes (Cross-Market Mispricing) |
+| **4. Micro-Grid Maker**       | [`micro_grid_maker.py`](src/strategy/micro_grid_maker.py)             | Passive 2-sided limit grid quoting inside spread with toxic flow guard                 | Maker (0.25%) capturing spread rebate              | Low-Volatility High-Liquidity pairs   |
 
 ---
 
-## 💻 Interactive Local Web Dashboard
+## Interactive Local Web Dashboard
 
 The engine includes a zero-dependency, ultra-lightweight local web server providing real-time telemetry for judges and operators:
 
@@ -186,6 +180,7 @@ python main.py --mode web --port 8080
 ```
 
 ### Dashboard Capabilities:
+
 - **Real-Time KPI Cards:** Total Portfolio Value (starting at 5,000,000 TMN), Net Return %, Current Drawdown %, and Free Cash Balance.
 - **Triangular Arbitrage Live Radar:** Continuously updating table displaying direct TMN vs synthetic prices with real-time discrepancy percentages.
 - **Interactive Portfolio Equity Curve:** Compounding balance chart plotted against the 100% TMN cash baseline.
@@ -193,7 +188,7 @@ python main.py --mode web --port 8080
 
 ---
 
-## 🛠 Unified CLI Reference
+## Unified CLI Reference
 
 All platform operations are consolidated into a single entrypoint (`main.py`):
 
@@ -246,7 +241,7 @@ python main.py --mode live --authorized
 
 ---
 
-## 📁 Repository Directory Structure
+## Repository Directory Structure
 
 ```
 wallex/
@@ -308,40 +303,3 @@ wallex/
     ├── trading_decisions.jsonl           # Second-by-second structured decision ledger
     └── portfolio_state.json              # Persisted portfolio snapshot
 ```
-
----
-
-## 🏆 Hackathon Compliance Matrix
-
-| Rule # | Starcoach × Wallex Competition Requirement | Implementation & Verification Evidence | Status |
-| :---: | :--- | :--- | :---: |
-| **1** | **Zero Manual Intervention** | All trade signals, exits, and sizes generated autonomously by the 5-Agent Council and logged to `logs/trading_decisions.jsonl`. | ✅ **PASS** |
-| **2** | **Initial Capital: 5,000,000 TMN** | `PortfolioEngine(initial_capital_toman=5_000_000.0)` strictly initialized in `main.py` and audited in `test_portfolio.py`. | ✅ **PASS** |
-| **3** | **Max Order Cap: 500,000 TMN** | Hard constraint strictly verified in `RiskEngine.validate_order()` (`tests/test_risk_engine.py`). | ✅ **PASS** |
-| **4** | **Max Drawdown Limit: 5.0%** | Hard circuit breaker halts all trading operations immediately upon touching 5% drawdown (`test_drawdown_limit_triggers_system_halt`). | ✅ **PASS** |
-| **5** | **100% Toman Liquidation** | Automated liquidation protocol executes market sells for all open positions back to TMN before the deadline (`python main.py --mode liquidate`). | ✅ **PASS** |
-| **6** | **Wallex API & MCP Integration** | Native asynchronous client for `/v1/depth`, `/v1/udf/history`, `/v1/trades`, plus full Model Context Protocol server in `src/mcp/`. | ✅ **PASS** |
-| **7** | **Live Trading Safety Gate** | Real execution blocked by default (`TRADING_MODE=SIMULATION`); requires explicit `--authorized` flag to unlock (Fail-Closed). | ✅ **PASS** |
-| **8** | **Code Quality & Reproducibility** | **93 automated unit & integration tests** passing with 100% success rate in 3.2s via Pytest (`python main.py --mode test`). | ✅ **PASS** |
-
----
-
-## 🎬 Presentation & Judging Assets
-
-To ensure a seamless, high-scoring evaluation during the hackathon pitch:
-
-1. **5-Minute Scene-by-Scene Pitch Script:** [`docs/DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md)  
-   Complete 300-second timed walkthrough with exact Persian narration, screen capture cues, and bulletproof answers to tough judge questions.
-2. **AI Video Generation Prompts & Storyboard:** [`docs/AI_VIDEO_GENERATION_PROMPT.md`](docs/AI_VIDEO_GENERATION_PROMPT.md)  
-   Master cinematic prompts and scene-by-scene prompts for **Gemini Video**, **Google Veo 2**, and **OpenAI Sora** in a dark Cyberpunk FinTech aesthetic.
-3. **Interactive HTML Judge Audit Report:** [`docs/JUDGE_AUDIT_REPORT.html`](docs/JUDGE_AUDIT_REPORT.html)  
-   Self-contained visual report viewable in any browser with interactive KPI metrics, strategy comparisons, and live decision logs.
-
----
-
-<div align="center">
-
-**Engineered for the Starcoach × Wallex Agentic AI Algorithmic Trading Challenge**  
-*Quantitative Microstructure • Autonomous Multi-Agent Consensus • Mathematical Capital Protection*
-
-</div>
