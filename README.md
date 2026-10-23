@@ -6,16 +6,6 @@
 
 **An institutional-grade, multi-agent quantitative trading engine featuring native Wallex connectivity, a 5-agent consensus swarm, adaptive cross-regime strategies, real-time triangular arbitrage, a local FinTech web dashboard, and an impenetrable deterministic risk management shield.**
 
-[Quickstart](#-quickstart-in-10-seconds) •
-[1. Algorithm Architecture & Logic](#-1-core-algorithm-architecture--trading-logic) •
-[2. AI & Wallex Tools (MCP)](#-2-artificial-intelligence-integration--wallex-tools-mcp) •
-[3. Buy & Sell Decision Rules](#-3-buy--sell-decision-making-rules--triggers) •
-[4. Capital & Risk Management](#-4-capital-management--risk-control-methodology) •
-[5. Reproducibility & Evaluation](#-5-reproducibility-backtesting--performance-evaluation) •
-[Unified CLI Reference](#-unified-cli-reference) •
-
-</div>
-
 ---
 
 ## Executive Summary
